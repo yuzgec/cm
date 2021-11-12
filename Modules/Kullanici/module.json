@@ -1,0 +1,13 @@
+{
+    "name": "Kullanici",
+    "alias": "kullanici",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Kullanici\\Providers\\KullaniciServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

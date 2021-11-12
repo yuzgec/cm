@@ -1,0 +1,13 @@
+{
+    "name": "Ayarlar",
+    "alias": "ayarlar",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Ayarlar\\Providers\\AyarlarServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

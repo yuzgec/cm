@@ -1,0 +1,13 @@
+{
+    "name": "Odeme",
+    "alias": "odeme",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Odeme\\Providers\\OdemeServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

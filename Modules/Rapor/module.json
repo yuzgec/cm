@@ -1,0 +1,13 @@
+{
+    "name": "Rapor",
+    "alias": "rapor",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Rapor\\Providers\\RaporServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

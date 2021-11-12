@@ -1,0 +1,13 @@
+{
+    "name": "Dosya",
+    "alias": "dosya",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Dosya\\Providers\\DosyaServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}
