@@ -18,15 +18,18 @@
                             <div class="d-flex">
                                 <div class="me-3">
                                     <div class="input-icon">
-                                        <input type="text" class="form-control" placeholder="Arama…">
-                                        <span class="input-icon-addon">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-                                                viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                                stroke-linecap="round" stroke-linejoin="round">
-                                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                <circle cx="10" cy="10" r="7" />
-                                                <line x1="21" y1="21" x2="15" y2="15" /></svg>
-                                        </span>
+                                        <form method="GET" action="{{ route('kullanici.index') }}">
+                                            @csrf
+                                            <input type="text" name="q" class="form-control" placeholder="Arama…" value="{{ request('q') }}">
+                                            <span class="input-icon-addon">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+                                                    viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                                    stroke-linecap="round" stroke-linejoin="round">
+                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                    <circle cx="10" cy="10" r="7" />
+                                                    <line x1="21" y1="21" x2="15" y2="15" /></svg>
+                                            </span>
+                                        </form>
                                     </div>
                                 </div>
 
@@ -155,30 +158,5 @@
         </div>
     </div>
 @endsection
-@section('customJS')
 
-    <script>
-        $(document).ready(function() {
-
-            $('.switch').change(function() {
-                const id = $(this)[0].getAttribute('active-id');
-                const is_active = $(this).prop('checked');
-
-                $.get("{{route('kullanici.switch')}}", {id:id,is_active:is_active},
-                    () => {
-                        if(is_active)
-                        {
-                            $("#active").show(500).delay(3000).fadeOut();
-                            console.log('Kullanıcı Durumu Aktif Hale Getirildi')
-                        }
-                        else
-                        {
-                            $("#noactive").show(500).delay(3000).fadeOut();
-                            console.log('Kullanıcı Durumu Pasif Hale Getirildi')
-                        }
-                    });
-            })
-        })
-    </script>
-@endsection
 

@@ -103,6 +103,16 @@
                                         </div>
                                     </div>
 
+                                    <div class="form-group mb-3 row">
+                                        <label class="form-label col-3 col-form-label">Durumu</label>
+                                        <div class="col">
+                                            <select class="form-select" name="durum">
+                                                <option value="" disabled>Durum Seçiniz...</option>
+                                                <option value="1">Aktif</option>
+                                                <option value="2">Pasif</option>
+                                            </select>
+                                        </div>
+                                    </div>
                                     
                                     <div class="form-group mb-3 row">
                                         <label class="form-label col-3 col-form-label">Şifre </label>

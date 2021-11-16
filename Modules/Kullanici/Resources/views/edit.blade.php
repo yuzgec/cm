@@ -104,6 +104,16 @@
                                         </div>
                                     </div>
 
+                                    <div class="form-group mb-3 row">
+                                        <label class="form-label col-3 col-form-label">Durumu</label>
+                                        <div class="col">
+                                            <select class="form-select" name="durum">
+                                                <option value="1" {{ ($detay->durum ==1) ? 'selected' : null}}>Aktif</option>
+                                                <option value="2" {{ ($detay->durum ==2) ? 'selected' : null}}>Pasif</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
                                     
                                     <div class="form-group mb-3 row">
                                         <label class="form-label col-3 col-form-label">Şifre </label>

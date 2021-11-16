@@ -3,14 +3,14 @@
 namespace Modules\Kullanici\Http\Controllers;
 
 use Illuminate\Contracts\Support\Renderable;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\User;
 use Spatie\Permission\Models\Role;
-use DB;
-use Hash;
+use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
-use RealRashid\SweetAlert\Facades\Alert;
+use App\Models\User;
+Use Alert;
+use Hash;
+use DB;
 
 class KullaniciController extends Controller
 {
@@ -20,8 +20,21 @@ class KullaniciController extends Controller
      */
     public function index()
     {
-        $all = User::with('roles')->get();
-        //dd($all);
+
+        if (request()->filled('q'))
+        {
+            request()->flash();
+            $aranan = request('q');
+            $all = User::with('roles')->where('name', 'like', "%$aranan%")
+                ->orWhere('telefon','like', "%$aranan%")
+                ->orderBy('id', 'DESC')
+                ->get();
+
+        } else {
+
+            $all = User::with('roles')->get();
+
+        }
         return view('kullanici::index',compact('all'));
     }
 
@@ -47,15 +60,16 @@ class KullaniciController extends Controller
 
         $user->name         =  $request->name;
         $user->email        =  $request->email;
-        $user->telefon        =  $request->telefon;
+        $user->telefon      =  $request->telefon;
+        $user->durum        =  $request->durum;
         $user->depertman    =  $request->depertman;
         $user->password     =  Hash::make($request->password);
         $user->save();
 
         $user->syncRoles($request->role);
 
-        toast('Success Toast','success');
-        return back()->withInput();
+        toast('eklendi.','success');
+        return redirect()->route('kullanici.index');
     }
 
     /**
@@ -93,14 +107,16 @@ class KullaniciController extends Controller
         $user->name         =  $request->name;
         $user->email        =  $request->email;
         $user->telefon      =  $request->telefon;
+        $user->durum        =  $request->durum;
         $user->depertman    =  $request->depertman;
         $user->password     =  Hash::make($request->password);
         $user->save();
 
         $user->syncRoles($request->role);
 
-        Alert::warning('Warning Title', 'Warning Message');
-        return back()->withInput();
+        alert()->success('SuccessAlert','Lorem ipsum dolor sit amet.');
+
+        return redirect()->route('kullanici.index');
     }
 
     /**
