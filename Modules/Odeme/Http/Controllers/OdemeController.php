@@ -15,7 +15,6 @@ class OdemeController extends Controller
 
     public function odemeal(Request $request){
   
-
         Config::$CLIENT_CODE = 41460;
         Config::$CLIENT_USERNAME = 'TP10072800';
         Config::$CLIENT_PASSWORD = '0088DCBA01823014';
@@ -46,9 +45,10 @@ class OdemeController extends Controller
         $siparisAciklama = "siparis aciklama";
         $taksit = 1;
         $islemtutar = money($request->tutar);
-        $toplamTutar = money($request->tutar + ( $request->tutar*2.09 / 100 ));
+        $toplamTutar = money($request->tutar + ( $request->tutar * 2.09 / 100 ));
 
         //dd($toplamTutar);
+
         $islemid = time();
         $ipAdr = $ip;
         $dataBir = $request->personel;
@@ -57,9 +57,7 @@ class OdemeController extends Controller
         $dataDort = " ";
         $dataBes = " ";
 
-
         $soap = new Soap();
-
 
         $nesne = new Odeme($spid, $guid, $kkSahibi, $kkNo, $kkSkAy, $kkSkYil, $kkCvc, $kkSahibiGsm,
             $hataUrl, $basariliUrl, $siparisId, $siparisAciklama, $taksit, $islemtutar, $toplamTutar, $islemid, $ipAdr, $odemeUrl,
@@ -71,7 +69,9 @@ class OdemeController extends Controller
         if($res['Sonuc'] == 1)
         {
             return view('odeme::success', compact('res'));
+
         }else{
+
             return view('odeme::error', compact('res'));
         }
     }

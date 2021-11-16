@@ -34,8 +34,8 @@
 
                     <div class="form-group mb-2">
                         <label for="singin-email-2">Telefon Numaranız *</label>
-                        <input type="text" class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{ old('phone') }}"  autocomplete="phone" autofocus>
-                        @error('phone')
+                        <input type="text" class="form-control @error('telefon') is-invalid @enderror" name="telefon" value="{{ old('telefon') }}"  autocomplete="telefon" autofocus>
+                        @error('telefon')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>

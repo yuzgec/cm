@@ -10,6 +10,7 @@ use Spatie\Permission\Models\Role;
 use DB;
 use Hash;
 use Illuminate\Support\Arr;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class KullaniciController extends Controller
 {
@@ -19,7 +20,8 @@ class KullaniciController extends Controller
      */
     public function index()
     {
-        $all = User::all();
+        $all = User::with('roles')->get();
+        //dd($all);
         return view('kullanici::index',compact('all'));
     }
 
@@ -29,7 +31,8 @@ class KullaniciController extends Controller
      */
     public function create()
     {
-        $roles = Role::pluck('name','name')->all();
+
+        $roles = Role::all();
         return view('kullanici::create',compact('roles'));
     }
 
@@ -40,7 +43,19 @@ class KullaniciController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = new User;
+
+        $user->name         =  $request->name;
+        $user->email        =  $request->email;
+        $user->telefon        =  $request->telefon;
+        $user->depertman    =  $request->depertman;
+        $user->password     =  Hash::make($request->password);
+        $user->save();
+
+        $user->syncRoles($request->role);
+
+        toast('Success Toast','success');
+        return back()->withInput();
     }
 
     /**
@@ -60,7 +75,9 @@ class KullaniciController extends Controller
      */
     public function edit($id)
     {
-        return view('kullanici::edit');
+        $detay = User::findOrFail($id);
+        $roles = Role::all();
+        return view('kullanici::edit', compact('detay', 'roles'));
     }
 
     /**
@@ -71,7 +88,19 @@ class KullaniciController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = User::findOrFail($id);
+
+        $user->name         =  $request->name;
+        $user->email        =  $request->email;
+        $user->telefon      =  $request->telefon;
+        $user->depertman    =  $request->depertman;
+        $user->password     =  Hash::make($request->password);
+        $user->save();
+
+        $user->syncRoles($request->role);
+
+        Alert::warning('Warning Title', 'Warning Message');
+        return back()->withInput();
     }
 
     /**

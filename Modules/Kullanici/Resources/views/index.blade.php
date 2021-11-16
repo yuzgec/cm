@@ -61,9 +61,9 @@
                                         <th class="w-1"></th>
                                     </tr>
                                 </thead>
-                                <tbody id="orders">
+                                <tbody>
                                 @foreach ($all as $item)
-                                    <tr id="page_{{$item->id}}">
+                                    <tr>
                                         <td>
                                             <div class="d-flex py-1 align-items-center">
                                                 <span class="avatar me-2" style="background-image: url({{ ($item->pageImage == "") ? '/images/resimyok.jpg' : '/images/pageImage/50/'.$item->pageImage}})"></span>
@@ -81,12 +81,14 @@
                                         </td>
                                         <td>
                                             <div class="text-muted">
-                                                {{ $item->phone}}
+                                                {{ $item->telefon}}
                                             </div>
                                         </td>
                                         <td>
                                             <div class="text-muted">
-                                                Admin
+                                                @foreach ($item->roles as $rol)
+                                                    {{ $rol->name}}
+                                                @endforeach
                                             </div>
                                         </td>
                                         
@@ -95,7 +97,7 @@
                                                 <input 
                                                 class="form-check-input switch" 
                                                 active-id="{{ $item->id }}"
-                                                type="checkbox" @if ($item->is_active == 1) checked @endif>
+                                                type="checkbox" @if ($item->durum == 1) checked @endif>
                                             </label>
                                         </td>
                                         <td class="text-muted">
@@ -154,7 +156,6 @@
     </div>
 @endsection
 @section('customJS')
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <script>
         $(document).ready(function() {

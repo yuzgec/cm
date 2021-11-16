@@ -13,12 +13,12 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
-            $table->string('phone')->unique();
+            $table->string('telefon')->unique();
             $table->timestamp('email_verified_at')->nullable();
+            $table->string('depertman')->nullable();
             $table->string('password');
-            $table->boolean('is_admin')->nullable();
-            $table->boolean('is_active')->nullable();
-            $table->string('userImage')->nullable();
+            $table->boolean('durum')->nullable();
+            $table->string('profil_foto')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
