@@ -36,12 +36,12 @@
 
                 <div class="form-group">
                     <label for="singin-email-2">İsim Soyisim *</label>
-                    <input type="text" name="adsoyad" class="form-control mb-2" placeholder="Kart Üzerinde Yazan İsim Soyisim">
+                    <input type="text" name="adsoyad" class="form-control mb-2" placeholder="Kart Üzerinde Yazan İsim Soyisim" value="Gözde Yüzgeç">
                 </div>
 
                 <div class="form-group">
                     <label for="singin-email-2">Kart Numarası *</label>
-                    <input type="text" name="kartno" class="form-control mb-2" placeholder="Kart Üzerinde Yazan İsim Soyisim" value="4546711234567894">
+                    <input type="text" name="kartno" class="form-control mb-2" placeholder="Kart Üzerinde Yazan İsim Soyisim" value="4543607476233328">
                 </div>
 
                 <div class="form-group d-flex justify-content-between">
@@ -51,13 +51,13 @@
                     </div>
                     <div class="col-5">
                         <label for="singin-email-2">Kart Son Kullanma Yıl *</label>
-                        <input type="text" name="kartyil" class="form-control mb-2" placeholder="Kart Son Kullanma Ay Örn : 21" value="26">
+                        <input type="text" name="kartyil" class="form-control mb-2" placeholder="Kart Son Kullanma Ay Örn : 21" value="2025">
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label for="singin-email-2">Kart CVC *</label>
-                    <input type="text" name="cvc" class="form-control mb-2" placeholder="Kart CVC No" value="000">
+                    <input type="text" name="cvc" class="form-control mb-2" placeholder="Kart CVC No" value="322">
                 </div>
 
                 <button type="submit" class="btn btn-primary btn-block">Ödemeyi Gerçekleştir</button>

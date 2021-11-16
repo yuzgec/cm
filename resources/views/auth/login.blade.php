@@ -53,11 +53,7 @@
                                     <input type="checkbox" class="custom-control-input" id="signin-remember-2" name="remember" {{ old('remember') ? 'checked' : '' }}>
                                     <label class="custom-control-label" for="signin-remember-2">Beni Hatırla</label>
                                 </div>
-                                <div>
-                                    <a href="{{ route('register') }}">
-                                        Hesap Oluştur
-                                    </a>
-                                </div>
+                              
                             </div>
                         </div>
                     </div>    

@@ -4,7 +4,12 @@ namespace Modules\Kullanici\Http\Controllers;
 
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controller;
+use App\Http\Controllers\Controller;
+use App\Models\User;
+use Spatie\Permission\Models\Role;
+use DB;
+use Hash;
+use Illuminate\Support\Arr;
 
 class KullaniciController extends Controller
 {
@@ -14,7 +19,8 @@ class KullaniciController extends Controller
      */
     public function index()
     {
-        return view('kullanici::index');
+        $all = User::all();
+        return view('kullanici::index',compact('all'));
     }
 
     /**
@@ -23,7 +29,8 @@ class KullaniciController extends Controller
      */
     public function create()
     {
-        return view('kullanici::create');
+        $roles = Role::pluck('name','name')->all();
+        return view('kullanici::create',compact('roles'));
     }
 
     /**
@@ -75,5 +82,14 @@ class KullaniciController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function active(Request $request)
+    {
+
+        dd($request->is_active);
+        $update=User::findOrFail($request->id);
+        $update->is_active = $request->is_active == "true" ? 1 : 0 ;
+        $update->save();
     }
 }

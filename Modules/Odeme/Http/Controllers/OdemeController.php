@@ -16,10 +16,10 @@ class OdemeController extends Controller
     public function odemeal(Request $request){
   
 
-        Config::$CLIENT_CODE = 10738;
-        Config::$CLIENT_USERNAME = 'test';
-        Config::$CLIENT_PASSWORD = 'test';
-        Config::$SERVICE_URI = 'https://test-dmz.param.com.tr:4443/turkpos.ws/service_turkpos_test.asmx?wsdl';
+        Config::$CLIENT_CODE = 41460;
+        Config::$CLIENT_USERNAME = 'TP10072800';
+        Config::$CLIENT_PASSWORD = '0088DCBA01823014';
+        Config::$SERVICE_URI = 'https://posws.param.com.tr/turkpos.ws/service_turkpos_prod.asmx?wsdl';
 
         ## Kullanıcının IP adresi
         if( isset( $_SERVER["HTTP_CLIENT_IP"] ) ) {
@@ -32,21 +32,21 @@ class OdemeController extends Controller
 
         $soap = new Soap();
         $spid = 1011;
-        $guid = '0c13d406-873b-403b-9c09-a5766840d98c';
+        $guid = 'E8AAD860-80C3-4C35-9EF9-7E5D5FD1765D';
         $kkSahibi = $request->adsoyad;
         $kkNo = $request->kartno;
         $kkSkAy = $request->kartay;
         $kkSkYil = $request->kartyil;
         $kkCvc = $request->cvc;
-        $kkSahibiGsm = "5340882563";
+        $kkSahibiGsm = "5332802852";
         $hataUrl = route('failed');
         $basariliUrl = route('success');
         $siparisId = time();
         $odemeUrl = route('odeme.index');
         $siparisAciklama = "siparis aciklama";
         $taksit = 1;
-        $islemtutar = "100,00";
-        $toplamTutar = "102,45";
+        $islemtutar = "1";
+        $toplamTutar = "1,029";
         $islemid = "";
         $ipAdr = $ip;
         $dataBir = $request->personel;
@@ -68,8 +68,6 @@ class OdemeController extends Controller
 
         if($res['Sonuc'] == 1)
         {
-
-            
             return view('odeme::success', compact('res'));
         }else{
             return view('odeme::error', compact('res'));

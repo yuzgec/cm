@@ -8,3 +8,5 @@ Route::get('/', function () {
 });
 
 Auth::routes();
+
+Route::resource('roles', RoleController::class)->middleware('auth');
