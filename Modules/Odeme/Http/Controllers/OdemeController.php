@@ -45,8 +45,8 @@ class OdemeController extends Controller
         $odemeUrl = route('odeme.index');
         $siparisAciklama = "siparis aciklama";
         $taksit = 1;
-        $islemtutar = "1";
-        $toplamTutar = "1,029";
+        $islemtutar = $request->tutar;
+        $toplamTutar = $request->tutar + ( $request->tutar*2.09 / 100 );
         $islemid = "";
         $ipAdr = $ip;
         $dataBir = $request->personel;
