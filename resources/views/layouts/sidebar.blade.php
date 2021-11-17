@@ -22,7 +22,7 @@
                         </span>
                     </a>
                 </li>
-                @role('Admin')
+             
                 <li class="nav-item  {{ menu_is_active('kullanici') }} dropdown">
                         <a class="nav-link dropdown-toggle" href="#kullanici" data-bs-toggle="dropdown" role="button" aria-expanded="{{ menu_is_active('kullanici', 'true') }}" >
                         <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/package -->
@@ -48,7 +48,7 @@
                         </div>
                     </div>
                 </li>
-                @endrole
+              
                 <li class="nav-item {{ menu_is_active('sms') }} dropdown">
                     <a class="nav-link dropdown-toggle {{ menu_is_active('rapor', 'show') }}" href="#sms" data-bs-toggle="dropdown" role="button" aria-expanded="{{ menu_is_active('sms', 'true') }}" >
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
