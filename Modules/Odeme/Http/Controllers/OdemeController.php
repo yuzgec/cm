@@ -45,7 +45,7 @@ class OdemeController extends Controller
         $siparisAciklama = "siparis aciklama";
         $taksit = 1;
         $islemtutar = money($request->tutar);
-        $toplamTutar = money($request->tutar + ( $request->tutar * 2.09 / 100 ));
+        $toplamTutar = money($request->tutar + ( $request->tutar * 1.69 / 100 ));
 
         //dd($toplamTutar);
 
