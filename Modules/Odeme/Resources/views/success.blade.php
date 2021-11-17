@@ -7,5 +7,7 @@
 
 @section('content')
     <h3>{{ $res['Sonuc_Str'] }}</h3>
+
+    <iframe src="{{ $res['UCD_URL'] }}" frameborder="0">
     
 @endsection
