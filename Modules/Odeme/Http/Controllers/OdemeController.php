@@ -47,7 +47,7 @@ class OdemeController extends Controller
         $islemtutar = money($request->tutar);
         $toplamTutar = money($request->tutar + ( $request->tutar * 2.09 / 100 ));
 
-        dd($toplamTutar);
+        //dd($toplamTutar);
 
         $islemid = time();
         $ipAdr = $ip;
