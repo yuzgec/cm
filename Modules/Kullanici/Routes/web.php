@@ -1,3 +1,3 @@
 <?php
 
-    Route::resource('/kullanici', 'KullaniciController')->middleware(['role:Admin', 'auth']);
+    Route::resource('/kullanici', 'KullaniciController')->middleware('auth');
