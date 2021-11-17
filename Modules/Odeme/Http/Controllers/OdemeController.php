@@ -64,7 +64,7 @@ class OdemeController extends Controller
             $dataBir, $dataIki, $dataUc, $dataDort, $dataBes);
         $res = $soap->send($nesne)->getSoapResultMethod();
          
-        dd($res);
+        //dd($res);
 
         if($res['Sonuc'] == 1)
         {
