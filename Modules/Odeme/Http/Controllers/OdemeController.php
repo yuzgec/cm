@@ -68,7 +68,7 @@ class OdemeController extends Controller
 
         if($res['Sonuc'] == 1)
         {
-            return view('odeme::success', compact('res'));
+            return redirect()->url($res['UCD_URL']);
 
         }else{
 
