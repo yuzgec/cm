@@ -36,28 +36,33 @@
 
                 <div class="form-group">
                     <label for="singin-email-2">İsim Soyisim *</label>
-                    <input type="text" name="adsoyad" class="form-control mb-2" placeholder="Kart Üzerinde Yazan İsim Soyisim" value="Gözde Yüzgeç">
+                    <input type="text" name="adsoyad" class="form-control mb-2" placeholder="Kart Üzerinde Yazan İsim Soyisim" value="{{old('adsoyad')}}">
                 </div>
 
                 <div class="form-group">
                     <label for="singin-email-2">Kart Numarası *</label>
-                    <input type="text" name="kartno" class="form-control mb-2" placeholder="Kart Üzerinde Yazan İsim Soyisim" value="4543607476233328">
+                    <input type="text" name="kartno" class="form-control mb-2" placeholder="Kart Üzerinde Yazan İsim Soyisim" value="{{old('kartno')}}">
                 </div>
 
                 <div class="form-group d-flex justify-content-between">
                     <div class="col-5">
                         <label for="singin-email-2">Kart Son Kullanma Ay *</label>
-                        <input type="text" name="kartay" class="form-control mb-2" placeholder="Kart Son Kullanma Ay Örn : 01" value="12">
+                        <input type="text" name="kartay" class="form-control mb-2" placeholder="Kart Son Kullanma Ay Örn : 01" value="{{old('kartay')}}">
                     </div>
                     <div class="col-5">
-                        <label for="singin-email-2">Kart Son Kullanma Yıl *</label>
-                        <input type="text" name="kartyil" class="form-control mb-2" placeholder="Kart Son Kullanma Ay Örn : 21" value="2025">
+                        <label for="singin-email-2">Kart Son Kullanma Yıl * -</label>
+                        <input type="text" name="kartyil" class="form-control mb-2" placeholder="Kart Son Kullanma Ay Örn : 2021" value="{{old('kartyil')}}">
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label for="singin-email-2">Kart CVC *</label>
-                    <input type="text" name="cvc" class="form-control mb-2" placeholder="Kart CVC No" value="322">
+                    <input type="text" name="cvc" class="form-control mb-2" placeholder="Kart CVC No" value="{{old('cvc')}}">
+                </div>
+
+                <div class="form-group">
+                    <label for="singin-email-2">Kart CVC *</label>
+                    <textarea type="text" name="aciklama" class="form-control mb-2" placeholder="Kart CVC No" value="{{old('aciklama')}}"></textarea>
                 </div>
 
                 <button type="submit" class="btn btn-primary btn-block">Ödemeyi Gerçekleştir</button>

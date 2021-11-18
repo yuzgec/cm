@@ -42,12 +42,12 @@ class OdemeController extends Controller
         $basariliUrl = route('success');
         $siparisId = time();
         $odemeUrl = route('odeme.index');
-        $siparisAciklama = "siparis aciklama";
+        $siparisAciklama = $request->aciklama;
         $taksit = 1;
         $islemtutar = money($request->tutar);
         $toplamTutar = money($request->tutar + ( $request->tutar * 1.69 / 100 ));
 
-        //dd($toplamTutar);
+        dd($toplamTutar);
 
         $islemid = time();
         $ipAdr = $ip;

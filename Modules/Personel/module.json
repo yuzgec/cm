@@ -1,0 +1,13 @@
+{
+    "name": "Personel",
+    "alias": "personel",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Personel\\Providers\\PersonelServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

@@ -118,7 +118,7 @@
                                     <div class="form-group mb-3 row">
                                         <label class="form-label col-3 col-form-label">Şifre </label>
                                         <div class="col">
-                                            <input type="password" class="form-control" name="password" placeholder="Kullanıcı Şifresi Giriniz...." value="{{ $detay->password}}">
+                                            <input type="password" class="form-control" name="password" placeholder="Kullanıcı Şifresi Giriniz....">
                                         </div>
                                     </div>
                                 
@@ -126,11 +126,10 @@
                                     <div class="form-group mb-3 row">
                                         <label class="form-label col-3 col-form-label">Şifre Tekrar</label>
                                         <div class="col">
-                                            <input type="password" class="form-control" name="password_confirmation" placeholder="Kullanıcı Şifresi  Giriniz...." value="{{ $detay->password}}">
+                                            <input type="password" class="form-control" name="password_confirmation" placeholder="Kullanıcı Şifresini Tekrar Giriniz...." >
                                         </div>
                                     </div>
-                                
-                                
+                                                                
                                 </div>
 
                                 <button type="submit" class="btn btn-primary btn-block">Kaydet</button>
