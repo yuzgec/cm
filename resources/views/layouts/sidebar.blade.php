@@ -38,10 +38,7 @@
                                 <a class="dropdown-item" href="{{route('kullanici.index')}}" title="Kullanıcıları Listele">
                                     Kullanıcıları Listele
                                 </a>
-                                <a class="dropdown-item" href="./accordion.html" title="Kullanıcı Grupları">
-                                    Kullanıcı Grupları
-                                </a>
-                                <a class="dropdown-item" href="./accordion.html" title="Kullanıcı Rolleri">
+                                <a class="dropdown-item" href="{{route('roller.index')}}" title="Kullanıcı Rolleri">
                                     Kullanıcı Rolleri
                                 </a>
                             </div>
@@ -65,19 +62,19 @@
                         <a class="dropdown-item" href="{{ route('sms.index') }}" title="SMS Dashboard">
                             SMS Dashboard
                         </a>
-                        <a class="dropdown-item" href="./activity.html" title="SMS Gönder">
+                        <a class="dropdown-item" href="{{route('dashboard.index')}}" title="SMS Gönder">
                             SMS Gönder
                         </a>
-                        <a class="dropdown-item" href="./gallery.html" title="Toplu SMS Gönder">
+                        <a class="dropdown-item" href="{{route('dashboard.index')}}" title="Toplu SMS Gönder">
                             Toplu SMS Gönder
                         </a>
-                        <a class="dropdown-item" href="./gallery.html" title="SMS Şablonları">
+                        <a class="dropdown-item" href="{{route('dashboard.index')}}" title="SMS Şablonları">
                             SMS Şablonları
                         </a>
-                        <a class="dropdown-item" href="./gallery.html" title="Excel ile SMS Gönder">
+                        <a class="dropdown-item" href="{{route('dashboard.index')}}" title="Excel ile SMS Gönder">
                             Excel ile SMS Gönder
                         </a>
-                        <a class="dropdown-item" href="./gallery.html" title="SMS Raporlama">
+                        <a class="dropdown-item" href="{{route('dashboard.index')}}" title="SMS Raporlama">
                             SMS Raporlama
                         </a>
                     </div>
@@ -99,14 +96,46 @@
                         <a class="dropdown-item" href="{{ route('rapor.index') }}" >
                             Rapor Anasayfa
                         </a>
-                        <a class="dropdown-item" href="./activity.html" >
-                        Personel Raporlama
+                        <a class="dropdown-item" href="{{route('dashboard.index')}}" >
+                            Personel Raporlama
                         </a>
-                        <a class="dropdown-item" href="./gallery.html" >
+                        <a class="dropdown-item" href="{{route('dashboard.index')}}" >
                             Çağrı Raporlama
                         </a>
-                        <a class="dropdown-item" href="./gallery.html" >
-                            Tahsilat Raporlama
+                        <a class="dropdown-item" href="{{route('dashboard.index')}}" >
+                            Ödeme Raporlama
+                        </a>
+                    </div>
+                </li>
+
+                <li class="nav-item  {{ menu_is_active('personel') }} dropdown">
+                    <a class="nav-link dropdown-toggle" href="#sms" data-bs-toggle="dropdown" role="button" aria-expanded="{{ menu_is_active('personel', 'true') }}" >
+                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" 
+                            stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                            <path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" />
+                        </svg>
+                        </span>
+                        <span class="nav-link-title {{ menu_is_active('personel') }}">
+                            Personel Yönetimi
+                        </span>
+                    </a>
+
+                    <div class="dropdown-menu {{ menu_is_active('personel', 'show') }}">
+                        <a class="dropdown-item" href="{{route('personel.index')}}" title="Personel Listesi">
+                            Personel Listesi
+                        </a>
+                        <a class="dropdown-item" href="{{route('dashboard.index')}}" >
+                            Personel Çalışma Grupları
+                        </a>
+                        <a class="dropdown-item" href="{{route('dashboard.index')}}" >
+                            Personel Mesai Saatleri
+                        </a>
+                        <a class="dropdown-item" href="{{route('dashboard.index')}}" >
+                            Personel Giriş-Çıkış
+                        </a>
+                        <a class="dropdown-item" href="{{route('dashboard.index')}}" >
+                            Personel Raporlama
                         </a>
                     </div>
                 </li>
@@ -123,19 +152,19 @@
                     </a>
 
                     <div class="dropdown-menu {{ menu_is_active('ayar', 'show') }}">
-                        <a class="dropdown-item" href="./activity.html" >
+                        <a class="dropdown-item" href="{{route('dashboard.index')}}" >
                             Ayar 1
                         </a>
-                        <a class="dropdown-item" href="./gallery.html" >
+                        <a class="dropdown-item" href="{{route('dashboard.index')}}" >
                             Ayar 2
                         </a>
-                        <a class="dropdown-item" href="./gallery.html" >
+                        <a class="dropdown-item" href="{{route('dashboard.index')}}" >
                             Ayar 3
                         </a>
-                        <a class="dropdown-item" href="./gallery.html" >
+                        <a class="dropdown-item" href="{{route('dashboard.index')}}" >
                             Ayar 4
                         </a>
-                        <a class="dropdown-item" href="./gallery.html" >
+                        <a class="dropdown-item" href="{{route('dashboard.index')}}" >
                             Ayar 5
                         </a>
                     </div>

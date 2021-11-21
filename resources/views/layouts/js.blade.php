@@ -1,1 +1,1 @@
-<script src="/assets/js/tabler.min.js"></script>
+<script src="/assets/js/tabler.js"></script>

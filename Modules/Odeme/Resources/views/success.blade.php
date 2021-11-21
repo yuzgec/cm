@@ -6,8 +6,7 @@
 @endsection
 
 @section('content')
-    <h3>{{ $res['Sonuc_Str'] }}</h3>
+    <h3>{{ $request['TURKPOS_RETVAL_Sonuc_Str'] }}</h3>
 
-    <iframe src="{{ $res['UCD_URL'] }}" frameborder="0">
     
 @endsection

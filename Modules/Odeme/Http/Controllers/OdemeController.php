@@ -15,10 +15,10 @@ class OdemeController extends Controller
 
     public function odemeal(Request $request){
   
-        Config::$CLIENT_CODE = 41460;
-        Config::$CLIENT_USERNAME = 'TP10072800';
-        Config::$CLIENT_PASSWORD = '0088DCBA01823014';
-        Config::$SERVICE_URI = 'https://posws.param.com.tr/turkpos.ws/service_turkpos_prod.asmx?wsdl';
+        Config::$CLIENT_CODE = env('CLIENT_CODE');
+        Config::$CLIENT_USERNAME = env('CLIENT_USERNAME');
+        Config::$CLIENT_PASSWORD = env('CLIENT_PASSWORD');
+        Config::$SERVICE_URI = env('SERVICE_URI');
 
         ## Kullanıcının IP adresi
         if( isset( $_SERVER["HTTP_CLIENT_IP"] ) ) {
@@ -31,56 +31,99 @@ class OdemeController extends Controller
 
         $soap = new Soap();
         $spid = 1011;
-        $guid = 'E8AAD860-80C3-4C35-9EF9-7E5D5FD1765D';
+        $guid = env('GUID_ID');
         $kkSahibi = $request->adsoyad;
         $kkNo = $request->kartno;
         $kkSkAy = $request->kartay;
         $kkSkYil = $request->kartyil;
         $kkCvc = $request->cvc;
         $kkSahibiGsm = "5332802852";
-        $hataUrl = route('failed');
-        $basariliUrl = route('success');
+        $hataUrl = route('odemesonuc');
+        $basariliUrl = route('odemesonuc');
         $siparisId = time();
         $odemeUrl = route('odeme.index');
         $siparisAciklama = $request->aciklama;
         $taksit = 1;
+        
         $islemtutar = money($request->tutar);
         $toplamTutar = money($request->tutar + ( $request->tutar * 1.69 / 100 ));
+        
+        $islemid    = time();
+        $ipAdr      = $ip;
+     
+        $dataBir    = $request->dosyaNo;
+        $dataIki    = $request->tcKimlikNo;
+        $dataUc     = $request->adsoyad;
+        $dataDort   = substr($request->kartno, -4);
+        $dataBes    = 1;
+        $dataAlti   = $request->aciklama;
 
-        dd($toplamTutar);
+        $soap       = new Soap();
 
-        $islemid = time();
-        $ipAdr = $ip;
-        $dataBir = $request->personel;
-        $dataIki = " ";
-        $dataUc = " ";
-        $dataDort = " ";
-        $dataBes = " ";
-
-        $soap = new Soap();
-
-        $nesne = new Odeme($spid, $guid, $kkSahibi, $kkNo, $kkSkAy, $kkSkYil, $kkCvc, $kkSahibiGsm,
+        $nesne      = new Odeme($spid, $guid, $kkSahibi, $kkNo, $kkSkAy, $kkSkYil, $kkCvc, $kkSahibiGsm,
             $hataUrl, $basariliUrl, $siparisId, $siparisAciklama, $taksit, $islemtutar, $toplamTutar, $islemid, $ipAdr, $odemeUrl,
             $dataBir, $dataIki, $dataUc, $dataDort, $dataBes);
-        $res = $soap->send($nesne)->getSoapResultMethod();
-         
+            
+        $res        = $soap->send($nesne)->getSoapResultMethod();
+        
         //dd($res);
 
-        if($res['Sonuc'] == 1)
-        {
-            return redirect($res['UCD_URL']);
+        return redirect($res['UCD_URL']);
+     
+    }
 
+    public function odemesonuc(Request $request){
+
+        
+        //dd($request);
+
+        $extra = explode('|',$request->TURKPOS_RETVAL_Ext_Data);
+
+        //dd($extra[3]);
+
+        $odeme = new \Modules\Odeme\Entities\Odeme;
+
+        $odeme->islem_id             = $request->TURKPOS_RETVAL_Siparis_ID;
+        $odeme->personel_id          = auth()->user()->id;
+        $odeme->dosya_no             = $extra[0];
+        $odeme->tckn                 = $extra[1];
+        $odeme->ad_soyad             = $extra[2];
+        $odeme->odeme_turu           = $extra[4];
+        $odeme->aciklama             = $extra[5];
+        $odeme->dekont_id            = $request->TURKPOS_RETVAL_Dekont_ID;
+        $odeme->islem_id             = $request->TURKPOS_RETVAL_Islem_ID;
+        $odeme->odeme_tutari         = str_replace([","],["."],$request->TURKPOS_RETVAL_Odeme_Tutari);
+        $odeme->odeme_komisyon       = str_replace([","],["."],$request->TURKPOS_RETVAL_Tahsilat_Tutari);
+        $odeme->kart_no              = $extra[3];
+
+        if ($request->TURKPOS_RETVAL_Sonuc == 1) {
+            $odeme->odeme_durumu         = $request->TURKPOS_RETVAL_Sonuc_Str;
         }else{
-
-            return view('odeme::error', compact('res'));
+            $odeme->odeme_durumu           = $request->TURKPOS_RETVAL_Sonuc_Str;
+            $odeme->odeme_hata_mesaji      = $request->TURKPOS_RETVAL_Sonuc_Str;
         }
+
+        if ($request->TURKPOS_RETVAL_Sonuc == 1) {
+            $odeme->odeme_cevap           = 1;
+        }else{
+            $odeme->odeme_cevap           = 0;
+        }
+
+        $odeme->save();
+
+        if ($request->TURKPOS_RETVAL_Sonuc == 1) {
+            
+            return view('odeme::success', compact('request'));
+        }else{
+            return view('odeme::index', compact('request'));
+        }    
+
     }
 
     public function index()
     {
-
-
-        return view('odeme::index');
+        $liste =  \Modules\Odeme\Entities\Odeme::where('personel_id', auth()->user()->id)->get();   
+        return view('odeme::index', compact('liste'));
     }
 
     /**

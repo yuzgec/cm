@@ -1,19 +1,21 @@
 <?php
 
-namespace Modules\Odeme\Entities;
+namespace Modules\Personel\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Odeme extends Model
+class Mesai extends Model
 {
     use HasFactory;
 
     protected $guarded = [];
-    protected $table = 'odeme';
-    
+    protected $table = 'mesai';
+
+    public $timestamps  = false;
+        
     protected static function newFactory()
     {
-        return \Modules\Odeme\Database\factories\OdemeFactory::new();
+        return \Modules\Personel\Database\factories\MesaiFactory::new();
     }
 }

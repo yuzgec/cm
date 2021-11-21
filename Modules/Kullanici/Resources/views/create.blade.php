@@ -26,7 +26,7 @@
                                 </svg>
                                 Yönetim Anasayfa
                             </a> 
-                            <a href="{{ route('kullanici.create')}}" class="btn btn-primary ml-3">
+                            <a href="{{ route('kullanici.index')}}" class="btn btn-primary ml-3">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
                                     viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                                     stroke-linecap="round" stroke-linejoin="round">
@@ -36,7 +36,7 @@
                                 </svg>
                                 Kullanıcı Listesi
                             </a>
-                            <a href="{{ route('roles.create')}}" class="btn btn-primary ml-3">
+                            <a href="{{ route('roller.create')}}" class="btn btn-primary ml-3">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
                                     viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                                     stroke-linecap="round" stroke-linejoin="round">
@@ -50,7 +50,7 @@
                         </div>
                     </div>
                 </div>
-                <form action="{{ route('kullanici.store')}}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('kullanici.store')}}" method="POST" enctype="multipart/form-data" autocomplete="off">
                     @csrf 
                     <div class="row">
                         
@@ -68,14 +68,14 @@
                                     <div class="form-group mb-3 row">
                                         <label class="form-label col-3 col-form-label">Adı Soyadı </label>
                                         <div class="col">
-                                            <input type="text" class="form-control" name="name" placeholder="Kullanıcı Adı Soyadı Giriniz...." value="{{ old('name') }}">
+                                            <input type="text" class="form-control" name="name" placeholder="Kullanıcı Adı Soyadı Giriniz...." value="{{ old('name') }}" autocomplete="off">
                                         </div>
                                     </div>
                 
                                     <div class="form-group mb-3 row">
                                         <label class="form-label col-3 col-form-label">Email Adresi </label>
                                         <div class="col">
-                                            <input type="email" class="form-control" name="email" placeholder="Kullanıcı Email Adresi Giriniz...." value="{{ old('email') }}">
+                                            <input type="email" class="form-control" name="email" placeholder="Kullanıcı Email Adresi Giriniz...." value="{{ old('email') }}" autocomplete="off">
                                         </div>
                                     </div>
 

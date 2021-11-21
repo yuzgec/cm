@@ -5,7 +5,9 @@ namespace Modules\Personel\Http\Controllers;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-
+use Modules\Personel\Entities\Personel;
+use Modules\Personel\Entities\Mesai;
+use Modules\Personel\Http\Requests\PersonelRequest;
 class PersonelController extends Controller
 {
     /**
@@ -14,7 +16,10 @@ class PersonelController extends Controller
      */
     public function index()
     {
-        return view('personel::index');
+
+        $all = Personel::with('mesai')->get();
+        //dd($all);
+        return view('personel::index', compact('all'));
     }
 
     /**
@@ -23,7 +28,8 @@ class PersonelController extends Controller
      */
     public function create()
     {
-        return view('personel::create');
+        $mesai = Mesai::all();
+        return view('personel::create',compact('mesai'));
     }
 
     /**
@@ -31,9 +37,22 @@ class PersonelController extends Controller
      * @param Request $request
      * @return Renderable
      */
-    public function store(Request $request)
+    public function store(PersonelRequest $request)
     {
-        //
+        $personel = new Personel;
+
+        $personel->adsoyad      =  $request->adsoyad;
+        $personel->telefon      =  $request->telefon;
+        $personel->email        =  $request->email;
+        $personel->tckn         =  $request->tckn;
+        $personel->mesai_id     =  $request->mesai_id;
+        $personel->durum        =  $request->durum;
+
+
+        $personel->save();
+
+        return redirect()->route('personel.index');
+
     }
 
     /**
@@ -53,7 +72,11 @@ class PersonelController extends Controller
      */
     public function edit($id)
     {
-        return view('personel::edit');
+
+        $personel = Personel::findOrFail($id);
+        $mesai = Mesai::all();
+
+        return view('personel::edit', compact('personel','mesai'));
     }
 
     /**
@@ -62,9 +85,20 @@ class PersonelController extends Controller
      * @param int $id
      * @return Renderable
      */
-    public function update(Request $request, $id)
+    public function update(PersonelRequest $request, $id)
     {
-        //
+        $personel = Personel::findOrFail($id);
+       //dd($personel);
+        $personel->adsoyad      =  $request->adsoyad;
+        $personel->telefon      =  $request->telefon;
+        $personel->email        =  $request->email;
+        $personel->tckn         =  $request->tckn;
+        $personel->mesai_id     =  $request->mesai_id;
+        $personel->durum        =  $request->durum;
+
+        $personel->save();
+
+        return redirect()->route('personel.index');
     }
 
     /**
