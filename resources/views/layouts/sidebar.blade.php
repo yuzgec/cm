@@ -125,12 +125,10 @@
                         <a class="dropdown-item" href="{{route('personel.index')}}" title="Personel Listesi">
                             Personel Listesi
                         </a>
-                        <a class="dropdown-item" href="{{route('dashboard.index')}}" >
+                        <a class="dropdown-item" href="{{route('mesai.index')}}" >
                             Personel Çalışma Grupları
                         </a>
-                        <a class="dropdown-item" href="{{route('dashboard.index')}}" >
-                            Personel Mesai Saatleri
-                        </a>
+                       
                         <a class="dropdown-item" href="{{route('dashboard.index')}}" >
                             Personel Giriş-Çıkış
                         </a>

@@ -5,6 +5,7 @@ namespace Modules\Personel\Http\Controllers;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Modules\Personel\Entities\Mesai;
 
 class MesaiController extends Controller
 {
@@ -14,7 +15,8 @@ class MesaiController extends Controller
      */
     public function index()
     {
-        return view('personel::index');
+        $all = Mesai::all();
+        return view('personel::mesai.index',compact('all'));
     }
 
     /**
@@ -23,7 +25,7 @@ class MesaiController extends Controller
      */
     public function create()
     {
-        return view('personel::create');
+        return view('personel::mesai.create');
     }
 
     /**
@@ -33,7 +35,14 @@ class MesaiController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $mesai = new Mesai;
+        //dd($mesai);
+        $mesai->mesai_adi       = $request->mesai_adi;
+        $mesai->mesai_giris     = $request->mesai_giris;
+        $mesai->mesai_cikis     = $request->mesai_cikis;
+        $mesai->save();
+
+        return redirect()->route('mesai.index');
     }
 
     /**
@@ -53,7 +62,8 @@ class MesaiController extends Controller
      */
     public function edit($id)
     {
-        return view('personel::edit');
+        $mesai = Mesai::findOrFail($id);
+        return view('personel::mesai.edit', compact('mesai'));
     }
 
     /**
@@ -64,7 +74,14 @@ class MesaiController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $mesai = Mesai::findOrFail($id);
+        //dd($mesai);
+        $mesai->mesai_adi       = $request->mesai_adi;
+        $mesai->mesai_giris     = $request->mesai_giris;
+        $mesai->mesai_cikis     = $request->mesai_cikis;
+        $mesai->save();
+
+        return redirect()->route('mesai.index');
     }
 
     /**
@@ -74,6 +91,9 @@ class MesaiController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $sil = Mesai::findOrFail($id);
+
+        $sil->delete();
+        return redirect()->route('mesai.index');
     }
 }
