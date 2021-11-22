@@ -154,7 +154,12 @@
                 
                                     <div class="form-group mb-3 ">
                                         <label class="form-label">Kullanıcı Resim</label>
-                                        <input type="file" class="form-control" name="profil_foto">
+                                        <input type="file" class="form-control" name="profil_foto" id="images">
+
+                                        <div class="text-center mt-4">
+                                            <div id="preview"></div>
+                                        </div>
+
                                     </div>
                 
                                 </div>
