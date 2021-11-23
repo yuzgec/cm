@@ -129,10 +129,10 @@
                             Personel Çalışma Grupları
                         </a>
                        
-                        <a class="dropdown-item" href="{{route('dashboard.index')}}" >
+                        <a class="dropdown-item" href="{{route('giriscikis')}}" >
                             Personel Giriş-Çıkış
                         </a>
-                        <a class="dropdown-item" href="{{route('dashboard.index')}}" >
+                        <a class="dropdown-item" href="{{route('mesairaporlama')}}" >
                             Personel Raporlama
                         </a>
                     </div>
