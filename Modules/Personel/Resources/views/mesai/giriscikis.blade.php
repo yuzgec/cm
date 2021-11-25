@@ -28,7 +28,7 @@
                                     <label><small>Personel Listesi</small></label>
                                     <select type="text" class="form-select" placeholder="Personel Seçiniz" name="personel">
                                         <option value="">Personel Seçiniz</option>
-                                            @foreach ($personel as $item)
+                                            @foreach ($personeller as $item)
                                                 <option value="{{ $item->id }}">{{ $item->adsoyad }}</option>
                                             @endforeach
                                     </select>
@@ -38,7 +38,7 @@
                         </div>
                     </div>
                 </div>
-             
+
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="table-responsive">
@@ -46,65 +46,49 @@
                                 <thead>
                                     <tr>
                                         <th>Personel Adı</th>
-                                        <th>Mesai Giriş</th>
-                                        <th>Mesai Çıkış</th>
-                                        <th>Mesai Çıkış</th>
-                                        <th>Geç Kalma</th>
-                                        <th>Mesai</th>
+                                        <th>Çalışma Gün Sayısı</th>
+                                        <th>Eksik Çalışma (Dakika)</th>
+                                        <th>Fazla Mesai (Dakika)</th>
                                         <th></th>
                                         <th class="w-1"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                  @php $mesai = ['Mesai Yok', '+60dk Mesai', '+150dk Mesai', '+45dk Mesai']; @endphp
-                                  @php $isim = ['Salih Arık', 'Ahmet Yılmaz', 'Selim Şahin', 'Ayşe Güngör']; @endphp
-                                  @for ($i = 0; $i < 100; $i++)
+                                  @foreach($Kayitlar as $personel)
                                     <tr>
                                       <td>
                                         <div class="text-muted">
-                                          {{ $i+1 }}
+                                            <a href="{{ route('giriscikisdetay', $personel->id) }}" title="Personel Adı">
+                                                {{$personel->adsoyad}}
+                                            </a>
                                         </div>
                                       </td>
                                         <td>
                                             <div class="text-muted">
-                                             <a href="{{ route('giriscikisdetay', $i+1) }}" title="Personel Adı">
-                                               @php $ra= rand(1,3); $r=array_rand($isim,4);echo $isim[$r[$ra]]; @endphp
-                                             </a>
+                                                {{$personel->calismaGunSayisi}}
                                             </div>
                                         </td>
                                         <td>
                                             <div class="text-muted">
-                                              23.11.2021 09:00
+                                                {{$personel->gecMesai}}
                                             </div>
                                         </td>
                                         <td>
                                             <div class="text-muted">
-                                              23.11.2021 18:00
-                                            </div>
-                                        </td>
-
-                                        <td>
-                                            <div class="text-muted">
-                                              {{rand(1,99)}}DK Geç
-                                            </div>
-                                        </td>
-
-                                        <td>
-                                            <div class="text-muted badge">
-                                                @php $ra= rand(1,3); $r=array_rand($mesai,4);echo $mesai[$r[$ra]]; @endphp
+                                                {{$personel->fazlaCalisma}}
                                             </div>
                                         </td>
                                     </tr>
-                              
-                                    @endfor
+
+                                    @endforeach
                                 </div>
-                        
+
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
-              
+
             </div>
         </div>
     </div>

@@ -9,4 +9,4 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::resource('roles', RoleController::class)->middleware('auth');
+Route::resource('roles', \App\Http\Controllers\RoleController::class)->middleware('auth');

@@ -12,6 +12,9 @@ class Monitoring extends Model
     protected $guarded = [];
     protected $connection = "personeldb";
     protected $table = "monitoring";
+    protected $dates = [
+        "Eventtime" => "datetime"
+    ];
 
     protected static function newFactory()
     {
