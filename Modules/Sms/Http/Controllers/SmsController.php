@@ -76,4 +76,27 @@ class SmsController extends Controller
     {
         //
     }
+
+    public function smsgonder(){
+
+        return view('sms::smsgonder');
+
+    }
+
+    public function toplusmsgonder(){
+        return view('sms::toplusmsgonder');
+
+    }
+
+    public function excelsmsgonder(){
+        return view('sms::excelsmsgonder');
+    }
+
+    public function smssablon(){
+        return view('sms::smssablon');
+    }
+
+    public function smsraporlama(){
+        return view('sms::smsraporlama');
+    }
 }

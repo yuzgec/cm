@@ -62,19 +62,20 @@
                         <a class="dropdown-item" href="{{ route('sms.index') }}" title="SMS Dashboard">
                             SMS Dashboard
                         </a>
-                        <a class="dropdown-item" href="{{route('dashboard.index')}}" title="SMS Gönder">
+                        <a class="dropdown-item" href="{{route('smsgonder')}}" title="SMS Gönder">
                             SMS Gönder
                         </a>
-                        <a class="dropdown-item" href="{{route('dashboard.index')}}" title="Toplu SMS Gönder">
+                        <a class="dropdown-item" href="{{route('toplusmsgonder')}}" title="Toplu SMS Gönder">
                             Toplu SMS Gönder
                         </a>
-                        <a class="dropdown-item" href="{{route('dashboard.index')}}" title="SMS Şablonları">
-                            SMS Şablonları
-                        </a>
-                        <a class="dropdown-item" href="{{route('dashboard.index')}}" title="Excel ile SMS Gönder">
+                       
+                        <a class="dropdown-item" href="{{route('excelsmsgonder')}}" title="Excel ile SMS Gönder">
                             Excel ile SMS Gönder
                         </a>
-                        <a class="dropdown-item" href="{{route('dashboard.index')}}" title="SMS Raporlama">
+                        <a class="dropdown-item" href="{{route('smssablon')}}" title="SMS Şablonları">
+                            SMS Şablonları
+                        </a>
+                        <a class="dropdown-item" href="{{route('smsraporlama')}}" title="SMS Raporlama">
                             SMS Raporlama
                         </a>
                     </div>
