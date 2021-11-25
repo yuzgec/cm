@@ -48,15 +48,26 @@
                                         <th>Personel Adı</th>
                                         <th>Mesai Giriş</th>
                                         <th>Mesai Çıkış</th>
+                                        <th>Mesai Çıkış</th>
+                                        <th>Geç Kalma</th>
+                                        <th>Mesai</th>
                                         <th></th>
                                         <th class="w-1"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                  @php $mesai = ['Mesai Yok', '+60dk Mesai', '+150dk Mesai', '+45dk Mesai']; @endphp
+                                  @php $isim = ['Salih Arık', 'Ahmet Yılmaz', 'Selim Şahin', 'Ayşe Güngör']; @endphp
+                                  @for ($i = 0; $i < 100; $i++)
                                     <tr>
+                                      <td>
+                                        <div class="text-muted">
+                                          {{ $i+1 }}
+                                        </div>
+                                      </td>
                                         <td>
                                             <div class="text-muted">
-                                              Ahmet Yılmaz
+                                              @php $ra= rand(1,3); $r=array_rand($isim,4);echo $isim[$r[$ra]]; @endphp
                                             </div>
                                         </td>
                                         <td>
@@ -69,332 +80,21 @@
                                               23.11.2021 18:00
                                             </div>
                                         </td>
-                                    </tr>
-                                    <tr>
+
                                         <td>
                                             <div class="text-muted">
-                                              Ahmet Yılmaz
+                                              {{rand(1,99)}}DK Geç
                                             </div>
                                         </td>
+
                                         <td>
-                                            <div class="text-muted">
-                                              23.11.2021 09:00
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="text-muted">
-                                              23.11.2021 18:00
+                                            <div class="text-muted badge">
+                                                @php $ra= rand(1,3); $r=array_rand($mesai,4);echo $mesai[$r[$ra]]; @endphp
                                             </div>
                                         </td>
                                     </tr>
-                                    
-                                    <tr>
-                                        <td>
-                                            <div class="text-muted">
-                                              Ahmet Yılmaz
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="text-muted">
-                                              23.11.2021 09:00
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="text-muted">
-                                              23.11.2021 18:00
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    
-                                    <tr>
-                                        <td>
-                                            <div class="text-muted">
-                                              Ahmet Yılmaz
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="text-muted">
-                                              23.11.2021 09:00
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="text-muted">
-                                              23.11.2021 18:00
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    
-                                    <tr>
-                                        <td>
-                                            <div class="text-muted">
-                                              Ahmet Yılmaz
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="text-muted">
-                                              23.11.2021 09:00
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="text-muted">
-                                              23.11.2021 18:00
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    
-                                    <tr>
-                                        <td>
-                                            <div class="text-muted">
-                                              Ahmet Yılmaz
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="text-muted">
-                                              23.11.2021 09:00
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="text-muted">
-                                              23.11.2021 18:00
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    
-                                    <tr>
-                                        <td>
-                                            <div class="text-muted">
-                                              Ahmet Yılmaz
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="text-muted">
-                                              23.11.2021 09:00
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="text-muted">
-                                              23.11.2021 18:00
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    
-                                    <tr>
-                                        <td>
-                                            <div class="text-muted">
-                                              Ahmet Yılmaz
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="text-muted">
-                                              23.11.2021 09:00
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="text-muted">
-                                              23.11.2021 18:00
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    
-                                    <tr>
-                                        <td>
-                                            <div class="text-muted">
-                                              Ahmet Yılmaz
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="text-muted">
-                                              23.11.2021 09:00
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="text-muted">
-                                              23.11.2021 18:00
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    
-                                    <tr>
-                                        <td>
-                                            <div class="text-muted">
-                                              Ahmet Yılmaz
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="text-muted">
-                                              23.11.2021 09:00
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="text-muted">
-                                              23.11.2021 18:00
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    
-                                    <tr>
-                                        <td>
-                                            <div class="text-muted">
-                                              Ahmet Yılmaz
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="text-muted">
-                                              23.11.2021 09:00
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="text-muted">
-                                              23.11.2021 18:00
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    
-                                    <tr>
-                                        <td>
-                                            <div class="text-muted">
-                                              Ahmet Yılmaz
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="text-muted">
-                                              23.11.2021 09:00
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="text-muted">
-                                              23.11.2021 18:00
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    
-                                    <tr>
-                                        <td>
-                                            <div class="text-muted">
-                                              Ahmet Yılmaz
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="text-muted">
-                                              23.11.2021 09:00
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="text-muted">
-                                              23.11.2021 18:00
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    
-                                    <tr>
-                                        <td>
-                                            <div class="text-muted">
-                                              Ahmet Yılmaz
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="text-muted">
-                                              23.11.2021 09:00
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="text-muted">
-                                              23.11.2021 18:00
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    
-                                    <tr>
-                                        <td>
-                                            <div class="text-muted">
-                                              Ahmet Yılmaz
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="text-muted">
-                                              23.11.2021 09:00
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="text-muted">
-                                              23.11.2021 18:00
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    
-                                    <tr>
-                                        <td>
-                                            <div class="text-muted">
-                                              Ahmet Yılmaz
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="text-muted">
-                                              23.11.2021 09:00
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="text-muted">
-                                              23.11.2021 18:00
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    
-                                    <tr>
-                                        <td>
-                                            <div class="text-muted">
-                                              Ahmet Yılmaz
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="text-muted">
-                                              23.11.2021 09:00
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="text-muted">
-                                              23.11.2021 18:00
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    
-                                    <tr>
-                                        <td>
-                                            <div class="text-muted">
-                                              Ahmet Yılmaz
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="text-muted">
-                                              23.11.2021 09:00
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="text-muted">
-                                              23.11.2021 18:00
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    
-                                    <tr>
-                                        <td>
-                                            <div class="text-muted">
-                                              Ahmet Yılmaz
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="text-muted">
-                                              23.11.2021 09:00
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="text-muted">
-                                              23.11.2021 18:00
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    
-                                    
+                              
+                                    @endfor
                                 </div>
                         
                                 </tbody>
