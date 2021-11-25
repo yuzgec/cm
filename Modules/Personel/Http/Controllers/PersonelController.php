@@ -9,6 +9,7 @@ use Modules\Personel\Entities\Personel;
 use Modules\Personel\Entities\SicilRemote;
 use Modules\Personel\Entities\Mesai;
 use Modules\Personel\Http\Requests\PersonelRequest;
+use Modules\Personel\Entities\Monitoring;
 class PersonelController extends Controller
 {
     /**
@@ -18,7 +19,8 @@ class PersonelController extends Controller
     public function index()
     {
 
-        $all = SicilRemote::all();
+        $all = Personel::with('mesai')->get();
+        //dd($all);
         return view('personel::index', compact('all'));
     }
 
@@ -112,8 +114,16 @@ class PersonelController extends Controller
     }
 
     public function giriscikis(){
-
+        $baslangic = "2021-11-01";
+        $bitis = "2021-11-24";
+        
        $personel = Personel::all();
+       $Personeller = [];
+       foreach($personel as $row){
+           $SQL = Monitoring::where('UserID', $row->remote_id)->where('Eventtime', '>=', $baslangic)->where('Eventtime','<=', $bitis);
+           dd($SQL->get());
+           dd($row);
+       }
        return view('personel::mesai.giriscikis', compact('personel'));
     }
 

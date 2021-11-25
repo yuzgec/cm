@@ -12,6 +12,7 @@ class CreatePersonelTable extends Migration
         Schema::create('personel', function (Blueprint $table) {
             $table->id();
             $table->integer('mesai_id');
+            $table->string('remote_id')->nullable();
             $table->string('adsoyad');
             $table->string('telefon');
             $table->string('email');
