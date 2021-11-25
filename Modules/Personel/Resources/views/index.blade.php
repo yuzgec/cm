@@ -71,25 +71,25 @@
                                             <div class="d-flex py-1 align-items-center">
                                                 <span class="avatar me-2" style="background-image: url({{ ($item->foto == "") ? '/assets/images/resimyok.jpg' : '/images/personel/50/'.$item->foto}})"></span>
                                                 <div class="flex-fill">
-                                                    <div class="font-weight-medium">{{ $item->adsoyad}}</div>
+                                                    <div class="font-weight-medium">{{ $item->Ad.' '.$item->Soyad}}</div>
                                                 </div>
                                             </div>
                                         </td>
                                         <td>
                                             <div class="text-muted">
-                                                {{ $item->email}}
+                                                {{ $item->UserID}}
                                             </div>
                                         </td>
 
                                         <td>
                                             <div class="text-muted">
-                                                {{ $item->telefon}}
+                                                {{ $item->SicilNo}}
                                             </div>
                                         </td>
                                            
                                         <td>
                                             <div class="text-muted">
-                                                {{ $item->mesai->mesai_adi}}
+                                                {{ $item->telefon}}
                                             </div>
                                         </td>
                                         

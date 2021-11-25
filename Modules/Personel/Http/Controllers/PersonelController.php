@@ -6,6 +6,7 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\Personel\Entities\Personel;
+use Modules\Personel\Entities\SicilRemote;
 use Modules\Personel\Entities\Mesai;
 use Modules\Personel\Http\Requests\PersonelRequest;
 class PersonelController extends Controller
@@ -17,8 +18,7 @@ class PersonelController extends Controller
     public function index()
     {
 
-        $all = Personel::with('mesai')->get();
-        //dd($all);
+        $all = SicilRemote::all();
         return view('personel::index', compact('all'));
     }
 
