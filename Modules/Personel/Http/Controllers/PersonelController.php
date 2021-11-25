@@ -187,9 +187,18 @@ class PersonelController extends Controller
     }
 
 
-    public function giriscikisdetay(){
-        $personel = Personel::all();
-        return view('personel::mesai.giriscikisdetay', compact('personel'));
+    public function giriscikisdetay($user_id){
+
+        $baslangic = "2021-11-01";
+        $bitis = "2021-11-24";
+
+        $personel       = Personel::findOrFail($user_id);
+        $monitoring     = Monitoring::where('UserID', $personel->remote_id)
+        ->where('Eventtime', '>=', $baslangic)
+        ->where('Eventtime','<=', $bitis)
+        ->paginate(20);
+
+        return view('personel::mesai.giriscikisdetay', compact('personel', 'monitoring'));
      }
 
 
