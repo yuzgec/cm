@@ -121,16 +121,25 @@ class PersonelController extends Controller
        $Personeller = [];
        foreach($personel as $row){
            $SQL = Monitoring::where('UserID', $row->remote_id)->where('Eventtime', '>=', $baslangic)->where('Eventtime','<=', $bitis);
-           dd($SQL->get());
-           dd($row);
+           //dd($SQL->get());
+           //dd($row);
        }
        return view('personel::mesai.giriscikis', compact('personel'));
     }
 
 
-    public function giriscikisdetay(){
-        $personel = Personel::all();
-        return view('personel::mesai.giriscikisdetay', compact('personel'));
+    public function giriscikisdetay($user_id){
+
+        $baslangic = "2021-11-01";
+        $bitis = "2021-11-24";
+
+        $personel       = Personel::findOrFail($user_id);
+        $monitoring     = Monitoring::where('UserID', $personel->remote_id)
+        ->where('Eventtime', '>=', $baslangic)
+        ->where('Eventtime','<=', $bitis)
+        ->paginate(20);
+        
+        return view('personel::mesai.giriscikisdetay', compact('personel', 'monitoring'));
      }
 
     
