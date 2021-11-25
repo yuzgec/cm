@@ -67,7 +67,9 @@
                                       </td>
                                         <td>
                                             <div class="text-muted">
-                                              @php $ra= rand(1,3); $r=array_rand($isim,4);echo $isim[$r[$ra]]; @endphp
+                                             <a href="{{ route('giriscikisdetay', $i+1) }}" title="Personel Adı">
+                                               @php $ra= rand(1,3); $r=array_rand($isim,4);echo $isim[$r[$ra]]; @endphp
+                                             </a>
                                             </div>
                                         </td>
                                         <td>

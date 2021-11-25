@@ -117,6 +117,12 @@ class PersonelController extends Controller
        return view('personel::mesai.giriscikis', compact('personel'));
     }
 
+
+    public function giriscikisdetay(){
+        $personel = Personel::all();
+        return view('personel::mesai.giriscikisdetay', compact('personel'));
+     }
+
     
     public function mesairaporlama(){
         return view('personel::mesai.raporlama');

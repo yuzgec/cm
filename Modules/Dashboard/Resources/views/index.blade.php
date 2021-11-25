@@ -211,7 +211,7 @@
           <thead>
             <tr>
               <th class="w-1"><input class="form-check-input m-0 align-middle" type="checkbox" aria-label="Select all invoices"></th>
-              <th class="w-1">Dosya No. <!-- Download SVG icon from http://tabler-icons.io/i/chevron-up -->
+              <th class="w-1">Dosya No.
                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-sm text-dark icon-thick" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><polyline points="6 15 12 9 18 15" /></svg>
               </th>
               <th>Ad Soyad</th>
@@ -225,7 +225,7 @@
             <tr>
               <td><input class="form-check-input m-0 align-middle" type="checkbox" aria-label="Select invoice"></td>
               <td><span class="text-muted">001401</span></td>
-              <td><a href="invoice.html" class="text-reset" tabindex="-1">Ahmet Yılmaz</a></td>
+              <td><a href="{{route('dashboard.index')}}" class="text-reset" tabindex="-1">Ahmet Yılmaz</a></td>
               <td>
                 1218,00₺
               </td>
@@ -243,7 +243,7 @@
             <tr>
                 <td><input class="form-check-input m-0 align-middle" type="checkbox" aria-label="Select invoice"></td>
                 <td><span class="text-muted">001401</span></td>
-                <td><a href="invoice.html" class="text-reset" tabindex="-1">Ahmet Yılmaz</a></td>
+                <td><a href="{{route('dashboard.index')}}" class="text-reset" tabindex="-1">Ahmet Yılmaz</a></td>
                 <td>
                   1218,00₺
                 </td>
@@ -261,7 +261,7 @@
               <tr>
                 <td><input class="form-check-input m-0 align-middle" type="checkbox" aria-label="Select invoice"></td>
                 <td><span class="text-muted">001401</span></td>
-                <td><a href="invoice.html" class="text-reset" tabindex="-1">Ahmet Yılmaz</a></td>
+                <td><a href="{{route('dashboard.index')}}" class="text-reset" tabindex="-1">Ahmet Yılmaz</a></td>
                 <td>
                   1218,00₺
                 </td>
@@ -279,7 +279,7 @@
               <tr>
                 <td><input class="form-check-input m-0 align-middle" type="checkbox" aria-label="Select invoice"></td>
                 <td><span class="text-muted">001401</span></td>
-                <td><a href="invoice.html" class="text-reset" tabindex="-1">Ahmet Yılmaz</a></td>
+                <td><a href="{{route('dashboard.index')}}" class="text-reset" tabindex="-1">Ahmet Yılmaz</a></td>
                 <td>
                   1218,00₺
                 </td>
@@ -297,7 +297,7 @@
               <tr>
                 <td><input class="form-check-input m-0 align-middle" type="checkbox" aria-label="Select invoice"></td>
                 <td><span class="text-muted">001401</span></td>
-                <td><a href="invoice.html" class="text-reset" tabindex="-1">Ahmet Yılmaz</a></td>
+                <td><a href="{{route('dashboard.index')}}" class="text-reset" tabindex="-1">Ahmet Yılmaz</a></td>
                 <td>
                   1218,00₺
                 </td>
@@ -315,7 +315,7 @@
               <tr>
                 <td><input class="form-check-input m-0 align-middle" type="checkbox" aria-label="Select invoice"></td>
                 <td><span class="text-muted">001401</span></td>
-                <td><a href="invoice.html" class="text-reset" tabindex="-1">Ahmet Yılmaz</a></td>
+                <td><a href="{{route('dashboard.index')}}" class="text-reset" tabindex="-1">Ahmet Yılmaz</a></td>
                 <td>
                   1218,00₺
                 </td>
