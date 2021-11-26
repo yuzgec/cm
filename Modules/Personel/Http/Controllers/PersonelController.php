@@ -117,8 +117,8 @@ class PersonelController extends Controller
     }
 
     public function giriscikis(){
-        $baslangic = Carbon::now()->startOfMonth()->format('Y-m-d');
-        $bitis = Carbon::now()->addDays('-1')->format('Y-m-d');
+        $baslangic = Carbon::parse('2021-10-01')->format('Y-m-d');
+        $bitis = Carbon::parse('2021-10-31')->format('Y-m-d');
         $personeller = Personel::with('mesai')->get();
         $Kayitlar = [];
         foreach ($personeller as $personel){
@@ -128,54 +128,61 @@ class PersonelController extends Controller
             $data = $personel;
             $period = CarbonPeriod::create($baslangic, $bitis);
             foreach($period as $row){
-                $gunBasi = $row->format('Y-m-d')." " . $personel->mesai->mesai_giris;
-                $gunSonu = $row->format('Y-m-d')." " . $personel->mesai->mesai_cikis;
-                $tamGunEksi = Carbon::parse($gunBasi)->diffInMinutes($gunSonu);
-                $pazarlar = [];
-                $calismagunler = [];
-
-                $Kontrol = DB::table('personel_puantaj')->where('user_id', $personel->id)->where('gun', $row->format('Y-m-d'));
-                if($Kontrol->count()>0){
-                    $Kontrol = $Kontrol->first();
-                    $gecMesai+= $Kontrol->gec_mesai;
-                    $fazlaCalisma+= $Kontrol->fazla_calisma;
-                    $calismaGunSayisi+= $Kontrol->calisma_gun;
-                }else{
-                    if($row->isSunday() || $row->isSaturday()){
-                        //echo $row->format('d.m.Y'). " Hafta Tatili <br />";
-                    }else{
-                        $Girisler = $personel->Monitoring()
-                            ->where('TerminalID', 3)
-                            ->whereDate('Eventtime','=', $row->format('Y-m-d'))
-                            ->orderBy('Eventtime','ASC');
-                        if($Girisler->count()<1){
-                            $gecMesai+= $tamGunEksi;
-                            //echo "Tüm gün gelmemiş <br />";
-                        }else{
-                            $calismaGunSayisi++;
-                            $baslangicFark = Carbon::parse($gunBasi)->diffInMinutes($Girisler->first()->Eventtime);
-                            if($baslangicFark > 0){
-                                $gecMesai+= $baslangicFark;
-                            }
-                            $Cikislar = $personel->Monitoring()
-                                ->where('TerminalID', 3)
-                                ->whereDate('Eventtime','=', $row->format('Y-m-d'))
-                                ->orderBy('Eventtime','DESC');
-                            $bitisFark = Carbon::parse($gunSonu)->diffInMinutes($Cikislar->first()->Eventtime);
-                            if($bitisFark>0){
-                                $fazlaCalisma+= $bitisFark;
-                            }
-                            //echo $row->format('d.m.Y')." Normal gün ". " - " . $baslangicFark ." Dakika Geç - ". $bitisFark." Dakika Fazla Çalışma<br />";
-                        }
-                    }
-                    DB::table('personel_puantaj')->insert([
-                        "user_id" => $personel->id,
-                        "gun" => $row->format('Y-m-d'),
-                        "calisma_gun" => 1,
-                        "fazla_calisma" => $fazlaCalisma,
-                        "gec_mesai" =>$gecMesai
-                    ]);
-                }
+                $Kayit = PuantajGetir($personel->id, $row->format('Y-m-d'));
+                if(!$Kayit)
+                    continue;
+                $gecMesai+= $Kayit->gec_mesai;
+                $fazlaCalisma+= $Kayit->fazla_calisma;
+                $calismaGunSayisi++;
+//                $gunBasi = $row->format('Y-m-d')." " . $personel->mesai->mesai_giris;
+//                $gunSonu = $row->format('Y-m-d')." " . $personel->mesai->mesai_cikis;
+//                $tamGunEksi = Carbon::parse($gunBasi)->diffInMinutes($gunSonu);
+//
+//                $pazarlar = [];
+//                $calismagunler = [];
+//
+//                $Kontrol = DB::table('personel_puantaj')->where('user_id', $personel->id)->where('gun', $row->format('Y-m-d'));
+//                if($Kontrol->count()>0){
+//                    $Kontrol = $Kontrol->first();
+//                    $gecMesai+= $Kontrol->gec_mesai;
+//                    $fazlaCalisma+= $Kontrol->fazla_calisma;
+//                    $calismaGunSayisi+= $Kontrol->calisma_gun;
+//                }else{
+//                    if($row->isSunday() || $row->isSaturday()){
+//                        //echo $row->format('d.m.Y'). " Hafta Tatili <br />";
+//                    }else{
+//                        $Girisler = $personel->Monitoring()
+//                            ->where('TerminalID', 3)
+//                            ->whereDate('Eventtime','=', $row->format('Y-m-d'))
+//                            ->orderBy('Eventtime','ASC');
+//                        if($Girisler->count()<1){
+//                            $gecMesai+= $tamGunEksi;
+//                            //echo "Tüm gün gelmemiş <br />";
+//                        }else{
+//                            $calismaGunSayisi++;
+//                            $baslangicFark = Carbon::parse($gunBasi)->diffInMinutes($Girisler->first()->Eventtime);
+//                            if($baslangicFark > 0){
+//                                $gecMesai+= $baslangicFark;
+//                            }
+//                            $Cikislar = $personel->Monitoring()
+//                                ->where('TerminalID', 3)
+//                                ->whereDate('Eventtime','=', $row->format('Y-m-d'))
+//                                ->orderBy('Eventtime','DESC');
+//                            $bitisFark = Carbon::parse($gunSonu)->diffInMinutes($Cikislar->first()->Eventtime);
+//                            if($bitisFark>0){
+//                                $fazlaCalisma+= $bitisFark;
+//                            }
+//                            //echo $row->format('d.m.Y')." Normal gün ". " - " . $baslangicFark ." Dakika Geç - ". $bitisFark." Dakika Fazla Çalışma<br />";
+//                        }
+//                    }
+//                    DB::table('personel_puantaj')->insert([
+//                        "user_id" => $personel->id,
+//                        "gun" => $row->format('Y-m-d'),
+//                        "calisma_gun" => 1,
+//                        "fazla_calisma" => $bitisFark,
+//                        "gec_mesai" =>$baslangicFark
+//                    ]);
+//                }
 
             }
             $data->gecMesai = $gecMesai;
@@ -185,20 +192,42 @@ class PersonelController extends Controller
         }
        return view('personel::mesai.giriscikis', compact('Kayitlar', 'personeller'));
     }
-
+    public function Test($Id){
+        $baslangic = Carbon::now()->startOfMonth()->format('Y-m-d');
+        $bitis = Carbon::now()->addDays('-1')->format('Y-m-d');
+        $Personel = Personel::findOrFail($Id);
+        dd($Personel->mesai);
+    }
 
     public function giriscikisdetay($user_id){
+        $Baslangic = "2021-10-01";
+        $Bitis = "2021-10-31";
+        $Personel = Personel::findOrFail($user_id);
+        $period = CarbonPeriod::create($Baslangic, $Bitis);
+        $MesaiBaslangic = $Personel->mesai->mesai_giris;
+        $MesaiBitis = $Personel->mesai->mesai_cikis;
+        $Gunler = [];
+        $ToplamEksi = 0;
+        $ToplamArti = 0;
+        foreach ($period as $tarih){
+            $Kayit = PuantajGetir($user_id, $tarih->format('Y-m-d'));
+            if(!$Kayit)
+                continue;
+            $ToplamEksi+= $Kayit->gec_mesai;
+            $ToplamArti+= $Kayit->fazla_calisma;
 
-        $baslangic = "2021-11-01";
-        $bitis = "2021-11-24";
+            $Gunler[] = [
+                "Tarih" => $tarih,
+                "MesaiBaslangic" => Carbon::parse($MesaiBaslangic)->format('d.m.Y H:i:s'),
+                "MesaiBitis" => Carbon::parse($MesaiBitis)->format('d.m.Y H:i:s'),
+                "IseGirisSaati" => Carbon::parse($Kayit->mesai_giris)->format('H:i'),
+                "GirisFark" => $Kayit->gec_mesai,
+                "CikisSaati" => Carbon::parse($Kayit->mesai_cikis)->format('H:i'),
+                "CikisFark" => $Kayit->fazla_calisma
+            ];
+        }
 
-        $personel       = Personel::findOrFail($user_id);
-        $monitoring     = Monitoring::where('UserID', $personel->remote_id)
-        ->where('Eventtime', '>=', $baslangic)
-        ->where('Eventtime','<=', $bitis)
-        ->paginate(20);
-
-        return view('personel::mesai.giriscikisdetay', compact('personel', 'monitoring'));
+        return view('personel::mesai.giriscikisdetay', compact('Personel', 'Gunler', 'ToplamArti','ToplamEksi'));
      }
 
 

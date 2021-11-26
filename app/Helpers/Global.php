@@ -1,5 +1,8 @@
-<?php 
+<?php
 
+
+use Carbon\Carbon;
+use Modules\Personel\Entities\Personel;
 
 function menu_is_active($url, $durum = 'active')
 {
@@ -9,6 +12,44 @@ function menu_is_active($url, $durum = 'active')
 
 function money($deger){
     return number_format((float)$deger, 2, ',', '');
+}
+function PuantajGetir($UserId, $Tarih){
+    $Personel = Personel::findOrFail($UserId);
+    $MesaiBaslangic = $Personel->mesai->mesai_giris;
+    $MesaiBitis = $Personel->mesai->mesai_cikis;
+    if(Carbon::parse($Tarih)->isFriday())
+        $MesaiBitis = "17:00:00";
+    
+    $Kontrol = \Illuminate\Support\Facades\DB::table('personel_puantaj')->where('user_id', $UserId)->where('gun', $Tarih);
+    if($Kontrol->count()>0){
+        return $Kontrol->first();
+    }
+    $BaslangicSaati = Carbon::parse($Tarih . " " . $MesaiBaslangic)->format('Y-m-d H:i:s');
+    $BitisSaati = Carbon::parse($Tarih . " " . $MesaiBitis)->format('Y-m-d H:i:s');
+    $IlkGiris =$Personel->Monitoring()->whereDate('Eventtime', $Tarih)->where('TerminalID',3)->orderBy('Eventtime','ASC');
+    if($IlkGiris->count() < 1)
+        return false;
+    $IlkGiris = $IlkGiris->first();
+    $GirisFark = Carbon::parse($BaslangicSaati)->diffInMinutes($IlkGiris->Eventtime, false);
+    $SonCikis = $Personel->Monitoring()->whereDate('Eventtime', $Tarih)->where('TerminalID', 1)->orderBy('Eventtime','DESC')->first();
+    if(!$SonCikis){
+        return false;
+    }
+    $CikisFark = Carbon::parse($BitisSaati)->diffInMinutes($SonCikis->Eventtime, false);
+    if($GirisFark>0)
+        $GirisFark = 0;
+    if($CikisFark<0)
+        $CikisFark = 0;
+    $Kayit = new \Modules\Personel\Entities\Puantaj();
+    $Kayit->user_id = $UserId;
+    $Kayit->gun = $Tarih;
+    $Kayit->calisma_gun = 1;
+    $Kayit->fazla_calisma = $CikisFark;
+    $Kayit->gec_mesai = $GirisFark;
+    $Kayit->mesai_giris = $IlkGiris->Eventtime;
+    $Kayit->mesai_cikis = $SonCikis->Eventtime;
+    $Kayit->save();
+    return $Kayit;
 }
 
 
