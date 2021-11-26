@@ -17,7 +17,6 @@ function PuantajGetir($Personel, $Tarih, $MesaiBaslangic, $MesaiBitis){
 //    $Personel = Personel::findOrFail($UserId);
 //    $MesaiBaslangic = $Personel->mesai->mesai_giris;
 //    $MesaiBitis = $Personel->mesai->mesai_cikis;
-    dd($Personel);
     if(Carbon::parse($Tarih)->isFriday())
         $MesaiBitis = "17:00:00";
 
