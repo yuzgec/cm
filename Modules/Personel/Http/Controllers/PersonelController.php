@@ -127,8 +127,10 @@ class PersonelController extends Controller
             $calismaGunSayisi = 0;
             $data = $personel;
             $period = CarbonPeriod::create($baslangic, $bitis);
+            $mesaiBaslangic = $personel->mesai->mesai_giris;
+            $mesaiBitis = $personel->mesai->mesai_cikis;
             foreach($period as $row){
-                $Kayit = PuantajGetir($personel->id, $row->format('Y-m-d'));
+                $Kayit = PuantajGetir($personel, $row->format('Y-m-d'), $mesaiBaslangic, $mesaiBitis);
                 if(!$Kayit)
                     continue;
                 $gecMesai+= $Kayit->gec_mesai;

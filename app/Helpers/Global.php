@@ -13,14 +13,15 @@ function menu_is_active($url, $durum = 'active')
 function money($deger){
     return number_format((float)$deger, 2, ',', '');
 }
-function PuantajGetir($UserId, $Tarih){
-    $Personel = Personel::findOrFail($UserId);
-    $MesaiBaslangic = $Personel->mesai->mesai_giris;
-    $MesaiBitis = $Personel->mesai->mesai_cikis;
+function PuantajGetir($Personel, $Tarih, $MesaiBaslangic, $MesaiBitis){
+//    $Personel = Personel::findOrFail($UserId);
+//    $MesaiBaslangic = $Personel->mesai->mesai_giris;
+//    $MesaiBitis = $Personel->mesai->mesai_cikis;
+    dd($Personel);
     if(Carbon::parse($Tarih)->isFriday())
         $MesaiBitis = "17:00:00";
-    
-    $Kontrol = \Illuminate\Support\Facades\DB::table('personel_puantaj')->where('user_id', $UserId)->where('gun', $Tarih);
+
+    $Kontrol = \Modules\Personel\Entities\Puantaj::where('user_id', $Personel->id)->where('gun', $Tarih);
     if($Kontrol->count()>0){
         return $Kontrol->first();
     }
@@ -41,7 +42,7 @@ function PuantajGetir($UserId, $Tarih){
     if($CikisFark<0)
         $CikisFark = 0;
     $Kayit = new \Modules\Personel\Entities\Puantaj();
-    $Kayit->user_id = $UserId;
+    $Kayit->user_id = $Personel->id;
     $Kayit->gun = $Tarih;
     $Kayit->calisma_gun = 1;
     $Kayit->fazla_calisma = $CikisFark;
