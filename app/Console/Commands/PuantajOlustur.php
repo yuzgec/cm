@@ -20,7 +20,11 @@ class PuantajOlustur extends Command
     public function handle()
     {
         Carbon::setLocale('tr');
-        $SonTarih = Puantaj::query()->orderByDesc('gun')->limit(1)->first()->gun->format('Y-m-d');
+        $SonTarih = Puantaj::query()->orderByDesc('gun')->limit(1);
+        if($SonTarih->count()<1)
+            $SonTarih = "2021-01-06";
+        else
+            $SonTarih = $SonTarih->first()->gun->format('Y-m-d');
         $Tarihler = CarbonPeriod::create($SonTarih, Carbon::now()->subDay()->format('Y-m-d'));
         foreach(Personel::query()->whereNotNull('remote_id')->get() as $Personel){
             $Mesai = $Personel->mesai;
