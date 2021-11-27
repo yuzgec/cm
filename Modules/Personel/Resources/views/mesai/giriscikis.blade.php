@@ -16,24 +16,14 @@
 
                         <div class="col-6" >
                             <div class="d-flex justify-content-between" style="float: right;">
-                                <div class="col-5 p-1">
-                                    <label><small>Başlangıç Tarihi</small></label>
-                                    <input type="date" name="baslangic" value="" class="form-control">
-                                </div>
-                                <div class="col-5 p-1">
-                                    <label><small>Bitiş Tarihi</small></label>
-                                    <input type="date" name="baslangic" value="" class="form-control">
-                                </div>
-                                <div class="col-5 p-1">
-                                    <label><small>Personel Listesi</small></label>
-                                    <select type="text" class="form-select" placeholder="Personel Seçiniz" name="personel">
-                                        <option value="">Personel Seçiniz</option>
-                                            @foreach ($personeller as $item)
-                                                <option value="{{ $item->id }}">{{ $item->adsoyad }}</option>
-                                            @endforeach
+                                <div class="col-12 p-1">
+                                    <label><small>Puantaj Periyod</small></label>
+                                    <select class="form-select" name="ay">
+                                        @foreach($Aylar as $ay)
+                                            <option value="{{$ay["id"]}}">{{$ay["label"]}}</option>
+                                        @endforeach
                                     </select>
                                 </div>
-
                             </div>
                         </div>
                     </div>
@@ -54,7 +44,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                  @foreach($Kayitlar as $personel)
+                                  @foreach($personeller as $personel)
                                     <tr>
                                       <td>
                                         <div class="text-muted">
@@ -65,17 +55,17 @@
                                       </td>
                                         <td>
                                             <div class="text-muted">
-                                                {{$personel->calismaGunSayisi}}
+{{--                                                {{$personel->fazla_mesai}}--}}
                                             </div>
                                         </td>
                                         <td>
                                             <div class="text-muted">
-                                                {{$personel->gecMesai}}
+                                                {{$personel->eksik_mesai}}
                                             </div>
                                         </td>
                                         <td>
                                             <div class="text-muted">
-                                                {{$personel->fazlaCalisma}}
+                                                {{$personel->fazla_mesai}}
                                             </div>
                                         </td>
                                     </tr>
