@@ -14,7 +14,7 @@
                             </h3>
                         </div>
 
-                        <div class="col-6" >
+                        <div class="col-4" >
                             <div class="d-flex justify-content-between" style="float: right;">
                                 <div class="col-12 p-1">
                                     <label><small>Puantaj Periyod</small></label>
@@ -26,6 +26,8 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="col-4" style="text-align: right">
+                            <a href="/mesai/ExcelIndir?ay={{request()->get('ay')}}" class="btn btn-primary">Excel'e Aktar</a>
                     </div>
                 </div>
 

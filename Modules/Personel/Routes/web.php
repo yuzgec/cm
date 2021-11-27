@@ -7,8 +7,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/mesai/raporlama', 'PersonelController@mesairaporlama')->name('mesairaporlama');
 
 
+    Route::get('/mesai/ExcelIndir', 'PersonelController@ExcelIndir');
+
     Route::resource('/personel', 'PersonelController');
     Route::resource('/mesai', 'MesaiController');
 
-    Route::get('/mesai/Test/{Id}', 'PersonelController@Test');
+
+
 });

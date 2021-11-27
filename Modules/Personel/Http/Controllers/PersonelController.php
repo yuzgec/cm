@@ -2,12 +2,14 @@
 
 namespace Modules\Personel\Http\Controllers;
 
+use App\Exports\PuantajExport;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 use Modules\Personel\Entities\Personel;
 use Modules\Personel\Entities\Puantaj;
 use Modules\Personel\Entities\SicilRemote;
@@ -151,13 +153,6 @@ class PersonelController extends Controller
             FROM personel');
        return view('personel::mesai.giriscikis', compact( 'personeller','Aylar'));
     }
-    public function Test($Id){
-        $baslangic = Carbon::now()->startOfMonth()->format('Y-m-d');
-        $bitis = Carbon::now()->addDays('-1')->format('Y-m-d');
-        $Personel = Personel::findOrFail($Id);
-        dd($Personel->mesai);
-    }
-
     public function giriscikisdetay($user_id){
         $Personel = Personel::findOrFail($user_id);
         $Aylar = [];
@@ -186,5 +181,50 @@ class PersonelController extends Controller
 
     public function mesairaporlama(){
         return view('personel::mesai.raporlama');
+    }
+    public function ExcelIndir(Request $request){
+        $Puantaj = Puantaj::query();
+        $Ay = date('Ym01');
+        if($request->ay)
+            $Ay = $request->ay."01";
+
+        $TamTarih = Carbon::parse($Ay)->format('Y-m-d');
+
+        $baslangic = $TamTarih;
+        $bitis = Carbon::parse($TamTarih)->endOfMonth()->format('Y-m-d');
+        $personeller = DB::select('
+            SELECT *,
+                (
+                    SELECT
+                        SUM(personel_puantaj.fazla_calisma) as fazla_calisma
+                    FROM personel_puantaj
+                    WHERE user_id=personel.id AND (gun BETWEEN "'.$baslangic.'" AND "'.$bitis.'")
+                ) as fazla_mesai,
+                (
+                    SELECT
+                        SUM(personel_puantaj.gec_mesai) as gec_mesai
+                    FROM personel_puantaj
+                    WHERE user_id=personel.id AND (gun BETWEEN "'.$baslangic.'" AND "'.$bitis.'")
+                ) as eksik_mesai
+
+            FROM personel');
+        $data = [];
+//        dd($personeller);
+        $data[] = [
+            "Puantaj Periyodu",
+            "Personel Adı Soyadı",
+            "Fazla Çalışma (Dakika)",
+            "Eksik Çalışma (Dakika)"
+        ];
+        foreach ($personeller as $row){
+            $data[] = [
+                Carbon::parse($TamTarih)->locale('tr')->translatedFormat('Y F'). " Puantajı",
+                $row->adsoyad,
+                $row->fazla_mesai,
+                $row->eksik_mesai
+            ];
+        }
+        $data = new PuantajExport($data);
+        return Excel::download($data, 'Puantaj.xlsx');
     }
 }
