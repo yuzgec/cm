@@ -20,16 +20,20 @@ class PuantajOlustur extends Command
     public function handle()
     {
         Carbon::setLocale('tr');
-        $Tarihler = CarbonPeriod::create('2021-01-06','2021-11-26');
+        $SonTarih = Puantaj::query()->orderByDesc('gun')->limit(1)->first()->gun->format('Y-m-d');
+        $Tarihler = CarbonPeriod::create($SonTarih, Carbon::now()->subDay()->format('Y-m-d'));
         foreach(Personel::query()->whereNotNull('remote_id')->get() as $Personel){
             $Mesai = $Personel->mesai;
             $MesaiBitisSaati = $Mesai->mesai_cikis;
+            dump($Personel->adsoyad." İşleniyor...");
             foreach($Tarihler as $Tarih){
                 if($Tarih->isFriday())
                     $MesaiBitisSaati = "17:00:00";
                 $PuantajKontrol = Puantaj::query()->where('user_id', $Personel->id)->where('gun', $Tarih->format('Y-m-d'));
-                if($PuantajKontrol->count() > 0)
+                if($PuantajKontrol->count() > 0){
+                    dump($Tarih->format('d.m.Y') . " için puantaj kaydı mevcut");
                     continue;
+                }
                 $GirisFarki = 0;
                 $CikisFarki = 0;
 

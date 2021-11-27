@@ -9,11 +9,9 @@ use Rennokki\QueryCache\Traits\QueryCacheable;
 class Puantaj extends Model
 {
     use HasFactory;
-    use QueryCacheable;
 
     protected $guarded = [];
     protected $table = "personel_puantaj";
-    protected $cacheFor = 60*60*24;
     protected $dates = [
         "mesai_giris","mesai_cikis","gun"
     ];
