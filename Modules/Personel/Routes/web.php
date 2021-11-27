@@ -8,6 +8,7 @@ Route::middleware(['auth'])->group(function () {
 
 
     Route::get('/mesai/ExcelIndir', 'PersonelController@ExcelIndir');
+    Route::get('/mesai/ExcelDetayIndir', 'PersonelController@ExcelDetayIndir');
 
     Route::resource('/personel', 'PersonelController');
     Route::resource('/mesai', 'MesaiController');

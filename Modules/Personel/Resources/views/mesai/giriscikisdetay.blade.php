@@ -19,6 +19,9 @@
                                 @endforeach
                             </select>
                         </div>
+                        <div>
+                            <a href="/mesai/ExcelDetayIndir?ay={{request()->get('ay')}}&personel={{$Personel->id}}" class="btn btn-primary">Excel'e Aktar</a>
+                        </div>
                     </div>
                 </div>
                 <div class="col-lg-12">

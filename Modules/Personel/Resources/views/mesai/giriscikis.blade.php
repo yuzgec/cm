@@ -28,6 +28,7 @@
                         </div>
                         <div class="col-4" style="text-align: right">
                             <a href="/mesai/ExcelIndir?ay={{request()->get('ay')}}" class="btn btn-primary">Excel'e Aktar</a>
+                        </div>
                     </div>
                 </div>
 

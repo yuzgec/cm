@@ -209,7 +209,6 @@ class PersonelController extends Controller
 
             FROM personel');
         $data = [];
-//        dd($personeller);
         $data[] = [
             "Puantaj Periyodu",
             "Personel Adı Soyadı",
@@ -226,5 +225,32 @@ class PersonelController extends Controller
         }
         $data = new PuantajExport($data);
         return Excel::download($data, 'Puantaj.xlsx');
+    }
+    public function ExcelDetayIndir(Request $request){
+        $Personel = Personel::findOrFail($request->personel);
+        $Ay = date('Ym01');
+        if($request->ay)
+            $Ay = $request->ay."01";
+
+        $TamTarih = Carbon::parse($Ay)->format('Y-m-d');
+
+        $baslangic = $TamTarih;
+        $bitis = Carbon::parse($TamTarih)->endOfMonth()->format('Y-m-d');
+        $data = [];
+        $data[] = ["Tarih","Mesai Giriş Saati","Geç Giriş","Mesai Çıkış Saait","Fazla Mesai"];
+        $Kayitlar = Puantaj::query()->where('user_id', $Personel->id)
+            ->where('gun', '>=', $baslangic)
+            ->where('gun','<=', $bitis)->get();
+        foreach ($Kayitlar as $row){
+            $data[] = [
+                Carbon::parse($row->gun)->locale('tr')->translatedFormat('d F Y l'),
+                $row->mesai_giris->format('H:i'),
+                (($row->gec_mesai > 0)?$row->gec_mesai:0),
+                $row->mesai_cikis->format('H:i'),
+                (($row->fazla_calisma>0)?$row->fazla_calisma:0)
+            ];
+        }
+        $data = new PuantajExport($data);
+        return Excel::download($data, 'Puantaj Detay.xlsx');
     }
 }
