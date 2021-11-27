@@ -29,6 +29,8 @@ class PuantajOlustur extends Command
             foreach($Tarihler as $Tarih){
                 if($Tarih->isFriday())
                     $MesaiBitisSaati = "17:00:00";
+                else
+                    $MesaiBitisSaati = $Mesai->mesai_cikis;
                 $PuantajKontrol = Puantaj::query()->where('user_id', $Personel->id)->where('gun', $Tarih->format('Y-m-d'));
                 if($PuantajKontrol->count() > 0){
                     dump($Tarih->format('d.m.Y') . " için puantaj kaydı mevcut");
