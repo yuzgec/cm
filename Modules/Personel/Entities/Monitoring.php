@@ -10,7 +10,6 @@ class Monitoring extends Model
     use HasFactory;
 
     protected $guarded = [];
-    protected $connection = "personeldb";
     protected $table = "monitoring";
     protected $dates = [
         "Eventtime" => "datetime"

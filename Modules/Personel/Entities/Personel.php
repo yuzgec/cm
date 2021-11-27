@@ -20,6 +20,9 @@ class Personel extends Model
     public function Monitoring(){
         return $this->hasMany(Monitoring::class, 'UserID', 'remote_id');
     }
+    public function Puantaj(){
+        return $this->belongsTo(Puantaj::class,'user_id', 'id');
+    }
     protected static function newFactory()
     {
         return \Modules\Personel\Database\factories\PersonelFactory::new();

@@ -5,9 +5,21 @@
         <div class="card">
             <div class="card-body">
                 <div class="cart-title">
-                    {{ $Personel->adsoyad.' - ' .$Personel->remote_id }}<br />
-                    Fazla Mesai : {{$ToplamArti}} Dk. <br />
-                    Eksi Mesai : {{$ToplamEksi}}
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            {{ $Personel->adsoyad.' - ' .$Personel->remote_id }}<br />
+        {{--                    Fazla Mesai : {{$ToplamArti}} Dk. <br />--}}
+        {{--                    Eksi Mesai : {{$ToplamEksi}}--}}
+                        </div>
+                        <div>
+                            <label><small>Puantaj Periyod</small></label>
+                            <select class="form-select" name="ay" id="ay" onchange="changeDate()">
+                                @foreach($Aylar as $ay)
+                                    <option value="{{$ay["id"]}}" {{($ay["id"] == request()->get('ay')) ? 'selected=""':''}}>{{$ay["label"]}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-lg-12">
                     <div class="card">
@@ -25,13 +37,13 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                @foreach ($Gunler as $item)
+                                @foreach ($Kayitlar as $item)
                                     <tr>
-                                        <td><div class="text-muted">{{\Carbon\Carbon::parse($item["Tarih"])->locale('tr_TR')->format('d F Y')}}</div></td>
-                                        <td><div class="text-muted">{{$item["IseGirisSaati"]}}</div></td>
-                                        <td><div class="text-muted">{{$item["GirisFark"]}}</div></td>
-                                        <td><div class="text-muted">{{$item["CikisSaati"]}}</div></td>
-                                        <td><div class="text-muted">{{$item["CikisFark"]}}</div></td>
+                                        <td><div class="text-muted">{{\Carbon\Carbon::parse($item->gun)->locale('tr')->translatedFormat('d F Y l')}}</div></td>
+                                        <td><div class="text-muted">{{$item->mesai_giris->format('H:i')}}</div></td>
+                                        <td><div class="text-muted">{{($item->gec_mesai > 0)?$item->gec_mesai." dk.":"-"}}</div></td>
+                                        <td><div class="text-muted">{{$item->mesai_cikis->format('H:i')}}</div></td>
+                                        <td><div class="text-muted">{{($item->fazla_calisma>0)?$item->fazla_calisma." dk":"-"}}</div></td>
                                     </tr>
                                 </div>
                                 @endforeach
@@ -47,4 +59,12 @@
             </div>
         </div>
     </div>
+@endsection
+@section('customJS')
+    <script>
+        function changeDate(){
+            val = document.getElementById('ay').value;
+            document.location = "?ay=" + val;
+        }
+    </script>
 @endsection

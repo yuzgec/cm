@@ -18,9 +18,9 @@
                             <div class="d-flex justify-content-between" style="float: right;">
                                 <div class="col-12 p-1">
                                     <label><small>Puantaj Periyod</small></label>
-                                    <select class="form-select" name="ay">
+                                    <select class="form-select" name="ay" id="ay" onchange="changeDate()">
                                         @foreach($Aylar as $ay)
-                                            <option value="{{$ay["id"]}}">{{$ay["label"]}}</option>
+                                            <option value="{{$ay["id"]}}" {{($ay["id"] == request()->get('ay')) ? 'selected=""':''}}>{{$ay["label"]}}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -82,4 +82,12 @@
             </div>
         </div>
     </div>
+@endsection
+@section('customJS')
+    <script>
+        function changeDate(){
+            val = document.getElementById('ay').value;
+            document.location = "?ay=" + val;
+        }
+    </script>
 @endsection

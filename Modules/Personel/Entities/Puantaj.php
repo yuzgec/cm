@@ -14,6 +14,9 @@ class Puantaj extends Model
     protected $guarded = [];
     protected $table = "personel_puantaj";
     protected $cacheFor = 60*60*24;
+    protected $dates = [
+        "mesai_giris","mesai_cikis","gun"
+    ];
 
     protected static function newFactory()
     {

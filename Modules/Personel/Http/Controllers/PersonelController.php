@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Modules\Personel\Entities\Personel;
+use Modules\Personel\Entities\Puantaj;
 use Modules\Personel\Entities\SicilRemote;
 use Modules\Personel\Entities\Mesai;
 use Modules\Personel\Http\Requests\PersonelRequest;
@@ -52,7 +53,6 @@ class PersonelController extends Controller
         $personel->tckn         =  $request->tckn;
         $personel->mesai_id     =  $request->mesai_id;
         $personel->durum        =  $request->durum;
-
 
         $personel->save();
 
@@ -124,22 +124,28 @@ class PersonelController extends Controller
         }
         $Aylar = collect($Aylar)->sortByDesc('id')->toArray();
 
+        $Ay = \request()->get('ay');
+        if(!$Ay)
+            $Ay = date('Ym01');
+        else
+            $Ay = $Ay."01";
+        $TamTarih = Carbon::parse($Ay)->format('Y-m-d');
 
-        $baslangic = Carbon::parse('2021-10-01')->format('Y-m-d');
-        $bitis = Carbon::parse('2021-10-31')->format('Y-m-d');
+        $baslangic = $TamTarih;
+        $bitis = Carbon::parse($TamTarih)->endOfMonth()->format('Y-m-d');
         $personeller = DB::select('
             SELECT *,
                 (
                     SELECT
                         SUM(personel_puantaj.fazla_calisma) as fazla_calisma
                     FROM personel_puantaj
-                    WHERE user_id=personel.id AND (gun BETWEEN "2021-10-01" AND "2021-10-31")
+                    WHERE user_id=personel.id AND (gun BETWEEN "'.$baslangic.'" AND "'.$bitis.'")
                 ) as fazla_mesai,
                 (
                     SELECT
                         SUM(personel_puantaj.gec_mesai) as gec_mesai
                     FROM personel_puantaj
-                    WHERE user_id=personel.id AND (gun BETWEEN "2021-10-01" AND "2021-10-31")
+                    WHERE user_id=personel.id AND (gun BETWEEN "'.$baslangic.'" AND "'.$bitis.'")
                 ) as eksik_mesai
 
             FROM personel');
@@ -153,34 +159,28 @@ class PersonelController extends Controller
     }
 
     public function giriscikisdetay($user_id){
-        $Baslangic = "2021-10-01";
-        $Bitis = "2021-10-31";
         $Personel = Personel::findOrFail($user_id);
-        $period = CarbonPeriod::create($Baslangic, $Bitis);
-        $MesaiBaslangic = $Personel->mesai->mesai_giris;
-        $MesaiBitis = $Personel->mesai->mesai_cikis;
-        $Gunler = [];
-        $ToplamEksi = 0;
-        $ToplamArti = 0;
-        foreach ($period as $tarih){
-            $Kayit = PuantajGetir($Personel, $tarih->format('Y-m-d'), $MesaiBaslangic, $MesaiBitis);
-            if(!$Kayit)
-                continue;
-            $ToplamEksi+= $Kayit->gec_mesai;
-            $ToplamArti+= $Kayit->fazla_calisma;
-
-            $Gunler[] = [
-                "Tarih" => $tarih,
-                "MesaiBaslangic" => Carbon::parse($MesaiBaslangic)->format('d.m.Y H:i:s'),
-                "MesaiBitis" => Carbon::parse($MesaiBitis)->format('d.m.Y H:i:s'),
-                "IseGirisSaati" => Carbon::parse($Kayit->mesai_giris)->format('H:i'),
-                "GirisFark" => $Kayit->gec_mesai,
-                "CikisSaati" => Carbon::parse($Kayit->mesai_cikis)->format('H:i'),
-                "CikisFark" => $Kayit->fazla_calisma
-            ];
+        $Aylar = [];
+        Carbon::setLocale('tr');
+        foreach(CarbonPeriod::create('2021-01-01', '1 month', Carbon::now()->format('Y-m-d')) as $ay){
+            $Aylar[] = ["id" => $ay->format('Ym'), "label" => $ay->translatedFormat('F Y')];
         }
+        $Aylar = collect($Aylar)->sortByDesc('id')->toArray();
 
-        return view('personel::mesai.giriscikisdetay', compact('Personel', 'Gunler', 'ToplamArti','ToplamEksi'));
+        $Ay = \request()->get('ay');
+        if(!$Ay)
+            $Ay = date('Ym01');
+        else
+            $Ay = $Ay."01";
+        $TamTarih = Carbon::parse($Ay)->format('Y-m-d');
+
+        $baslangic = $TamTarih;
+        $bitis = Carbon::parse($TamTarih)->endOfMonth()->format('Y-m-d');
+        $Kayitlar = $Personel->Puantaj()->where('gun','>=', $baslangic)->where('gun','<=', $bitis)->get();
+        $Kayitlar = Puantaj::query()->where('user_id', $Personel->id)
+            ->where('gun', '>=', $baslangic)
+            ->where('gun','<=', $bitis)->get();
+        return view('personel::mesai.giriscikisdetay', compact('Personel', 'Aylar', 'Kayitlar'));
      }
 
 
