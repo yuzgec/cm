@@ -6,7 +6,8 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\Sms\Entities\SmsSablon;
-class SmsController extends Controller
+
+class SmsSablonController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +15,8 @@ class SmsController extends Controller
      */
     public function index()
     {
-        return view('sms::index');
+        $sms_sablon = SmsSablon::all();
+        return view('sms::sablon.index',compact('sms_sablon'));
     }
 
     /**
@@ -33,7 +35,13 @@ class SmsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $sablon = new SmsSablon;
+        $sablon->sms_sablon_adi   = $request->sms_sablon_adi;
+        $sablon->sms_sablon   = $request->sms_sablon;
+        $sablon->save();
+
+        return redirect()->route('smssablon.index');
+
     }
 
     /**
@@ -53,7 +61,8 @@ class SmsController extends Controller
      */
     public function edit($id)
     {
-        return view('sms::edit');
+        $sablon = SmsSablon::findOrFail($id);
+        return view('sms::sablon.edit',compact('sablon'));
     }
 
     /**
@@ -64,7 +73,12 @@ class SmsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $sablon = SmsSablon::findOrFail($id);
+        $sablon->sms_sablon_adi   = $request->sms_sablon_adi;
+        $sablon->sms_sablon   = $request->sms_sablon;
+        $sablon->save();
+
+        return redirect()->route('smssablon.index');
     }
 
     /**
@@ -74,28 +88,10 @@ class SmsController extends Controller
      */
     public function destroy($id)
     {
-        //
-    }
+        $sil = SmsSablon::findOrFail($id);
+        $sil->delete();
 
-    public function smsgonder(){
-        $sms_sablon = SmsSablon::all();
-        $secilen_sablon = SmsSablon::find(\request('smssablon'));
-        return view('sms::smsgonder', compact('sms_sablon', 'secilen_sablon'));
-    }
+        return redirect()->route('smssablon.index');
 
-    public function toplusmsgonder(){
-        $sms_sablon = SmsSablon::all();
-        $secilen_sablon = SmsSablon::find(\request('smssablon'));
-
-        return view('sms::toplusmsgonder', compact('sms_sablon', 'secilen_sablon'));
-    }
-
-    public function excelsmsgonder(){
-        return view('sms::excelsmsgonder');
-    }
-
-
-    public function smsraporlama(){
-        return view('sms::smsraporlama');
     }
 }

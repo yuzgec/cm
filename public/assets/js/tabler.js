@@ -8055,26 +8055,22 @@
 
 	EnableActivationTabsFromLocationHash();
 
+            const images = document.getElementById('images'),
+                preview = document.getElementById('preview');
 
-
-	
-        const images = document.getElementById('images'),
-            preview = document.getElementById('preview');
-
-        images.addEventListener('change', function() {
-            preview.innerHTML = '';
-            [...this.files].map(file => {
-                const reader = new FileReader();
-                reader.addEventListener('load', function(){
-                    const image = new Image();
-                    image.height = 100;
-                    image.title = file.name;
-                    image.src = this.result;
-                    preview.appendChild(image);
-                });
-                reader.readAsDataURL(file);
-            })
-        });
-
+            images.addEventListener('change', function() {
+                preview.innerHTML = '';
+                [...this.files].map(file => {
+                    const reader = new FileReader();
+                    reader.addEventListener('load', function(){
+                        const image = new Image();
+                        image.height = 100;
+                        image.title = file.name;
+                        image.src = this.result;
+                        preview.appendChild(image);
+                    });
+                    reader.readAsDataURL(file);
+                })
+            });
 
 })));

@@ -8,7 +8,7 @@
                 <img src="{{url('assets/images/logo.png')}}" width="250"  alt="{{config('app.name')}}" class="navbar-brand-image">
             </a>
         </h1>
-     
+
         <div class="collapse navbar-collapse" id="navbar-menu">
             <ul class="navbar-nav pt-lg-3">
 
@@ -22,7 +22,7 @@
                         </span>
                     </a>
                 </li>
-             
+
                 <li class="nav-item  {{ menu_is_active('kullanici') }} dropdown">
                         <a class="nav-link dropdown-toggle" href="#kullanici" data-bs-toggle="dropdown" role="button" aria-expanded="{{ menu_is_active('kullanici', 'true') }}" >
                         <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/package -->
@@ -45,11 +45,11 @@
                         </div>
                     </div>
                 </li>
-              
+
                 <li class="nav-item {{ menu_is_active('sms') }} dropdown">
                     <a class="nav-link dropdown-toggle {{ menu_is_active('rapor', 'show') }}" href="#sms" data-bs-toggle="dropdown" role="button" aria-expanded="{{ menu_is_active('sms', 'true') }}" >
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" 
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
                                 stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                                 <path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" />
                             </svg>
@@ -68,11 +68,11 @@
                         <a class="dropdown-item" href="{{route('toplusmsgonder')}}" title="Toplu SMS Gönder">
                             Toplu SMS Gönder
                         </a>
-                       
+
                         <a class="dropdown-item" href="{{route('excelsmsgonder')}}" title="Excel ile SMS Gönder">
                             Excel ile SMS Gönder
                         </a>
-                        <a class="dropdown-item" href="{{route('smssablon')}}" title="SMS Şablonları">
+                        <a class="dropdown-item" href="{{route('smssablon.index')}}" title="SMS Şablonları">
                             SMS Şablonları
                         </a>
                         <a class="dropdown-item" href="{{route('smsraporlama')}}" title="SMS Raporlama">
@@ -80,11 +80,11 @@
                         </a>
                     </div>
                 </li>
-                
+
                 <li class="nav-item  {{ menu_is_active('rapor') }} dropdown">
                     <a class="nav-link dropdown-toggle {{ menu_is_active('rapor', 'show') }}" href="#rapor" data-bs-toggle="dropdown" role="button" aria-expanded="{{ menu_is_active('rapor', 'true') }}" >
                         <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/star -->
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" 
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
                                 stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                                 <path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" />
                             </svg>
@@ -112,7 +112,7 @@
                 <li class="nav-item  {{ menu_is_active('personel') }} dropdown">
                     <a class="nav-link dropdown-toggle" href="#sms" data-bs-toggle="dropdown" role="button" aria-expanded="{{ menu_is_active('personel', 'true') }}" >
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" 
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
                             stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                             <path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" />
                         </svg>
@@ -129,7 +129,7 @@
                         <a class="dropdown-item" href="{{route('mesai.index')}}" >
                             Personel Çalışma Grupları
                         </a>
-                       
+
                         <a class="dropdown-item" href="{{route('giriscikis')}}" >
                             Personel Giriş-Çıkış
                         </a>
@@ -138,11 +138,11 @@
                         </a>
                     </div>
                 </li>
-            
+
                 <li class="nav-item  {{ menu_is_active('ayar') }} dropdown">
                     <a class="nav-link dropdown-toggle" href="#sms" data-bs-toggle="dropdown" role="button" aria-expanded="{{ menu_is_active('ayar', 'true') }}" >
                         <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/star -->
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" 
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
                             stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" /></svg>
                         </span>
                         <span class="nav-link-title {{ menu_is_active('ayar') }}">
@@ -197,7 +197,7 @@
                         </span>
                     </a>
                 </li>
-            
+
             </ul>
         </div>
     </div>

@@ -2,11 +2,12 @@
 
 
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Request;
 use Modules\Personel\Entities\Personel;
 
 function menu_is_active($url, $durum = 'active')
 {
-    return request()->is($url) ? $durum : null;
+    return (Request::segment(1) == $url) ? $durum : null;
 }
 
 
