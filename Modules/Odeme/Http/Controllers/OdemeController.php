@@ -14,7 +14,7 @@ class OdemeController extends Controller
 {
 
     public function odemeal(Request $request){
-  
+
         Config::$CLIENT_CODE = env('CLIENT_CODE');
         Config::$CLIENT_USERNAME = env('CLIENT_USERNAME');
         Config::$CLIENT_PASSWORD = env('CLIENT_PASSWORD');
@@ -44,13 +44,13 @@ class OdemeController extends Controller
         $odemeUrl = route('odeme.index');
         $siparisAciklama = $request->aciklama;
         $taksit = 1;
-        
+
         $islemtutar = money($request->tutar);
         $toplamTutar = money($request->tutar + ( $request->tutar * 1.69 / 100 ));
-        
+
         $islemid    = time();
         $ipAdr      = $ip;
-     
+
         $dataBir    = $request->dosyaNo;
         $dataIki    = $request->tcKimlikNo;
         $dataUc     = $request->adsoyad;
@@ -63,18 +63,18 @@ class OdemeController extends Controller
         $nesne      = new Odeme($spid, $guid, $kkSahibi, $kkNo, $kkSkAy, $kkSkYil, $kkCvc, $kkSahibiGsm,
             $hataUrl, $basariliUrl, $siparisId, $siparisAciklama, $taksit, $islemtutar, $toplamTutar, $islemid, $ipAdr, $odemeUrl,
             $dataBir, $dataIki, $dataUc, $dataDort, $dataBes);
-            
+
         $res        = $soap->send($nesne)->getSoapResultMethod();
-        
-        //dd($res);
+
+        dd($res);
 
         return redirect($res['UCD_URL']);
-     
+
     }
 
     public function odemesonuc(Request $request){
 
-        
+
         //dd($request);
 
         $extra = explode('|',$request->TURKPOS_RETVAL_Ext_Data);
@@ -112,17 +112,17 @@ class OdemeController extends Controller
         $odeme->save();
 
         if ($request->TURKPOS_RETVAL_Sonuc == 1) {
-            
+
             return view('odeme::success', compact('request'));
         }else{
             return view('odeme::index', compact('request'));
-        }    
+        }
 
     }
 
     public function index()
     {
-        $liste =  \Modules\Odeme\Entities\Odeme::where('personel_id', auth()->user()->id)->get();   
+        $liste =  \Modules\Odeme\Entities\Odeme::where('personel_id', auth()->user()->id)->get();
         return view('odeme::index', compact('liste'));
     }
 
@@ -185,5 +185,5 @@ class OdemeController extends Controller
     {
         //
     }
- 
+
 }
