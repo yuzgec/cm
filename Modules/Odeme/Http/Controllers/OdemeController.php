@@ -2,9 +2,11 @@
 
 namespace Modules\Odeme\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\DB;
 use Turkpos\Config;
 use Turkpos\Soap;
 use Turkpos\BuilderObject\Odeme;
@@ -15,10 +17,12 @@ class OdemeController extends Controller
 
     public function odemeal(Request $request){
 
-        Config::$CLIENT_CODE = env('CLIENT_CODE');
-        Config::$CLIENT_USERNAME = env('CLIENT_USERNAME');
-        Config::$CLIENT_PASSWORD = env('CLIENT_PASSWORD');
-        Config::$SERVICE_URI = env('SERVICE_URI');
+
+
+        Config::$CLIENT_CODE        = env('CLIENT_CODE');
+        Config::$CLIENT_USERNAME    = env('CLIENT_USERNAME');
+        Config::$CLIENT_PASSWORD    = env('CLIENT_PASSWORD');
+        Config::$SERVICE_URI        = env('SERVICE_URI');
 
         ## Kullanıcının IP adresi
         if( isset( $_SERVER["HTTP_CLIENT_IP"] ) ) {
@@ -31,13 +35,13 @@ class OdemeController extends Controller
 
         $soap = new Soap();
         $spid = 1011;
-        $guid = env('GUID_ID');
+        $guid = env('GUID');
         $kkSahibi = $request->adsoyad;
         $kkNo = $request->kartno;
         $kkSkAy = $request->kartay;
         $kkSkYil = $request->kartyil;
         $kkCvc = $request->cvc;
-        $kkSahibiGsm = "5332802852";
+        $kkSahibiGsm = "5555555555";
         $hataUrl = route('odemesonuc');
         $basariliUrl = route('odemesonuc');
         $siparisId = time();
@@ -49,14 +53,18 @@ class OdemeController extends Controller
         $toplamTutar = money($request->tutar + ( $request->tutar * 1.69 / 100 ));
 
         $islemid    = time();
-        $ipAdr      = $ip;
+
+        if (config('app.env') === 'production'){
+            $ipAdr      = "78.188.150.116";
+        }else{
+            $ipAdr      = $ip;
+        }
 
         $dataBir    = $request->dosyaNo;
         $dataIki    = $request->tcKimlikNo;
         $dataUc     = $request->adsoyad;
         $dataDort   = substr($request->kartno, -4);
         $dataBes    = 1;
-        $dataAlti   = $request->aciklama;
 
         $soap       = new Soap();
 
@@ -64,22 +72,22 @@ class OdemeController extends Controller
             $hataUrl, $basariliUrl, $siparisId, $siparisAciklama, $taksit, $islemtutar, $toplamTutar, $islemid, $ipAdr, $odemeUrl,
             $dataBir, $dataIki, $dataUc, $dataDort, $dataBes);
 
+        //dd($nesne);
+
         $res        = $soap->send($nesne)->getSoapResultMethod();
 
-        dd($res);
+        if($res['UCD_URL'] == ""){
+            return redirect()->route('odeme.index');
+        }
 
         return redirect($res['UCD_URL']);
 
     }
 
-    public function odemesonuc(Request $request){
-
-
-        //dd($request);
+    public function odemesonuc(Request $request)
+    {
 
         $extra = explode('|',$request->TURKPOS_RETVAL_Ext_Data);
-
-        //dd($extra[3]);
 
         $odeme = new \Modules\Odeme\Entities\Odeme;
 
@@ -88,13 +96,12 @@ class OdemeController extends Controller
         $odeme->dosya_no             = $extra[0];
         $odeme->tckn                 = $extra[1];
         $odeme->ad_soyad             = $extra[2];
+        $odeme->kart_no              = $extra[3];
         $odeme->odeme_turu           = $extra[4];
-        $odeme->aciklama             = $extra[5];
         $odeme->dekont_id            = $request->TURKPOS_RETVAL_Dekont_ID;
         $odeme->islem_id             = $request->TURKPOS_RETVAL_Islem_ID;
         $odeme->odeme_tutari         = str_replace([","],["."],$request->TURKPOS_RETVAL_Odeme_Tutari);
         $odeme->odeme_komisyon       = str_replace([","],["."],$request->TURKPOS_RETVAL_Tahsilat_Tutari);
-        $odeme->kart_no              = $extra[3];
 
         if ($request->TURKPOS_RETVAL_Sonuc == 1) {
             $odeme->odeme_durumu         = $request->TURKPOS_RETVAL_Sonuc_Str;
@@ -111,8 +118,7 @@ class OdemeController extends Controller
 
         $odeme->save();
 
-        if ($request->TURKPOS_RETVAL_Sonuc == 1) {
-
+        if ($request->TURKPOS_RETVAL_Sonuc == 1){
             return view('odeme::success', compact('request'));
         }else{
             return view('odeme::index', compact('request'));
@@ -122,8 +128,17 @@ class OdemeController extends Controller
 
     public function index()
     {
-        $liste =  \Modules\Odeme\Entities\Odeme::where('personel_id', auth()->user()->id)->get();
-        return view('odeme::index', compact('liste'));
+
+
+        $gunluktoplam = DB::table('odeme')->sum('odeme.odeme_komisyon');
+
+        //dd($gunluktoplam);
+
+        $baslangic       = Carbon::today();
+        $bitis           = Carbon::now();
+        //dd($baslangic);
+        $odemegecmisi    = \Modules\Odeme\Entities\Odeme::where('personel_id', auth()->user()->id)->whereBetween('created_at', [$baslangic, $bitis])->get();
+        return view('odeme::index', compact('odemegecmisi', 'gunluktoplam'));
     }
 
     /**

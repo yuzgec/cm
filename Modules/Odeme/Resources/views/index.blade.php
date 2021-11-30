@@ -14,12 +14,12 @@
     -moz-appearance: textfield;
     }
 </style>
-    
+
 @endsection
 @section('content')
     <div class="col-6 card bg-white justify-content-center  p-3">
         <div>
-            <h3>{{ @$res['Sonuc_Str'] }}</h3> 
+            <h3>{{ @$res['Sonuc_Str'] }}</h3>
         </div>
         <div class="card-body">
             <form action="{{ route('odemeal')}}" class="card card-md" method="POST">
@@ -31,7 +31,7 @@
                         <label for="singin-email-2">Dosya No</label>
                         <input type="text" name="dosyaNo" class="form-control mb-2" placeholder="Dosya NO" value="{{old('dosyaNo')}}">
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="singin-email-2">Borçlu Ad Soyad</label>
                         <input type="text" name="adSoyad" class="form-control mb-2" placeholder="Borçlu Ad Soyad" value="{{old('adSoyad')}}">
@@ -62,7 +62,6 @@
 
                             <label for="singin-email-2">Kart Son Kullanma Yıl *</label>
 
-            
                             <select class="form-select" name="kartay">
                                 <option value="" disabled>Kart Son Kullanma Ay</option>
                                 <option value="01">01</option>
@@ -78,7 +77,7 @@
                                 <option value="01">11</option>
                                 <option value="01">12</option>
                             </select>
-                        
+
                         </div>
                         <div class="col-5">
                             <label for="singin-email-2">Kart Son Kullanma Yıl *</label>
@@ -117,13 +116,14 @@
         </div>
     </div>
     <div class="col-6 card bg-white justify-content-center p-3">
-         <h5 class="card-title mt-3">Son Alınan Ödemeler - <b>Toplam 12.458,50</b></h5>
+         <h5 class="card-title mt-3">Son Alınan Ödemeler - <b>Toplam {{ $gunluktoplam }}₺</b></h5>
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-vcenter card-table">
                     <thead>
                         <tr>
                             <th>Dosya No</th>
+                            <th>Dekont Id</th>
                             <th>Ad Soyad</th>
                             <th>Tutar</th>
                             <th>Tarih</th>
@@ -132,163 +132,41 @@
                         </tr>
                     </thead>
                     <tbody>
+                    @foreach($odemegecmisi as $row)
                         <tr>
                             <td>
                                 <div class="text-muted">
-                                    111111
+                                    {{$row->dosya_no}}
                                 </div>
                             </td>
                             <td>
                                 <div class="text-muted">
-                                    Ahmet Yılmaz
+                                    {{$row->dekont_id}}
                                 </div>
                             </td>
                             <td>
                                 <div class="text-muted">
-                                    1450,00
+                                    {{$row->ad_soyad}}
                                 </div>
                             </td>
-
-                          
-                          
                             <td>
                                 <div class="text-muted">
-                                    22.11.2021 13:48
+                                    {{$row->odeme_komisyon}}
                                 </div>
                             </td>
-
+                            <td>
+                                <div class="text-muted">
+                                    {{$row->created_at}}
+                                </div>
+                            </td>
                             <td>
                                 <div class="">
-                                    <span class="badge badge-danger"> Başarılı</span>
+                                    <span class="badge bg-{{( $row->odeme_cevap == 1 ) ? 'success' : 'danger'}}"> {{( $row->odeme_cevap == 1 ) ? 'Başarılı' : 'Başarısız'}}</span>
                                 </div>
                             </td>
-                        </tr> 
-                        <tr>
-                            <td>
-                                <div class="text-muted">
-                                    111111
-                                </div>
-                            </td>
-                            <td>
-                                <div class="text-muted">
-                                    Ahmet Yılmaz
-                                </div>
-                            </td>
-                            <td>
-                                <div class="text-muted">
-                                    1450,00
-                                </div>
-                            </td>
+                        </tr>
+                       @endforeach
 
-                          
-                          
-                            <td>
-                                <div class="text-muted">
-                                    22.11.2021 13:48
-                                </div>
-                            </td>
-
-                            <td>
-                                <div class="">
-                                    <span class="badge badge-danger"> Başarılı</span>
-                                </div>
-                            </td>
-                        </tr> 
-                        <tr>
-                            <td>
-                                <div class="text-muted">
-                                    111111
-                                </div>
-                            </td>
-                            <td>
-                                <div class="text-muted">
-                                    Ahmet Yılmaz
-                                </div>
-                            </td>
-                            <td>
-                                <div class="text-muted">
-                                    1450,00
-                                </div>
-                            </td>
-
-                          
-                          
-                            <td>
-                                <div class="text-muted">
-                                    22.11.2021 13:48
-                                </div>
-                            </td>
-
-                            <td>
-                                <div class="">
-                                    <span class="badge badge-danger"> Başarılı</span>
-                                </div>
-                            </td>
-                        </tr> 
-                        <tr>
-                            <td>
-                                <div class="text-muted">
-                                    111111
-                                </div>
-                            </td>
-                            <td>
-                                <div class="text-muted">
-                                    Ahmet Yılmaz
-                                </div>
-                            </td>
-                            <td>
-                                <div class="text-muted">
-                                    1450,00
-                                </div>
-                            </td>
-
-                          
-                          
-                            <td>
-                                <div class="text-muted">
-                                    22.11.2021 13:48
-                                </div>
-                            </td>
-
-                            <td>
-                                <div class="">
-                                    <span class="badge badge-danger"> Başarılı</span>
-                                </div>
-                            </td>
-                        </tr> 
-                        <tr>
-                            <td>
-                                <div class="text-muted">
-                                    111111
-                                </div>
-                            </td>
-                            <td>
-                                <div class="text-muted">
-                                    Ahmet Yılmaz
-                                </div>
-                            </td>
-                            <td>
-                                <div class="text-muted">
-                                    1450,00
-                                </div>
-                            </td>
-
-                          
-                          
-                            <td>
-                                <div class="text-muted">
-                                    22.11.2021 13:48
-                                </div>
-                            </td>
-
-                            <td>
-                                <div class="">
-                                    <span class="badge badge-danger"> Başarılı</span>
-                                </div>
-                            </td>
-                        </tr> 
-                        
-                    
                     </tbody>
                 </table>
             </div>
