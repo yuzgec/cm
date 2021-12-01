@@ -16,8 +16,6 @@ class OdemeController extends Controller
 {
 
     public function odemeal(Request $request){
-        dd(route('odeme.index'));
-
 
         Config::$CLIENT_CODE        = env('CLIENT_CODE');
         Config::$CLIENT_USERNAME    = env('CLIENT_USERNAME');
