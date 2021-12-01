@@ -17,11 +17,11 @@
                     </a>
                 </div>
 
-                <form class="card card-md" method="POST" action="{{ route('register') }}">
+                <form class="card card-md" method="POST" action="">
                     @csrf
                     <div class="card-body">
                         <h2 class="card-title text-center mb-4">Yeni Kullanıcı Oluştur</h2>
-                
+
                     <div class="form-group mb-1">
                         <label for="singin-email-2">Adınız Soyadınız *</label>
                         <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}"  autocomplete="name" autofocus>
@@ -75,10 +75,10 @@
                         <button type="submit" class="btn btn-primary btn-block" style="width: 100%">
                             Kayıt Ol
                         </button>
-                    
+
                     </div>
                 </form>
-            </div>    
+            </div>
         </div>
 
         <script src="/assets/js/tabler.min.js"></script>
@@ -87,4 +87,3 @@
 
 
 
-                   
