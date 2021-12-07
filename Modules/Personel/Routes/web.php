@@ -9,6 +9,7 @@ Route::middleware(['auth','role:Admin'])->prefix('personel')->group(function () 
 
     Route::get('/mesai/ExcelIndir', 'PersonelController@ExcelIndir');
     Route::get('/mesai/ExcelDetayIndir', 'PersonelController@ExcelDetayIndir');
+    Route::get('/mesai/MesaiRaporExcelIndir', 'PersonelController@MesaiRaporExcelIndir')->name('mesairaporexcel');
 
     Route::resource('/personel', 'PersonelController');
     Route::resource('/mesai', 'MesaiController');

@@ -2,6 +2,7 @@
 
 namespace Modules\Personel\Http\Controllers;
 
+use App\Exports\MesaiRaporExport;
 use App\Exports\PuantajExport;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
@@ -180,11 +181,37 @@ class PersonelController extends Controller
 
 
     public function mesairaporlama(){
-
+        $RaporTarih =Carbon::yesterday()->toDateString();
         $MesaiRapor = Puantaj::with('getUser')->where('gun', Carbon::yesterday())->get();
 
-        //dd($MesaiRapor);
-        return view('personel::mesai.raporlama', compact('MesaiRapor'));
+        return view('personel::mesai.raporlama', compact('MesaiRapor', 'RaporTarih'));
+    }
+     public function MesaiRaporExcelIndir(){
+
+         $RaporTarih = Carbon::yesterday()->toDateString();
+
+         $data = [];
+         $data[] = [
+             "Personel ID",
+             "Personel Adı Soyadı",
+             "Tarih",
+             "Fazla Çalışma (Dakika)",
+             "Eksik Çalışma (Dakika)"
+         ];
+
+         $MesaiRapor = Puantaj::with('getUser')->where('gun', Carbon::yesterday())->get();
+
+         foreach ($MesaiRapor as $row){
+             $data[] = [
+                 $row->getUser->remote_id,
+                 $row->getUser->adsoyad,
+                 $row->gun,
+                 $row->fazla_calisma,
+                 $row->gec_mesai
+             ];
+         }
+         $data = new MesaiRaporExport($data);
+         return Excel::download($data, $RaporTarih.' Mesai Rapor.xlsx');
     }
 
     public function ExcelIndir(Request $request){
