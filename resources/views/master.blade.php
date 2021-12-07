@@ -46,6 +46,8 @@
                 @include('layouts.footer')
 
             </div>
+
+
         </div>
 
         @include('layouts.js')

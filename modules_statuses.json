@@ -6,5 +6,7 @@
     "Sms": true,
     "Dosya": true,
     "Rapor": true,
-    "Personel": true
+    "Personel": true,
+    "Agent": true,
+    "CallCenter": true
 }

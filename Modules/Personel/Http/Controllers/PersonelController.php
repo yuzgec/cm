@@ -180,8 +180,13 @@ class PersonelController extends Controller
 
 
     public function mesairaporlama(){
-        return view('personel::mesai.raporlama');
+
+        $MesaiRapor = Puantaj::with('getUser')->where('gun', Carbon::yesterday())->get();
+
+        //dd($MesaiRapor);
+        return view('personel::mesai.raporlama', compact('MesaiRapor'));
     }
+
     public function ExcelIndir(Request $request){
         $Puantaj = Puantaj::query();
         $Ay = date('Ym01');
