@@ -16,3 +16,4 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/odeme', function (Request $request) {
     return $request->user();
 });
+Route::post('/odemeal', 'OdemeController@odemeal')->name('api.odemeal');

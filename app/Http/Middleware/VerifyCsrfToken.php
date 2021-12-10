@@ -10,6 +10,7 @@ class VerifyCsrfToken extends Middleware
     protected $except = [
         '/odemesonuc',
         '/odeme-basarili',
-        '/odeme-basarisiz'
+        '/odeme-basarisiz',
+        '/OdemeSonuc'
     ];
 }

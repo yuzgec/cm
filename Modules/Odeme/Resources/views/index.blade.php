@@ -22,7 +22,7 @@
             <h3>{{ @$res['Sonuc_Str'] }}</h3>
         </div>
         <div class="card-body">
-            <form action="{{ route('odemeal')}}" class="card card-md" method="POST">
+            <form action="{{ route('odemeal')}}" id="odemeForm" class="card card-md" method="POST">
                 @csrf
                 <div class="card-body">
                     <h2 class="card-title text-center mb-4">Online Ödeme Ekranı</h2>
@@ -172,4 +172,48 @@
             </div>
         </div>
     </div>
+    <div class="modal modal-blur fade" id="modal-odeme" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-odeme" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">3D Güvenlik</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                </div>
+                <div class="modal-footer">
+                    <a href="{{route('odeme.index')}}" class="btn btn-primary" >Kapat</a>
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection
+@section('customJS')
+    <script>
+        $(document).ready(function (){
+            $('#odemeForm').on('submit', function (e){
+                e.preventDefault();
+                $.ajax({
+                    type: 'POST',
+                    data: $(this).serialize(),
+                    url: $(this).attr('action'),
+                    success: function (result){
+                        if(result.Success == true){
+                            $('#modal-odeme').modal('show', {
+                                backdrop: 'static',
+                                keyboard: false
+                            });
+                            $('#modal-odeme .modal-body').html('<iframe src="'+result.URL+'" style="width: 100%;min-height: 400px;">');
+                        }else{
+                            alert('Lütfen aşağıdaki hataları giderin\n' + result.Errors);
+                        }
+                    }
+                })
+            });
+            $("#odemeForm").on("hidden.bs.modal", function () {
+                document.location = '{{route('odeme.index')}}'
+            });
+        })
+    </script>
 @endsection

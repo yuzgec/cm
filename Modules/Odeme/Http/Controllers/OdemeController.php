@@ -6,17 +6,34 @@ use Carbon\Carbon;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Nwidart\Modules\Facades\Module;
 use Turkpos\Config;
 use Turkpos\Soap;
 use Turkpos\BuilderObject\Odeme;
-
+use Validator;
 
 class OdemeController extends Controller
 {
 
     public function odemeal(Request $request){
-
+        $validator = Validator::make($request->all(), [
+            "tutar" => "required",
+            "adsoyad" => "required",
+            "kartno" => "required",
+            "cvc" => "required",
+            "aciklama" => "required"
+        ],[
+            "tutar.required" => "Lütfen Tutar belirtin",
+            "adsoyad.required" => "Lütfen İsim Soyisim belirtin",
+            "kartno.required" => "Lütfen Kart No belirtin",
+            "cvc.required" => "Lütfen CVV belirtin",
+            "aciklama.required" => "Lütfen Açıklama belirtin",
+        ]);
+        if(!$validator->passes()){
+            return response()->json(["Success" => false, "Errors" => $validator->errors()->all()]);
+        }
         Config::$CLIENT_CODE        = env('CLIENT_CODE');
         Config::$CLIENT_USERNAME    = env('CLIENT_USERNAME');
         Config::$CLIENT_PASSWORD    = env('CLIENT_PASSWORD');
@@ -40,15 +57,15 @@ class OdemeController extends Controller
         $kkSkYil = $request->kartyil;
         $kkCvc = $request->cvc;
         $kkSahibiGsm = "5555555555";
-        $hataUrl = route('odemesonuc');
-        $basariliUrl = route('odemesonuc');
+        $hataUrl = "https://cm.test/OdemeSonuc?sonuc=2";
+        $basariliUrl = "https://cm.test/OdemeSonuc?sonuc=1";
         $siparisId = time();
         $odemeUrl = route('odeme.index');
         $siparisAciklama = $request->aciklama;
         $taksit = 1;
 
         $islemtutar = money($request->tutar);
-        $toplamTutar = money($request->tutar + ( $request->tutar * 1.69 / 100 ));
+        $toplamTutar = $islemtutar;// money($request->tutar + ( $request->tutar * 1.69 / 100 ));
 
         $islemid    = time();
 
@@ -62,23 +79,25 @@ class OdemeController extends Controller
         $dataIki    = $request->tcKimlikNo;
         $dataUc     = $request->adsoyad;
         $dataDort   = substr($request->kartno, -4);
-        $dataBes    = 1;
+        $dataBes    = $request->user()->id;
 
         $soap       = new Soap();
 
         $nesne      = new Odeme($spid, $guid, $kkSahibi, $kkNo, $kkSkAy, $kkSkYil, $kkCvc, $kkSahibiGsm,
             $hataUrl, $basariliUrl, $siparisId, $siparisAciklama, $taksit, $islemtutar, $toplamTutar, $islemid, $ipAdr, $odemeUrl,
             $dataBir, $dataIki, $dataUc, $dataDort, $dataBes);
-
-        //dd($nesne);
+//        dd('Burada');
+//        dd($nesne);
 
         $res        = $soap->send($nesne)->getSoapResultMethod();
 
         if($res['UCD_URL'] == ""){
+            return response()->json(["Success" => false, "Errors" => $res["Sonuc_Str"]]);
             return redirect()->route('odeme.index');
         }
-
-        return redirect($res['UCD_URL']);
+//        dd($res);
+        return response()->json(["Success" => true, "URL" => $res["UCD_URL"]]);
+        //return redirect($res['UCD_URL']);
 
     }
 
@@ -126,6 +145,10 @@ class OdemeController extends Controller
 
     public function index()
     {
+
+
+
+
 
 
         $gunluktoplam = DB::table('odeme')->sum('odeme.odeme_komisyon');
