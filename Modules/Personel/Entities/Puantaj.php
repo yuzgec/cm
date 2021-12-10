@@ -16,6 +16,10 @@ class Puantaj extends Model
         "mesai_giris","mesai_cikis","gun"
     ];
 
+    public function getUser(){
+        return $this->hasOne('Modules\Personel\Entities\Personel', 'id', 'user_id');
+    }
+
     protected static function newFactory()
     {
         return \Modules\Personel\Database\factories\PuantajFactory::new();

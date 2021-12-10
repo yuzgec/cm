@@ -10,6 +10,7 @@
         </h1>
 
         <div class="collapse navbar-collapse" id="navbar-menu">
+
             <ul class="navbar-nav pt-lg-3">
 
                 <li class="nav-item  {{ menu_is_active('dashboard') }}">
@@ -113,7 +114,7 @@
                     <a class="nav-link dropdown-toggle" href="#sms" data-bs-toggle="dropdown" role="button" aria-expanded="{{ menu_is_active('personel', 'true') }}" >
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
-                            stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                 stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                             <path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" />
                         </svg>
                         </span>
@@ -136,6 +137,27 @@
                         <a class="dropdown-item" href="{{route('mesairaporlama')}}" >
                             Personel Raporlama
                         </a>
+                    </div>
+                </li>
+
+                <li class="nav-item  {{ menu_is_active('callcenter') }} dropdown">
+                    <a class="nav-link dropdown-toggle" href="#sms" data-bs-toggle="dropdown" role="button" aria-expanded="{{ menu_is_active('callcenter', 'true') }}" >
+                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
+                                 stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                            <path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" />
+                        </svg>
+                        </span>
+                        <span class="nav-link-title {{ menu_is_active('personel') }}">
+                            Call Center
+                        </span>
+                    </a>
+
+                    <div class="dropdown-menu {{ menu_is_active('callcenter', 'show') }}">
+                        <a class="dropdown-item" href="{{route('callcenter.index')}}" title="Personel Listesi">
+                            CallCenter Dashboard
+                        </a>
+
                     </div>
                 </li>
 
@@ -182,9 +204,11 @@
                         </span>
                     </a>
                 </li>
-
+                <hr>
+                @include('layouts.agentsidebar')
+                <hr>
                 <li class="nav-item">
-                    <a class="nav-link" href="./docs/index.html" >
+                    <a class="nav-link" href="{{route('dashboard.index')}}" >
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 3v4a1 1 0 0 0 1 1h4" />
@@ -197,8 +221,9 @@
                         </span>
                     </a>
                 </li>
-
             </ul>
+
+
         </div>
     </div>
 </aside>
