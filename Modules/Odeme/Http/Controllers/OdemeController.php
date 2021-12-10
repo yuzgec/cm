@@ -57,8 +57,8 @@ class OdemeController extends Controller
         $kkSkYil = $request->kartyil;
         $kkCvc = $request->cvc;
         $kkSahibiGsm = "5555555555";
-        $hataUrl = "https://cm.test/OdemeSonuc?sonuc=2";
-        $basariliUrl = "https://cm.test/OdemeSonuc?sonuc=1";
+        $hataUrl = url('OdemeSonuc');
+        $basariliUrl = url('OdemeSonuc');
         $siparisId = time();
         $odemeUrl = route('odeme.index');
         $siparisAciklama = $request->aciklama;
@@ -145,12 +145,6 @@ class OdemeController extends Controller
 
     public function index()
     {
-
-
-
-
-
-
         $gunluktoplam = DB::table('odeme')->sum('odeme.odeme_komisyon');
 
         //dd($gunluktoplam);
