@@ -69,7 +69,7 @@ class OdemeController extends Controller
 
         $islemid    = time();
 
-        if (config('app.env') === 'production'){
+        if (config('app.env') === 'prod'){
             $ipAdr      = "78.188.150.116";
         }else{
             $ipAdr      = $ip;
