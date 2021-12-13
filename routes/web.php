@@ -46,6 +46,7 @@ Route::post('/OdemeSonuc', function (Request $request){
     if ($request->TURKPOS_RETVAL_Sonuc == 1){
         return "Ödeme işlemi başarıyla gerçekleşmiştir.";
     }else{
+        dd($request->all());
         return "Hata <br />" . $request->TURKPOS_RETVAL_Sonuc_Str;
     }
 });
