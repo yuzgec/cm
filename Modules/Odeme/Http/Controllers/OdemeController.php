@@ -56,7 +56,7 @@ class OdemeController extends Controller
         $kkSkAy = $request->kartay;
         $kkSkYil = $request->kartyil;
         $kkCvc = $request->cvc;
-        $kkSahibiGsm = "5555555555";
+        $kkSahibiGsm = "5321347703";
         $hataUrl = url('OdemeSonuc');
         $basariliUrl = url('OdemeSonuc');
         $siparisId = time();
