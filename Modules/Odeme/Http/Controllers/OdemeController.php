@@ -65,7 +65,7 @@ class OdemeController extends Controller
         $taksit = 1;
 
         $islemtutar = money($request->tutar);
-        $toplamTutar = $islemtutar;// money($request->tutar + ( $request->tutar * 1.69 / 100 ));
+        $toplamTutar = money($request->tutar + ( $request->tutar * 1.69 / 100 ));
 
         $islemid    = time();
 
