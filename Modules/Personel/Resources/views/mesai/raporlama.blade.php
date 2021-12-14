@@ -60,22 +60,49 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($MesaiRapor as $item)
+                                @foreach($Personeller as $item)
                                     <tr>
                                         <td>
                                             <div class="text-muted">
-                                                {{ $item->getUser->adsoyad }}
+                                                {{ $item[0]->getUser->adsoyad }}
                                             </div>
                                         </td>
-
-                                        @foreach($Gunler as $gun)
-                                            <td class="text-center yazi">
-                                                <th>{{$item->fazla_calisma}}</th>
-                                                <th>{{$item->gec_mesai}}</th>
-                                                <th>{{substr($item->mesai_giris, -8)}}</th>
-                                                <th>{{substr($item->mesai_cikis, -8)}}</th>
-                                            </td>
-                                        @endforeach
+                                        <td class="text-center yazi">
+                                            <th>{{$item[0]->fazla_calisma}}</th>
+                                            <th>{{$item[0]->gec_mesai}}</th>
+                                            <th>{{substr($item[0]->mesai_giris, -8)}}</th>
+                                            <th>{{substr($item[0]->mesai_cikis, -8)}}</th>
+                                        </td>
+                                        <td class="text-center yazi">
+                                            <th>{{@$item[1]->fazla_calisma}}</th>
+                                            <th>{{@$item[1]->gec_mesai}}</th>
+                                            <th>{{substr(@$item[1]->mesai_giris, -8)}}</th>
+                                            <th>{{substr(@$item[1]->mesai_cikis, -8)}}</th>
+                                        </td>
+                                        <td class="text-center yazi">
+                                            <th>{{@$item[3]->fazla_calisma}}</th>
+                                            <th>{{@$item[3]->gec_mesai}}</th>
+                                            <th>{{substr(@$item[3]->mesai_giris, -8)}}</th>
+                                            <th>{{substr(@$item[3]->mesai_cikis, -8)}}</th>
+                                        </td>
+                                        <td class="text-center yazi">
+                                            <th>{{@$item[4]->fazla_calisma}}</th>
+                                            <th>{{@$item[4]->gec_mesai}}</th>
+                                            <th>{{substr(@$item[4]->mesai_giris, -8)}}</th>
+                                            <th>{{substr(@$item[4]->mesai_cikis, -8)}}</th>
+                                        </td>
+                                        <td class="text-center yazi">
+                                            <th>{{@$item[5]->fazla_calisma}}</th>
+                                            <th>{{@$item[5]->gec_mesai}}</th>
+                                            <th>{{substr(@$item[5]->mesai_giris, -8)}}</th>
+                                            <th>{{substr(@$item[5]->mesai_cikis, -8)}}</th>
+                                        </td>
+                                        <td class="text-center yazi">
+                                            <th>{{@$item[6]->fazla_calisma}}</th>
+                                            <th>{{@$item[6]->gec_mesai}}</th>
+                                            <th>{{substr(@$item[6]->mesai_giris, -8)}}</th>
+                                            <th>{{substr(@$item[6]->mesai_cikis, -8)}}</th>
+                                        </td>
                                     </tr>
                                 @endforeach
 

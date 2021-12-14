@@ -182,17 +182,20 @@ class PersonelController extends Controller
 
     public function mesairaporlama(){
 
-        $now = Carbon::now();
+        $now = Carbon::parse("2021-11-14 18:16:00");
         $HaftaBaslangic = $now->startOfWeek()->format('Y-m-d H:i');
         $HaftaBitis = $now->endOfWeek()->format('Y-m-d H:i');
 
         $MesaiRapor = Puantaj::with('getUser')->whereBetween('gun', [$HaftaBaslangic, $HaftaBitis])->get();
+
         $RaporTarih = $HaftaBaslangic.' - '.$HaftaBitis;
 
         $Gunler = ['Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi', 'Pazar'];
-        //dd($MesaiRapor);
-
-        return view('personel::mesai.raporlama', compact('MesaiRapor', 'RaporTarih', 'Gunler'));
+        $Personeller = [];
+        foreach ($MesaiRapor as $Row){
+            $Personeller[$Row->user_id][] = $Row;
+        }
+        return view('personel::mesai.raporlama', compact('MesaiRapor', 'RaporTarih', 'Gunler', 'Personeller'));
     }
      public function MesaiRaporExcelIndir(){
 
