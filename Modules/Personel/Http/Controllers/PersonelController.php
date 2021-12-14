@@ -182,14 +182,13 @@ class PersonelController extends Controller
 
     public function mesairaporlama(){
 
-        $now = Carbon::parse("2021-11-14 18:16:00");
+        $now = Carbon::now();
         $HaftaBaslangic = $now->startOfWeek()->format('Y-m-d H:i');
         $HaftaBitis = $now->endOfWeek()->format('Y-m-d H:i');
 
         $MesaiRapor = Puantaj::with('getUser')->whereBetween('gun', [$HaftaBaslangic, $HaftaBitis])->get();
 
-        $RaporTarih = $HaftaBaslangic.' - '.$HaftaBitis;
-
+        $RaporTarih = Carbon::parse($HaftaBaslangic)->translatedFormat('d F Y').' - '.Carbon::parse($HaftaBitis)->translatedFormat('d F Y');
         $Gunler = ['Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi', 'Pazar'];
         $Personeller = [];
         foreach ($MesaiRapor as $Row){
