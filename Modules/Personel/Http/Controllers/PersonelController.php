@@ -181,10 +181,18 @@ class PersonelController extends Controller
 
 
     public function mesairaporlama(){
-        $RaporTarih =Carbon::yesterday()->toDateString();
-        $MesaiRapor = Puantaj::with('getUser')->where('gun', Carbon::yesterday())->get();
 
-        return view('personel::mesai.raporlama', compact('MesaiRapor', 'RaporTarih'));
+        $now = Carbon::now();
+        $HaftaBaslangic = $now->startOfWeek()->format('Y-m-d H:i');
+        $HaftaBitis = $now->endOfWeek()->format('Y-m-d H:i');
+
+        $MesaiRapor = Puantaj::with('getUser')->whereBetween('gun', [$HaftaBaslangic, $HaftaBitis])->get();
+        $RaporTarih = $HaftaBaslangic.' - '.$HaftaBitis;
+
+        $Gunler = ['Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi', 'Pazar'];
+        //dd($MesaiRapor);
+
+        return view('personel::mesai.raporlama', compact('MesaiRapor', 'RaporTarih', 'Gunler'));
     }
      public function MesaiRaporExcelIndir(){
 
@@ -205,7 +213,7 @@ class PersonelController extends Controller
              $data[] = [
                  $row->getUser->remote_id,
                  $row->getUser->adsoyad,
-                 $row->gun,
+                 $RaporTarih,
                  $row->fazla_calisma,
                  $row->gec_mesai
              ];
