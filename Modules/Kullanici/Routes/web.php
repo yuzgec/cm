@@ -1,5 +1,5 @@
 <?php
 
 
-    Route::resource('/kullanici', 'KullaniciController')->middleware('auth');
-    Route::resource('/roller', 'RolController')->middleware('auth');
+    Route::resource('/kullanici', 'KullaniciController')->middleware(['auth','role:Admin']);
+    Route::resource('/roller', 'RolController')->middleware(['auth','role:Admin']);

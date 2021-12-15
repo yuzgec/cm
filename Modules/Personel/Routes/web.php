@@ -14,6 +14,4 @@ Route::middleware(['auth','role:Admin'])->prefix('personel')->group(function () 
     Route::resource('/personel', 'PersonelController');
     Route::resource('/mesai', 'MesaiController');
 
-
-
 });

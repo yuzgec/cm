@@ -25,7 +25,7 @@
                                     <line x1="5" y1="12" x2="19" y2="12" />
                                 </svg>
                                 Yönetim Anasayfa
-                            </a> 
+                            </a>
                             <a href="{{ route('kullanici.create')}}" class="btn btn-primary ml-3">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
                                     viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
@@ -46,15 +46,15 @@
                                 </svg>
                                 Kullanıcı Grupları
                             </a>
-                            
+
                         </div>
                     </div>
                 </div>
                 <form action="{{ route('kullanici.update', $detay->id )}}" method="POST" enctype="multipart/form-data">
-                    @csrf   
+                    @csrf
                     @method('PUT')
                     <div class="row">
-                        
+
                         <div class="col-md-8">
                             <div class="card">
                                 <div class="card-header bg-dark">
@@ -63,16 +63,16 @@
                                         Kullanıcı Düzenle - {{ $detay->name}}
                                     </h3>
                                 </div>
-                
+
                                 <div class="card-body">
-                
+
                                     <div class="form-group mb-3 row">
                                         <label class="form-label col-3 col-form-label">Adı Soyadı </label>
                                         <div class="col">
                                             <input type="text" class="form-control" name="name" placeholder="Kullanıcı Adı Soyadı Giriniz...." value="{{ $detay->name}}">
                                         </div>
                                     </div>
-                
+
                                     <div class="form-group mb-3 row">
                                         <label class="form-label col-3 col-form-label">Email Adresi </label>
                                         <div class="col">
@@ -80,7 +80,7 @@
                                         </div>
                                     </div>
 
-                                    
+
                                     <div class="form-group mb-3 row">
                                         <label class="form-label col-3 col-form-label">Telefon Numarası </label>
                                         <div class="col">
@@ -88,7 +88,7 @@
                                         </div>
                                     </div>
 
-                                    
+
                                     <div class="form-group mb-3 row">
                                         <label class="form-label col-3 col-form-label">Depertman</label>
                                         <div class="col">
@@ -114,26 +114,26 @@
                                         </div>
                                     </div>
 
-                                    
+
                                     <div class="form-group mb-3 row">
                                         <label class="form-label col-3 col-form-label">Şifre </label>
                                         <div class="col">
                                             <input type="password" class="form-control" name="password" placeholder="Kullanıcı Şifresi Giriniz....">
                                         </div>
                                     </div>
-                                
-        
+
+
                                     <div class="form-group mb-3 row">
                                         <label class="form-label col-3 col-form-label">Şifre Tekrar</label>
                                         <div class="col">
                                             <input type="password" class="form-control" name="password_confirmation" placeholder="Kullanıcı Şifresini Tekrar Giriniz...." >
                                         </div>
                                     </div>
-                                                                
+
                                 </div>
 
                                 <button type="submit" class="btn btn-primary btn-block">Kaydet</button>
-                
+
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -151,7 +151,7 @@
                                     </a>
                                 </div>
                                 <div class="card-body">
-                
+
                                     <div class="form-group mb-3 ">
                                         <label class="form-label">Kullanıcı Resim</label>
                                         <input type="file" class="form-control" name="profil_foto" id="images">
@@ -159,12 +159,12 @@
                                         <div class="text-center mt-4">
                                             <div id="preview"></div>
                                         </div>
-                                        
+
                                     </div>
-                
+
                                 </div>
                             </div>
-                
+
                             <div class="card mt-2">
                                 <div class="card-header bg-dark">
                                     <h3 class="card-title text-white">
@@ -175,7 +175,7 @@
                                 <div class="card-body">
                                     <div class="form-group mb-3 row">
                                         <div class="col">
-                                            <select class="form-select" multiple name="role" size="5">
+                                            <select class="form-select" multiple name="role[]" size="5">
                                                 @foreach ($roles as $item)
                                                     <option value="{{ $item->name }}" {{ $detay->hasRole($item->name) ? 'selected' : null }}> {{ $item->name }}</option>
                                                 @endforeach
@@ -185,7 +185,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                     </div>
                 </form>
             </div>

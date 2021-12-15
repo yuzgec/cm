@@ -63,7 +63,10 @@ class KullaniciController extends Controller
         $user->telefon      =  $request->telefon;
         $user->durum        =  $request->durum;
         $user->depertman    =  $request->depertman;
-        $user->password     =  Hash::make($request->password);
+        if ($request->password){
+            $user->password     =  Hash::make($request->password);
+        }
+
         $user->save();
 
         $user->syncRoles($request->role);
@@ -109,7 +112,9 @@ class KullaniciController extends Controller
         $user->telefon      =  $request->telefon;
         $user->durum        =  $request->durum;
         $user->depertman    =  $request->depertman;
-        $user->password     =  Hash::make($request->password);
+        if ($request->password){
+            $user->password     =  Hash::make($request->password);
+        }
         $user->save();
 
         $user->syncRoles($request->role);

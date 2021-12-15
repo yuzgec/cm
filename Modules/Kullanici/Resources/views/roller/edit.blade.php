@@ -63,9 +63,7 @@
                                         Kullanıcı Rol Düzenle
                                     </h3>
                                 </div>
-
                                 <div class="card-body">
-
                                     <div class="form-group mb-3 row">
                                         <label class="form-label col-3 col-form-label">Rol Adı </label>
                                         <div class="col">

@@ -10,31 +10,21 @@ use Spatie\Permission\Models\Role;
 
 class RolController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     * @return Renderable
-     */
+
     public function index()
     {
         $all = Role::all();
         return view('kullanici::roller.index',compact('all'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     * @return Renderable
-     */
+
     public function create()
     {
         $Permission = Permission::all();
         return view('kullanici::roller.create', compact('Permission'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     * @param Request $request
-     * @return Renderable
-     */
+
     public function store(Request $request)
     {
 
@@ -48,21 +38,12 @@ class RolController extends Controller
         return redirect()->route('roller.index');
     }
 
-    /**
-     * Show the specified resource.
-     * @param int $id
-     * @return Renderable
-     */
     public function show($id)
     {
         return view('kullanici::show');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     * @param int $id
-     * @return Renderable
-     */
+
     public function edit($id)
     {
         $Permission = Permission::all();

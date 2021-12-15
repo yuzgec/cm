@@ -145,72 +145,44 @@ class OdemeController extends Controller
 
     public function index()
     {
-        $gunluktoplam = DB::table('odeme')->sum('odeme.odeme_komisyon');
-
-        //dd($gunluktoplam);
+        $gunluktoplam = DB::table('odeme')
+            ->where('created_at', Carbon::today())
+            ->where('personel_id', auth()->user()->id)
+            ->where('odeme_cevap', 1)
+            ->sum('odeme.odeme_komisyon');
 
         $baslangic       = Carbon::today();
         $bitis           = Carbon::now();
-        //dd($baslangic);
         $odemegecmisi    = \Modules\Odeme\Entities\Odeme::where('personel_id', auth()->user()->id)->whereBetween('created_at', [$baslangic, $bitis])->get();
         return view('odeme::index', compact('odemegecmisi', 'gunluktoplam'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     * @return Renderable
-     */
     public function create()
     {
         return view('odeme::create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     * @param Request $request
-     * @return Renderable
-     */
+
     public function store(Request $request)
     {
         //
     }
 
-    /**
-     * Show the specified resource.
-     * @param int $id
-     * @return Renderable
-     */
     public function show($id)
     {
         return view('odeme::show');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     * @param int $id
-     * @return Renderable
-     */
     public function edit($id)
     {
         return view('odeme::edit');
     }
 
-    /**
-     * Update the specified resource in storage.
-     * @param Request $request
-     * @param int $id
-     * @return Renderable
-     */
     public function update(Request $request, $id)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     * @param int $id
-     * @return Renderable
-     */
     public function destroy($id)
     {
         //
