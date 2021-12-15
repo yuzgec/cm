@@ -50,7 +50,6 @@
                                 <colgroup span="5" style="border: 1px solid black"></colgroup>
                                 <colgroup span="5" style="border: 1px solid black"></colgroup>
                                 <colgroup span="5" style="border: 1px solid black"></colgroup>
-
                                 <thead>
                                 <tr>
                                     <th>Personel ID</th>

@@ -5,6 +5,7 @@ namespace Modules\Kullanici\Http\Controllers;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
 class RolController extends Controller
@@ -25,7 +26,8 @@ class RolController extends Controller
      */
     public function create()
     {
-        return view('kullanici::roller.create');
+        $Permission = Permission::all();
+        return view('kullanici::roller.create', compact('Permission'));
     }
 
     /**
@@ -35,10 +37,13 @@ class RolController extends Controller
      */
     public function store(Request $request)
     {
+
         $rol = new Role;
 
         $rol->name =$request->name;
         $rol->save();
+
+        $rol->givePermissionTo($request->permission);
 
         return redirect()->route('roller.index');
     }
@@ -60,7 +65,9 @@ class RolController extends Controller
      */
     public function edit($id)
     {
-        return view('kullanici::edit');
+        $Permission = Permission::all();
+        $Detay = Role::findById($id);
+        return view('kullanici::roller.edit',compact('Permission', 'Detay'));
     }
 
     /**
@@ -71,7 +78,14 @@ class RolController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $rol = Role::findById($id);
+
+        $rol->name =$request->name;
+        $rol->save();
+
+        $rol->givePermissionTo($request->permission);
+
+        return redirect()->route('roller.index');
     }
 
     /**
@@ -85,6 +99,6 @@ class RolController extends Controller
         $sil->delete();
 
         return redirect()->route('roller.index');
-        
+
     }
 }

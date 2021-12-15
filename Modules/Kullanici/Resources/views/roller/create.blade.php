@@ -25,7 +25,7 @@
                                     <line x1="5" y1="12" x2="19" y2="12" />
                                 </svg>
                                 Yönetim Anasayfa
-                            </a> 
+                            </a>
                             <a href="{{ route('kullanici.index')}}" class="btn btn-primary ml-3">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
                                     viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
@@ -46,14 +46,14 @@
                                 </svg>
                                 Rol Listesi
                             </a>
-                            
+
                         </div>
                     </div>
                 </div>
                 <form action="{{ route('roller.store')}}" method="POST" enctype="multipart/form-data" autocomplete="off">
-                    @csrf 
+                    @csrf
                     <div class="row">
-                        
+
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header bg-dark">
@@ -62,25 +62,34 @@
                                         Kullanıcı Rol Oluştur
                                     </h3>
                                 </div>
-                
+
                                 <div class="card-body">
-                
+
                                     <div class="form-group mb-3 row">
                                         <label class="form-label col-3 col-form-label">Rol Adı </label>
                                         <div class="col">
                                             <input type="text" class="form-control" name="name" placeholder="Rol Adı Giriniz...." value="{{ old('name') }}" autocomplete="off">
                                         </div>
                                     </div>
-                                
+
+                                    <div class="form-selectgroup">
+                                        @foreach($Permission as $p)
+                                            <label class="form-selectgroup-item">
+                                                <input type="checkbox" name="permission[]" value="{{ $p->name }}" class="form-selectgroup-input">
+                                                <span class="form-selectgroup-label">{{ $p->name }}</span>
+                                            </label>
+                                        @endforeach
+                                    </div>
+
                                 </div>
 
                                 <button type="submit" class="btn btn-primary btn-block">Kaydet</button>
-                
+
                             </div>
                         </div>
-                       
+
                         </div>
-                    
+
                     </div>
                 </form>
             </div>

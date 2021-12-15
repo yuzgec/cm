@@ -15,6 +15,7 @@ class PermissionSeeder extends Seeder
     public function run()
     {
         Permission::create(['name' => 'Odeme List']);
+        Permission::create(['name' => 'Odeme Show']);
         Permission::create(['name' => 'Odeme Edit']);
         Permission::create(['name' => 'Odeme Delete']);
     }

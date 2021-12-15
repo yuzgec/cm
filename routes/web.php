@@ -2,6 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
+use Nwidart\Modules\Facades\Module;
+use Spatie\Permission\Models\Permission;
+
 
 Route::get('/', function () {
     return view('auth.login');
@@ -10,6 +13,16 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::resource('roles', \App\Http\Controllers\RoleController::class)->middleware('auth');
+
+Route::get('rollers', function (){
+
+   foreach (Module::scan() as $m){
+       Permission::create(['name' => $m. ' Listele']);
+       Permission::create(['name' => $m. ' Ekle']);
+       Permission::create(['name' => $m. ' Düzenle']);
+       Permission::create(['name' => $m. ' Sil']);
+   }
+});
 
 Route::post('/OdemeSonuc', function (Request $request){
     $extra = explode('|',$request->TURKPOS_RETVAL_Ext_Data);
