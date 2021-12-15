@@ -79,7 +79,7 @@
                                             <input type="checkbox" name="permission[]"
                                                    value="{{ $p->name }}"
                                                    class="form-selectgroup-input"
-                                            {{  }}>
+                                           >
                                             <span class="form-selectgroup-label">{{ $p->name }}</span>
                                         </label>
                                         @endforeach
