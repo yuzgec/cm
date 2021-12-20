@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use Nwidart\Modules\Facades\Module;
@@ -57,6 +58,15 @@ Route::post('/OdemeSonuc', function (Request $request){
     $odeme->save();
 
     if ($request->TURKPOS_RETVAL_Sonuc == 1){
+
+        Mail::send("mail.odeme",compact('odeme',),function ($message){
+            $message->to('salih.arik@mecitkahraman.com.tr')->subject("Ödeme başarıyla oluşturmuştur.");
+        });
+
+        Mail::send("mail.odeme",compact('odeme',),function ($message){
+            $message->to('olcayy@gmail.com')->subject("Ödeme başarıyla oluşturmuştur.");
+        });
+
         return "Ödeme işlemi başarıyla gerçekleşmiştir.";
     }else{
         dd($request->all());

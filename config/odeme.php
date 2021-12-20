@@ -1,6 +1,6 @@
 <?php
 return [
-    "url" => "https://test-dmz.param.com.tr:4443/turkpos.ws/service_turkpos_test.asmx?WSDL",
+    "url" => "https://test-dmz.param.com.tr:4443/turkpos.ws/service_turkpos_test.asmx?wsdl",
     "user" => "test",
     "code" => "10738",
     "pass" => "test",

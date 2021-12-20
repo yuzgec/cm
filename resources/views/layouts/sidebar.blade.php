@@ -4,7 +4,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <h1 class="navbar-brand navbar-brand-autodark">
-            <a href="{{route('dashboard.index')}}" title="Dashboard">
+            <a href="{{route('dashboard.index')}}" title="Anasayfa">
                 <img src="{{url('assets/images/logo.png')}}" width="250"  alt="{{config('app.name')}}" class="navbar-brand-image">
             </a>
         </h1>
