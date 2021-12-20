@@ -33,6 +33,7 @@
                             </div>--}}
                         </div>
                         <div class="col-4" style="text-align: right">
+                            <a href="?tarih={{ Carbon\Carbon::parse($HaftaBaslangic)->subWeek()->format('Y-m-d') }}" class="btn btn-warning">Önceki Hafta</a>
                             <a href="{{route('mesairaporexcel')}}" class="btn btn-primary">Excel'e Aktar</a>
                         </div>
                     </div>

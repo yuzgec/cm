@@ -180,9 +180,11 @@ class PersonelController extends Controller
      }
 
 
-    public function mesairaporlama(){
+    public function mesairaporlama(Request $request){
 
         $now = Carbon::now();
+        if($request->tarih)
+            $now = Carbon::parse($request->tarih);
         $HaftaBaslangic = $now->startOfWeek()->format('Y-m-d H:i');
         $HaftaBitis = $now->endOfWeek()->format('Y-m-d H:i');
 
@@ -194,7 +196,7 @@ class PersonelController extends Controller
         foreach ($MesaiRapor as $Row){
             $Personeller[$Row->user_id][] = $Row;
         }
-        return view('personel::mesai.raporlama', compact('MesaiRapor', 'RaporTarih', 'Gunler', 'Personeller'));
+        return view('personel::mesai.raporlama', compact('MesaiRapor', 'RaporTarih', 'Gunler', 'Personeller', 'HaftaBaslangic'));
     }
      public function MesaiRaporExcelIndir(){
 
