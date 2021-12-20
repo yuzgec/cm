@@ -20,20 +20,9 @@
                             </h3>
                         </div>
 
-                        <div class="col-2" >
-                           {{-- <div class="d-flex justify-content-between" style="float: right;">
-                                <div class="col-12 p-1">
-                                    <label><small>Puantaj Periyod</small></label>
-                                    <select class="form-select" name="ay" id="ay" onchange="changeDate()">
-                                        @foreach($Aylar as $ay)
-                                            <option value="{{$ay["id"]}}" {{($ay["id"] == request()->get('ay')) ? 'selected=""':''}}>{{$ay["label"]}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>--}}
-                        </div>
-                        <div class="col-4" style="text-align: right">
+                        <div class="col-6" style="text-align: right">
                             <a href="?tarih={{ Carbon\Carbon::parse($HaftaBaslangic)->subWeek()->format('Y-m-d') }}" class="btn btn-warning">Önceki Hafta</a>
+                            <a href="?tarih={{ Carbon\Carbon::parse($HaftaBaslangic)->addWeek()->format('Y-m-d') }}" class="btn btn-info">Sonraki Hafta</a>
                             <a href="{{route('mesairaporexcel')}}" class="btn btn-primary">Excel'e Aktar</a>
                         </div>
                     </div>
