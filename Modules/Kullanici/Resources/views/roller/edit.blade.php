@@ -54,7 +54,6 @@
                     @method('PUT')
                     @csrf
                     <div class="row">
-
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header bg-dark">
@@ -77,6 +76,7 @@
                                             <input type="checkbox" name="permission[]"
                                                    value="{{ $p->name }}"
                                                    class="form-selectgroup-input"
+                                                   {{ ($Detay->hasPermissionTo($p->name))?'checked':'' }}
                                            >
                                             <span class="form-selectgroup-label">{{ $p->name }}</span>
                                         </label>

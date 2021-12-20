@@ -1,7 +1,5 @@
-
 <aside class="navbar navbar-vertical navbar-expand-lg navbar-dark">
     <div class="container-fluid">
-
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -10,10 +8,9 @@
                 <img src="{{url('assets/images/logo.png')}}" width="250"  alt="{{config('app.name')}}" class="navbar-brand-image">
             </a>
         </h1>
-
         <div class="collapse navbar-collapse" id="navbar-menu">
             <ul class="navbar-nav pt-lg-3">
-                @role('Admin|Super Vizor')
+
                 <li class="nav-item  {{ menu_is_active('dashboard') }}">
                     <a class="nav-link" href="{{route('dashboard.index')}}" >
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
@@ -24,8 +21,7 @@
                         </span>
                     </a>
                 </li>
-                @endrole
-                @role('Admin')
+                @can('Kullanıcı Yönetimi')
                 <li class="nav-item  {{ menu_is_active('kullanici') }} dropdown">
                         <a class="nav-link dropdown-toggle" href="#kullanici" data-bs-toggle="dropdown" role="button" aria-expanded="{{ menu_is_active('kullanici', 'true') }}" >
                         <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/package -->
@@ -41,15 +37,17 @@
                                 <a class="dropdown-item" href="{{route('kullanici.index')}}" title="Kullanıcıları Listele">
                                     Kullanıcıları Listele
                                 </a>
+                                @can('Kullanıcı Rol Yönetimi')
                                 <a class="dropdown-item" href="{{route('roller.index')}}" title="Kullanıcı Rolleri">
                                     Kullanıcı Rolleri
                                 </a>
+                                @endcan
                             </div>
                         </div>
                     </div>
                 </li>
-                @endrole
-                @role('Admin|Super Vizor')
+                @endcan
+                @can('SMS')
                 <li class="nav-item {{ menu_is_active('sms') }} dropdown">
                     <a class="nav-link dropdown-toggle {{ menu_is_active('rapor', 'show') }}" href="#sms" data-bs-toggle="dropdown" role="button" aria-expanded="{{ menu_is_active('sms', 'true') }}" >
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
@@ -66,25 +64,29 @@
                         <a class="dropdown-item" href="{{ route('sms.index') }}" title="SMS Dashboard">
                             SMS Dashboard
                         </a>
+                        @can('SMS Gönder')
                         <a class="dropdown-item" href="{{route('smsgonder')}}" title="SMS Gönder">
                             SMS Gönder
                         </a>
                         <a class="dropdown-item" href="{{route('toplusmsgonder')}}" title="Toplu SMS Gönder">
                             Toplu SMS Gönder
                         </a>
-
                         <a class="dropdown-item" href="{{route('excelsmsgonder')}}" title="Excel ile SMS Gönder">
                             Excel ile SMS Gönder
                         </a>
                         <a class="dropdown-item" href="{{route('smssablon.index')}}" title="SMS Şablonları">
                             SMS Şablonları
                         </a>
+                        @endcan
+                        @can('SMS Raporlama')
                         <a class="dropdown-item" href="{{route('smsraporlama')}}" title="SMS Raporlama">
                             SMS Raporlama
                         </a>
+                        @endcan
                     </div>
                 </li>
-
+                @endcan
+                @can('Rapor Yönetimi')
                 <li class="nav-item  {{ menu_is_active('rapor') }} dropdown">
                     <a class="nav-link dropdown-toggle {{ menu_is_active('rapor', 'show') }}" href="#rapor" data-bs-toggle="dropdown" role="button" aria-expanded="{{ menu_is_active('rapor', 'true') }}" >
                         <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/star -->
@@ -101,18 +103,25 @@
                         <a class="dropdown-item" href="{{ route('rapor.index') }}" >
                             Rapor Anasayfa
                         </a>
+                        @can('Personel Raporlama')
                         <a class="dropdown-item" href="{{route('dashboard.index')}}" >
                             Personel Raporlama
                         </a>
+                        @endcan
+                        @can('Çağrı Raporlama')
                         <a class="dropdown-item" href="{{route('dashboard.index')}}" >
                             Çağrı Raporlama
                         </a>
+                        @endcan
+                        @can('Ödeme Raporlama')
                         <a class="dropdown-item" href="{{route('dashboard.index')}}" >
                             Ödeme Raporlama
                         </a>
+                        @endcan
                     </div>
                 </li>
-
+                @endcan
+                @can('Personel Yönetimi')
                 <li class="nav-item  {{ menu_is_active('personel') }} dropdown">
                     <a class="nav-link dropdown-toggle" href="#sms" data-bs-toggle="dropdown" role="button" aria-expanded="{{ menu_is_active('personel', 'true') }}" >
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
@@ -130,19 +139,25 @@
                         <a class="dropdown-item" href="{{route('personel.index')}}" title="Personel Listesi">
                             Personel Listesi
                         </a>
+                        @can('Personel Çalışma Grupları')
                         <a class="dropdown-item" href="{{route('mesai.index')}}" >
                             Personel Çalışma Grupları
                         </a>
-
+                        @endcan
+                        @can('Personel Giriş-Çıkış')
                         <a class="dropdown-item" href="{{route('giriscikis')}}" >
                             Personel Giriş-Çıkış
                         </a>
+                        @endcan
+                        @can('Personel Raporlama')
                         <a class="dropdown-item" href="{{route('mesairaporlama')}}" >
                             Personel Raporlama
                         </a>
+                        @endcan
                     </div>
                 </li>
-
+                @endcan
+                @can('CallCenter')
                 <li class="nav-item  {{ menu_is_active('callcenter') }} dropdown">
                     <a class="nav-link dropdown-toggle" href="#sms" data-bs-toggle="dropdown" role="button" aria-expanded="{{ menu_is_active('callcenter', 'true') }}" >
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
@@ -163,7 +178,8 @@
 
                     </div>
                 </li>
-
+                @endcan
+                @can('Ayar Yönetimi')
                 <li class="nav-item  {{ menu_is_active('ayar') }} dropdown">
                     <a class="nav-link dropdown-toggle" href="#sms" data-bs-toggle="dropdown" role="button" aria-expanded="{{ menu_is_active('ayar', 'true') }}" >
                         <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/star -->
@@ -193,7 +209,8 @@
                         </a>
                     </div>
                 </li>
-
+                @endcan
+                @can('Ödeme Al')
                 <li class="nav-item  {{ menu_is_active('odeme') }}">
                     <a class="nav-link" href="{{route('odeme.index')}}" title="Ödeme Al">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
@@ -207,9 +224,8 @@
                         </span>
                     </a>
                 </li>
-
+                @endcan
                 <hr>
-                @endrole
                 @include('layouts.agentsidebar')
                 <hr>
                 <li class="nav-item">
