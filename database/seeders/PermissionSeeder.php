@@ -36,6 +36,14 @@ class PermissionSeeder extends Seeder
                 ]
             ],
             [
+                "name" => "Personel Yönetimi",
+                "parent_id" => 0,
+                "subs" => [
+                    ["name" => "Personel Çalışma Grupları", "parent_id" => 0],
+                    ["name" => "Personel Giriş-Çıkış", "parent_id" => 0],
+                ]
+            ],
+            [
                 "name" => "Ayar Yönetimi",
                 "parent_id" => 0,
                 "subs" => []
