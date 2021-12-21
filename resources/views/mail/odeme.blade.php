@@ -283,12 +283,13 @@
                     <td align="center" valign="top">
                         <table width="600" border="0" align="center" cellpadding="0" cellspacing="0" class="main">
                             <tr>
-                                <td align="center" valign="top" style="background:#232e3c;"><table width="500" border="0" cellspacing="0" cellpadding="0"
-                                                                                                   class="two-left-inner">
+                                <td align="center" valign="top" style="background:#232e3c;">
+                                    <table width="500" border="0" cellspacing="0" cellpadding="0" class="two-left-inner">
                                         <tr>
                                             <td height="10" align="center" valign="top" style="font-size:10px; line-height:10px;">&nbsp;</td>
                                         </tr>
-                                    </table></td>
+                                    </table>
+                                </td>
                             </tr>
                         </table>
                     </td>
@@ -299,19 +300,19 @@
                 <tr>
                     <td align="center" valign="top"><table width="600" border="0" align="center" cellpadding="0" cellspacing="0" class="main">
                             <tr>
-                                <td align="center" valign="top"><table width="260" border="0" align="center" cellpadding="0" cellspacing="0">
+                                <td align="center" valign="top">
+                                    <table width="260" border="0" align="center" cellpadding="0" cellspacing="0">
                                         <tr>
                                             <td height="40" align="center" valign="top" style="font-size:40px; line-height:40px;">&nbsp;</td>
                                         </tr>
                                         <tr>
                                             <td align="center" valign="top" style="font-family:'Open Sans', sans-serif, Verdana;
             font-size:12px; color:#4b4b4c; line-height:30px; font-weight:normal;" mc:edit="tm5-30">
-                                                <multiline>&copy; {{ date('Y') }} Mecit Kahraman Avukatlık Bürosu</multiline>
+                                                <multiline>&copy; 2021 -  Mecit Kahraman Avukatlık Bürosu</multiline>
                                             </td>
                                         </tr>
-
-
-                                    </table></td>
+                                    </table>
+                                </td>
                             </tr>
                         </table></td>
                 </tr>
