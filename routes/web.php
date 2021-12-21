@@ -70,9 +70,11 @@ Route::post('/OdemeSonuc', function (Request $request){
             $message->to('olcayy@gmail.com')->subject("Ödeme başarıyla oluşturmuştur.");
         });
 
-        return "Ödeme işlemi başarıyla gerçekleşmiştir.";
     }else{
         dd($request->all());
         return "Hata <br />" . $request->TURKPOS_RETVAL_Sonuc_Str;
     }
+
+    return "Ödeme işlemi başarıyla gerçekleşmiştir.";
+
 });
