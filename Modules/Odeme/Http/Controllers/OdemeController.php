@@ -149,7 +149,7 @@ class OdemeController extends Controller
             ->where('created_at', Carbon::today())
             ->where('personel_id', auth()->user()->id)
             ->where('odeme_cevap', 1)
-            ->sum('odeme.odeme_komisyon');
+            ->sum('odeme.odeme_tutari');
 
         $baslangic       = Carbon::today();
         $bitis           = Carbon::now();

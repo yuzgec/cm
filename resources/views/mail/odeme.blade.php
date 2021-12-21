@@ -136,7 +136,7 @@
                                                                 <tr>
                                                                     <td align="left" valign="top" style="font-family:'Open Sans', Verdana, Arial; font-size:14px; color:#FFF; font-weight:normal;
                     line-height:24px;" mc:edit="tm5-05">
-                                                                        <multiline>{{ $mail->ad_soyad }}<br />
+                                                                        <multiline>{{ $odeme->ad_soyad }}<br />
                                                                             Abdi İpekçi Caddesi No:13/19 Şişli / İstanbul
                                                                         </multiline></td>
                                                                 </tr>
@@ -156,7 +156,7 @@
                                                                 </tr>
                                                                 <tr>
                                                                     <td align="left" valign="top" style="font-family:'Open Sans', Verdana, Arial; font-size:14px; color:#FFF; font-weight:normal; line-height:24px;" mc:edit="tm5-07">
-                                                                        <multiline>#{{ $mail->dekont_id }}</multiline></td>
+                                                                        <multiline>#{{ $odeme->dekont_id }}</multiline></td>
                                                                 </tr>
                                                                 <tr>
                                                                     <td align="left" valign="top" style="font-family:'Open Sans', Verdana, Arial; font-size:14px; color:#FFF; font-weight:normal; line-height:24px;">&nbsp;</td>
@@ -177,7 +177,7 @@
                                                                             </tr>
                                                                             <tr>
                                                                                 <td align="left" valign="top" style="font-family:'Open Sans', Verdana, Arial; font-size:30px; color:#FFF; font-weight:bold;" mc:edit="tm5-09">
-                                                                                    <multiline>{{ $mail->odeme_tutari }}</multiline>
+                                                                                    <multiline>{{ $odeme->odeme_tutari }}</multiline>
                                                                                 </td>
                                                                             </tr>
                                                                         </table>
@@ -259,13 +259,13 @@
                                                             </multiline></td>
                                                         <td width="115" align="left" valign="bottom" style="font-family:'Open Sans', sans-serif, Verdana; font-size:13px; color:#71746f;
                 line-height:22px; font-weight:normal;" class="two-left" mc:edit="tm5-23">
-                                                            <multiline>{{ $mail->tckn }}</multiline>
+                                                            <multiline>{{ $odeme->tckn }}</multiline>
                                                         </td>
                                                         <td width="115" align="left" valign="bottom" style="font-family:'Open Sans', sans-serif, Verdana; font-size:13px;color:#71746f; line-height:22px; font-weight:normal;" class="two-left" mc:edit="tm5-24">
-                                                            <multiline>{{ $mesai->getPersonel->adsoyad }}</multiline></td>
+                                                            <multiline>{{ $mesai->ad_soyad }}</multiline></td>
                                                         <td width="115" align="left" valign="bottom" style="font-family:'Open Sans', sans-serif, Verdana;
                 font-size:13px; color:#71746f; line-height:22px; font-weight:normal;" class="two-left" mc:edit="tm5-25">
-                                                            <multiline>{{ $mail->odeme_tutari }}</multiline></td>
+                                                            <multiline>{{ $odeme->odeme_tutari }}</multiline></td>
                                                     </tr>
                                                 </table></td>
                                         </tr>

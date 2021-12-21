@@ -18,6 +18,6 @@ class Odeme extends Model
     }
 
     public function getPersonel(){
-        return $this->hasOne('Modules\Odeme\Entities\Personel');
+        return $this->hasOne('Modules\Odeme\Entities\Personel', 'id', 'personel_id');
     }
 }
