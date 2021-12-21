@@ -2,9 +2,14 @@
 
 namespace Modules\Dashboard\Http\Controllers;
 
+use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\DB;
+use Modules\Odeme\Entities\Odeme;
+use Modules\Personel\Entities\Personel;
 
 class DashboardController extends Controller
 {
@@ -14,7 +19,16 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('dashboard::index');
+        $UserCount = User::all()->count();
+        $PersonelCount = Personel::all()->count();
+        $OdemeListesi = Odeme::with('getPersonel')->where('odeme_cevap', 1)->limit(200)->paginate(10);
+
+        $GunlukToplam = DB::table('odeme')
+            ->where('created_at', Carbon::today())
+            ->where('odeme_cevap', 1)
+            ->sum('odeme.odeme_tutari');
+
+        return view('dashboard::index', compact('UserCount', 'PersonelCount','OdemeListesi', 'GunlukToplam'));
     }
 
     /**
