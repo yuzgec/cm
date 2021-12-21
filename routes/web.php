@@ -26,6 +26,7 @@ Route::get('rollers', function (){
 });
 
 Route::post('/OdemeSonuc', function (Request $request){
+
     $extra = explode('|',$request->TURKPOS_RETVAL_Ext_Data);
 
     $odeme = new \Modules\Odeme\Entities\Odeme;
@@ -57,14 +58,18 @@ Route::post('/OdemeSonuc', function (Request $request){
 //    dd($request->all());
     $odeme->save();
 
+
+
     if ($request->TURKPOS_RETVAL_Sonuc == 1){
 
-        Mail::send("mail.odeme",compact('odeme',),function ($message){
-            $message->to('salih.arik@mecitkahraman.com.tr')->subject("Ödeme başarıyla oluşturmuştur.");
+        $mail = \Modules\Odeme\Entities\Odeme::with('getPersonel')->find($odeme->id);
+
+        Mail::send("mail.odeme",compact('mail'),function ($message){
+            $message->to('salih.arik@mecitkahraman.com.tr')->subject($mail->dosya_no." | Ödeme başarıyla oluşturmuştur.");
         });
 
-        Mail::send("mail.odeme",compact('odeme',),function ($message){
-            $message->to('olcayy@gmail.com')->subject("Ödeme başarıyla oluşturmuştur.");
+        Mail::send("mail.odeme",compact('mail'),function ($message){
+            $message->to('olcayy@gmail.com')->subject($mail->dosya_no." | Ödeme başarıyla oluşturmuştur.");
         });
 
         return "Ödeme işlemi başarıyla gerçekleşmiştir.";

@@ -15,26 +15,15 @@
     <style type="text/css">
 
         body{ margin:0; padding:0; -webkit-text-size-adjust: none; -ms-text-size-adjust: none; background:#f0f3f8;}
-
         span.preheader{display: none; font-size: 1px;}
-
         html { width: 100%; }
-
         table { border-spacing: 0; border-coll apse: collapse;}
-
         .ReadMsgBody { width: 100%; background-color: #FFFFFF; }
-
         .ExternalClass { width: 100%; background-color: #FFFFFF; }
-
         .ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalCl ass font, .ExternalClass td, .ExternalClass div { line-height: 100%; }
-
         a,a:hover { text-decoration:none; color:#FFF;}
-
         img { display: block !important; }
-
         table td { border-collapse: collapse; }
-
-
         @media only screen and (max-width:640px)
 
         {
@@ -46,7 +35,6 @@
             table [class=menu-icon] { display:none;}
             img[class="image-full"] { width: 100% !important; }
             table[class=menu-icon] { display:none;}
-
         }
 
         @media only screen and (max-width:479px)
@@ -59,9 +47,7 @@
             table [class=menu-icon] { display:none;}
             img[class="image-full"] { width: 100% !important; }
             table[class=menu-icon] { display:none;}
-
         }
-
 
     </style>
 
@@ -69,7 +55,6 @@
 
 <body yahoo="fix" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 
-<!--Main Table Start-->
 
 <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#f0f3f8">
     <tr>
@@ -77,11 +62,13 @@
 
             <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
                 <tr>
-                    <td align="center" valign="top"><table width="600" border="0" align="center" cellpadding="0" cellspacing="0" class="main">
+                    <td align="center" valign="top">
+                        <table width="600" border="0" align="center" cellpadding="0" cellspacing="0" class="main">
                             <tr>
                                 <td height="60" align="center" valign="top" style="font-size:60px; line-height:60px;">&nbsp;</td>
                             </tr>
-                        </table></td>
+                        </table>
+                    </td>
                 </tr>
             </table>
 
@@ -149,7 +136,7 @@
                                                                 <tr>
                                                                     <td align="left" valign="top" style="font-family:'Open Sans', Verdana, Arial; font-size:14px; color:#FFF; font-weight:normal;
                     line-height:24px;" mc:edit="tm5-05">
-                                                                        <multiline>Adı Soyad<br />
+                                                                        <multiline>{{ $mail->ad_soyad }}<br />
                                                                             Abdi İpekçi Caddesi No:13/19 Şişli / İstanbul
                                                                         </multiline></td>
                                                                 </tr>
@@ -169,7 +156,7 @@
                                                                 </tr>
                                                                 <tr>
                                                                     <td align="left" valign="top" style="font-family:'Open Sans', Verdana, Arial; font-size:14px; color:#FFF; font-weight:normal; line-height:24px;" mc:edit="tm5-07">
-                                                                        <multiline>#215869876</multiline></td>
+                                                                        <multiline>#{{ $mail->dekont_id }}</multiline></td>
                                                                 </tr>
                                                                 <tr>
                                                                     <td align="left" valign="top" style="font-family:'Open Sans', Verdana, Arial; font-size:14px; color:#FFF; font-weight:normal; line-height:24px;">&nbsp;</td>
@@ -190,10 +177,11 @@
                                                                             </tr>
                                                                             <tr>
                                                                                 <td align="left" valign="top" style="font-family:'Open Sans', Verdana, Arial; font-size:30px; color:#FFF; font-weight:bold;" mc:edit="tm5-09">
-                                                                                    <multiline>2.254₺</multiline>
+                                                                                    <multiline>{{ $mail->odeme_tutari }}</multiline>
                                                                                 </td>
                                                                             </tr>
-                                                                        </table></td>
+                                                                        </table>
+                                                                    </td>
                                                                 </tr>
                                                             </table>
                                                         </td>
@@ -271,14 +259,13 @@
                                                             </multiline></td>
                                                         <td width="115" align="left" valign="bottom" style="font-family:'Open Sans', sans-serif, Verdana; font-size:13px; color:#71746f;
                 line-height:22px; font-weight:normal;" class="two-left" mc:edit="tm5-23">
-                                                            <multiline>1111111111</multiline>
+                                                            <multiline>{{ $mail->tckn }}</multiline>
                                                         </td>
-                                                        <td width="115" align="left" valign="bottom" style="font-family:'Open Sans', sans-serif, Verdana; font-size:13px;
-                 color:#71746f; line-height:22px; font-weight:normal;" class="two-left" mc:edit="tm5-24">
-                                                            <multiline>Salih Arık</multiline></td>
+                                                        <td width="115" align="left" valign="bottom" style="font-family:'Open Sans', sans-serif, Verdana; font-size:13px;color:#71746f; line-height:22px; font-weight:normal;" class="two-left" mc:edit="tm5-24">
+                                                            <multiline>{{ $mesai->getPersonel->adsoyad }}</multiline></td>
                                                         <td width="115" align="left" valign="bottom" style="font-family:'Open Sans', sans-serif, Verdana;
                 font-size:13px; color:#71746f; line-height:22px; font-weight:normal;" class="two-left" mc:edit="tm5-25">
-                                                            <multiline>2.254,00₺</multiline></td>
+                                                            <multiline>{{ $mail->odeme_tutari }}</multiline></td>
                                                     </tr>
                                                 </table></td>
                                         </tr>
@@ -320,7 +307,7 @@
                                         <tr>
                                             <td align="center" valign="top" style="font-family:'Open Sans', sans-serif, Verdana;
             font-size:12px; color:#4b4b4c; line-height:30px; font-weight:normal;" mc:edit="tm5-30">
-                                                <multiline>&copy; 2021 Mecit Kahraman Avukatlık Bürosu</multiline>
+                                                <multiline>&copy; {{ date('Y') }} Mecit Kahraman Avukatlık Bürosu</multiline>
                                             </td>
                                         </tr>
 

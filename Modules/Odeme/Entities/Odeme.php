@@ -11,9 +11,13 @@ class Odeme extends Model
 
     protected $guarded = [];
     protected $table = 'odeme';
-    
+
     protected static function newFactory()
     {
         return \Modules\Odeme\Database\factories\OdemeFactory::new();
+    }
+
+    public function getPersonel(){
+        return $this->hasOne('Modules\Odeme\Entities\Personel');
     }
 }
