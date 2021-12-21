@@ -63,13 +63,14 @@ Route::post('/OdemeSonuc', function (Request $request){
     if ($request->TURKPOS_RETVAL_Sonuc == 1){
 
         $mail = \Modules\Odeme\Entities\Odeme::with('getPersonel')->find($odeme->id);
+        dd($mail);
 
         Mail::send("mail.odeme",compact('mail'),function ($message){
-            $message->to('salih.arik@mecitkahraman.com.tr')->subject($mail->dosya_no." | Ödeme başarıyla oluşturmuştur.");
+            $message->to('salih.arik@mecitkahraman.com.tr')->subject("Ödeme başarıyla oluşturmuştur.");
         });
 
         Mail::send("mail.odeme",compact('mail'),function ($message){
-            $message->to('olcayy@gmail.com')->subject($mail->dosya_no." | Ödeme başarıyla oluşturmuştur.");
+            $message->to('olcayy@gmail.com')->subject("Ödeme başarıyla oluşturmuştur.");
         });
 
         return "Ödeme işlemi başarıyla gerçekleşmiştir.";
