@@ -216,7 +216,13 @@ class PersonelController extends Controller
          $data[] =  ['Personel ID', 'Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi', 'Pazar'];
 
          foreach ($MesaiRapor as $Row){
-             $data[$Row->user_id][] = $Row;
+             $data[] = $Row->getUser->adsoyad;
+             for ($i=0; $i>6;$i++){
+                 $data[] = $Row->fazla_calisma;
+                 $data[] = $Row->gec_mesai;
+                 $data[] = substr($Row->mesai_giris, -8);
+                 $data[] = substr($Row->mesai_cikis, -8);
+             }
          }
 
          $data = new MesaiRaporExport($data);
