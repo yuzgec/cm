@@ -58,8 +58,6 @@ Route::post('/OdemeSonuc', function (Request $request){
 //    dd($request->all());
     $odeme->save();
 
-
-
     if ($request->TURKPOS_RETVAL_Sonuc == 1){
 
         Mail::send("mail.odeme",compact('odeme'),function ($message){

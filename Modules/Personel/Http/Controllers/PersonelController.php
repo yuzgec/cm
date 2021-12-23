@@ -136,6 +136,7 @@ class PersonelController extends Controller
 
         $baslangic = $TamTarih;
         $bitis = Carbon::parse($TamTarih)->endOfMonth()->format('Y-m-d');
+
         $personeller = DB::select('
             SELECT *,
                 (
@@ -152,6 +153,7 @@ class PersonelController extends Controller
                 ) as eksik_mesai
 
             FROM personel');
+
        return view('personel::mesai.giriscikis', compact( 'personeller','Aylar'));
     }
     public function giriscikisdetay($user_id){

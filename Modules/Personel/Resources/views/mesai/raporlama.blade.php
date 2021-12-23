@@ -69,6 +69,12 @@
                                             <th>{{substr(@$item[1]->mesai_cikis, -8)}}</th>
                                         </td>
                                         <td class="text-center yazi">
+                                        <th>{{@$item[2]->fazla_calisma}}</th>
+                                        <th>{{@$item[2]->gec_mesai}}</th>
+                                        <th>{{substr(@$item[2]->mesai_giris, -8)}}</th>
+                                        <th>{{substr(@$item[2]->mesai_cikis, -8)}}</th>
+                                        </td>
+                                        <td class="text-center yazi">
                                             <th>{{@$item[3]->fazla_calisma}}</th>
                                             <th>{{@$item[3]->gec_mesai}}</th>
                                             <th>{{substr(@$item[3]->mesai_giris, -8)}}</th>
@@ -94,7 +100,6 @@
                                         </td>
                                     </tr>
                                 @endforeach
-
                         </div>
 
                         </tbody>
