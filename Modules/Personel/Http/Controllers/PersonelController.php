@@ -200,24 +200,23 @@ class PersonelController extends Controller
         }
         return view('personel::mesai.raporlama', compact('MesaiRapor', 'RaporTarih', 'Gunler', 'Personeller', 'HaftaBaslangic'));
     }
-     public function MesaiRaporExcelIndir(){
+     public function MesaiRaporExcelIndir(Request $request){
 
          $RaporTarih = Carbon::yesterday()->toDateString();
-
-         $data = [];
-
          $now = Carbon::now();
-         if(request('tarih'))
-             $now = Carbon::parse(request('tarih'));
-
+         if($request->tarih)
+             $now = Carbon::parse($request->tarih);
          $HaftaBaslangic = $now->startOfWeek()->format('Y-m-d H:i');
          $HaftaBitis = $now->endOfWeek()->format('Y-m-d H:i');
 
+
          $MesaiRapor = Puantaj::with('getUser')->whereBetween('gun', [$HaftaBaslangic, $HaftaBitis])->get();
 
-         $Personeller = [];
+         $data = [];
+         $data[] =  ['Personel ID', 'Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi', 'Pazar'];
+
          foreach ($MesaiRapor as $Row){
-             $Personeller[$Row->user_id][] = $Row;
+             $data[$Row->user_id][] = $Row;
          }
 
          $data = new MesaiRaporExport($data);
