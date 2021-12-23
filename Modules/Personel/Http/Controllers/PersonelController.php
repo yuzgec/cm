@@ -205,25 +205,21 @@ class PersonelController extends Controller
          $RaporTarih = Carbon::yesterday()->toDateString();
 
          $data = [];
-         $data[] = [
-             "Personel ID",
-             "Personel Adı Soyadı",
-             "Tarih",
-             "Fazla Çalışma (Dakika)",
-             "Eksik Çalışma (Dakika)"
-         ];
 
-         $MesaiRapor = Puantaj::with('getUser')->where('gun', Carbon::yesterday())->get();
+         $now = Carbon::now();
+         if(request('tarih'))
+             $now = Carbon::parse(request('tarih'));
 
-         foreach ($MesaiRapor as $row){
-             $data[] = [
-                 $row->getUser->remote_id,
-                 $row->getUser->adsoyad,
-                 $RaporTarih,
-                 $row->fazla_calisma,
-                 $row->gec_mesai
-             ];
+         $HaftaBaslangic = $now->startOfWeek()->format('Y-m-d H:i');
+         $HaftaBitis = $now->endOfWeek()->format('Y-m-d H:i');
+
+         $MesaiRapor = Puantaj::with('getUser')->whereBetween('gun', [$HaftaBaslangic, $HaftaBitis])->get();
+
+         $Personeller = [];
+         foreach ($MesaiRapor as $Row){
+             $Personeller[$Row->user_id][] = $Row;
          }
+
          $data = new MesaiRaporExport($data);
          return Excel::download($data, $RaporTarih.' Mesai Rapor.xlsx');
     }
