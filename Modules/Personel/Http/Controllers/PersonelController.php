@@ -217,7 +217,7 @@ class PersonelController extends Controller
 
          foreach ($MesaiRapor as $Row){
              $data[] = $Row->getUser->adsoyad;
-             for ($i=0; $i>6;$i++){
+             for ($i=0; $i >= 6;$i++){
                  $data[] = $Row->fazla_calisma;
                  $data[] = $Row->gec_mesai;
                  $data[] = substr($Row->mesai_giris, -8);
