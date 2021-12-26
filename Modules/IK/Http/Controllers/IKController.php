@@ -5,6 +5,7 @@ namespace Modules\IK\Http\Controllers;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Modules\Personel\Entities\Mesai;
 use Modules\Personel\Entities\Personel;
 
 class IKController extends Controller
@@ -15,8 +16,8 @@ class IKController extends Controller
      */
     public function index()
     {
-        $personel = Personel::all();
-        return view('ik::index', compact('personel'));
+        $Personel = Personel::all();
+        return view('ik::index', compact('Personel'));
     }
 
     /**
@@ -83,6 +84,10 @@ class IKController extends Controller
         $Personel = Personel::with('mesai')->paginate(20);
 
         return view('ik::calisanlar', compact('Personel'));
+    }
+    public function calisanDetay($id){
+        $PersoneDetay = Personel::find($id);
+        return view('ik::calisandetay', compact('PersoneDetay'));
     }
 
     public function izinler(){

@@ -1,4 +1,4 @@
-@hasanyrole('Agent|Admin')
+
     <li class="nav-item  {{ menu_is_active('agent') }}">
         <a class="nav-link" href="{{route('agent.index')}}" title="Agent Dashboard">
             <span class="nav-link-icon d-md-none d-lg-inline-block">
@@ -58,4 +58,4 @@
             </span>
         </a>
     </li>
-@endhasanyrole
+

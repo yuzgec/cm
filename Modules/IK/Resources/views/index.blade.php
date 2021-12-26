@@ -14,7 +14,7 @@
                 </h3>
             </div>
             <div class="list-group list-group-flush list-group-hoverable">
-                @foreach($personel->slice(0,4) as $item)
+                @foreach($Personel->slice(0,4) as $item)
                 <div class="list-group-item">
                     <div class="row align-items-center">
                         <div class="col-auto"><span class="badge bg-success"></span></div>
@@ -48,7 +48,7 @@
                 </h3>
             </div>
             <div class="list-group list-group-flush list-group-hoverable">
-                @foreach($personel->slice(5,8) as $item)
+                @foreach($Personel->slice(5,8) as $item)
                     <div class="list-group-item">
                         <div class="row align-items-center">
                             <div class="col-auto"><span class="badge bg-success"></span></div>
@@ -81,7 +81,7 @@
                 </h3>
             </div>
             <div class="list-group list-group-flush list-group-hoverable">
-                @foreach($personel->slice(5,6) as $item)
+                @foreach($Personel->slice(5,6) as $item)
                     <div class="list-group-item">
                         <div class="row align-items-center">
                             <div class="col-auto"><span class="badge bg-success"></span></div>
@@ -188,7 +188,7 @@
                 chart: {
                     type: "donut",
                     fontFamily: 'inherit',
-                    height: 240,
+                    height: 400,
                     sparkline: {
                         enabled: true
                     },
@@ -199,12 +199,12 @@
                 fill: {
                     opacity: 1,
                 },
-                series: [44, 55, 12, 2],
-                labels: ["Direct", "Affilliate", "E-mail", "Other"],
+                series: [44, 55, 12, 2, 12, 6],
+                labels: ['Hukuk', 'İdari İşler', 'İcra', 'Değer Kaybı', 'Dış Görev', 'Muhasebe', 'Bedeni Hasar'],
                 grid: {
                     strokeDashArray: 4,
                 },
-                colors: ["#206bc4", "#79a6dc", "#d2e1f3", "#e9ecf1"],
+                colors: ["#e6de00", '#00670a', "#0018ff", "#ff0000",'#999', '#e400ff', '#ff6000' ],
                 legend: {
                     show: true,
                     position: 'bottom',
