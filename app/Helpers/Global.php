@@ -10,6 +10,17 @@ function menu_is_active($url, $durum = 'active')
     return (Request::segment(1) == $url) ? $durum : null;
 }
 
+function ikmasonary($url){
+    return (Request::segment(1) == $url) ? 'true' : null;
+}
+
+function isim($isim){
+    $parcala = explode(" ", $isim);
+    $ilk = substr(current($parcala), 0,1);
+    $son = substr(end($parcala), 0,1);
+    return mb_convert_encoding($ilk.' '.$son, "UTF-8", "ISO-8859-9");
+}
+
 
 function money($deger){
     return number_format((float)$deger, 2, ',', '');

@@ -5,6 +5,8 @@
         <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
         <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
         <title>@yield('title', config('app.name'))</title>
         @include('layouts.css')
         @yield('customCSS')
@@ -35,7 +37,7 @@
 
                 <div class="page-body">
                     <div class="container-xl">
-                        <div class="row row-deck row-cards">
+                        <div class="row row-deck row-cards" data-masonry='{"percentPosition": {{ ikmasonary('ik') }} }'>
 
                             @yield('content')
 

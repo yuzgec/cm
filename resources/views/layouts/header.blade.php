@@ -1,8 +1,8 @@
 <header class="navbar navbar-expand-md navbar-light d-none d-lg-flex d-print-none">
-  
+
     <div class="container-xl">
 
-      
+
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -36,9 +36,9 @@
         </div>
         <div class="nav-item dropdown">
           <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
-            <span class="avatar avatar-sm" style="background-image: url(./static/avatars/000m.jpg)"></span>
+            <span class="avatar avatar-sm" >{{ isim(auth()->user()->name)}}</span>
             <div class="d-none d-xl-block ps-2">
-              <div>{{ auth()->user()->name}}</div>
+              <div>{{ auth()->user()->name }}</div>
               <div class="mt-1 small text-muted">Kullanıcı Görevi</div>
             </div>
           </a>
@@ -46,10 +46,10 @@
             <a href="#" class="dropdown-item">Profil Düzenle</a>
             <div class="dropdown-divider"></div>
             <a href="#" class="dropdown-item">Ayarlar</a>
-            <form action="{{route('logout')}}" method="post"> 
-                @csrf 
+            <form action="{{route('logout')}}" method="post">
+                @csrf
                 <button type="submit" class="dropdown-item">Çıkış</button>
-            </form> 
+            </form>
 
           </div>
         </div>
@@ -72,6 +72,6 @@
         </div>
     </div>
 
-      
+
     </div>
   </header>

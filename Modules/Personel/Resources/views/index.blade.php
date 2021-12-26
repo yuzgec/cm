@@ -47,7 +47,7 @@
                         </div>
                     </div>
                 </div>
-             
+
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="table-responsive">
@@ -69,7 +69,9 @@
                                     <tr>
                                         <td>
                                             <div class="d-flex py-1 align-items-center">
-                                                <span class="avatar me-2" style="background-image: url({{ ($item->foto == "") ? '/assets/images/resimyok.jpg' : '/images/personel/50/'.$item->foto}})"></span>
+                                                <span class="avatar me-2" style="background-image: url({{'/images/personel/50/'.$item->foto}})">
+                                                    {{ ($item->foto == "") ? isim($item->adsoyad) : null }}
+                                                </span>
                                                 <div class="flex-fill">
                                                     <div class="font-weight-medium">{{ $item->adsoyad}}</div>
                                                 </div>
@@ -83,20 +85,20 @@
 
                                         <td>
                                             <div class="text-muted">
-                                                {{ $item->telefon}}
+                                                {{ ($item->telefon == 0) ? null : $item->telefon}}
                                             </div>
                                         </td>
-                                           
+
                                         <td>
                                             <div class="text-muted">
                                                 {{ $item->mesai->mesai_adi}}
                                             </div>
                                         </td>
-                                        
+
                                         <td class="">
                                             <label class="form-check form-check-single form-switch ">
-                                                <input 
-                                                class="form-check-input switch" 
+                                                <input
+                                                class="form-check-input switch"
                                                 active-id="{{ $item->id }}"
                                                 type="checkbox" @if ($item->durum == 1) checked @endif>
                                             </label>
@@ -151,7 +153,7 @@
                         </div>
                     </div>
                 </div>
-              
+
             </div>
         </div>
     </div>

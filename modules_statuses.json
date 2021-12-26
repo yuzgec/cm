@@ -8,5 +8,6 @@
     "Rapor": true,
     "Personel": true,
     "Agent": true,
-    "CallCenter": true
+    "CallCenter": true,
+    "IK": true
 }

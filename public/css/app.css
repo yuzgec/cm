@@ -85,6 +85,20 @@ p {
   margin-bottom: 1rem;
 }
 
+
+.birsatir {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.ikisatir {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
 abbr[title],
 abbr[data-original-title] {
   text-decoration: underline;

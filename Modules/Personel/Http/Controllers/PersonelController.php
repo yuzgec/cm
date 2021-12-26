@@ -300,4 +300,5 @@ class PersonelController extends Controller
         $data = new PuantajExport($data);
         return Excel::download($data, 'Puantaj Detay.xlsx');
     }
+
 }

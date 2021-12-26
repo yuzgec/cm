@@ -10,7 +10,6 @@
         </h1>
         <div class="collapse navbar-collapse" id="navbar-menu">
             <ul class="navbar-nav pt-lg-3">
-
                 <li class="nav-item  {{ menu_is_active('dashboard') }}">
                     <a class="nav-link" href="{{route('dashboard.index')}}" >
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
@@ -210,6 +209,45 @@
                     </div>
                 </li>
                 @endcan
+
+                    <li class="nav-item  {{ menu_is_active('ik') }} dropdown">
+                        <a class="nav-link dropdown-toggle" href="#sms" data-bs-toggle="dropdown" role="button" aria-expanded="{{ menu_is_active('ik', 'true') }}" >
+                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+	                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><polyline points="13 3 13 10 19 10 11 21 11 14 5 14 13 3" /></svg>
+                        </span>
+                            <span class="nav-link-title {{ menu_is_active('ik') }}">
+                            İK Yönetimi
+                        </span>
+                        </a>
+
+                        <div class="dropdown-menu {{ menu_is_active('ik', 'show') }}">
+                            <a class="dropdown-item" href="{{route('ik.index')}}" >
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><circle cx="12" cy="13" r="2" /><line x1="13.45" y1="11.55" x2="15.5" y2="9.5" /><path d="M6.4 20a9 9 0 1 1 11.2 0z" /></svg>
+                                 İK Dashboard
+                            </a>
+                            <a class="dropdown-item" href="{{route('calisanlar')}}" >
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><circle cx="9" cy="7" r="4" /><path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /><path d="M21 21v-2a4 4 0 0 0 -3 -3.85" /></svg>
+                                 Çalışanlar
+                            </a>
+                            <a class="dropdown-item" href="{{route('izinler')}}" >
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M16 10h4a2 2 0 0 1 0 4h-4l-4 7h-3l2 -7h-4l-2 2h-3l2 -4l-2 -4h3l2 2h4l-2 -7h3z" /></svg>
+                                 İzinler
+                            </a>
+                            <a class="dropdown-item" href="{{route('harcamalar')}}" >
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M17 8v-3a1 1 0 0 0 -1 -1h-10a2 2 0 0 0 0 4h12a1 1 0 0 1 1 1v3m0 4v3a1 1 0 0 1 -1 1h-12a2 2 0 0 1 -2 -2v-12" /><path d="M20 12v4h-4a2 2 0 0 1 0 -4h4" /></svg>
+                                 Harcamalar
+                            </a>
+                            <a class="dropdown-item" href="{{route('ikraporlar')}}" >
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M8 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h5.697" /><path d="M18 14v4h4" /><path d="M18 11v-4a2 2 0 0 0 -2 -2h-2" /><rect x="8" y="3" width="6" height="4" rx="2" /><circle cx="18" cy="18" r="4" /><path d="M8 11h4" /><path d="M8 15h3" /></svg>
+                                 Raporlar
+                            </a>
+                            <a class="dropdown-item" href="{{route('takvim')}}" >
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><rect x="4" y="5" width="16" height="16" rx="2" /><line x1="16" y1="3" x2="16" y2="7" /><line x1="8" y1="3" x2="8" y2="7" /><line x1="4" y1="11" x2="20" y2="11" /><line x1="11" y1="15" x2="12" y2="15" /><line x1="12" y1="15" x2="12" y2="18" /></svg>
+                                 Takvim
+                            </a>
+                        </div>
+                    </li>
+
                 @can('Ödeme Al')
                 <li class="nav-item  {{ menu_is_active('odeme') }}">
                     <a class="nav-link" href="{{route('odeme.index')}}" title="Ödeme Al">

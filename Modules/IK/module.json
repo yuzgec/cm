@@ -1,0 +1,13 @@
+{
+    "name": "IK",
+    "alias": "ik",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\IK\\Providers\\IKServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}
