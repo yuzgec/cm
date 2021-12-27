@@ -10,17 +10,16 @@
             <div class="card-header">
                 <h3 class="card-title">
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M16 10h4a2 2 0 0 1 0 4h-4l-4 7h-3l2 -7h-4l-2 2h-3l2 -4l-2 -4h3l2 2h4l-2 -7h3z" /></svg>
-                    İzin Talepleri
+                    İzin Talepleri (4)
                 </h3>
             </div>
             <div class="list-group list-group-flush list-group-hoverable">
                 @foreach($Personel->slice(0,4) as $item)
                 <div class="list-group-item">
                     <div class="row align-items-center">
-                        <div class="col-auto"><span class="badge bg-success"></span></div>
                         <div class="col-auto">
                             <a href="#">
-                               <span class="avatar me-2" style="background-image: url({{'/images/personel/50/'.$item->foto}})">
+                               <span class="avatar me-2" style="color:white;background-image: url({{'/images/personel/50/'.$item->foto}});background-color: {{ $item->mesai->mesai_renk }} ">
                                     {{ ($item->foto == "") ? isim($item->adsoyad) : null }}
                                 </span>
                             </a>
@@ -44,17 +43,16 @@
             <div class="card-header">
                 <h3 class="card-title">
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" /><circle cx="18" cy="18" r="4" /><path d="M15 3v4" /><path d="M7 3v4" /><path d="M3 11h16" /><path d="M18 16.496v1.504l1 1" /></svg>
-                    Yaklaşan İzinler
+                    Yaklaşan İzinler (4)
                 </h3>
             </div>
             <div class="list-group list-group-flush list-group-hoverable">
                 @foreach($Personel->slice(5,8) as $item)
                     <div class="list-group-item">
                         <div class="row align-items-center">
-                            <div class="col-auto"><span class="badge bg-success"></span></div>
                             <div class="col-auto">
                                 <a href="#">
-                                    <span class="avatar me-2" style="background-image: url({{'/images/personel/50/'.$item->foto}})">
+                                     <span class="avatar me-2" style="color:white;background-image: url({{'/images/personel/50/'.$item->foto}});background-color: {{ $item->mesai->mesai_renk }} ">
                                         {{ ($item->foto == "") ? isim($item->adsoyad) : null }}
                                     </span>
                                 </a>
@@ -77,17 +75,16 @@
             <div class="card-header">
                 <h3 class="card-title">
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" /><circle cx="18" cy="18" r="4" /><path d="M15 3v4" /><path d="M7 3v4" /><path d="M3 11h16" /><path d="M18 16.496v1.504l1 1" /></svg>
-                    Mesai Talepleri
+                    Mesai Talepleri  (4)
                 </h3>
             </div>
             <div class="list-group list-group-flush list-group-hoverable">
                 @foreach($Personel->slice(5,6) as $item)
                     <div class="list-group-item">
                         <div class="row align-items-center">
-                            <div class="col-auto"><span class="badge bg-success"></span></div>
                             <div class="col-auto">
                                 <a href="#">
-                                    <span class="avatar me-2" style="background-image: url({{'/images/personel/50/'.$item->foto}})">
+                                    <span class="avatar me-2" style="color:white;background-image: url({{'/images/personel/50/'.$item->foto}});background-color: {{ $item->mesai->mesai_renk }} ">
                                         {{ ($item->foto == "") ? isim($item->adsoyad) : null }}
                                     </span>
                                 </a>
@@ -110,7 +107,7 @@
                 <div class="d-flex">
                     <h3 class="card-title">
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M17 8v-3a1 1 0 0 0 -1 -1h-10a2 2 0 0 0 0 4h12a1 1 0 0 1 1 1v3m0 4v3a1 1 0 0 1 -1 1h-12a2 2 0 0 1 -2 -2v-12" /><path d="M20 12v4h-4a2 2 0 0 1 0 -4h4" /></svg>
-                        Ödeme Talepleri
+                        Ödeme Talepleri (0)
                     </h3>
                 </div>
                 <div class="d-flex">
@@ -136,15 +133,15 @@
                     <p>01.01.2022</p>
                 </div>
                 <div class="d-flex justify-content-between">
-                    <p>Yılbaşı</p>
+                    <p class="birsatir">23 Nisan Egemenlik ve Çocuk Bayramı</p>
+                    <p>23.04.2022</p>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <p class="birsatir"> Atatürk'ü Anma ve Gençlik ve Spor Bayramı </p>
                     <p>01.01.2022</p>
                 </div>
                 <div class="d-flex justify-content-between">
-                    <p>Yılbaşı</p>
-                    <p>01.01.2022</p>
-                </div>
-                <div class="d-flex justify-content-between">
-                    <p>Yılbaşı</p>
+                    <p>Ramazan Bayramı</p>
                     <p>01.01.2022</p>
                 </div>
             </div>
@@ -157,7 +154,7 @@
                 <div class="d-flex">
                     <h3 class="card-title">
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><circle cx="7" cy="7" r="4" /><path d="M7 3v4h4" /><line x1="9" y1="17" x2="9" y2="21" /><line x1="17" y1="14" x2="17" y2="21" /><line x1="13" y1="13" x2="13" y2="21" /><line x1="21" y1="12" x2="21" y2="21" /></svg>
-                        Çalışan Dağılımı
+                        Çalışan Dağılımı ({{ $Personel->count() }})
                     </h3>
                     <div class="ms-auto">
                         <div class="dropdown">

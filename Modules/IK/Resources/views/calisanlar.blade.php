@@ -2,23 +2,21 @@
 @section('title', 'Çalışanlar Listesi | '.config('app.name'))
 @section('content')
     <div class="col-12 d-flex justify-content-between">
-        <div class="text-muted mt-1 mb-1">Toplam ({{ $Personel->count() }}) personel bulunmaktadır.</div>
+        <div class="text-muted mt-1 mb-1">Toplam ({{ $Personel->total() }}) personel bulunmaktadır.</div>
 
-            <div class="me-3">
-                <div class="input-icon">
-                    <form method="GET" action="{{ route('personel.index') }}">
-                        @csrf
-                        <input type="text" name="q" class="form-control" placeholder="Personel Arama…" value="{{ request('q') }}">
-                        <span class="input-icon-addon">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-                                 viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                 stroke-linecap="round" stroke-linejoin="round">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                <circle cx="10" cy="10" r="7" />
-                                <line x1="21" y1="21" x2="15" y2="15" /></svg>
-                        </span>
-                    </form>
-                </div>
+            <div class="input-icon">
+                <form method="GET" action="{{ route('personel.index') }}">
+                    @csrf
+                    <input type="text" name="q" class="form-control" placeholder="Personel Arama…" value="{{ request('q') }}">
+                    <span class="input-icon-addon">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+                             viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                             stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <circle cx="10" cy="10" r="7" />
+                            <line x1="21" y1="21" x2="15" y2="15" /></svg>
+                    </span>
+                </form>
             </div>
 
             <a href="{{ route('personel.create')}}" class="btn btn-primary">
@@ -32,6 +30,10 @@
                 Personel Ekle
             </a>
 
+            {{ $Personel->appends(['siralama' => 'personel'])->links() }}
+
+
+
     </div>
 
     @foreach($Personel as $item)
@@ -43,17 +45,19 @@
                         <div class="dropdown">
                             <a class="dropdown-toggle text-muted" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
                             <div class="dropdown-menu dropdown-menu-end">
-                                <a class="dropdown-item active" href="#">İzin ekle</a>
-                                <a class="dropdown-item" href="#">Avans Ekle</a>
-                                <a class="dropdown-item" href="#">Harcama Ekle</a>
+                                <a class="dropdown-item active" href="#" title="İzin Ekle">İzin ekle</a>
+                                <a class="dropdown-item" href="#" title="Avans Ekle">Avans Ekle</a>
+                                <a class="dropdown-item" href="#" title="Harcama Ekle">Harcama Ekle</a>
                             </div>
                         </div>
                     </div>
                 </div>
-                <span class="avatar avatar-xl mb-3 avatar-rounded" style="background-image: url({{'/images/personel/50/'.$item->foto}})">
+
+                <span class="avatar avatar-xl mb-3 avatar-rounded" style="background-image: url({{'/images/personel/50/'.$item->foto}})" title="{{$item->adsoyad}}">
                     {{ ($item->foto == "") ? isim($item->adsoyad) : null }}
                 </span>
-                <h3 class="m-0 mb-1"><a href="#">{{$item->adsoyad}}</a></h3>
+
+                <h3 class="m-0 mb-1"><a href="#" title="{{$item->adsoyad}}">{{$item->adsoyad}}</a></h3>
                 <div class="text-muted birsatir" title="{{ $item->email}}">{{ $item->email}}</div>
                 <div class="text-muted birsatir">{{ ($item->telefon) ? $item->telefon : null}}</div>
                 <div class="mt-3">

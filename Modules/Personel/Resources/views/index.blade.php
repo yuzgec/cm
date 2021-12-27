@@ -11,7 +11,7 @@
                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 20h4l10.5 -10.5a1.5 1.5 0 0 0 -4 -4l-10.5 10.5v4" /><line x1="13.5" y1="6.5" x2="17.5" y2="10.5" /></svg>
                                 Personel Yönetimi
                             </h3>
-                            <div class="text-muted mt-1 mb-1">Toplam ({{ $all->count() }}) personel bulunmaktadır.</div>
+                            <div class="text-muted mt-1 mb-1">Toplam ({{ $Personel->count() }}) personel bulunmaktadır.</div>
                         </div>
 
                         <div class="col-auto ms-auto d-print-none mb-1">
@@ -65,11 +65,11 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                @foreach ($all as $item)
+                                @foreach ($Personel as $item)
                                     <tr>
                                         <td>
                                             <div class="d-flex py-1 align-items-center">
-                                                <span class="avatar me-2" style="background-image: url({{'/images/personel/50/'.$item->foto}})">
+                                                <span class="avatar me-2" style="color:white;background-image: url({{'/images/personel/50/'.$item->foto}});background-color: {{ $item->mesai->mesai_renk }} ">
                                                     {{ ($item->foto == "") ? isim($item->adsoyad) : null }}
                                                 </span>
                                                 <div class="flex-fill">
@@ -90,8 +90,8 @@
                                         </td>
 
                                         <td>
-                                            <div class="text-muted">
-                                                {{ $item->mesai->mesai_adi}}
+                                            <div class="text-muted badge" style="background-color:{{ $item->mesai->mesai_renk}} ">
+                                                <span class="text-white">{{ $item->mesai->mesai_adi}}</span>
                                             </div>
                                         </td>
 

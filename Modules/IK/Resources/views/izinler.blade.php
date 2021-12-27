@@ -19,11 +19,9 @@
                 <li class="nav-item">
                     <a href="#onay-surecleri" class="nav-link" data-bs-toggle="tab"><span class="m-2">Onay Süreçleri</span></a>
                 </li>
-
             </ul>
             <div class="card-body">
                 <div class="tab-content">
-
                     <div class="tab-pane active show" id="izinler">
 
                         <ul class="nav nav-tabs" data-bs-toggle="tabs">

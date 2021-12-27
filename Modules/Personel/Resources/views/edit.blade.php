@@ -4,77 +4,76 @@
     <div class="col-sm-12 col-lg-12">
         <div class="card">
             <div class="card-body">
-                <div class="page-header d-print-none">
-                    <div class="row align-items-center">
-                        <div class="col">
-                            <div class="page-pretitle">
-                                Yönetim Paneli
-                            </div>
-                            <h2 class="page-title">
-                                Çağrı Merkezi Sistemi
-                            </h2>
-                        </div>
 
-                        <div class="col-auto ms-auto d-print-none mb-1">
-                            <a href="{{ route('dashboard.index')}}" class="btn btn-secondary">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-                                    viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                    stroke-linecap="round" stroke-linejoin="round">
-                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                    <line x1="12" y1="5" x2="12" y2="19" />
-                                    <line x1="5" y1="12" x2="19" y2="12" />
-                                </svg>
-                                Yönetim Anasayfa
-                            </a> 
-                            <a href="{{ route('kullanici.create')}}" class="btn btn-primary ml-3">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-                                    viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                    stroke-linecap="round" stroke-linejoin="round">
-                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                    <line x1="12" y1="5" x2="12" y2="19" />
-                                    <line x1="5" y1="12" x2="19" y2="12" />
-                                </svg>
-                                Personel Listesi
-                            </a>
-                            <a href="{{ route('roles.create')}}" class="btn btn-primary ml-3">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-                                    viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                    stroke-linecap="round" stroke-linejoin="round">
-                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                    <line x1="12" y1="5" x2="12" y2="19" />
-                                    <line x1="5" y1="12" x2="19" y2="12" />
-                                </svg>
-                                Personel Grupları
-                            </a>
-                            
-                        </div>
-                    </div>
-                </div>
                 <form action="{{ route('personel.update', $personel->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     <div class="row">
 
                         @include('layouts.validate')
+                        <div class="col-md-4">
+                            <div class="card">
+                                <div class="card-body">
 
+                                    <div class="form-group mb-3 text-center ">
+                                        <label class="form-label">Personel Resim</label>
+
+                                        <span class="avatar avatar-xl mb-3 avatar-rounded" style="background-image: url({{'/images/personel/50/'.$personel->foto}})" title="{{$personel->adsoyad}}">
+                                            {{ ($personel->foto == "") ? isim($personel->adsoyad) : null }}
+                                        </span>
+
+                                        <input type="file" class="form-control" name="foto" id="images">
+
+                                        <div class="text-center mt-4">
+                                            <div id="preview"></div>
+                                        </div>
+                                        @if($personel->durum == 1)
+                                            <span class="badge bg-success ">Aktif Çalışan</span>
+                                        @else
+                                            <span class="badge bg-danger ">Eski Çalışan</span>
+                                        @endif
+                                    </div>
+
+                                    <div class="d-flex justify-content-between">
+                                        <p>Adı Soyadı</p>
+                                        <p>{{ $personel->adsoyad }}</p>
+                                    </div>
+                                    <div class="d-flex justify-content-between">
+                                        <p>Yönetici</p>
+                                        <p>{{ @$personel->mesai->adsoyad }}</p>
+                                    </div>
+                                    <div class="d-flex justify-content-between">
+                                        <p>Ünvan</p>
+                                        <p>{{ @$personel->mesai->adsoyad }}</p>
+                                    </div>
+                                    <div class="d-flex justify-content-between">
+                                        <p>Depertman</p>
+                                        <p>{{ @$personel->mesai->mesai_adi }}</p>
+                                    </div>
+                                    <div class="d-flex justify-content-between">
+                                        <p>E-Posta</p>
+                                        <p>{{ @$personel->email }}</p>
+                                    </div>
+                                    <div class="d-flex justify-content-between">
+                                        <p>Telefon</p>
+                                        <p>{{ @$personel->telefon}}</p>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
                         <div class="col-md-8">
                             <div class="card">
-                                <div class="card-header bg-dark">
-                                    <h3 class="card-title text-white">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 20h4l10.5 -10.5a1.5 1.5 0 0 0 -4 -4l-10.5 10.5v4" /><line x1="13.5" y1="6.5" x2="17.5" y2="10.5" /></svg>
-                                        Personel Düzenle - {{ $personel->adsoyad}}
-                                    </h3>
-                                </div>
-                
                                 <div class="card-body">
-                
+
                                     <div class="form-group mb-3 row">
                                         <label class="form-label col-3 col-form-label">Adı Soyadı </label>
                                         <div class="col">
                                             <input type="text" class="form-control" name="adsoyad" value="{{ $personel->adsoyad}}">
                                         </div>
                                     </div>
-                
+
                                     <div class="form-group mb-3 row">
                                         <label class="form-label col-3 col-form-label">Email Adresi </label>
                                         <div class="col">
@@ -82,7 +81,6 @@
                                         </div>
                                     </div>
 
-                                    
                                     <div class="form-group mb-3 row">
                                         <label class="form-label col-3 col-form-label">Telefon Numarası </label>
                                         <div class="col">
@@ -96,7 +94,7 @@
                                             <input type="text" class="form-control" name="tckn" value="{{ $personel->tckn}}">
                                         </div>
                                     </div>
-                                    
+
                                     <div class="form-group mb-3 row">
                                         <label class="form-label col-3 col-form-label">Personel Grubu</label>
                                         <div class="col">
@@ -118,43 +116,15 @@
                                             </select>
                                         </div>
                                     </div>
-                                
+
                                 </div>
 
                                 <button type="submit" class="btn btn-primary btn-block">Kaydet</button>
-                
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="card">
-                                <div class="card-header bg-dark" style="justify-content:space-between; ">
-                                    <h3 class="card-title text-white ">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 8v-2a2 2 0 0 1 2 -2h2" /><path d="M4 16v2a2 2 0 0 0 2 2h2" /><path d="M16 4h2a2 2 0 0 1 2 2v2" /><path d="M16 20h2a2 2 0 0 0 2 -2v-2" /><circle cx="12" cy="12" r="3" /></svg>
-                                        Multimedya
-                                    </h3>
-                                    <a href="{{ route('dashboard.index') }}">
-                                        <h3 class="card-title text-white">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 13l-4 -4l4 -4m-4 4h11a4 4 0 0 1 0 8h-1" /></svg>
-                                            Geri
-                                        </h3>
-                                    </a>
-                                </div>
-                                <div class="card-body">
-                
-                                    <div class="form-group mb-3 ">
-                                        <label class="form-label">Personel Resim</label>
-                                        <input type="file" class="form-control" name="foto" id="images">
 
-                                        <div class="text-center mt-4">
-                                            <div id="preview"></div>
-                                        </div>
-                                    </div>
-                
-                                </div>
                             </div>
-                           
                         </div>
-                    
+
+
                     </div>
             </form>
             </div>

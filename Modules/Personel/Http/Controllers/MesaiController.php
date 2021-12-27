@@ -6,6 +6,7 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\Personel\Entities\Mesai;
+use Modules\Personel\Entities\Personel;
 
 class MesaiController extends Controller
 {
@@ -15,8 +16,9 @@ class MesaiController extends Controller
      */
     public function index()
     {
-        $all = Mesai::all();
-        return view('personel::mesai.index',compact('all'));
+        $Mesai = Mesai::with('mesaiyoneticisi')->get();
+        //dd($Mesai);
+        return view('personel::mesai.index',compact('Mesai'));
     }
 
     /**
@@ -25,7 +27,9 @@ class MesaiController extends Controller
      */
     public function create()
     {
-        return view('personel::mesai.create');
+        $Personel = Personel::select('remote_id', 'adsoyad')->get();
+        //dd($Personel);
+        return view('personel::mesai.create',compact('Personel'));
     }
 
     /**
@@ -36,10 +40,11 @@ class MesaiController extends Controller
     public function store(Request $request)
     {
         $mesai = new Mesai;
-        //dd($mesai);
         $mesai->mesai_adi       = $request->mesai_adi;
         $mesai->mesai_giris     = $request->mesai_giris;
         $mesai->mesai_cikis     = $request->mesai_cikis;
+        $mesai->mesai_renk      = $request->mesai_renk;
+        $mesai->mesai_yonetici  = $request->mesai_yonetici;
         $mesai->save();
 
         return redirect()->route('mesai.index');
@@ -62,8 +67,9 @@ class MesaiController extends Controller
      */
     public function edit($id)
     {
-        $mesai = Mesai::findOrFail($id);
-        return view('personel::mesai.edit', compact('mesai'));
+        $Personel = Personel::select('remote_id', 'adsoyad')->get();
+        $Mesai = Mesai::findOrFail($id);
+        return view('personel::mesai.edit', compact('Mesai', 'Personel'));
     }
 
     /**
@@ -75,10 +81,11 @@ class MesaiController extends Controller
     public function update(Request $request, $id)
     {
         $mesai = Mesai::findOrFail($id);
-        //dd($mesai);
         $mesai->mesai_adi       = $request->mesai_adi;
         $mesai->mesai_giris     = $request->mesai_giris;
         $mesai->mesai_cikis     = $request->mesai_cikis;
+        $mesai->mesai_renk      = $request->mesai_renk;
+        $mesai->mesai_yonetici  = $request->mesai_yonetici;
         $mesai->save();
 
         return redirect()->route('mesai.index');

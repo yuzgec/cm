@@ -26,9 +26,9 @@ class PersonelController extends Controller
     public function index()
     {
 
-        $all = Personel::with('mesai')->get();
+        $Personel = Personel::with('mesai')->get()->sortByDesc('mesai.mesai_renk');;
         //dd($all);
-        return view('personel::index', compact('all'));
+        return view('personel::index', compact('Personel'));
     }
 
     /**
@@ -81,7 +81,7 @@ class PersonelController extends Controller
     public function edit($id)
     {
 
-        $personel = Personel::findOrFail($id);
+        $personel = Personel::with('mesai')->findOrFail($id);
         $mesai = Mesai::all();
 
         return view('personel::edit', compact('personel','mesai'));

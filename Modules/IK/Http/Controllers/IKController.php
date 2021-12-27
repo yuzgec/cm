@@ -16,7 +16,7 @@ class IKController extends Controller
      */
     public function index()
     {
-        $Personel = Personel::all();
+        $Personel = Personel::with('mesai')->get();
         return view('ik::index', compact('Personel'));
     }
 

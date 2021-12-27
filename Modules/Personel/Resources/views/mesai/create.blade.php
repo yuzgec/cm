@@ -25,7 +25,7 @@
                                     <line x1="5" y1="12" x2="19" y2="12" />
                                 </svg>
                                 Yönetim Anasayfa
-                            </a> 
+                            </a>
                             <a href="{{ route('kullanici.create')}}" class="btn btn-primary ml-3">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
                                     viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
@@ -36,8 +36,8 @@
                                 </svg>
                                 Personel Listesi
                             </a>
-                           
-                            
+
+
                         </div>
                     </div>
                 </div>
@@ -55,16 +55,16 @@
                                         Çalışma Grubu Ekle
                                     </h3>
                                 </div>
-                
+
                                 <div class="card-body">
-                
+
                                     <div class="form-group mb-3 row">
                                         <label class="form-label col-3 col-form-label">Grub Adı </label>
                                         <div class="col">
                                             <input type="text" class="form-control" name="mesai_adi" placeholder="Çalışma Grubu Adı Giriniz">
                                         </div>
                                     </div>
-                
+
                                     <div class="form-group mb-3 row">
                                         <label class="form-label col-3 col-form-label" for="giris">Mesai Giriş </label>
                                         <div class="col">
@@ -78,14 +78,34 @@
                                             <input type="time" class="form-control" name="mesai_cikis"  id="cikis">
                                         </div>
                                     </div>
-                                  
+
+                                    <div class="form-group mb-3 row">
+                                        <label class="form-label col-3 col-form-label">Grup Yöneticisi</label>
+                                        <div class="col">
+                                            <select class="form-select" name="mesai_yonetici">
+                                                <option value="" disabled>Yönetici Seçiniz...</option>
+                                                    @foreach($Personel as $item)
+                                                        <option value="{{$item->remote_id}}">{{$item->adsoyad}}</option>
+                                                    @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group mb-3 row">
+                                        <label class="form-label col-3 col-form-label" for="cikis">Grup Renk </label>
+                                        <div class="col">
+                                            <input type="color" class="form-control" name="mesai_renk">
+                                        </div>
+                                    </div>
+
+
                                 </div>
 
                                 <button type="submit" class="btn btn-primary btn-block">Kaydet</button>
-                
+
                             </div>
                         </div>
-                       
+
                     </div>
                 </form>
             </div>
