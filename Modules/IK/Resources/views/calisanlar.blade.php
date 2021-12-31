@@ -52,12 +52,14 @@
                         </div>
                     </div>
                 </div>
-
-                <span class="avatar avatar-xl mb-3 avatar-rounded" style="background-image: url({{'/images/personel/50/'.$item->foto}})" title="{{$item->adsoyad}}">
-                    {{ ($item->foto == "") ? isim($item->adsoyad) : null }}
-                </span>
-
-                <h3 class="m-0 mb-1"><a href="#" title="{{$item->adsoyad}}">{{$item->adsoyad}}</a></h3>
+                <a href="{{route('personel.edit', $item->id)}}" title="{{$item->adsoyad}}">
+                    <span class="avatar avatar-xl mb-3 avatar-rounded" style="background-image: url({{'/images/personel/50/'.$item->foto}})">
+                        {{ ($item->foto == "") ? isim($item->adsoyad) : null }}
+                    </span>
+                </a>
+                <h3 class="m-0 mb-1">
+                    <a href="{{route('personel.edit', $item->id)}}" title="{{$item->adsoyad}}">{{$item->adsoyad}}</a>
+                </h3>
                 <div class="text-muted birsatir" title="{{ $item->email}}">{{ $item->email}}</div>
                 <div class="text-muted birsatir">{{ ($item->telefon) ? $item->telefon : null}}</div>
                 <div class="mt-3">

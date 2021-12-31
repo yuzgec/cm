@@ -119,9 +119,10 @@
                     <a class="nav-link dropdown-toggle" href="#sms" data-bs-toggle="dropdown" role="button" aria-expanded="{{ menu_is_active('personel', 'true') }}" >
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
-                                 stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                            <path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" />
-                        </svg>
+                                 stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                <path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" />
+                            </svg>
                         </span>
                         <span class="nav-link-title {{ menu_is_active('personel') }}">
                             Personel Yönetimi
@@ -150,30 +151,39 @@
                     </div>
                 </li>
                 @endcan
-                @can('CallCenter')
-                <li class="nav-item  {{ menu_is_active('callcenter') }} dropdown">
-                    <a class="nav-link dropdown-toggle" href="#sms" data-bs-toggle="dropdown" role="button" aria-expanded="{{ menu_is_active('callcenter', 'true') }}" >
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><rect x="4" y="13" rx="2" width="4" height="6" /><rect x="16" y="13" rx="2" width="4" height="6" /><path d="M4 15v-3a8 8 0 0 1 16 0v3" /><path d="M18 19a6 3 0 0 1 -6 3" /></svg>
-                        </span>
-                        <span class="nav-link-title {{ menu_is_active('personel') }}">
-                            Call Center
-                        </span>
-                    </a>
 
-                    <div class="dropdown-menu {{ menu_is_active('callcenter', 'show') }}">
-                        <a class="dropdown-item" href="{{route('callcenter.index')}}" title="Personel Listesi">
-                            CallCenter Dashboard
+                @can('CallCenter')
+                    <li class="nav-item  {{ menu_is_active('personel') }} dropdown">
+                        <a class="nav-link dropdown-toggle" href="#sms" data-bs-toggle="dropdown" role="button" aria-expanded="{{ menu_is_active('personel', 'true') }}" >
+                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                             <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><rect x="4" y="13" rx="2" width="4" height="6" /><rect x="16" y="13" rx="2" width="4" height="6" /><path d="M4 15v-3a8 8 0 0 1 16 0v3" /><path d="M18 19a6 3 0 0 1 -6 3" /></svg>
+                        </span>
+                            <span class="nav-link-title {{ menu_is_active('personel') }}">
+                            Callcenter Yönetimi
+                        </span>
                         </a>
-                    </div>
-                </li>
+
+                        <div class="dropdown-menu {{ menu_is_active('callcenter', 'show') }}">
+                            <a class="dropdown-item" href="{{route('callcenter.index')}}" title="CallCenter Dashboard">
+                                CallCenter Dashboard
+                            </a>
+                        </div>
+                    </li>
                 @endcan
+
+
+
+
+
                 @can('Ayar Yönetimi')
                 <li class="nav-item  {{ menu_is_active('ayar') }} dropdown">
                     <a class="nav-link dropdown-toggle" href="#sms" data-bs-toggle="dropdown" role="button" aria-expanded="{{ menu_is_active('ayar', 'true') }}" >
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z" /><circle cx="12" cy="12" r="3" /></svg>
-                        <span class="nav-link-title {{ menu_is_active('ayar') }}">
-                            Ayar Yönetimi
-                        </span>
+                       <span class="nav-link-icon d-md-none d-lg-inline-block">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z" /><circle cx="12" cy="12" r="3" /></svg>
+                       </span>
+                       <span class="nav-link-title {{ menu_is_active('ayar') }}">
+                         Ayar Yönetimi
+                       </span>
                     </a>
 
                     <div class="dropdown-menu {{ menu_is_active('ayar', 'show') }}">
@@ -198,12 +208,12 @@
 
                     <li class="nav-item  {{ menu_is_active('ik') }} dropdown">
                         <a class="nav-link dropdown-toggle" href="#sms" data-bs-toggle="dropdown" role="button" aria-expanded="{{ menu_is_active('ik', 'true') }}" >
-                        <span class="nav-link-icon d-md-none d-lg-inline-block">
-	                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><polyline points="13 3 13 10 19 10 11 21 11 14 5 14 13 3" /></svg>
-                        </span>
-                            <span class="nav-link-title {{ menu_is_active('ik') }}">
-                            İK Yönetimi
-                        </span>
+                            <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><polyline points="13 3 13 10 19 10 11 21 11 14 5 14 13 3" /></svg>
+                            </span>
+                                <span class="nav-link-title {{ menu_is_active('ik') }}">
+                                 İK Yönetimi
+                            </span>
                         </a>
 
                         <div class="dropdown-menu {{ menu_is_active('ik', 'show') }}">
@@ -213,7 +223,7 @@
                             </a>
                             <a class="dropdown-item" href="{{route('calisanlar')}}" >
                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><circle cx="9" cy="7" r="4" /><path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /><path d="M21 21v-2a4 4 0 0 0 -3 -3.85" /></svg>
-                                 Çalışanlar
+                                    Çalışanlar
                             </a>
                             <a class="dropdown-item" href="{{route('izinler')}}" >
                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M16 10h4a2 2 0 0 1 0 4h-4l-4 7h-3l2 -7h-4l-2 2h-3l2 -4l-2 -4h3l2 2h4l-2 -7h3z" /></svg>
