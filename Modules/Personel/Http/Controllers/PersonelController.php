@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
+use Modules\IK\Entities\Varyant;
 use Modules\Personel\Entities\Personel;
 use Modules\Personel\Entities\Puantaj;
 use Modules\Personel\Entities\SicilRemote;
@@ -19,34 +20,21 @@ use Modules\Personel\Http\Requests\PersonelRequest;
 use Modules\Personel\Entities\Monitoring;
 class PersonelController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     * @return Renderable
-     */
+
     public function index()
     {
 
         $Personel = Personel::with('mesai')->get()->sortByDesc('mesai.mesai_renk');;
-        //dd($all);
         return view('personel::index', compact('Personel'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     * @return Renderable
-     */
     public function create()
     {
         $mesai = Mesai::all();
         return view('personel::create',compact('mesai'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     * @param Request $request
-     * @return Renderable
-     */
-    public function store(PersonelRequest $request)
+    public function store(Request $request)
     {
         $personel = new Personel;
 
@@ -63,57 +51,37 @@ class PersonelController extends Controller
 
     }
 
-    /**
-     * Show the specified resource.
-     * @param int $id
-     * @return Renderable
-     */
     public function show($id)
     {
         return view('personel::show');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     * @param int $id
-     * @return Renderable
-     */
+
     public function edit($id)
     {
-
-        $personel = Personel::with('mesai')->findOrFail($id);
-        $mesai = Mesai::all();
-
-        return view('personel::edit', compact('personel','mesai'));
+        $Personel = Personel::with('mesai')->with('Bilgiler')->findOrFail($id);
+        $Mesai = Mesai::all();
+        $Varyant =  Varyant::all();
+        return view('personel::edit', compact('Personel','Mesai', 'Varyant'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     * @param Request $request
-     * @param int $id
-     * @return Renderable
-     */
-    public function update(PersonelRequest $request, $id)
+
+    public function update(Request $request, $id)
     {
         $personel = Personel::findOrFail($id);
-       //dd($personel);
         $personel->adsoyad      =  $request->adsoyad;
         $personel->telefon      =  $request->telefon;
         $personel->email        =  $request->email;
         $personel->tckn         =  $request->tckn;
         $personel->mesai_id     =  $request->mesai_id;
         $personel->durum        =  $request->durum;
-
         $personel->save();
+
+        $personel->addMedia($request->image)->toMediaCollection();
 
         return redirect()->route('personel.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     * @param int $id
-     * @return Renderable
-     */
     public function destroy($id)
     {
         //

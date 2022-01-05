@@ -47,7 +47,7 @@
                         </div>
                     </div>
                 </div>
-             
+
                     <div class="col-lg-12">
                     <div class="card">
                         <div class="table-responsive">
@@ -69,11 +69,11 @@
                                     <tr>
                                         <td>
                                             <div class="d-flex py-1 align-items-center">
-                                                <span class="avatar me-2" style="background-image: url({{ ($item->pageImage == "") ? '/images/resimyok.jpg' : '/images/pageImage/50/'.$item->pageImage}})"></span>
+                                                <span class="avatar me-2" style="background-image: url({{ ($item->getFirstMediaUrl() == "") ? '/images/resimyok.jpg' : $item->getFirstMediaUrl()}})">
+                                                    {{ (!$item->getFirstMediaUrl()) ? isim($item->name) : null }}
+                                                </span>
                                                 <div class="flex-fill">
                                                     <div class="font-weight-medium">{{ $item->name}}</div>
-                                                    <div class="text-muted"><a href="#"
-                                                            class="text-reset">{{ $item->pageUrl }}</a></div>
                                                 </div>
                                             </div>
                                         </td>
@@ -94,11 +94,11 @@
                                                 @endforeach
                                             </div>
                                         </td>
-                                        
+
                                         <td class="">
                                             <label class="form-check form-check-single form-switch ">
-                                                <input 
-                                                class="form-check-input switch" 
+                                                <input
+                                                class="form-check-input switch"
                                                 active-id="{{ $item->id }}"
                                                 type="checkbox" @if ($item->durum == 1) checked @endif>
                                             </label>
@@ -153,7 +153,7 @@
                         </div>
                     </div>
                 </div>
-              
+
             </div>
         </div>
     </div>

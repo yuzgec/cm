@@ -52,9 +52,10 @@
                         </div>
                     </div>
                 </div>
+
                 <a href="{{route('personel.edit', $item->id)}}" title="{{$item->adsoyad}}">
-                    <span class="avatar avatar-xl mb-3 avatar-rounded" style="background-image: url({{'/images/personel/50/'.$item->foto}})">
-                        {{ ($item->foto == "") ? isim($item->adsoyad) : null }}
+                    <span class="avatar avatar-xl mb-3 avatar-rounded" style="background-image: url({{$item->getFirstMediaUrl() }})" title="{{$item->adsoyad}}">
+                        {{ (!$item->getFirstMediaUrl()) ? isim($item->adsoyad) : null }}
                     </span>
                 </a>
                 <h3 class="m-0 mb-1">

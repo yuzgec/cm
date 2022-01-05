@@ -16,11 +16,16 @@
                     <div class="row align-items-center">
                         <div class="col-auto">
                             <a href="#">
+
                                <span class="avatar me-2"
+                                     title="{{$item->adsoyad}}"
                                      style="color:white;
-                                         background-image: url({{'/images/personel/50/'.$item->foto}});
-                                         background: {{ $item->mesai->mesai_renk }} linear-gradient(135deg,hsla(0,0%,20%,.4),{{ $item->mesai->mesai_renk }})">
-                                    {{ ($item->foto == "") ? isim($item->adsoyad) : null }}
+                                         background: {{ $item->mesai->mesai_renk }} linear-gradient(135deg,hsla(0,0%,20%,.4),{{ $item->mesai->mesai_renk }});
+                                         background-image: url({{$item->getFirstMediaUrl() }});
+                                         background-size: cover;
+                                         border: 2px solid  {{$item->mesai->mesai_renk}};
+                                        ">
+                                     {{ (!$item->getFirstMediaUrl()) ? isim($item->adsoyad) : null }}
                                 </span>
                             </a>
                         </div>

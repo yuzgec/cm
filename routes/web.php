@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
+use Modules\Personel\Entities\Personel;
 use Nwidart\Modules\Facades\Module;
 use Spatie\Permission\Models\Permission;
 
@@ -15,7 +16,7 @@ Auth::routes();
 
 Route::resource('roles', \App\Http\Controllers\RoleController::class)->middleware('auth');
 
-Route::get('rollers', function (){
+/*Route::get('rollers', function (){
 
    foreach (Module::scan() as $m){
        Permission::create(['name' => $m. ' Listele']);
@@ -23,7 +24,18 @@ Route::get('rollers', function (){
        Permission::create(['name' => $m. ' Düzenle']);
        Permission::create(['name' => $m. ' Sil']);
    }
-});
+});*/
+
+/*Route::get('personelbilgiler', function (){
+    $all = Personel::all();
+    foreach ($all as $a){
+        \Modules\Personel\Entities\PersonelBilgileri::create([
+            'personel_id' => $a->id,
+            'kisisel_eposta' => $a->email,
+            'kisisel_telefon' => $a->adsoyad,
+            ]);
+    }
+});*/
 
 Route::post('/OdemeSonuc', function (Request $request){
 

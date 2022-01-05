@@ -57,7 +57,6 @@ class KullaniciController extends Controller
     public function store(Request $request)
     {
         $user = new User;
-
         $user->name         =  $request->name;
         $user->email        =  $request->email;
         $user->telefon      =  $request->telefon;
@@ -68,6 +67,8 @@ class KullaniciController extends Controller
         }
 
         $user->save();
+
+        $user->addMedia($request->profil_foto)->toMediaCollection();
 
         $user->syncRoles($request->role);
 
@@ -116,6 +117,8 @@ class KullaniciController extends Controller
             $user->password     =  Hash::make($request->password);
         }
         $user->save();
+
+        $user->addMedia($request->profil_foto)->toMediaCollection();
 
         $user->syncRoles($request->role);
 

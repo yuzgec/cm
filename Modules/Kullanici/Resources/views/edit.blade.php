@@ -153,6 +153,7 @@
                                 <div class="card-body">
 
                                     <div class="form-group mb-3 ">
+                                        <img src="{{ $detay->getFirstMediaUrl() }}">
                                         <label class="form-label">Kullanıcı Resim</label>
                                         <input type="file" class="form-control" name="profil_foto" id="images">
 
