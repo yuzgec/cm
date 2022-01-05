@@ -69,7 +69,10 @@
                                     <tr>
                                         <td>
                                             <div class="d-flex py-1 align-items-center">
-                                                <span class="avatar me-2" style="background-image: url({{ ($item->getFirstMediaUrl() == "") ? '/images/resimyok.jpg' : $item->getFirstMediaUrl()}})">
+                                                <span class="avatar me-2"
+                                                      style="background-image: url({{ $item->getFirstMediaUrl() }});
+                                                      border: 2px solid {{ $item->mesai->mesai_renk }}"
+                                                >
                                                     {{ (!$item->getFirstMediaUrl()) ? isim($item->adsoyad) : null }}
                                                 </span>
                                                 <div class="flex-fill">

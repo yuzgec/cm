@@ -118,7 +118,10 @@ class KullaniciController extends Controller
         }
         $user->save();
 
-        $user->addMedia($request->profil_foto)->toMediaCollection();
+        if ($request->hasFile('profil_foto')) {
+            $user->media()->delete();
+            $user->addMedia($request->profil_foto)->toMediaCollection();
+        }
 
         $user->syncRoles($request->role);
 
@@ -127,12 +130,7 @@ class KullaniciController extends Controller
         return redirect()->route('kullanici.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     * @param int $id
-     * @return Renderable
-     */
-    public function destroy($id)
+     public function destroy($id)
     {
         //
     }

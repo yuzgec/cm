@@ -13,11 +13,13 @@ use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use Modules\IK\Entities\Varyant;
 use Modules\Personel\Entities\Personel;
+use Modules\Personel\Entities\PersonelBilgileri;
 use Modules\Personel\Entities\Puantaj;
 use Modules\Personel\Entities\SicilRemote;
 use Modules\Personel\Entities\Mesai;
 use Modules\Personel\Http\Requests\PersonelRequest;
 use Modules\Personel\Entities\Monitoring;
+
 class PersonelController extends Controller
 {
 
@@ -65,19 +67,60 @@ class PersonelController extends Controller
         return view('personel::edit', compact('Personel','Mesai', 'Varyant'));
     }
 
-
     public function update(Request $request, $id)
     {
-        $personel = Personel::findOrFail($id);
-        $personel->adsoyad      =  $request->adsoyad;
-        $personel->telefon      =  $request->telefon;
-        $personel->email        =  $request->email;
-        $personel->tckn         =  $request->tckn;
-        $personel->mesai_id     =  $request->mesai_id;
-        $personel->durum        =  $request->durum;
-        $personel->save();
+        //dd($request->all());
+        DB::transaction(function () use($request, $id) {
 
-        $personel->addMedia($request->image)->toMediaCollection();
+            $Personel = Personel::findOrFail(request('id'));
+
+            $Personel->adsoyad = $request->adsoyad;
+            $Personel->telefon = $request->telefon;
+            $Personel->email = $request->email;
+            $Personel->tckn = $request->tckn;
+            $Personel->mesai_id = $request->mesai_id;
+            $Personel->durum = $request->durum;
+            $Personel->save();
+
+            if ($request->hasFile('image')) {
+                $Personel->media()->delete();
+                $Personel->addMedia($request->image)->toMediaCollection();
+            }
+
+            $Pb = PersonelBilgileri::findOrFail($id);
+            $Pb->ise_baslama_tarihi = $request->ise_baslama_tarihi;
+            $Pb->kisisel_eposta = $request->kisisel_eposta;
+            $Pb->kisisel_telefon = $request->kisisel_telefon;
+            $Pb->erisim_turu = $request->erisim_turu;
+            $Pb->sozlesme_turu = $request->sozlesme_turu;
+            $Pb->personel_grubu = $request->personel_grubu;
+            $Pb->medeni_hal = $request->medeni_hal;
+            $Pb->cinsiyet = $request->cinsiyet;
+            $Pb->engel_derecesi = $request->engel_derecesi;
+            $Pb->uyrugu = $request->uyrugu;
+            $Pb->cocuk_sayisi = $request->cocuk_sayisi;
+            $Pb->askerlik_durumu = $request->askerlik_durumu;
+            $Pb->kan_grubu = $request->kan_grubu;
+            $Pb->egitim_durumu = $request->egitim_durumu;
+            $Pb->mezuniyet = $request->mezuniyet;
+            $Pb->mezun_okul = $request->mezun_okul;
+            $Pb->adres = $request->adres;
+            $Pb->adres_telefon = $request->adres_telefon;
+            $Pb->adres_ulke = $request->adres_ulke;
+            $Pb->adres_sehir = $request->adres_sehir;
+            $Pb->adres_postakodu = $request->adres_postakodu;
+            $Pb->banka_adi = $request->banka_adi;
+            $Pb->banka_hesap_tipi = $request->banka_hesap_tipi;
+            $Pb->banka_hesap_no = $request->banka_hesap_no;
+            $Pb->banka_iban = $request->banka_iban;
+            $Pb->acil_kisi = $request->acil_kisi;
+            $Pb->acil_yakinlik = $request->acil_yakinlik;
+            $Pb->acil_telefon = $request->acil_telefon;
+            $Pb->sosyalmedya_adi = $request->sosyalmedya_adi;
+            $Pb->sosyalmedya_baglanti = $request->sosyalmedya_baglanti;
+            $Pb->save();
+
+        });
 
         return redirect()->route('personel.index');
     }

@@ -1,6 +1,7 @@
 @extends('master')
 @section('title', 'Çalışanlar Listesi | '.config('app.name'))
 @section('content')
+
     <div class="col-12 d-flex justify-content-between">
         <div class="text-muted mt-1 mb-1">Toplam ({{ $Personel->total() }}) personel bulunmaktadır.</div>
 
@@ -31,9 +32,6 @@
             </a>
 
             {{ $Personel->appends(['siralama' => 'personel'])->links() }}
-
-
-
     </div>
 
     @foreach($Personel as $item)
@@ -54,7 +52,7 @@
                 </div>
 
                 <a href="{{route('personel.edit', $item->id)}}" title="{{$item->adsoyad}}">
-                    <span class="avatar avatar-xl mb-3 avatar-rounded" style="background-image: url({{$item->getFirstMediaUrl() }})" title="{{$item->adsoyad}}">
+                    <span class="avatar avatar-xl mb-3 avatar-rounded" style="background-image: url({{$item->getFirstMediaUrl() }});border: 2px solid {{ $item->mesai->mesai_renk }}" title="{{$item->adsoyad}}">
                         {{ (!$item->getFirstMediaUrl()) ? isim($item->adsoyad) : null }}
                     </span>
                 </a>
@@ -64,7 +62,9 @@
                 <div class="text-muted birsatir" title="{{ $item->email}}">{{ $item->email}}</div>
                 <div class="text-muted birsatir">{{ ($item->telefon) ? $item->telefon : null}}</div>
                 <div class="mt-3">
-                    <span class="badge bg-purple-lt">{{ $item->mesai->mesai_adi}}</span>
+                    <span class="badge" style="background: {{ $item->mesai->mesai_renk }}">
+                        {{ $item->mesai->mesai_adi}}
+                    </span>
                 </div>
             </div>
         </div>

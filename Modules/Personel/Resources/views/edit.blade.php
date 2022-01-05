@@ -23,19 +23,24 @@
                 <form action="{{ route('personel.update', $Personel->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
+                    <input type="hidden" name="id" value="{{$Personel->id}}">
                     <div class="row">
 
                         @include('layouts.validate')
                         <div class="d-flex mb-2 justify-content-between" >
                             <div class="d-flex">
-                                 <span class="avatar mb-3 avatar-rounded" style="background-image: url({{'/images/personel/50/'.$Personel->foto}})" title="{{$Personel->adsoyad}}">
-                                    {{ ($Personel->foto == "") ? isim($Personel->adsoyad) : null }}
+
+                                 <span class="avatar mb-3 avatar-rounded"
+                                       style="background-image: url({{$Personel->getFirstMediaUrl() }});border: 2px solid {{ $Personel->mesai->mesai_renk }}"
+                                       title="{{$Personel->adsoyad}}">
+                                     {{ (!$Personel->getFirstMediaUrl()) ? isim($Personel->adsoyad) : null }}
                                 </span>
 
                                 <div class="ps-2">
                                     <div><b>{{$Personel->adsoyad}}</b></div>
                                     <div class="small text-muted">{{$Personel->email}}</div>
                                 </div>
+
                             </div>
                             <div>
                                 <button type="submit" class="btn btn-primary">Kaydet</button>
@@ -96,7 +101,9 @@
                                                 <div class="form-group mb-3 text-center ">
                                                     <label class="form-label">Personel Resim</label>
 
-                                                    <span class="avatar avatar-xl mb-3 avatar-rounded" style="background-image: url({{$Personel->getFirstMediaUrl() }})" title="{{$Personel->adsoyad}}">
+                                                    <span class="avatar avatar-xl mb-3 avatar-rounded"
+                                                          style="background-image: url({{$Personel->getFirstMediaUrl() }});
+                                                            border: 2px solid {{ $Personel->mesai->mesai_renk }}" title="{{$Personel->adsoyad}}">
                                                         {{ (!$Personel->getFirstMediaUrl()) ? isim($Personel->adsoyad) : null }}
                                                     </span>
 
@@ -159,7 +166,7 @@
                                                     </div>
                                                     <div class="col-6">
                                                         <label class="form-label">Email (Kişisel)</label>
-                                                        <input type="text" class="form-control" name="" value="{{$Personel->email}}">
+                                                        <input type="text" class="form-control" name="kisisel_eposta" value="{{$Personel->Bilgiler->kisisel_eposta}}">
                                                     </div>
                                                 </div>
 
@@ -171,7 +178,7 @@
                                                     </div>
                                                     <div class="col-6">
                                                         <label class="form-label">Telefon (Kişisel)</label>
-                                                        <input type="text" class="form-control" name="" value="{{$Personel->telefon}}">
+                                                        <input type="text" class="form-control" name="unvan" value="{{$Personel->telefon}}">
                                                     </div>
                                                 </div>
 
