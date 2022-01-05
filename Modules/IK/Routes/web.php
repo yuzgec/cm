@@ -13,6 +13,7 @@
 
 Route::prefix('ik')->group(function() {
     Route::resource('/ik', 'IKController');
+    Route::resource('/varyant', 'VaryantController');
     Route::get('/calisanlar', 'IKController@calisanlar')->name('calisanlar');
     Route::get('/izinler', 'IKController@izinler')->name('izinler');
     Route::get('/harcamalar', 'IKController@index')->name('harcamalar');

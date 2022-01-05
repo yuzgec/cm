@@ -1,6 +1,5 @@
 <?php
 
-
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Request;
 use Modules\Personel\Entities\Personel;
@@ -18,10 +17,8 @@ function isim($isim){
     $parcala = explode(" ", $isim);
     $ilk = substr(current($parcala), 0,1);
     $son = substr(end($parcala), 0,1);
-
     return mb_convert_encoding($ilk.' '.$son, "UTF-8", "ISO-8859-9");
 }
-
 
 function money($deger){
     return number_format((float)$deger, 2, ',', '');

@@ -1,11 +1,8 @@
 @extends('master')
 @section('title', 'İnsan Kaynakları Yönetim Paneli | '.config('app.name'))
 @section('content')
-
-
     {{-- İzin Talepleri   --}}
     <div class="col-4">
-
         <div class="card mb-3">
             <div class="card-header">
                 <h3 class="card-title">
@@ -19,7 +16,10 @@
                     <div class="row align-items-center">
                         <div class="col-auto">
                             <a href="#">
-                               <span class="avatar me-2" style="color:white;background-image: url({{'/images/personel/50/'.$item->foto}});background-color: {{ $item->mesai->mesai_renk }} ">
+                               <span class="avatar me-2"
+                                     style="color:white;
+                                         background-image: url({{'/images/personel/50/'.$item->foto}});
+                                         background: {{ $item->mesai->mesai_renk }} linear-gradient(135deg,hsla(0,0%,20%,.4),{{ $item->mesai->mesai_renk }})">
                                     {{ ($item->foto == "") ? isim($item->adsoyad) : null }}
                                 </span>
                             </a>
@@ -31,14 +31,12 @@
                     </div>
                 </div>
                 @endforeach
-
             </div>
         </div>
     </div>
 
     {{-- Yaklaşan İzinler  --}}
     <div class="col-4">
-
         <div class="card mb-3">
             <div class="card-header">
                 <h3 class="card-title">
@@ -52,7 +50,10 @@
                         <div class="row align-items-center">
                             <div class="col-auto">
                                 <a href="#">
-                                     <span class="avatar me-2" style="color:white;background-image: url({{'/images/personel/50/'.$item->foto}});background-color: {{ $item->mesai->mesai_renk }} ">
+                                    <span class="avatar me-2"
+                                          style="color:white;
+                                              background-image: url({{'/images/personel/50/'.$item->foto}});
+                                              background: {{ $item->mesai->mesai_renk }} linear-gradient(135deg,hsla(0,0%,20%,.4),{{ $item->mesai->mesai_renk }})">
                                         {{ ($item->foto == "") ? isim($item->adsoyad) : null }}
                                     </span>
                                 </a>
@@ -84,8 +85,11 @@
                         <div class="row align-items-center">
                             <div class="col-auto">
                                 <a href="#">
-                                    <span class="avatar me-2" style="color:white;background-image: url({{'/images/personel/50/'.$item->foto}});background-color: {{ $item->mesai->mesai_renk }} ">
-                                        {{ ($item->foto == "") ? isim($item->adsoyad) : null }}
+                                    <span class="avatar me-2"
+                                          style="color:white;
+                                              background-image: url({{'/images/personel/50/'.$item->foto}});
+                                              background: {{ $item->mesai->mesai_renk }} linear-gradient(135deg,hsla(0,0%,20%,.4),{{ $item->mesai->mesai_renk }})">
+                                          {{ ($item->foto == "") ? isim($item->adsoyad) : null }}
                                     </span>
                                 </a>
                             </div>
@@ -112,12 +116,11 @@
                 </div>
                 <div class="d-flex">
                     <p>Onayınızı bekleyen ödeme talebi yok</p>
-
                 </div>
-
             </div>
         </div>
     </div>
+
     {{-- Resmi Tatiller  --}}
     <div class="col-4">
         <div class="card">
