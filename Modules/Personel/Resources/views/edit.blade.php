@@ -181,7 +181,7 @@
                                                     <div class="form-group row mb-3">
                                                         <div class="col-6">
                                                             <label class="form-label">Sözleşme Türü</label>
-                                                            <select class="form-select" name="durum">
+                                                            <select class="form-select" name="sozlemeturu">
                                                                 <option value="1" selected="">Süreli</option>
                                                                 <option value="2">Süresiz</option>
                                                             </select>
@@ -201,8 +201,13 @@
 
                                                     <div class="form-group row mb-3">
                                                         <div class="col-6">
-                                                            <label class="form-label">TC Kimlik Numrası </label>
-                                                            <input type="text" class="form-control" name="tckn" value="{{ $Personel->tckn}}">
+                                                            <label class="form-label" for="isebaslama">İşe Başlama Tarihi</label>
+                                                            <div class="input-group">
+                                                                <span class="input-group-text">
+                                                                    {{\Carbon\Carbon::parse($Personel->Bilgiler->ise_baslama_tarihi)->diffForHumans()}}
+                                                                </span>
+                                                                <input type="date" class="form-control" name="ise_baslama_tarihi" id="isebaslama" value="{{$Personel->Bilgiler->ise_baslama_tarihi}}">
+                                                            </div>
                                                         </div>
                                                         <div class="col-6">
                                                             <label class="form-label">Personel Grubu</label>
@@ -217,20 +222,7 @@
                                                         </div>
                                                     </div>
 
-                                                    <div class="form-group row mb-3">
-                                                        <div class="col-6">
-                                                            <label class="form-label" for="isebaslama">İşe Başlama Tarihi</label>
 
-                                                            <div class="input-group">
-                                                                <span class="input-group-text">
-                                                                 {{\Carbon\Carbon::parse($Personel->Bilgiler->ise_baslama_tarihi)->diffForHumans()}}
-                                                                </span>
-                                                                <input type="date" class="form-control" name="ise_baslama_tarihi" id="isebaslama" value="{{$Personel->Bilgiler->ise_baslama_tarihi}}">
-                                                            </div>
-
-
-                                                        </div>
-                                                    </div>
                                                     <button type="submit" class="btn btn-primary">Kaydet</button>
                                                 </div>
                                             </div>
