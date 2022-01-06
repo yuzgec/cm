@@ -36,18 +36,29 @@ class PersonelController extends Controller
         return view('personel::create',compact('mesai'));
     }
 
-    public function store(Request $request)
+    public function store(PersonelRequest $request)
     {
-        $personel = new Personel;
+        DB::transaction(function () use($request) {
+            $personel = new Personel;
+            $personel->adsoyad = $request->adsoyad;
+            $personel->telefon = $request->telefon;
+            $personel->email = $request->email;
+            $personel->tckn = $request->tckn;
+            $personel->mesai_id = $request->mesai_id;
+            $personel->durum = $request->durum;
 
-        $personel->adsoyad      =  $request->adsoyad;
-        $personel->telefon      =  $request->telefon;
-        $personel->email        =  $request->email;
-        $personel->tckn         =  $request->tckn;
-        $personel->mesai_id     =  $request->mesai_id;
-        $personel->durum        =  $request->durum;
+            $personel->save();
 
-        $personel->save();
+            $Pb = PersonelBilgileri::create([
+                'personel_id' => $personel->id,
+                'ise_baslama_tarihi' => $request->ise_baslama_tarihi,
+                'kisisel_eposta' => $request->kisisel_eposta,
+                'kisisel_telefon' => $request->kisisel_telefon,
+                'erisim_turu' => $request->erisim_turu,
+                'sozlesme_turu' => $request->sozlesme_turu
+            ]);
+
+        });
 
         return redirect()->route('personel.index');
 
@@ -121,7 +132,6 @@ class PersonelController extends Controller
             $Pb->sosyalmedya_adi = $request->sosyalmedya_adi;
             $Pb->sosyalmedya_baglanti = $request->sosyalmedya_baglanti;
             $Pb->save();
-
         });
 
         return redirect()->route('personel.index');
