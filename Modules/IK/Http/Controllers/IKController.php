@@ -16,6 +16,8 @@ class IKController extends Controller
      */
     public function index()
     {
+
+        $DogumGunu = Personel::where('')
         $Personel = Personel::with('mesai')->get();
         return view('ik::index', compact('Personel'));
     }

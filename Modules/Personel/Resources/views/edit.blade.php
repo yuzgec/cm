@@ -248,7 +248,7 @@
                                                 <div class="form-group row mb-3">
                                                     <div class="col-6">
                                                         <label class="form-label">Doğum Tarihi</label>
-                                                        <input type="text" class="form-control" name="" value="{{$Personel->telefon}}">
+                                                        <input type="date" class="form-control" name="dogum_tarihi" value="{{$Personel->Bilgiler->dogum_tarihi}}">
                                                     </div>
                                                     <div class="col-6">
                                                         <label class="form-label">Kimlik NO</label>

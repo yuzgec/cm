@@ -90,6 +90,7 @@ class PersonelController extends Controller
 
             $Pb = PersonelBilgileri::findOrFail($id);
             $Pb->ise_baslama_tarihi = $request->ise_baslama_tarihi;
+            $Pb->dogum_tarihi = $request->dogum_tarihi;
             $Pb->kisisel_eposta = $request->kisisel_eposta;
             $Pb->kisisel_telefon = $request->kisisel_telefon;
             $Pb->erisim_turu = $request->erisim_turu;
