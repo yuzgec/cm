@@ -19,5 +19,5 @@ Route::prefix('ik')->group(function() {
     Route::get('/izinler', 'IKController@izinler')->name('izinler');
     Route::get('/harcamalar', 'IKController@index')->name('harcamalar');
     Route::get('/raporlar', 'IKController@index')->name('ikraporlar');
-    Route::get('/takvim', 'IKController@index')->name('takvim');
+    Route::get('/takvim', 'IKController@takvim')->name('takvim');
 });

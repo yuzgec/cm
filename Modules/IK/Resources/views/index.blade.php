@@ -91,7 +91,6 @@
                         <div class="row align-items-center">
                             <div class="col-auto">
                                 <a href="{{ route('personel.edit', $item->id) }}" title="{{ $item->adsoyad }}">
-
                                <span class="avatar me-2"
                                      title="{{$item->adsoyad}}"
                                      style="color:white;

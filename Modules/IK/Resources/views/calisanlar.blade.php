@@ -1,39 +1,37 @@
 @extends('master')
 @section('title', 'Çalışanlar Listesi | '.config('app.name'))
 @section('content')
-
-    <div class="col-12 d-flex justify-content-between">
-        <div class="text-muted mt-1 mb-1">Toplam ({{ $Personel->total() }}) personel bulunmaktadır.</div>
-
-            <div class="input-icon">
-                <form method="GET" action="{{ route('personel.index') }}">
-                    @csrf
-                    <input type="text" name="q" class="form-control" placeholder="Personel Arama…" value="{{ request('q') }}">
-                    <span class="input-icon-addon">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-                             viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                             stroke-linecap="round" stroke-linejoin="round">
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                            <circle cx="10" cy="10" r="7" />
-                            <line x1="21" y1="21" x2="15" y2="15" /></svg>
-                    </span>
-                </form>
+        <div class="d-flex">
+            <div class="col-3 justify-content-center align-items-center ">
+                <p class="pt-2">Toplam ({{ $Personel->total() }}) personel bulunmaktadır.</p>
             </div>
+            <div class="col-3 justify-content-center align-items-center">
+                <div class="input-icon">
+                    <form method="GET" action="{{ route('personel.index') }}">
+                        @csrf
+                        <input type="text" name="q" class="form-control" placeholder="Personel Arama…" value="{{ request('q') }}">
+                        <span class="input-icon-addon">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+                                 viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                 stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <circle cx="10" cy="10" r="7" />
+                                <line x1="21" y1="21" x2="15" y2="15" /></svg>
+                        </span>
+                    </form>
+                </div>
+            </div>
+            <div class="col-4 justify-content-center align-items-center">
+                <a href="{{route('personel.create')}}" class="btn btn-secondary" style="margin-left:50px">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                    Çalışan Ekle
+                </a>
 
-            <a href="{{ route('personel.create')}}" class="btn btn-primary">
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-                     viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                     stroke-linecap="round" stroke-linejoin="round">
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                    <line x1="12" y1="5" x2="12" y2="19" />
-                    <line x1="5" y1="12" x2="19" y2="12" />
-                </svg>
-                Personel Ekle
-            </a>
-
-            {{ $Personel->appends(['siralama' => 'personel'])->links() }}
-    </div>
-
+            </div>
+            <div class="col-2 justify-content-end">
+                {{ $Personel->appends(['siralama' => 'personel'])->links() }}
+            </div>
+        </div>
     @foreach($Personel as $item)
     <div class="col-md-6 col-lg-3">
         <div class="card">
