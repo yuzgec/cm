@@ -19,16 +19,15 @@
     <div class="col-sm-12 col-lg-12">
         <div class="card">
             <div class="card-body">
-
-
                     <div class="row">
                         <form action="{{ route('personel.update', $Personel->id) }}" method="POST" enctype="multipart/form-data">
-                            @csrf
-                            @method('PUT')
-                        @include('layouts.validate')
-                        <div class="d-flex mb-2 justify-content-between" >
-                            <div class="d-flex">
+                        @csrf
+                        @method('PUT')
+                        <input type="hidden" name="id" value="{{$Personel->id}}">
 
+                        @include('layouts.validate')
+                        <div class="d-flex mb-2 justify-content-between">
+                            <div class="d-flex">
                                  <span class="avatar mb-3 avatar-rounded"
                                        style="background-image: url({{$Personel->getFirstMediaUrl() }});border: 2px solid {{ $Personel->mesai->mesai_renk }}"
                                        title="{{$Personel->adsoyad}}">
@@ -48,7 +47,6 @@
                             <li class="nav-item">
                                 <a href="#genel" class="nav-link active" data-bs-toggle="tab">Genel</a>
                             </li>
-
                             <li class="nav-item">
                                 <a href="#kisisel-bilgiler" class="nav-link" data-bs-toggle="tab">Kişisel Bilgiler</a>
                             </li>
@@ -90,13 +88,7 @@
                         </ul>
 
                         <div class="tab-content">
-
-
                                 <div class="tab-pane show active" id="genel">
-
-
-                                    <input type="hidden" name="id" value="{{$Personel->id}}">
-
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="card">
@@ -182,7 +174,7 @@
                                                         </div>
                                                         <div class="col-6">
                                                             <label class="form-label">Telefon (Kişisel)</label>
-                                                            <input type="text" class="form-control" name="unvan" value="{{$Personel->telefon}}">
+                                                            <input type="text" class="form-control" name="kisisel_telefon" value="{{$Personel->Bilgiler->kisisel_telefon}}">
                                                         </div>
                                                     </div>
 
@@ -199,7 +191,9 @@
                                                             <select class="form-select" name="erisim_turu">
                                                                 <option value="">Seçiniz...</option>
                                                                 @foreach($Varyant->where('parent_id', 1) as $item)
-                                                                    <option value="{{$item->id}}">{{$item->varyant_adi}}</option>
+                                                                    <option value="{{$item->id}}" {{ ($item->id == $Personel->Bilgiler->erisim_turu ) ? 'selected' : null }}>
+                                                                        {{$item->varyant_adi}}
+                                                                    </option>
                                                                 @endforeach
                                                             </select>
                                                         </div>
@@ -215,7 +209,9 @@
                                                             <select class="form-select" name="mesai_id">
                                                                 <option value="">Personel Grubu Seçiniz...</option>
                                                                 @foreach ($Mesai as $item)
-                                                                    <option value="{{ $item->id }}" {{ ($item->id == $Personel->mesai_id) ? 'selected' : null }}>{{ $item->mesai_adi}}</option>
+                                                                    <option value="{{ $item->id }}" {{ ($item->id == $Personel->mesai_id) ? 'selected' : null }}>
+                                                                        {{ $item->mesai_adi}}
+                                                                    </option>
                                                                 @endforeach
                                                             </select>
                                                         </div>
@@ -223,19 +219,22 @@
 
                                                     <div class="form-group row mb-3">
                                                         <div class="col-6">
-                                                            <label class="form-label" for="isebaslama">İşe Başlama Tarihi - {{\Carbon\Carbon::parse($Personel->Bilgiler->ise_baslama_tarihi)->diffForHumans()}}</label>
-                                                            <input type="date" class="form-control" name="ise_baslama_tarihi" id="isebaslama" value="{{$Personel->Bilgiler->ise_baslama_tarihi}}">
+                                                            <label class="form-label" for="isebaslama">İşe Başlama Tarihi</label>
+
+                                                            <div class="input-group">
+                                                                <span class="input-group-text">
+                                                                 {{\Carbon\Carbon::parse($Personel->Bilgiler->ise_baslama_tarihi)->diffForHumans()}}
+                                                                </span>
+                                                                <input type="date" class="form-control" name="ise_baslama_tarihi" id="isebaslama" value="{{$Personel->Bilgiler->ise_baslama_tarihi}}">
+                                                            </div>
+
+
                                                         </div>
                                                     </div>
-
                                                     <button type="submit" class="btn btn-primary">Kaydet</button>
-
                                                 </div>
-
                                             </div>
                                         </div>
-
-
                                     </div>
                                     </form>
                                 </div>
@@ -252,7 +251,7 @@
                                                     </div>
                                                     <div class="col-6">
                                                         <label class="form-label">Kimlik NO</label>
-                                                        <input type="text" class="form-control" name="" value="{{$Personel->tckn}}">
+                                                        <input type="text" class="form-control" name="tckn" value="{{$Personel->tckn}}">
                                                     </div>
                                                 </div>
 
@@ -262,7 +261,9 @@
                                                         <select class="form-select" name="medeni_hal">
                                                             <option value="">Seçiniz...</option>
                                                             @foreach($Varyant->where('parent_id', 8) as $item)
-                                                                <option value="{{$item->id}}">{{$item->varyant_adi}}</option>
+                                                                <option value="{{ $item->id }}" {{ ($item->id == $Personel->Bilgiler->medeni_hal) ? 'selected' : null }}>
+                                                                {{$item->varyant_adi}}
+                                                                </option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -271,7 +272,9 @@
                                                         <select class="form-select" name="cinsiyet">
                                                             <option value="">Seçiniz...</option>
                                                             @foreach($Varyant->where('parent_id', 14) as $item)
-                                                                <option value="{{$item->id}}">{{$item->varyant_adi}}</option>
+                                                                <option value="{{ $item->id }}" {{ ($item->id == $Personel->Bilgiler->cinsiyet) ? 'selected' : null }}>
+                                                                    {{$item->varyant_adi}}
+                                                                </option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -283,13 +286,15 @@
                                                         <select class="form-select" name="engel_derecesi">
                                                             <option value="">Seçiniz...</option>
                                                             @foreach($Varyant->where('parent_id', 19) as $item)
-                                                                <option value="{{$item->id}}">{{$item->varyant_adi}}</option>
+                                                                <option value="{{ $item->id }}" {{ ($item->id == $Personel->Bilgiler->engel_derecesi) ? 'selected' : null }}>
+                                                                    {{$item->varyant_adi}}
+                                                                </option>
                                                             @endforeach
                                                         </select>
                                                     </div>
                                                     <div class="col-6">
                                                         <label class="form-label">Uyruğu</label>
-                                                        <select class="form-select" name="durum">
+                                                        <select class="form-select" name="uyrugu">
                                                             <option value="1">Türkiye</option>
                                                             <option value="2">Diğer</option>
                                                         </select>
@@ -303,7 +308,9 @@
                                                         <select class="form-select" name="cocuk_sayisi">
                                                             <option value="">Seçiniz...</option>
                                                             @foreach($Varyant->where('parent_id', 24) as $item)
-                                                                <option value="{{$item->id}}">{{$item->varyant_adi}}</option>
+                                                                <option value="{{ $item->id }}" {{ ($item->id == $Personel->Bilgiler->cocuk_sayisi) ? 'selected' : null }}>
+                                                                    {{$item->varyant_adi}}
+                                                                </option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -313,7 +320,9 @@
                                                         <select class="form-select" name="askerlik_durumu">
                                                             <option value="">Seçiniz...</option>
                                                             @foreach($Varyant->where('parent_id', 31) as $item)
-                                                                <option value="{{$item->id}}">{{$item->varyant_adi}}</option>
+                                                                <option value="{{ $item->id }}" {{ ($item->id == $Personel->Bilgiler->askerlik_durumu) ? 'selected' : null }}>
+                                                                    {{$item->varyant_adi}}
+                                                                </option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -327,7 +336,9 @@
                                                         <select class="form-select" name="kan_grubu">
                                                             <option value="">Seçiniz...</option>
                                                             @foreach($Varyant->where('parent_id', 38) as $item)
-                                                                <option value="{{$item->id}}">{{$item->varyant_adi}}</option>
+                                                                <option value="{{ $item->id }}" {{ ($item->id == $Personel->Bilgiler->kan_grubu) ? 'selected' : null }}>
+                                                                    {{$item->varyant_adi}}
+                                                                </option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -337,7 +348,9 @@
                                                         <select class="form-select" name="egitim_durumu">
                                                             <option value="">Seçiniz...</option>
                                                             @foreach($Varyant->where('parent_id', 47) as $item)
-                                                                <option value="{{$item->id}}">{{$item->varyant_adi}}</option>
+                                                                <option value="{{ $item->id }}" {{ ($item->id == $Personel->Bilgiler->egitim_durumu) ? 'selected' : null }}>
+                                                                    {{$item->varyant_adi}}
+                                                                </option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -347,15 +360,17 @@
 
                                                     <div class="col-6">
                                                         <label class="form-label">Tamamlanan En Yüksek Eğitim Seviyesi</label>
-                                                        <select class="form-select" name="meziniyet">
+                                                        <select class="form-select" name="mezuniyet">
                                                             @foreach($Varyant->where('parent_id', 50) as $item)
-                                                                <option value="{{$item->id}}">{{$item->varyant_adi}}</option>
+                                                                <option value="{{ $item->id }}" {{ ($item->id == $Personel->Bilgiler->mezuniyet) ? 'selected' : null }}>
+                                                                    {{$item->varyant_adi}}
+                                                                </option>
                                                             @endforeach
                                                         </select>
                                                     </div>
                                                     <div class="col-6">
                                                         <label class="form-label">Son Tamamlanan Eğitim Kurumu</label>
-                                                        <input type="text" class="form-control" name="mezun_okul" value="">
+                                                        <input type="text" class="form-control" name="mezun_okul" value="{{ $Personel->Bilgiler->mezun_okul }}">
                                                     </div>
                                                 </div>
                                             </div>
@@ -385,7 +400,7 @@
                                             </div>
                                             <div class="col-6">
                                                 <label class="form-label">Ülke</label>
-                                                <select class="form-select" name="durum">
+                                                <select class="form-select" name="adres_ulke">
                                                     <option value="1">Türkiye</option>
                                                     <option value="2">Diğer</option>
                                                 </select>
@@ -394,11 +409,11 @@
                                         <div class="form-group row mb-3">
                                             <div class="col-6">
                                                 <label class="form-label">Şehir</label>
-                                                <input type="text" class="form-control" name="adres_sehir"  value="{{ $Personel->Bilgiler->adres_sehir }}">
+                                                <input type="text" class="form-control" name="adres_sehir" value="{{ $Personel->Bilgiler->adres_sehir }}">
                                             </div>
                                             <div class="col-6">
                                                 <label class="form-label">Posta Kodu</label>
-                                                <input type="text" class="form-control" name="adres_postakodu"  value="{{ $Personel->Bilgiler->adres_postakodu }}">
+                                                <input type="text" class="form-control" name="adres_postakodu" value="{{ $Personel->Bilgiler->adres_postakodu }}">
                                             </div>
                                         </div>
                                     </div>
@@ -419,7 +434,9 @@
                                                 <select class="form-select" name="banka_hesap_tipi">
                                                     <option value="">Seçiniz...</option>
                                                     @foreach($Varyant->where('parent_id', 60) as $item)
-                                                        <option value="{{$item->id}}">{{$item->varyant_adi}}</option>
+                                                        <option value="{{ $item->id }}" {{ ($item->id == $Personel->banka_hesap_tipi) ? 'selected' : null }}>
+                                                            {{$item->varyant_adi}}
+                                                        </option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -427,11 +444,11 @@
                                         <div class="form-group row mb-3">
                                             <div class="col-6">
                                                 <label class="form-label">Hesap No</label>
-                                                <input type="text" class="form-control" name="" value="">
+                                                <input type="text" class="form-control" name="banka_hesap_no" value="{{$Personel->Bilgiler->banka_hesap_no}}">
                                             </div>
                                             <div class="col-6">
                                                 <label class="form-label">IBAN</label>
-                                                <input type="text" class="form-control" name="" value="">
+                                                <input type="text" class="form-control" name="banka_iban" value="{{$Personel->Bilgiler->banka_iban}}">
                                             </div>
                                         </div>
                                     </div>
@@ -444,17 +461,17 @@
                                         <div class="form-group row mb-3">
                                             <div class="col-6">
                                                 <label class="form-label">Acil Durumda Aranacak Kişi</label>
-                                                <input type="text" class="form-control" name="" value="">
+                                                <input type="text" class="form-control" name="acil_kisi" value="{{$Personel->Bilgiler->acil_kisi}}">
                                             </div>
                                             <div class="col-6">
                                                 <label class="form-label">Acil Durumda Aranacak Kişi Yakınlık Derecesi</label>
-                                                <input type="text" class="form-control" name="" value="">
+                                                <input type="text" class="form-control" name="acil_yakinlik" value="{{$Personel->Bilgiler->acil_yakinlik}}">
                                             </div>
                                         </div>
                                         <div class="form-group row mb-3">
                                             <div class="col-6">
                                                 <label class="form-label">Acil Durumda Aranacak Kişi Telefon</label>
-                                                <input type="text" class="form-control" name="" value="">
+                                                <input type="text" class="form-control" name="acil_telefon" value="{{$Personel->Bilgiler->acil_telefon}}">
                                             </div>
                                         </div>
                                     </div>
@@ -468,11 +485,11 @@
                                         <div class="form-group row mb-3">
                                             <div class="col-6">
                                                 <label class="form-label">Bağlantı Adı</label>
-                                                <input type="text" class="form-control" name="" value="">
+                                                <input type="text" class="form-control" name="sosyalmedya_adi" value="{{$Personel->Bilgiler->sosyalmedya_adi}}">
                                             </div>
                                             <div class="col-6">
                                                 <label class="form-label">Bağlantı Adresi</label>
-                                                <input type="text" class="form-control" name="" value="">
+                                                <input type="text" class="form-control" name="sosyalmedya_baglanti" value="{{$Personel->Bilgiler->sosyalmedya_baglanti}}">
                                             </div>
                                         </div>
                                     </div>
