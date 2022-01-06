@@ -87,12 +87,9 @@
 
                                                 <div class="form-group mb-3 text-center ">
                                                     <label class="form-label">Personel Resim</label>
-
                                                     <span class="avatar avatar-xl mb-3 avatar-rounded">
                                                     </span>
-
-                                                    <input type="file" class="form-control" name="foto" id="images">
-
+                                                    <input type="file" class="form-control" name="image" id="images">
                                                     <div class="text-center mt-4">
                                                         <div id="preview"></div>
                                                     </div>
@@ -108,43 +105,42 @@
 
                                                 <div class="form-group mb-3">
                                                     <label class="form-label">Adı Soyadı</label>
-                                                    <input type="text" class="form-control" name="" >
+                                                    <input type="text" class="form-control" name="adsoyad" >
                                                 </div>
 
                                                 <div class="form-group row mb-3">
                                                     <div class="col-6">
                                                         <label class="form-label">Email (İş)</label>
-                                                        <input type="text" class="form-control" name="">
+                                                        <input type="text" class="form-control" name="email">
                                                     </div>
                                                     <div class="col-6">
                                                         <label class="form-label">Email (Kişisel)</label>
-                                                        <input type="text" class="form-control" name="" >
+                                                        <input type="text" class="form-control" name="kisisel_eposta" >
                                                     </div>
                                                 </div>
-
 
                                                 <div class="form-group row mb-3">
                                                     <div class="col-6">
                                                         <label class="form-label">Telefon (İş)</label>
-                                                        <input type="text" class="form-control" name="">
+                                                        <input type="text" class="form-control" name="telefon">
                                                     </div>
                                                     <div class="col-6">
                                                         <label class="form-label">Telefon (Kişisel)</label>
-                                                        <input type="text" class="form-control" name="">
+                                                        <input type="text" class="form-control" name="kisisel_telefon">
                                                     </div>
                                                 </div>
 
                                                 <div class="form-group row mb-3">
                                                     <div class="col-6">
                                                         <label class="form-label">Sözleşme Türü</label>
-                                                        <select class="form-select" name="durum">
+                                                        <select class="form-select" name="sozlesme_turu">
                                                             <option value="1" selected="">Süreli</option>
                                                             <option value="2">Süresiz</option>
                                                         </select>
                                                     </div>
                                                     <div class="col-6">
                                                         <label class="form-label">Erişim Türü</label>
-                                                        <select class="form-select" name="durum">
+                                                        <select class="form-select" name="erisim_turu">
                                                             <option value="1" selected="">Çalışan</option>
                                                             <option value="2">Yönetici</option>
                                                         </select>
@@ -155,11 +151,7 @@
                                                 <div class="form-group row mb-3">
                                                     <div class="col-6">
                                                         <label class="form-label">İşe Başlama Tarihi</label>
-                                                        <input type="date" class="form-control" name="" value="">
-                                                    </div>
-                                                    <div class="col-6">
-                                                        <label class="form-label">Telefon (Kişisel)</label>
-                                                        <input type="text" class="form-control" name="" >
+                                                        <input type="date" class="form-control" name="ise_baslama_tarihi">
                                                     </div>
                                                 </div>
 

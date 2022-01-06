@@ -6,11 +6,7 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreatePersonelBilgileriTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
+
     public function up()
     {
         Schema::create('personel_bilgileri', function (Blueprint $table) {
@@ -19,6 +15,7 @@ class CreatePersonelBilgileriTable extends Migration
             $table->string('kisisel_eposta')->nullable();
             $table->string('kisisel_telefon')->nullable();
             $table->date('ise_baslama_tarihi')->nullable();
+            $table->date('dogum_tarihi')->nullable();
             $table->string('unvan')->nullable();
             $table->string('erisim_turu')->nullable();
             $table->string('sozlesme_turu')->nullable();
