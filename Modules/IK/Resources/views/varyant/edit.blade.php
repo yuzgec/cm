@@ -20,7 +20,7 @@
                                             <input type="text" class="form-control" name="varyant_adi" value="{{ $Varyant->varyant_adi }}" autocomplete="off">
                                         </div>
                                     </div>
-
+                                    @if($Varyant->parent_id == null)
                                     <div class="form-group mb-3 row">
                                         <label class="form-label col-3 col-form-label">Varyant</label>
                                         <div class="col">
@@ -34,6 +34,7 @@
                                             </select>
                                         </div>
                                     </div>
+                                    @endif
 
                                     <button type="submit" class="btn btn-primary btn-block">Kaydet</button>
 

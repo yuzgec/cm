@@ -64,6 +64,7 @@ class PersonelController extends Controller
         $Personel = Personel::with('mesai')->with('Bilgiler')->findOrFail($id);
         $Mesai = Mesai::all();
         $Varyant =  Varyant::all();
+
         return view('personel::edit', compact('Personel','Mesai', 'Varyant'));
     }
 

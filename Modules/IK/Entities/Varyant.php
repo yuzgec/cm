@@ -14,6 +14,11 @@ class Varyant extends Model
 
     public $timestamps = false;
 
+    //Alt Kategori Sayısı
+    public function sub(){
+        return $this->hasMany(SELF::class, 'parent_id', 'id')->with('sub');
+    }
+
     protected static function newFactory()
     {
         return \Modules\IK\Database\factories\VaryantFactory::new();

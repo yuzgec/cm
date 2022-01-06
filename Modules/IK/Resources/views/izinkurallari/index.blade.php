@@ -1,5 +1,5 @@
 @extends('master')
-@section('title', 'Varyant Listesi | '.config('app.name'))
+@section('title', 'İzin Kuralları | '.config('app.name'))
 @section('content')
     <div class="col-sm-12 col-lg-12">
         <div class="card">
@@ -9,13 +9,13 @@
                         <div class="col">
                             <h3 class="page-title">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 20h4l10.5 -10.5a1.5 1.5 0 0 0 -4 -4l-10.5 10.5v4" /><line x1="13.5" y1="6.5" x2="17.5" y2="10.5" /></svg>
-                                Varyant Yönetimi
+                                İzin Kuralları Yönetimi
                             </h3>
                         </div>
 
                         <div class="col-auto ms-auto d-print-none mb-1">
                             <div class="d-flex">
-                                <a href="{{ route('varyant.create')}}" class="btn btn-primary">
+                                <a href="{{ route('izinkurallari.create')}}" class="btn btn-primary">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
                                          viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                                          stroke-linecap="round" stroke-linejoin="round">
@@ -23,7 +23,7 @@
                                         <line x1="12" y1="5" x2="12" y2="19" />
                                         <line x1="5" y1="12" x2="19" y2="12" />
                                     </svg>
-                                    Varyant Ekle
+                                    İzin Kural Ekle
                                 </a>
                             </div>
                         </div>
@@ -36,18 +36,24 @@
                             <table class="table table-vcenter card-table">
                                 <thead>
                                 <tr>
-                                    <th>Varyant Adı</th>
+                                    <th>Tür</th>
+                                    <th>Durum</th>
+                                    <th>Ücretli Ücretsiz</th>
+                                    <th>Hak Ediş</th>
+                                    <th>Hak Ediş Dıklığı</th>
+                                    <th>En az</th>
+                                    <th>En çok</th>
                                     <th></th>
                                     <th class="w-1"></th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach ($Varyant as $item)
+                                @foreach ($IzinKurallari as $item)
                                     <tr>
                                         <td>
                                             <div class="d-flex py-1 align-items-center">
                                                 <div class="flex-fill">
-                                                    <div class="font-weight-medium"><span class="badge">{{$item->sub()->count()}}</span> {{ $item->varyant_adi}}</div>
+                                                    <div class="font-weight-medium">{{ $item->izin_adi}}</div>
                                                 </div>
                                             </div>
                                         </td>
@@ -58,7 +64,7 @@
                                             </a>
                                         </td>
                                         <td>
-                                            <a class="btn btn-primary btn-sm btn-square" href="{{ route('varyant.edit', $item->id) }}">
+                                            <a class="btn btn-primary btn-sm btn-square" href="{{ route('izinkurallari.edit', $item->id) }}">
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 7h-3a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-3" /><path d="M9 15h3l8.5 -8.5a1.5 1.5 0 0 0 -3 -3l-8.5 8.5v3" /><line x1="16" y1="5" x2="19" y2="8" /></svg>
                                                 Düzenle
                                             </a>
@@ -80,7 +86,7 @@
                                                         <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 13l-4 -4l4 -4m-4 4h11a4 4 0 0 1 0 8h-1" /></svg>
                                                         İptal Et
                                                     </a>
-                                                    <form action="{{ route('varyant.destroy', $item->id) }}" method="POST">
+                                                    <form action="{{ route('izinkurallari.destroy', $item->id) }}" method="POST">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="submit" class="btn btn-danger btn-sm ms-auto">

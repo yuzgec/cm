@@ -29,7 +29,7 @@
                     <a href="#raporlar" class="nav-link" data-bs-toggle="tab"><span class="m-2">Raporlar</span></a>
                 </li>
                 <li class="nav-item">
-                    <a href="#kurallar" class="nav-link" data-bs-toggle="tab"><span class="m-2">Kurallar</span></a>
+                    <a href="{{route('izinkurallari.index')}}" class="nav-link"><span class="m-2">İzin Kuralları</span></a>
                 </li>
                 <li class="nav-item">
                     <a href="#onay-surecleri" class="nav-link" data-bs-toggle="tab"><span class="m-2">Onay Süreçleri</span></a>

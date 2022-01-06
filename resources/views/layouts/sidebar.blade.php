@@ -195,8 +195,8 @@
                         <a class="dropdown-item" href="{{route('dashboard.index')}}" >
                             Ayar 4
                         </a>
-                        <a class="dropdown-item" href="{{route('dashboard.index')}}" >
-                            Ayar 5
+                        <a class="dropdown-item" href="{{route('varyant.index')}}" >
+                            Varyant Yönetimi
                         </a>
                     </div>
                 </li>

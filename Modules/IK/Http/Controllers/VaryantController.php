@@ -12,7 +12,8 @@ class VaryantController extends Controller
 
     public function index()
     {
-        $Varyant =  Varyant::whereNull('parent_id')->get();
+        $Varyant =  Varyant::with('sub')->whereNull('parent_id')->get();
+        //dd($Varyant);
         return view('ik::varyant.index', compact('Varyant'));
     }
 
@@ -42,6 +43,7 @@ class VaryantController extends Controller
         $Varyant = Varyant::findOrFail($id);
         $VaryantListesi = Varyant::all();
         $Varyantlar = Varyant::where('parent_id', $id)->get();
+
         return view('ik::varyant.edit', compact('Varyant', 'VaryantListesi', 'Varyantlar'));
     }
 

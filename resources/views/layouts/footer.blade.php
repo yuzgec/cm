@@ -1,3 +1,4 @@
+{{--
 <footer class="footer footer-transparent d-print-none">
     <div class="container">
         <div class="row text-center align-items-center flex-row-reverse">
@@ -13,7 +14,7 @@
                 <li class="list-inline-item">
                     Copyright &copy; 2021
                     <a href="." class="link-secondary">{{ config('app.name')}}</a>.
-                    
+
                 </li>
                 <li class="list-inline-item">
                     <a href="{{route('dashboard.index')}}" class="link-secondary" rel="noopener">Versiyon : 1.0.0</a>
@@ -22,4 +23,4 @@
             </div>
         </div>
     </div>
-</footer>
+</footer>--}}

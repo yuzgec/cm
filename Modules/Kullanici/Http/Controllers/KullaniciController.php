@@ -14,10 +14,7 @@ use DB;
 
 class KullaniciController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     * @return Renderable
-     */
+
     public function index()
     {
 
@@ -38,22 +35,12 @@ class KullaniciController extends Controller
         return view('kullanici::index',compact('all'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     * @return Renderable
-     */
     public function create()
     {
-
         $roles = Role::all();
         return view('kullanici::create',compact('roles'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     * @param Request $request
-     * @return Renderable
-     */
     public function store(Request $request)
     {
         $user = new User;
@@ -62,35 +49,24 @@ class KullaniciController extends Controller
         $user->telefon      =  $request->telefon;
         $user->durum        =  $request->durum;
         $user->depertman    =  $request->depertman;
+
         if ($request->password){
             $user->password     =  Hash::make($request->password);
         }
 
         $user->save();
-
         $user->addMedia($request->profil_foto)->toMediaCollection();
-
         $user->syncRoles($request->role);
 
         toast('eklendi.','success');
         return redirect()->route('kullanici.index');
     }
 
-    /**
-     * Show the specified resource.
-     * @param int $id
-     * @return Renderable
-     */
     public function show($id)
     {
         return view('kullanici::show');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     * @param int $id
-     * @return Renderable
-     */
     public function edit($id)
     {
         $detay = User::findOrFail($id);
@@ -98,12 +74,6 @@ class KullaniciController extends Controller
         return view('kullanici::edit', compact('detay', 'roles'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     * @param Request $request
-     * @param int $id
-     * @return Renderable
-     */
     public function update(Request $request, $id)
     {
         $user = User::findOrFail($id);

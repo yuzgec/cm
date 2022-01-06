@@ -15,7 +15,7 @@
                 <div class="list-group-item">
                     <div class="row align-items-center">
                         <div class="col-auto">
-                            <a href="#">
+                            <a href="{{ route('personel.edit', $item->id) }}" title="{{ $item->adsoyad }}">
 
                                <span class="avatar me-2"
                                      title="{{$item->adsoyad}}"
@@ -30,7 +30,7 @@
                             </a>
                         </div>
                         <div class="col d-flex justify-content-between">
-                            <a href="#" class="text-body  birsatir" title="{{ $item->adsoyad }}">{{ $item->adsoyad }}</a>
+                            <a href="{{ route('personel.edit', $item->id) }}" class="text-body  birsatir" title="{{ $item->adsoyad }}">{{ $item->adsoyad }}</a>
                             <div class="text-body birsatir badge">10.02.2022</div>
                         </div>
                     </div>
@@ -45,32 +45,72 @@
         <div class="card mb-3">
             <div class="card-header">
                 <h3 class="card-title">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" /><circle cx="18" cy="18" r="4" /><path d="M15 3v4" /><path d="M7 3v4" /><path d="M3 11h16" /><path d="M18 16.496v1.504l1 1" /></svg>
-                    Yaklaşan İzinler (4)
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><circle cx="12" cy="12" r="9" /><polyline points="12 7 12 12 15 15" /></svg>                    Yaklaşan İzinler (4)
                 </h3>
             </div>
             <div class="list-group list-group-flush list-group-hoverable">
-                @foreach($Personel->slice(5,8) as $item)
+                @foreach($Personel->slice(0,5) as $item)
                     <div class="list-group-item">
                         <div class="row align-items-center">
                             <div class="col-auto">
-                                <a href="#">
-                                    <span class="avatar me-2"
-                                          style="color:white;
-                                              background-image: url({{'/images/personel/50/'.$item->foto}});
-                                              background: {{ $item->mesai->mesai_renk }} linear-gradient(135deg,hsla(0,0%,20%,.4),{{ $item->mesai->mesai_renk }})">
-                                        {{ ($item->foto == "") ? isim($item->adsoyad) : null }}
-                                    </span>
+                                <a href="{{ route('personel.edit', $item->id) }}" title="{{ $item->adsoyad }}">
+
+                               <span class="avatar me-2"
+                                     title="{{$item->adsoyad}}"
+                                     style="color:white;
+                                         background: {{ $item->mesai->mesai_renk }} linear-gradient(135deg,hsla(0,0%,20%,.4),{{ $item->mesai->mesai_renk }});
+                                         background-image: url({{$item->getFirstMediaUrl() }});
+                                         background-size: cover;
+                                         border: 2px solid  {{$item->mesai->mesai_renk}};
+                                         ">
+                                     {{ (!$item->getFirstMediaUrl()) ? isim($item->adsoyad) : null }}
+                                </span>
                                 </a>
                             </div>
                             <div class="col d-flex justify-content-between">
-                                <a href="#" class="text-body  birsatir" title="{{ $item->adsoyad }}">{{ $item->adsoyad }}</a>
+                                <a href="{{ route('personel.edit', $item->id) }}" class="text-body  birsatir" title="{{ $item->adsoyad }}">{{ $item->adsoyad }}</a>
                                 <div class="text-body birsatir badge">10.02.2022</div>
                             </div>
                         </div>
                     </div>
                 @endforeach
+            </div>
+        </div>
+    </div>
+    {{-- Yaklaşan Doğum Günleri --}}
+    <div class="col-4">
+        <div class="card mb-3">
+            <div class="card-header">
+                <h3 class="card-title">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><rect x="3" y="8" width="18" height="4" rx="1" /><line x1="12" y1="8" x2="12" y2="21" /><path d="M19 12v7a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-7" /><path d="M7.5 8a2.5 2.5 0 0 1 0 -5a4.8 8 0 0 1 4.5 5a4.8 8 0 0 1 4.5 -5a2.5 2.5 0 0 1 0 5" /></svg>                    Yaklaşan Doğum Günleri (8)
+                </h3>
+            </div>
+            <div class="list-group list-group-flush list-group-hoverable">
+                @foreach($Personel->slice(0,8) as $item)
+                    <div class="list-group-item">
+                        <div class="row align-items-center">
+                            <div class="col-auto">
+                                <a href="{{ route('personel.edit', $item->id) }}" title="{{ $item->adsoyad }}">
 
+                               <span class="avatar me-2"
+                                     title="{{$item->adsoyad}}"
+                                     style="color:white;
+                                         background: {{ $item->mesai->mesai_renk }} linear-gradient(135deg,hsla(0,0%,20%,.4),{{ $item->mesai->mesai_renk }});
+                                         background-image: url({{$item->getFirstMediaUrl() }});
+                                         background-size: cover;
+                                         border: 2px solid  {{$item->mesai->mesai_renk}};
+                                         ">
+                                     {{ (!$item->getFirstMediaUrl()) ? isim($item->adsoyad) : null }}
+                                </span>
+                                </a>
+                            </div>
+                            <div class="col d-flex justify-content-between">
+                                <a href="{{ route('personel.edit', $item->id) }}" class="text-body  birsatir" title="{{ $item->adsoyad }}">{{ $item->adsoyad }}</a>
+                                <div class="text-body birsatir badge">10.02.2022</div>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
             </div>
         </div>
     </div>
@@ -85,21 +125,26 @@
                 </h3>
             </div>
             <div class="list-group list-group-flush list-group-hoverable">
-                @foreach($Personel->slice(5,6) as $item)
+                @foreach($Personel->slice(0,4) as $item)
                     <div class="list-group-item">
                         <div class="row align-items-center">
                             <div class="col-auto">
-                                <a href="#">
-                                    <span class="avatar me-2"
-                                          style="color:white;
-                                              background-image: url({{'/images/personel/50/'.$item->foto}});
-                                              background: {{ $item->mesai->mesai_renk }} linear-gradient(135deg,hsla(0,0%,20%,.4),{{ $item->mesai->mesai_renk }})">
-                                          {{ ($item->foto == "") ? isim($item->adsoyad) : null }}
-                                    </span>
+                                <a href="{{ route('personel.edit', $item->id) }}" title="{{ $item->adsoyad }}">
+
+                               <span class="avatar me-2"
+                                     title="{{$item->adsoyad}}"
+                                     style="color:white;
+                                         background: {{ $item->mesai->mesai_renk }} linear-gradient(135deg,hsla(0,0%,20%,.4),{{ $item->mesai->mesai_renk }});
+                                         background-image: url({{$item->getFirstMediaUrl() }});
+                                         background-size: cover;
+                                         border: 2px solid  {{$item->mesai->mesai_renk}};
+                                         ">
+                                     {{ (!$item->getFirstMediaUrl()) ? isim($item->adsoyad) : null }}
+                                </span>
                                 </a>
                             </div>
                             <div class="col d-flex justify-content-between">
-                                <a href="#" class="text-body  birsatir" title="{{ $item->adsoyad }}">{{ $item->adsoyad }}</a>
+                                <a href="{{ route('personel.edit', $item->id) }}" class="text-body  birsatir" title="{{ $item->adsoyad }}">{{ $item->adsoyad }}</a>
                                 <div class="text-body birsatir badge">10.02.2022</div>
                             </div>
                         </div>
