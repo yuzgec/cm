@@ -4,6 +4,7 @@ namespace Modules\Personel\Http\Controllers;
 
 use App\Exports\MesaiRaporExport;
 use App\Exports\PuantajExport;
+use App\Models\User;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Illuminate\Contracts\Support\Renderable;
@@ -26,8 +27,8 @@ class PersonelController extends Controller
     public function index()
     {
 
-        $Personel = Personel::with('mesai')->get()->sortByDesc('mesai.mesai_renk');;
-        return view('personel::index', compact('Personel'));
+        $Users = User::with('mesai')->get()->sortByDesc('mesai.mesai_renk');
+        return view('personel::index', compact('Users'));
     }
 
     public function create()
@@ -50,7 +51,7 @@ class PersonelController extends Controller
             $personel->save();
 
             $Pb = PersonelBilgileri::create([
-                'personel_id' => $personel->id,
+                'user_id' => $personel->id,
                 'ise_baslama_tarihi' => $request->ise_baslama_tarihi,
                 'kisisel_eposta' => $request->kisisel_eposta,
                 'kisisel_telefon' => $request->kisisel_telefon,
@@ -72,7 +73,7 @@ class PersonelController extends Controller
 
     public function edit($id)
     {
-        $Personel = Personel::with('mesai')->with('Bilgiler')->findOrFail($id);
+        $Personel = User::with('mesai')->with('Bilgiler')->findOrFail($id);
         $Mesai = Mesai::all();
         $Varyant =  Varyant::all();
 
@@ -81,7 +82,10 @@ class PersonelController extends Controller
 
     public function update(Request $request, $id)
     {
-        //dd($request->all());
+ /*       dd($request->all());
+        $per = $request->except('pb');
+        $pb = $request->pb;*/
+
         DB::transaction(function () use($request, $id) {
 
             $Personel = Personel::findOrFail(request('id'));
@@ -203,8 +207,6 @@ class PersonelController extends Controller
             ->where('gun','<=', $bitis)->get();
         return view('personel::mesai.giriscikisdetay', compact('Personel', 'Aylar', 'Kayitlar'));
      }
-
-
     public function mesairaporlama(Request $request){
 
         $now = Carbon::now();
@@ -223,7 +225,7 @@ class PersonelController extends Controller
         }
         return view('personel::mesai.raporlama', compact('MesaiRapor', 'RaporTarih', 'Gunler', 'Personeller', 'HaftaBaslangic'));
     }
-     public function MesaiRaporExcelIndir(Request $request){
+    public function MesaiRaporExcelIndir(Request $request){
 
          $RaporTarih = Carbon::yesterday()->toDateString();
          $now = Carbon::now();
@@ -251,7 +253,6 @@ class PersonelController extends Controller
          $data = new MesaiRaporExport($data);
          return Excel::download($data, $RaporTarih.' Mesai Rapor.xlsx');
     }
-
     public function ExcelIndir(Request $request){
         $Puantaj = Puantaj::query();
         $Ay = date('Ym01');

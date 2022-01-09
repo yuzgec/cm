@@ -3,7 +3,7 @@
 @section('content')
         <div class="d-flex">
             <div class="col-3 justify-content-center align-items-center ">
-                <p class="pt-2">Toplam ({{ $Personel->total() }}) personel bulunmaktadır.</p>
+                <p class="pt-2">Toplam ({{ $Users->total() }}) personel bulunmaktadır.</p>
             </div>
             <div class="col-3 justify-content-center align-items-center">
                 <div class="input-icon">
@@ -29,10 +29,10 @@
 
             </div>
             <div class="col-2 justify-content-end">
-                {{ $Personel->appends(['siralama' => 'personel'])->links() }}
+                {{ $Users->appends(['siralama' => 'personel'])->links() }}
             </div>
         </div>
-    @foreach($Personel as $item)
+    @foreach($Users as $item)
     <div class="col-md-6 col-lg-3">
         <div class="card">
             <div class="card-body p-4 text-center">
@@ -49,13 +49,13 @@
                     </div>
                 </div>
 
-                <a href="{{route('personel.edit', $item->id)}}" title="{{$item->adsoyad}}">
-                    <span class="avatar avatar-xl mb-3 avatar-rounded" style="background-image: url({{$item->getFirstMediaUrl() }});border: 2px solid {{ $item->mesai->mesai_renk }}" title="{{$item->adsoyad}}">
-                        {{ (!$item->getFirstMediaUrl()) ? isim($item->adsoyad) : null }}
+                <a href="{{route('personel.edit', $item->id)}}" title="{{$item->name}}">
+                    <span class="avatar avatar-xl mb-3 avatar-rounded" style="background-image: url({{$item->getFirstMediaUrl() }});border: 2px solid {{ $item->mesai->mesai_renk }}" title="{{$item->name}}">
+                        {{ (!$item->getFirstMediaUrl()) ? isim($item->name) : null }}
                     </span>
                 </a>
                 <h3 class="m-0 mb-1">
-                    <a href="{{route('personel.edit', $item->id)}}" title="{{$item->adsoyad}}">{{$item->adsoyad}}</a>
+                    <a href="{{route('personel.edit', $item->id)}}" title="{{$item->name}}">{{$item->name}}</a>
                 </h3>
                 <div class="text-muted birsatir" title="{{ $item->email}}">{{ $item->email}}</div>
                 <div class="text-muted birsatir">{{ ($item->telefon) ? $item->telefon : null}}</div>

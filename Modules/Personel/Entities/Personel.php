@@ -28,7 +28,7 @@ class Personel extends Model implements HasMedia
 
     //Personel Bilgilerini Çeker
     public function Bilgiler(){
-        return $this->belongsTo(PersonelBilgileri::class, 'id', 'personel_id');
+        return $this->belongsTo(PersonelBilgileri::class, 'id', 'user_id');
     }
 
     protected static function newFactory()

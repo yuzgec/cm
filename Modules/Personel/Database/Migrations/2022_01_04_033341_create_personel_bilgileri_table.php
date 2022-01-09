@@ -11,10 +11,11 @@ class CreatePersonelBilgileriTable extends Migration
     {
         Schema::create('personel_bilgileri', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('personel_id')->references('id')->on('personel')->onDelete('cascade');
+            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('kisisel_eposta')->nullable();
             $table->string('kisisel_telefon')->nullable();
             $table->date('ise_baslama_tarihi')->nullable();
+
             $table->date('dogum_tarihi')->nullable();
             $table->string('unvan')->nullable();
             $table->string('erisim_turu')->nullable();
@@ -27,6 +28,7 @@ class CreatePersonelBilgileriTable extends Migration
             $table->string('cocuk_sayisi')->nullable();
             $table->string('askerlik_durumu')->nullable();
             $table->string('kan_grubu')->nullable();
+
             $table->string('egitim_durumu')->nullable();
             $table->string('mezuniyet')->nullable();
             $table->string('mezun_okul')->nullable();

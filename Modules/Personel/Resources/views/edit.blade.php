@@ -1,5 +1,5 @@
 @extends('master')
-@section('title', $Personel->adsoyad.' | Personel Düzenle | '.config('app.name'))
+@section('title', $Personel->name.' | Personel Düzenle | '.config('app.name'))
 @section('customJS')
     <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
     <script>
@@ -20,8 +20,10 @@
         <div class="card">
             <div class="card-body">
                     <div class="row">
+{{--
                         <form action="{{ route('personel.update', $Personel->id) }}" method="POST" enctype="multipart/form-data">
-                        @csrf
+--}}
+                        {{Form::model($Personel, ["route" => ["personel.update", $Personel->id]])}}
                         @method('PUT')
                         <input type="hidden" name="id" value="{{$Personel->id}}">
 
@@ -30,12 +32,12 @@
                             <div class="d-flex">
                                  <span class="avatar mb-3 avatar-rounded"
                                        style="background-image: url({{$Personel->getFirstMediaUrl() }});border: 2px solid {{ $Personel->mesai->mesai_renk }}"
-                                       title="{{$Personel->adsoyad}}">
-                                     {{ (!$Personel->getFirstMediaUrl()) ? isim($Personel->adsoyad) : null }}
+                                       title="{{$Personel->name}}">
+                                     {{ (!$Personel->getFirstMediaUrl()) ? isim($Personel->name) : null }}
                                 </span>
 
                                 <div class="ps-2">
-                                    <div><b>{{$Personel->adsoyad}}</b></div>
+                                    <div><b>{{$Personel->name}}</b></div>
                                     <div class="small text-muted">{{$Personel->email}}</div>
                                 </div>
                             </div>
@@ -96,8 +98,8 @@
                                                     <label class="form-label">Personel Resim</label>
                                                     <span class="avatar avatar-xl mb-3 avatar-rounded"
                                                           style="background-image: url({{$Personel->getFirstMediaUrl() }});
-                                                            border: 2px solid {{ $Personel->mesai->mesai_renk }}" title="{{$Personel->adsoyad}}">
-                                                        {{ (!$Personel->getFirstMediaUrl()) ? isim($Personel->adsoyad) : null }}
+                                                            border: 2px solid {{ $Personel->mesai->mesai_renk }}" title="{{$Personel->name}}">
+                                                        {{ (!$Personel->getFirstMediaUrl()) ? isim($Personel->name) : null }}
                                                     </span>
                                                     <input type="file" class="form-control" name="image" id="images">
                                                     <div class="text-center mt-4">
@@ -113,15 +115,15 @@
 
                                                 <div class="d-flex justify-content-between">
                                                     <p>Adı Soyadı</p>
-                                                    <p>{{ $Personel->adsoyad }}</p>
+                                                    <p>{{ $Personel->name }}</p>
                                                 </div>
                                                 <div class="d-flex justify-content-between">
                                                     <p>Yönetici</p>
-                                                    <p>{{ @$Personel->adsoyad }}</p>
+                                                    <p>{{ @$Personel->name }}</p>
                                                 </div>
                                                 <div class="d-flex justify-content-between">
                                                     <p>Ünvan</p>
-                                                    <p>{{ @$Personel->mesai->adsoyad }}</p>
+                                                    <p>{{ @$Personel->mesai->name }}</p>
                                                 </div>
                                                 <div class="d-flex justify-content-between">
                                                     <p>Depertman</p>
@@ -144,31 +146,25 @@
                                         <div class="card">
                                             <div class="card-body">
                                                 <div class="card-title"><h3>Genel Bilgiler</h3></div>
-
                                                 <div class="form-group mb-3">
-                                                    <label class="form-label">Adı Soyadı</label>
-                                                    <input type="text" class="form-control" name="adsoyad" value="{{ $Personel->adsoyad}}">
+                                                    <x-form-inputtext label="Adı Soyadı" name="name"/>
                                                 </div>
 
                                                 <div class="form-group row mb-3">
                                                     <div class="col-6">
-                                                        <label class="form-label">Email (İş)</label>
-                                                        <input type="text" class="form-control" name="email" value="{{$Personel->email}}">
+                                                        <x-form-email label="Email (İş)" name="email"/>
                                                     </div>
                                                     <div class="col-6">
-                                                        <label class="form-label">Email (Kişisel)</label>
-                                                        <input type="text" class="form-control" name="kisisel_eposta" value="{{$Personel->Bilgiler->kisisel_eposta}}">
+                                                        <x-form-email label="Email (Kişisel)" name="kisisel_eposta"/>
                                                     </div>
                                                 </div>
 
                                                 <div class="form-group row mb-3">
                                                     <div class="col-6">
-                                                        <label class="form-label">Telefon (İş)</label>
-                                                        <input type="text" class="form-control" name="telefon" value="{{$Personel->telefon}}">
+                                                        <x-form-inputtext label="Telefon (İş)" name="telefon"/>
                                                     </div>
                                                     <div class="col-6">
-                                                        <label class="form-label">Telefon (Kişisel)</label>
-                                                        <input type="text" class="form-control" name="kisisel_telefon" value="{{$Personel->Bilgiler->kisisel_telefon}}">
+                                                        <x-form-inputtext label="Telefon (Kişisel)" name="kisisel_telefon"/>
                                                     </div>
                                                 </div>
 
@@ -195,13 +191,14 @@
 
                                                 <div class="form-group row mb-3">
                                                     <div class="col-6">
-                                                        <label class="form-label" for="isebaslama">İşe Başlama Tarihi</label>
+                                                        {{--<label class="form-label" for="isebaslama">İşe Başlama Tarihi</label>
                                                         <div class="input-group">
                                                             <span class="input-group-text">
                                                                 {{\Carbon\Carbon::parse($Personel->Bilgiler->ise_baslama_tarihi)->diffForHumans()}}
                                                             </span>
-                                                            <input type="date" class="form-control" name="ise_baslama_tarihi" id="isebaslama" value="{{$Personel->Bilgiler->ise_baslama_tarihi}}">
-                                                        </div>
+                                                            <input type="date" class="form-control" name="pb[ise_baslama_tarihi]" id="isebaslama" value="{{$Personel->Bilgiler->ise_baslama_tarihi}}">
+                                                        </div>--}}
+                                                        <x-form-inputtext label="İşe Başlama Tarihi" name="pb[ise_baslama_tarihi]"/>
                                                     </div>
                                                     <div class="col-6">
                                                         <label class="form-label">Personel Grubu</label>
@@ -234,8 +231,7 @@
                                                     <input type="date" class="form-control" name="dogum_tarihi" value="{{$Personel->Bilgiler->dogum_tarihi}}">
                                                 </div>
                                                 <div class="col-6">
-                                                    <label class="form-label">Kimlik NO</label>
-                                                    <input type="text" class="form-control" name="tckn" value="{{$Personel->tckn}}">
+                                                    <x-form-inputtext label="TC Klimlik No" name="tckn"/>
                                                 </div>
                                             </div>
 
@@ -378,8 +374,7 @@
                                         </div>
                                         <div class="form-group row mb-3">
                                             <div class="col-6">
-                                                <label class="form-label">Ev Telefonu</label>
-                                                <input type="text" class="form-control" name="adres_telefon"  value="{{ $Personel->Bilgiler->adres_telefon }}">
+                                                <x-form-inputtext label="Ev Telefonu" name="adres_telefon"/>
                                             </div>
                                             <div class="col-6">
                                                 <label class="form-label">Ülke</label>

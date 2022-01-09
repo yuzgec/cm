@@ -2,7 +2,11 @@
 
 namespace App\Providers;
 
+use App\View\Components\Form\InputEMail;
+use App\View\Components\Form\InputPassword;
+use App\View\Components\Form\InputText;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Pagination\Paginator;
@@ -22,5 +26,9 @@ class AppServiceProvider extends ServiceProvider
         Carbon::setLocale(config('app.locale'));
         if(env('APP_ENV') != 'local')
             URL::forceScheme('https');
+
+        Blade::component('form-inputtext', InputText::class);
+        Blade::component('form-password', InputPassword::class);
+        Blade::component('form-email', InputEMail::class);
     }
 }

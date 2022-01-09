@@ -28,33 +28,27 @@
                     <h2 class="card-title text-center mb-4">Online Ödeme Ekranı</h2>
 
                     <div class="form-group">
-                        <label for="singin-email-2">Dosya No</label>
-                        <input type="text" name="dosyaNo" class="form-control mb-2" placeholder="Dosya NO" value="{{old('dosyaNo')}}">
+                        <x-form-inputtext label="Dosya No" name="dosyaNo"/>
                     </div>
 
                     <div class="form-group">
-                        <label for="singin-email-2">Borçlu Ad Soyad</label>
-                        <input type="text" name="adSoyad" class="form-control mb-2" placeholder="Borçlu Ad Soyad" value="{{old('adSoyad')}}">
+                        <x-form-inputtext label="Borçlu Ad Soyad" name="adSoyad"/>
                     </div>
 
                     <div class="form-group">
-                        <label for="singin-email-2">Borçlu TC Kimlik No</label>
-                        <input type="text" name="tcKimlikNo" class="form-control mb-2" placeholder="Ödeme Alınacak Tutar" value="{{old('tcKimlikNo')}}">
+                        <x-form-inputtext label="Borçlu TC Kimlik No" name="tcKimlikNo"/>
                     </div>
 
                     <div class="form-group">
-                        <label for="singin-email-2">Ödeme Alınacak Tutar *</label>
-                        <input type="number" name="tutar" class="form-control mb-2" placeholder="Ödeme Alınacak Tutar" value="{{old('tutar')}}">
+                        <x-form-inputtext label="Ödeme Alınacak Tutar *" name="tutar"/>
                     </div>
 
                     <div class="form-group">
-                        <label for="singin-email-2">İsim Soyisim *</label>
-                        <input type="text" name="adsoyad" class="form-control mb-2" placeholder="Kart Üzerinde Yazan İsim Soyisim" value="{{old('adsoyad')}}">
+                        <x-form-inputtext label="Kart ÜZerindeki İsim Soyisim *" name="adsoyad"/>
                     </div>
 
                     <div class="form-group">
-                        <label for="singin-email-2">Kart Numarası *</label>
-                        <input type="text" name="kartno" class="form-control mb-2" placeholder="Kart Üzerinde Yazan İsim Soyisim" value="{{old('kartno')}}">
+                        <x-form-inputtext label="Kart Numarası *" name="kartno"/>
                     </div>
 
                     <div class="form-group d-flex justify-content-between">
@@ -101,8 +95,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="singin-email-2">Kart CVC *</label>
-                        <input type="text" name="cvc" class="form-control mb-2" placeholder="Kart CVC No" value="{{old('cvc')}}">
+                        <x-form-inputtext label="Kart CVC *" name="cvc"/>
                     </div>
 
                     <div class="form-group">

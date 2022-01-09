@@ -2,6 +2,7 @@
 
 namespace Modules\IK\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -80,15 +81,16 @@ class IKController extends Controller
         //
     }
 
-
     public function takvim(){
         return view('ik::takvim');
     }
 
     public function calisanlar(){
-        $Personel = Personel::with('mesai')->paginate(20);
+        $Users = User::with('mesai')->paginate(20);
 
-        return view('ik::calisanlar', compact('Personel'));
+        //dd($Personel);
+
+        return view('ik::calisanlar', compact('Users'));
     }
     public function calisanDetay($id){
         $PersoneDetay = Personel::find($id);

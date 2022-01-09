@@ -17,13 +17,13 @@ class PersonelRequest extends FormRequest
         return [
             'adsoyad'               => 'required|min:4|max:75,'.$this->id,
             'foto'                  => 'mimes:jpeg,gif,png,jpg',
-            'telefon'               => 'required|numeric|min:10',
+            'telefon'               => 'required|numeric|digits:10',
             'email'                 => 'required|email',
             'mesai_id'              => 'required',
-            
+
         ];
     }
-    
+
     public function messages()
     {
         return [

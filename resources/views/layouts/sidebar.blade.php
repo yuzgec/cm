@@ -41,6 +41,21 @@
                                     Kullanıcı Rolleri
                                 </a>
                                 @endcan
+                                @can('Personel Çalışma Grupları')
+                                    <a class="dropdown-item" href="{{route('mesai.index')}}" >
+                                        Kullanici Çalışma Grupları
+                                    </a>
+                                @endcan
+                                @can('Personel Giriş-Çıkış')
+                                    <a class="dropdown-item" href="{{route('giriscikis')}}" >
+                                        Kullanici Giriş-Çıkış
+                                    </a>
+                                @endcan
+                                @can('Personel Raporlama')
+                                    <a class="dropdown-item" href="{{route('mesairaporlama')}}" >
+                                        Kullanici Raporlama
+                                    </a>
+                                @endcan
                             </div>
                         </div>
                     </div>
@@ -60,7 +75,7 @@
                         <a class="dropdown-item" href="{{ route('sms.index') }}" title="SMS Dashboard">
                             SMS Dashboard
                         </a>
-                        @can('SMS Gönder')
+
                         <a class="dropdown-item" href="{{route('smsgonder')}}" title="SMS Gönder">
                             SMS Gönder
                         </a>
@@ -73,7 +88,7 @@
                         <a class="dropdown-item" href="{{route('smssablon.index')}}" title="SMS Şablonları">
                             SMS Şablonları
                         </a>
-                        @endcan
+
                         @can('SMS Raporlama')
                         <a class="dropdown-item" href="{{route('smsraporlama')}}" title="SMS Raporlama">
                             SMS Raporlama
@@ -109,43 +124,6 @@
                         @can('Ödeme Raporlama')
                         <a class="dropdown-item" href="{{route('dashboard.index')}}" >
                             Ödeme Raporlama
-                        </a>
-                        @endcan
-                    </div>
-                </li>
-                @endcan
-                @can('Personel Yönetimi')
-                <li class="nav-item  {{ menu_is_active('personel') }} dropdown">
-                    <a class="nav-link dropdown-toggle" href="#sms" data-bs-toggle="dropdown" role="button" aria-expanded="{{ menu_is_active('personel', 'true') }}" >
-                        <span class="nav-link-icon d-md-none d-lg-inline-block">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
-                                 stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                                <path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" />
-                            </svg>
-                        </span>
-                        <span class="nav-link-title {{ menu_is_active('personel') }}">
-                            Personel Yönetimi
-                        </span>
-                    </a>
-
-                    <div class="dropdown-menu {{ menu_is_active('personel', 'show') }}">
-                        <a class="dropdown-item" href="{{route('personel.index')}}" title="Personel Listesi">
-                            Personel Listesi
-                        </a>
-                        @can('Personel Çalışma Grupları')
-                        <a class="dropdown-item" href="{{route('mesai.index')}}" >
-                            Personel Çalışma Grupları
-                        </a>
-                        @endcan
-                        @can('Personel Giriş-Çıkış')
-                        <a class="dropdown-item" href="{{route('giriscikis')}}" >
-                            Personel Giriş-Çıkış
-                        </a>
-                        @endcan
-                        @can('Personel Raporlama')
-                        <a class="dropdown-item" href="{{route('mesairaporlama')}}" >
-                            Personel Raporlama
                         </a>
                         @endcan
                     </div>
