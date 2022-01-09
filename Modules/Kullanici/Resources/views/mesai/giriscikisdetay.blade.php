@@ -1,5 +1,5 @@
 @extends('master')
-@section('title', $Personel->adsoyad.' | Personel Detay')
+@section('title', $Personel->adsoyad.' | Personel Mesai Giriş Çıkış')
 @section('content')
     <div class="col-sm-12 col-lg-12">
         <div class="card">

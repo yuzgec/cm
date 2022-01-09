@@ -137,13 +137,13 @@ class KullaniciController extends Controller
                     SELECT
                         SUM(personel_puantaj.fazla_calisma) as fazla_calisma
                     FROM personel_puantaj
-                    WHERE user_id=personel.id AND (gun BETWEEN "'.$baslangic.'" AND "'.$bitis.'")
+                    WHERE user_id=users.id AND (gun BETWEEN "'.$baslangic.'" AND "'.$bitis.'")
                 ) as fazla_mesai,
                 (
                     SELECT
                         SUM(personel_puantaj.gec_mesai) as gec_mesai
                     FROM personel_puantaj
-                    WHERE user_id=personel.id AND (gun BETWEEN "'.$baslangic.'" AND "'.$bitis.'")
+                    WHERE user_id=users.id AND (gun BETWEEN "'.$baslangic.'" AND "'.$bitis.'")
                 ) as eksik_mesai
 
             FROM users');
