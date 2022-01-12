@@ -6,14 +6,17 @@ use Illuminate\View\Component;
 
 class SelectBox extends Component
 {
-    /**
-     * Create a new component instance.
-     *
-     * @return void
-     */
-    public function __construct()
+
+    public $label;
+    public $name;
+    public $class;
+    public $list;
+    public function __construct($label, $name, $list, $class = "form-control")
     {
-        //
+        $this->label = $label;
+        $this->name = $name;
+        $this->list = $list;
+        $this->class = $class;
     }
 
     /**

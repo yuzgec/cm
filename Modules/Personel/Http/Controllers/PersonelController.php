@@ -30,13 +30,11 @@ class PersonelController extends Controller
         $Users = User::with('mesai')->get()->sortByDesc('mesai.mesai_renk');
         return view('personel::index', compact('Users'));
     }
-
     public function create()
     {
         $mesai = Mesai::all();
         return view('personel::create',compact('mesai'));
     }
-
     public function store(PersonelRequest $request)
     {
         DB::transaction(function () use($request) {
@@ -62,15 +60,11 @@ class PersonelController extends Controller
         });
 
         return redirect()->route('personel.index');
-
     }
-
     public function show($id)
     {
         return view('personel::show');
     }
-
-
     public function edit($id)
     {
         $Personel = User::with('mesai')->with('Bilgiler')->findOrFail($id);
@@ -79,7 +73,6 @@ class PersonelController extends Controller
 
         return view('personel::edit', compact('Personel','Mesai', 'Varyant'));
     }
-
     public function update(Request $request, $id)
     {
  /*       dd($request->all());
@@ -140,12 +133,10 @@ class PersonelController extends Controller
 
         return redirect()->route('personel.index');
     }
-
     public function destroy($id)
     {
         //
     }
-
     public function giriscikis(){
         $Aylar = [];
         Carbon::setLocale('tr');

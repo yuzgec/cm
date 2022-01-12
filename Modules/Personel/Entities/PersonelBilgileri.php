@@ -11,9 +11,7 @@ class PersonelBilgileri extends Model
 
     protected $guarded = [];
     protected $table = 'personel_bilgileri';
+    protected $dates = [];
 
-    protected static function newFactory()
-    {
-        return \Modules\Personel\Database\factories\PersonelBilgileriFactory::new();
-    }
+
 }

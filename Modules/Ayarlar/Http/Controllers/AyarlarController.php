@@ -2,78 +2,68 @@
 
 namespace Modules\Ayarlar\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Modules\Ayarlar\Entities\Departman;
+use Modules\Ayarlar\Entities\Sube;
+use Modules\Ayarlar\Entities\Unvan;
 
 class AyarlarController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     * @return Renderable
-     */
     public function index()
     {
         return view('ayarlar::index');
     }
-
-    /**
-     * Show the form for creating a new resource.
-     * @return Renderable
-     */
-    public function create()
-    {
-        return view('ayarlar::create');
+    public function getSirket(){
+        $Subeler = Sube::with('Yetkili')->get();
+        $Departmanlar = Departman::with('Yetkili','Sube')->get();
+        $Unvanlar = Unvan::with('Yetkili','Departman')->get();
+        $Calisanlar = User::select('id','name')->get();
+        return response()->json([
+            "Subeler" => $Subeler,
+            "Departmanlar" => $Departmanlar,
+            "Unvanlar" => $Unvanlar,
+            "Calisanlar" => $Calisanlar
+        ]);
     }
-
-    /**
-     * Store a newly created resource in storage.
-     * @param Request $request
-     * @return Renderable
-     */
-    public function store(Request $request)
-    {
-        //
+    public function storeSube(Request $request){
+        $request->validate(["name" => "required"],["name.required" => "Şube adı zorunludur"]);
+        if($request->id > 0)
+            $Item = Sube::findOrFail($request->id);
+        else
+            $Item = new Sube();
+        $Item->name = $request->name;
+        $Item->yonetici = $request->yetkili ? $request->yetkili : null;
+        $Item->save();
+        return response()->json(["Subeler" => Sube::with('Yetkili')->get()]);
     }
-
-    /**
-     * Show the specified resource.
-     * @param int $id
-     * @return Renderable
-     */
-    public function show($id)
-    {
-        return view('ayarlar::show');
+    public function storeDepartman(Request $request){
+        $request->validate(["name" => "required"],["name.required" => "Departman adı zorunludur"]);
+        if($request->id > 0)
+            $Item = Departman::findOrFail($request->id);
+        else
+            $Item = new Departman();
+        $Item->name = $request->name;
+        $Item->yonetici = $request->yetkili ? $request->yetkili : null;
+        $Item->sube_id = $request->sube_id ? $request->sube_id : null;
+        $Item->mesai_baslangic = $request->mesai_baslangic ? $request->mesai_baslangic : null;
+        $Item->mesai_bitis = $request->mesai_bitis ? $request->mesai_bitis : null;
+        $Item->renk = $request->renk;
+        $Item->save();
+        return response()->json(["Departmanlar" => Departman::with('Yetkili','Sube')->get()]);
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     * @param int $id
-     * @return Renderable
-     */
-    public function edit($id)
-    {
-        return view('ayarlar::edit');
-    }
-
-    /**
-     * Update the specified resource in storage.
-     * @param Request $request
-     * @param int $id
-     * @return Renderable
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     * @param int $id
-     * @return Renderable
-     */
-    public function destroy($id)
-    {
-        //
+    public function storeUnvan(Request $request){
+        $request->validate(["name" => "required"],["name.required" => "Departman adı zorunludur"]);
+        if($request->id > 0)
+            $Item = Unvan::findOrFail($request->id);
+        else
+            $Item = new Unvan();
+        $Item->name = $request->name;
+        $Item->yonetici = $request->yetkili ? $request->yetkili : null;
+        $Item->departman_id = $request->departman_id ? $request->departman_id : null;
+        $Item->save();
+        return response()->json(["Unvanlar" => Unvan::with('Yetkili','Departman')->get()]);
     }
 }

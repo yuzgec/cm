@@ -131,7 +131,7 @@ class KullaniciController extends Controller
         $baslangic = $TamTarih;
         $bitis = Carbon::parse($TamTarih)->endOfMonth()->format('Y-m-d');
 
-        $personeller = \Illuminate\Support\Facades\DB::select('
+        $personeller = DB::select('
             SELECT *,
                 (
                     SELECT
@@ -146,8 +146,14 @@ class KullaniciController extends Controller
                     WHERE user_id=users.id AND (gun BETWEEN "'.$baslangic.'" AND "'.$bitis.'")
                 ) as eksik_mesai
 
-            FROM users');
+            FROM users WHERE remote_id > 0');
 
+//        $personeller = User::query()
+//            ->select('*')
+//            ->selectRaw('(SELECT sum(personel_puantaj.fazla_calisma) as fazla_calisma FROM personel_puantaj WHERE user_id = users.id AND (gun BETWEEN "'.$baslangic.'" AND "'.$bitis.'")) as fazla_mesai')
+//            ->selectRaw('(SELECT sum(personel_puantaj.gec_mesai) as gec_mesai FROM personel_puantaj WHERE personel_puantaj.user_id = users.id AND (gun BETWEEN "'.$baslangic.'" AND "'.$bitis.'")) as eksik_mesai')
+//            ->where('remote_id','>',0)->get();
+//
         return view('kullanici::mesai.giriscikis', compact( 'personeller','Aylar'));
     }
     public function giriscikisdetay($user_id){

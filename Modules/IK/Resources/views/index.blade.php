@@ -11,27 +11,26 @@
                 </h3>
             </div>
             <div class="list-group list-group-flush list-group-hoverable">
-                @foreach($Personel->slice(0,4) as $item)
+                @foreach($Izinler as $Izin)
                 <div class="list-group-item">
                     <div class="row align-items-center">
                         <div class="col-auto">
-                            <a href="{{ route('personel.edit', $item->id) }}" title="{{ $item->adsoyad }}">
-
+                            <a href="{{ route('IK.edit', $Izin->user->id) }}" title="{{ $Izin->user->full_name }}">
                                <span class="avatar me-2"
-                                     title="{{$item->adsoyad}}"
+                                     title="{{$Izin->user->full_name}}"
                                      style="color:white;
-                                         background: {{ $item->mesai->mesai_renk }} linear-gradient(135deg,hsla(0,0%,20%,.4),{{ $item->mesai->mesai_renk }});
-                                         background-image: url({{$item->getFirstMediaUrl() }});
+                                         background: {{ $Izin->user->departman()->first()->renk }} linear-gradient(135deg,hsla(0,0%,20%,.4),{{ $Izin->user->departman()->first()->renk }});
+                                         background-image: url({{$Izin->user->getFirstMediaUrl() }});
                                          background-size: cover;
-                                         border: 2px solid  {{$item->mesai->mesai_renk}};
+                                         border: 2px solid  {{$Izin->user->departman()->first()->renk}};
                                         ">
-                                     {{ (!$item->getFirstMediaUrl()) ? isim($item->adsoyad) : null }}
+                                     {{ (!$Izin->user->getFirstMediaUrl()) ? isim($Izin->user->full_name) : null }}
                                 </span>
                             </a>
                         </div>
                         <div class="col d-flex justify-content-between">
-                            <a href="{{ route('personel.edit', $item->id) }}" class="text-body  birsatir" title="{{ $item->adsoyad }}">{{ $item->adsoyad }}</a>
-                            <div class="text-body birsatir badge">10.02.2022</div>
+                            <a href="{{ route('IK.edit', $Izin->user->id) }}" class="text-body  birsatir" title="{{ $Izin->user->full_name }}">{{ $Izin->user->full_name }}</a>
+                            <div class="text-body birsatir badge">{{$Izin->baslangic->locale('tr')->translatedFormat('d F Y H:i')}}</div>
                         </div>
                     </div>
                 </div>
@@ -49,31 +48,31 @@
                 </h3>
             </div>
             <div class="list-group list-group-flush list-group-hoverable">
-                @foreach($Personel->slice(0,5) as $item)
-                    <div class="list-group-item">
-                        <div class="row align-items-center">
-                            <div class="col-auto">
-                                <a href="{{ route('personel.edit', $item->id) }}" title="{{ $item->adsoyad }}">
+{{--                @foreach($Personel->slice(0,5) as $item)--}}
+{{--                    <div class="list-group-item">--}}
+{{--                        <div class="row align-items-center">--}}
+{{--                            <div class="col-auto">--}}
+{{--                                <a href="{{ route('personel.edit', $item->id) }}" title="{{ $item->adsoyad }}">--}}
 
-                               <span class="avatar me-2"
-                                     title="{{$item->adsoyad}}"
-                                     style="color:white;
-                                         background: {{ $item->mesai->mesai_renk }} linear-gradient(135deg,hsla(0,0%,20%,.4),{{ $item->mesai->mesai_renk }});
-                                         background-image: url({{$item->getFirstMediaUrl() }});
-                                         background-size: cover;
-                                         border: 2px solid  {{$item->mesai->mesai_renk}};
-                                         ">
-                                     {{ (!$item->getFirstMediaUrl()) ? isim($item->adsoyad) : null }}
-                                </span>
-                                </a>
-                            </div>
-                            <div class="col d-flex justify-content-between">
-                                <a href="{{ route('personel.edit', $item->id) }}" class="text-body  birsatir" title="{{ $item->adsoyad }}">{{ $item->adsoyad }}</a>
-                                <div class="text-body birsatir badge">10.02.2022</div>
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
+{{--                               <span class="avatar me-2"--}}
+{{--                                     title="{{$item->adsoyad}}"--}}
+{{--                                     style="color:white;--}}
+{{--                                         background: {{ $item->mesai->mesai_renk }} linear-gradient(135deg,hsla(0,0%,20%,.4),{{ $item->mesai->mesai_renk }});--}}
+{{--                                         background-image: url({{$item->getFirstMediaUrl() }});--}}
+{{--                                         background-size: cover;--}}
+{{--                                         border: 2px solid  {{$item->mesai->mesai_renk}};--}}
+{{--                                         ">--}}
+{{--                                     {{ (!$item->getFirstMediaUrl()) ? isim($item->adsoyad) : null }}--}}
+{{--                                </span>--}}
+{{--                                </a>--}}
+{{--                            </div>--}}
+{{--                            <div class="col d-flex justify-content-between">--}}
+{{--                                <a href="{{ route('personel.edit', $item->id) }}" class="text-body  birsatir" title="{{ $item->adsoyad }}">{{ $item->adsoyad }}</a>--}}
+{{--                                <div class="text-body birsatir badge">10.02.2022</div>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                @endforeach--}}
             </div>
         </div>
     </div>
@@ -86,30 +85,30 @@
                 </h3>
             </div>
             <div class="list-group list-group-flush list-group-hoverable">
-                @foreach($Personel->slice(0,8) as $item)
-                    <div class="list-group-item">
-                        <div class="row align-items-center">
-                            <div class="col-auto">
-                                <a href="{{ route('personel.edit', $item->id) }}" title="{{ $item->adsoyad }}">
-                               <span class="avatar me-2"
-                                     title="{{$item->adsoyad}}"
-                                     style="color:white;
-                                         background: {{ $item->mesai->mesai_renk }} linear-gradient(135deg,hsla(0,0%,20%,.4),{{ $item->mesai->mesai_renk }});
-                                         background-image: url({{$item->getFirstMediaUrl() }});
-                                         background-size: cover;
-                                         border: 2px solid  {{$item->mesai->mesai_renk}};
-                                         ">
-                                     {{ (!$item->getFirstMediaUrl()) ? isim($item->adsoyad) : null }}
-                                </span>
-                                </a>
-                            </div>
-                            <div class="col d-flex justify-content-between">
-                                <a href="{{ route('personel.edit', $item->id) }}" class="text-body  birsatir" title="{{ $item->adsoyad }}">{{ $item->adsoyad }}</a>
-                                <div class="text-body birsatir badge">10.02.2022</div>
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
+{{--                @foreach($Personel->slice(0,8) as $item)--}}
+{{--                    <div class="list-group-item">--}}
+{{--                        <div class="row align-items-center">--}}
+{{--                            <div class="col-auto">--}}
+{{--                                <a href="{{ route('personel.edit', $item->id) }}" title="{{ $item->adsoyad }}">--}}
+{{--                               <span class="avatar me-2"--}}
+{{--                                     title="{{$item->adsoyad}}"--}}
+{{--                                     style="color:white;--}}
+{{--                                         background: {{ $item->mesai->mesai_renk }} linear-gradient(135deg,hsla(0,0%,20%,.4),{{ $item->mesai->mesai_renk }});--}}
+{{--                                         background-image: url({{$item->getFirstMediaUrl() }});--}}
+{{--                                         background-size: cover;--}}
+{{--                                         border: 2px solid  {{$item->mesai->mesai_renk}};--}}
+{{--                                         ">--}}
+{{--                                     {{ (!$item->getFirstMediaUrl()) ? isim($item->adsoyad) : null }}--}}
+{{--                                </span>--}}
+{{--                                </a>--}}
+{{--                            </div>--}}
+{{--                            <div class="col d-flex justify-content-between">--}}
+{{--                                <a href="{{ route('personel.edit', $item->id) }}" class="text-body  birsatir" title="{{ $item->adsoyad }}">{{ $item->adsoyad }}</a>--}}
+{{--                                <div class="text-body birsatir badge">10.02.2022</div>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                @endforeach--}}
             </div>
         </div>
     </div>
@@ -124,31 +123,31 @@
                 </h3>
             </div>
             <div class="list-group list-group-flush list-group-hoverable">
-                @foreach($Personel->slice(0,4) as $item)
-                    <div class="list-group-item">
-                        <div class="row align-items-center">
-                            <div class="col-auto">
-                                <a href="{{ route('personel.edit', $item->id) }}" title="{{ $item->adsoyad }}">
+{{--                @foreach($Personel->slice(0,4) as $item)--}}
+{{--                    <div class="list-group-item">--}}
+{{--                        <div class="row align-items-center">--}}
+{{--                            <div class="col-auto">--}}
+{{--                                <a href="{{ route('personel.edit', $item->id) }}" title="{{ $item->adsoyad }}">--}}
 
-                               <span class="avatar me-2"
-                                     title="{{$item->adsoyad}}"
-                                     style="color:white;
-                                         background: {{ $item->mesai->mesai_renk }} linear-gradient(135deg,hsla(0,0%,20%,.4),{{ $item->mesai->mesai_renk }});
-                                         background-image: url({{$item->getFirstMediaUrl() }});
-                                         background-size: cover;
-                                         border: 2px solid  {{$item->mesai->mesai_renk}};
-                                         ">
-                                     {{ (!$item->getFirstMediaUrl()) ? isim($item->adsoyad) : null }}
-                                </span>
-                                </a>
-                            </div>
-                            <div class="col d-flex justify-content-between">
-                                <a href="{{ route('personel.edit', $item->id) }}" class="text-body  birsatir" title="{{ $item->adsoyad }}">{{ $item->adsoyad }}</a>
-                                <div class="text-body birsatir badge">10.02.2022</div>
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
+{{--                               <span class="avatar me-2"--}}
+{{--                                     title="{{$item->adsoyad}}"--}}
+{{--                                     style="color:white;--}}
+{{--                                         background: {{ $item->mesai->mesai_renk }} linear-gradient(135deg,hsla(0,0%,20%,.4),{{ $item->mesai->mesai_renk }});--}}
+{{--                                         background-image: url({{$item->getFirstMediaUrl() }});--}}
+{{--                                         background-size: cover;--}}
+{{--                                         border: 2px solid  {{$item->mesai->mesai_renk}};--}}
+{{--                                         ">--}}
+{{--                                     {{ (!$item->getFirstMediaUrl()) ? isim($item->adsoyad) : null }}--}}
+{{--                                </span>--}}
+{{--                                </a>--}}
+{{--                            </div>--}}
+{{--                            <div class="col d-flex justify-content-between">--}}
+{{--                                <a href="{{ route('personel.edit', $item->id) }}" class="text-body  birsatir" title="{{ $item->adsoyad }}">{{ $item->adsoyad }}</a>--}}
+{{--                                <div class="text-body birsatir badge">10.02.2022</div>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                @endforeach--}}
 
             </div>
         </div>
@@ -171,61 +170,61 @@
     </div>
 
     {{-- Resmi Tatiller  --}}
-    <div class="col-4">
-        <div class="card">
-            <div class="card-body">
-                <div class="d-flex">
-                    <h3 class="card-title">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 12a8 8 0 0 1 16 0z" /><path d="M12 12v6a2 2 0 0 0 4 0" /></svg>
-                        Resmi Tatiller
-                    </h3>
-                </div>
-                <div class="d-flex justify-content-between">
-                    <p>Yılbaşı</p>
-                    <p>01.01.2022</p>
-                </div>
-                <div class="d-flex justify-content-between">
-                    <p class="birsatir">23 Nisan Egemenlik ve Çocuk Bayramı</p>
-                    <p>23.04.2022</p>
-                </div>
-                <div class="d-flex justify-content-between">
-                    <p class="birsatir"> Atatürk'ü Anma ve Gençlik ve Spor Bayramı </p>
-                    <p>01.01.2022</p>
-                </div>
-                <div class="d-flex justify-content-between">
-                    <p>Ramazan Bayramı</p>
-                    <p>01.01.2022</p>
-                </div>
-            </div>
-        </div>
-    </div>
+{{--    <div class="col-4">--}}
+{{--        <div class="card">--}}
+{{--            <div class="card-body">--}}
+{{--                <div class="d-flex">--}}
+{{--                    <h3 class="card-title">--}}
+{{--                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 12a8 8 0 0 1 16 0z" /><path d="M12 12v6a2 2 0 0 0 4 0" /></svg>--}}
+{{--                        Resmi Tatiller--}}
+{{--                    </h3>--}}
+{{--                </div>--}}
+{{--                <div class="d-flex justify-content-between">--}}
+{{--                    <p>Yılbaşı</p>--}}
+{{--                    <p>01.01.2022</p>--}}
+{{--                </div>--}}
+{{--                <div class="d-flex justify-content-between">--}}
+{{--                    <p class="birsatir">23 Nisan Egemenlik ve Çocuk Bayramı</p>--}}
+{{--                    <p>23.04.2022</p>--}}
+{{--                </div>--}}
+{{--                <div class="d-flex justify-content-between">--}}
+{{--                    <p class="birsatir"> Atatürk'ü Anma ve Gençlik ve Spor Bayramı </p>--}}
+{{--                    <p>01.01.2022</p>--}}
+{{--                </div>--}}
+{{--                <div class="d-flex justify-content-between">--}}
+{{--                    <p>Ramazan Bayramı</p>--}}
+{{--                    <p>01.01.2022</p>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+{{--    </div>--}}
     {{-- Çalışan Dağılımı   --}}
-    <div class="col-4">
-        <div class="card">
-            <div class="card-body">
-                <div class="d-flex">
-                    <h3 class="card-title">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><circle cx="7" cy="7" r="4" /><path d="M7 3v4h4" /><line x1="9" y1="17" x2="9" y2="21" /><line x1="17" y1="14" x2="17" y2="21" /><line x1="13" y1="13" x2="13" y2="21" /><line x1="21" y1="12" x2="21" y2="21" /></svg>
-                        Çalışan Dağılımı ({{ $Personel->count() }})
-                    </h3>
-                    <div class="ms-auto">
-                        <div class="dropdown">
-                            <a class="dropdown-toggle text-muted" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Şirket</a>
-                            <div class="dropdown-menu dropdown-menu-end">
-                                <a class="dropdown-item active" href="#">Şirket</a>
-                                <a class="dropdown-item" href="#">Şube</a>
-                                <a class="dropdown-item" href="#">Depertman</a>
-                                <a class="dropdown-item" href="#">Ünvan</a>
-                                <a class="dropdown-item" href="#">Yaş</a>
-                                <a class="dropdown-item" href="#">Cinsiyet</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div id="chart-demo-pie"></div>
-            </div>
-        </div>
-    </div>
+{{--    <div class="col-4">--}}
+{{--        <div class="card">--}}
+{{--            <div class="card-body">--}}
+{{--                <div class="d-flex">--}}
+{{--                    <h3 class="card-title">--}}
+{{--                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><circle cx="7" cy="7" r="4" /><path d="M7 3v4h4" /><line x1="9" y1="17" x2="9" y2="21" /><line x1="17" y1="14" x2="17" y2="21" /><line x1="13" y1="13" x2="13" y2="21" /><line x1="21" y1="12" x2="21" y2="21" /></svg>--}}
+{{--                        Çalışan Dağılımı ({{ $Personel->count() }})--}}
+{{--                    </h3>--}}
+{{--                    <div class="ms-auto">--}}
+{{--                        <div class="dropdown">--}}
+{{--                            <a class="dropdown-toggle text-muted" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Şirket</a>--}}
+{{--                            <div class="dropdown-menu dropdown-menu-end">--}}
+{{--                                <a class="dropdown-item active" href="#">Şirket</a>--}}
+{{--                                <a class="dropdown-item" href="#">Şube</a>--}}
+{{--                                <a class="dropdown-item" href="#">Depertman</a>--}}
+{{--                                <a class="dropdown-item" href="#">Ünvan</a>--}}
+{{--                                <a class="dropdown-item" href="#">Yaş</a>--}}
+{{--                                <a class="dropdown-item" href="#">Cinsiyet</a>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--                <div id="chart-demo-pie"></div>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+{{--    </div>--}}
 @endsection
 @section('customJS')
     <script src="/assets/libs/apexcharts/dist/apexcharts.min.js"></script>

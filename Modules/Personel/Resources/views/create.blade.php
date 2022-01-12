@@ -23,7 +23,6 @@
                 <form action="{{ route('personel.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="row">
-
                         @include('layouts.validate')
                         <div class="d-flex mb-2 justify-content-between" >
                             <div class="d-flex">
@@ -33,7 +32,6 @@
                                 <button type="submit" class="btn btn-primary">Kaydet</button>
                             </div>
                         </div>
-
                         <ul class="nav nav-tabs mb-2" data-bs-toggle="tabs" id="tab">
                             <li class="nav-item">
                                 <a href="#genel" class="nav-link active" data-bs-toggle="tab">Genel</a>
@@ -77,14 +75,12 @@
                                 </div>
                             </li>
                         </ul>
-
                         <div class="tab-content">
                             <div class="tab-pane show active" id="genel">
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="card">
                                             <div class="card-body">
-
                                                 <div class="form-group mb-3 text-center ">
                                                     <label class="form-label">Personel Resim</label>
                                                     <span class="avatar avatar-xl mb-3 avatar-rounded">
@@ -104,29 +100,24 @@
                                                 <div class="card-title"><h3>Genel Bilgiler</h3></div>
 
                                                 <div class="form-group mb-3">
-                                                    <label class="form-label">Adı Soyadı</label>
-                                                    <input type="text" class="form-control" name="adsoyad" >
+                                                    <x-form-inputtext name="adsoyad" label="Adı Soyadı" />
                                                 </div>
 
                                                 <div class="form-group row mb-3">
                                                     <div class="col-6">
-                                                        <label class="form-label">Email (İş)</label>
-                                                        <input type="text" class="form-control" name="email">
+                                                        <x-form-email name="email" label="Email (İş)"/>
                                                     </div>
                                                     <div class="col-6">
-                                                        <label class="form-label">Email (Kişisel)</label>
-                                                        <input type="text" class="form-control" name="kisisel_eposta" >
+                                                        <x-form-email name="kisisel_eposta" label="Email (Kişisel)"/>
                                                     </div>
                                                 </div>
 
                                                 <div class="form-group row mb-3">
                                                     <div class="col-6">
-                                                        <label class="form-label">Telefon (İş)</label>
-                                                        <input type="text" class="form-control" name="telefon">
+                                                        <x-form-inputtext name="telefon" label="Telefon (İş)" />
                                                     </div>
                                                     <div class="col-6">
-                                                        <label class="form-label">Telefon (Kişisel)</label>
-                                                        <input type="text" class="form-control" name="kisisel_telefon">
+                                                        <x-form-inputtext name="kisisel_telefon" label="Telefon (Kişisel)" />
                                                     </div>
                                                 </div>
 

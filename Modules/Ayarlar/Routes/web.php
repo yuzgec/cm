@@ -1,4 +1,13 @@
 <?php
-
-    Route::resource('/ayarlar', 'AyarlarController')->middleware('auth');
+    use Modules\Ayarlar\Http\Controllers\AyarlarController;
+    Route::prefix('Ayarlar')->group(function (){
+        Route::middleware('auth')->group(function (){
+            Route::get('/', [AyarlarController::class, 'index'])->name('Ayarlar.index');
+            Route::get('/getSirket', [AyarlarController::class, 'getSirket'])->name('Ayarlar.getSirket');
+            Route::post('/storeSube', [AyarlarController::class, 'storeSube'])->name('Ayarlar.storeSube');
+            Route::post('/storeDepartman', [AyarlarController::class, 'storeDepartman'])->name('Ayarlar.storeDepartman');
+            Route::post('/storeUnvan', [AyarlarController::class, 'storeUnvan'])->name('Ayarlar.storeUnvan');
+        });
+    });
+//    Route::resource('/ayarlar', 'AyarlarController')->middleware('auth');
 

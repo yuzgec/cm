@@ -52,7 +52,7 @@
                                       <td>
                                         <div class="text-muted">
                                             <a href="{{ route('giriscikisdetay', $personel->id) }}" title="Personel Adı">
-                                                {{$personel->name}}
+                                                {{$personel->name . " " . $personel->last_name}}
                                             </a>
                                         </div>
                                       </td>

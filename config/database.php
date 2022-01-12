@@ -72,6 +72,18 @@ return [
             'sslmode' => 'prefer',
         ],
 
+        'monitoringdb' => [
+            'driver' => 'sqlsrv',
+            'url' => "78.188.150.116\KGS",
+            'host' => "78.188.150.116\KGS,9911",
+            'port' => 9911,
+            'database' => "KGS",
+            'username' => "sa",
+            'password' => "a123A123",
+            'charset' => 'utf8',
+            'prefix' => '',
+            'prefix_indexes' => true,
+        ],
         'sqlsrv' => [
             'driver' => 'sqlsrv',
             'url' => env('DATABASE_URL'),

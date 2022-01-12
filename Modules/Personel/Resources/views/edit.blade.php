@@ -31,7 +31,7 @@
                         <div class="d-flex mb-2 justify-content-between">
                             <div class="d-flex">
                                  <span class="avatar mb-3 avatar-rounded"
-                                       style="background-image: url({{$Personel->getFirstMediaUrl() }});border: 2px solid {{ $Personel->mesai->mesai_renk }}"
+                                       style="background-image: url({{$Personel->getFirstMediaUrl() }});border: 2px solid {{ @$Personel->mesai->mesai_renk }}"
                                        title="{{$Personel->name}}">
                                      {{ (!$Personel->getFirstMediaUrl()) ? isim($Personel->name) : null }}
                                 </span>
@@ -98,7 +98,7 @@
                                                     <label class="form-label">Personel Resim</label>
                                                     <span class="avatar avatar-xl mb-3 avatar-rounded"
                                                           style="background-image: url({{$Personel->getFirstMediaUrl() }});
-                                                            border: 2px solid {{ $Personel->mesai->mesai_renk }}" title="{{$Personel->name}}">
+                                                            border: 2px solid {{ @$Personel->mesai->mesai_renk }}" title="{{$Personel->name}}">
                                                         {{ (!$Personel->getFirstMediaUrl()) ? isim($Personel->name) : null }}
                                                     </span>
                                                     <input type="file" class="form-control" name="image" id="images">
@@ -228,7 +228,7 @@
                                             <div class="form-group row mb-3">
                                                 <div class="col-6">
                                                     <label class="form-label">Doğum Tarihi</label>
-                                                    <input type="date" class="form-control" name="dogum_tarihi" value="{{$Personel->Bilgiler->dogum_tarihi}}">
+                                                    <input type="date" class="form-control" name="dogum_tarihi" value="{{@$Personel->Bilgiler->dogum_tarihi}}">
                                                 </div>
                                                 <div class="col-6">
                                                     <x-form-inputtext label="TC Klimlik No" name="tckn"/>
@@ -350,7 +350,7 @@
                                                 </div>
                                                 <div class="col-6">
                                                     <label class="form-label">Son Tamamlanan Eğitim Kurumu</label>
-                                                    <input type="text" class="form-control" name="mezun_okul" value="{{ $Personel->Bilgiler->mezun_okul }}">
+                                                    <input type="text" class="form-control" name="mezun_okul" value="{{ @$Personel->Bilgiler->mezun_okul }}">
                                                 </div>
                                             </div>
                                         </div>
@@ -368,7 +368,7 @@
                                         <div class="form-group row mb-3">
                                             <div class="col-12">
                                                 <label class="form-label">Adres Bilgileri</label>
-                                                <textarea type="text" class="form-control" name="adres">{{ $Personel->Bilgiler->adres }}</textarea>
+                                                <textarea type="text" class="form-control" name="adres">{{ @$Personel->Bilgiler->adres }}</textarea>
                                             </div>
 
                                         </div>
@@ -387,11 +387,11 @@
                                         <div class="form-group row mb-3">
                                             <div class="col-6">
                                                 <label class="form-label">Şehir</label>
-                                                <input type="text" class="form-control" name="adres_sehir" value="{{ $Personel->Bilgiler->adres_sehir }}">
+                                                <input type="text" class="form-control" name="adres_sehir" value="{{ @$Personel->Bilgiler->adres_sehir }}">
                                             </div>
                                             <div class="col-6">
                                                 <label class="form-label">Posta Kodu</label>
-                                                <input type="text" class="form-control" name="adres_postakodu" value="{{ $Personel->Bilgiler->adres_postakodu }}">
+                                                <input type="text" class="form-control" name="adres_postakodu" value="{{ @$Personel->Bilgiler->adres_postakodu }}">
                                             </div>
                                         </div>
                                     </div>
@@ -404,14 +404,14 @@
                                         <div class="form-group row mb-3">
                                             <div class="col-6">
                                                 <label class="form-label">Banka Adı</label>
-                                                <input type="text" class="form-control" name="banka_adi" value="{{ $Personel->Bilgiler->banka_adi }}">
+                                                <input type="text" class="form-control" name="banka_adi" value="{{ @$Personel->Bilgiler->banka_adi }}">
                                             </div>
                                             <div class="col-6">
                                                 <label class="form-label">Hesap Tipi</label>
                                                 <select class="form-select" name="banka_hesap_tipi">
                                                     <option value="">Seçiniz...</option>
                                                     @foreach($Varyant->where('parent_id', 60) as $item)
-                                                        <option value="{{ $item->id }}" {{ ($item->id == $Personel->banka_hesap_tipi) ? 'selected' : null }}>
+                                                        <option value="{{ $item->id }}" {{ ($item->id == @$Personel->banka_hesap_tipi) ? 'selected' : null }}>
                                                             {{$item->varyant_adi}}
                                                         </option>
                                                     @endforeach
@@ -421,11 +421,11 @@
                                         <div class="form-group row mb-3">
                                             <div class="col-6">
                                                 <label class="form-label">Hesap No</label>
-                                                <input type="text" class="form-control" name="banka_hesap_no" value="{{$Personel->Bilgiler->banka_hesap_no}}">
+                                                <input type="text" class="form-control" name="banka_hesap_no" value="{{@$Personel->Bilgiler->banka_hesap_no}}">
                                             </div>
                                             <div class="col-6">
                                                 <label class="form-label">IBAN</label>
-                                                <input type="text" class="form-control" name="banka_iban" value="{{$Personel->Bilgiler->banka_iban}}">
+                                                <input type="text" class="form-control" name="banka_iban" value="{{@$Personel->Bilgiler->banka_iban}}">
                                             </div>
                                         </div>
                                     </div>
