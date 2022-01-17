@@ -2,6 +2,7 @@
 
 namespace Modules\Kullanici\Entities;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Rennokki\QueryCache\Traits\QueryCacheable;
@@ -16,12 +17,7 @@ class Puantaj extends Model
         "mesai_giris","mesai_cikis","gun"
     ];
 
-    public function getUser(){
-        return $this->hasOne('Modules\Personel\Entities\Personel', 'id', 'user_id');
-    }
-
-    protected static function newFactory()
-    {
-        return \Modules\Personel\Database\factories\PuantajFactory::new();
+    public function user(){
+        return $this->hasOne(User::class, 'id','user_id');
     }
 }

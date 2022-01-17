@@ -23,7 +23,6 @@ Route::prefix('ik')->group(function() {
 
     Route::get('/izinler', 'IKController@izinler')->name('izinler');
     Route::get('/harcamalar', 'IKController@index')->name('harcamalar');
-    Route::get('/raporlar', 'IKController@index')->name('ikraporlar');
     Route::get('/takvim', 'IKController@takvim')->name('takvim');
 
     Route::post('/IzinTalep', [IKController::class, 'IzinTalep'])->name('IK.izinTalep');
@@ -35,4 +34,6 @@ Route::prefix('ik')->group(function() {
     Route::get('/AvansDetay/{id}', [IKController::class, 'AvansDetay'])->name('IK.avansDetay');
     Route::post('/AvansOnayla', [IKController::class, 'AvansOnayla'])->name('IK.avansOnayla');
     Route::post('/AvansReddet', [IKController::class, 'AvansReddet'])->name('IK.avansReddet');
+
+    Route::get('/raporlar', [IKController::class, 'Raporlar'])->name('IK.raporlar');
 });

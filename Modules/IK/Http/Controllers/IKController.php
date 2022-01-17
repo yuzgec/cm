@@ -532,4 +532,55 @@ class IKController extends Controller
                 break;
         }
     }
+    public function Raporlar(Request $request){
+        $now = Carbon::now();
+        if($request->tarih)
+            $now = Carbon::parse($request->tarih);
+        $HaftaBaslangic = $now->startOfWeek()->format('Y-m-d H:i');
+        $HaftaBitis = $now->endOfWeek()->format('Y-m-d H:i');
+
+        $MesaiRapor = Puantaj::with('user')->whereBetween('gun', [$HaftaBaslangic, $HaftaBitis])->get();
+
+        $RaporTarih = Carbon::parse($HaftaBaslangic)->translatedFormat('d F Y').' - '.Carbon::parse($HaftaBitis)->translatedFormat('d F Y');
+        $Gunler = ['Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi', 'Pazar'];
+        $Personeller = [];
+        foreach ($MesaiRapor as $Row){
+            $Personeller[$Row->user_id][] = $Row;
+        }
+
+        $Personel = Personel::with('mesai')->paginate(5);
+        $YaklasanIzinler = [];
+        $OnayBekleyenler = [];
+        $Onaylananlar = [];
+        $Reddedilenler = [];
+        $Departmanlar = Departman::query()
+            ->where('yonetici', auth()->user()->id)
+            ->with('users.izinler')
+            ->get();
+        foreach ($Departmanlar as $Row){
+            foreach ($Row->users as $user){
+                foreach ($user->izinler as $izin){
+                    if($izin->durum == 0)
+                        $OnayBekleyenler[] = $izin;
+                    if($izin->durum == -1)
+                        $Reddedilenler[] = $izin;
+                    if($izin->durum == 1)
+                        $Onaylananlar[] = $izin;
+                }
+            }
+        }
+
+        return view('ik::raporlar', compact(
+            'Gunler',
+            'Personeller',
+            'RaporTarih',
+            'HaftaBaslangic',
+            'HaftaBitis',
+            'Personel',
+            'YaklasanIzinler',
+            'OnayBekleyenler',
+            'Onaylananlar',
+            'Reddedilenler'
+        ));
+    }
 }

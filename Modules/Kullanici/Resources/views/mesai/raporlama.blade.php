@@ -49,7 +49,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($Personeller as $item)
+                                    @foreach($Personeller as $item)
                                     <tr>
                                         <td>
                                             <div class="text-muted">
@@ -100,9 +100,7 @@
                                         </td>
                                     </tr>
                                 @endforeach
-                        </div>
-
-                        </tbody>
+                            </tbody>
                         </table>
                     </div>
                 </div>
