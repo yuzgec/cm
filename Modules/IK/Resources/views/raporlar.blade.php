@@ -335,7 +335,7 @@
                     </div>
                     <div class="tab-pane" id="avanslar">
                         <ul class="nav nav-tabs" data-bs-toggle="tabs">
-                            <li class="nav-item"><a href="#onayBekleyenAvanslar" class="nav-link actvie" data-bs-toggle="tab">Onay Bekleyenler</a></li>
+                            <li class="nav-item"><a href="#onayBekleyenAvanslar" class="nav-link active" data-bs-toggle="tab">Onay Bekleyenler</a></li>
                             <li class="nav-item"><a href="#onaylananAvanslar" class="nav-link" data-bs-toggle="tab">Onaylananlar</a></li>
                             <li class="nav-item"><a href="#reddedilenAvanslar" class="nav-link" data-bs-toggle="tab">Reddilenler</a></li>
                         </ul>
