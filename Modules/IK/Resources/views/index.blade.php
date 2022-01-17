@@ -7,7 +7,7 @@
             <div class="card-header">
                 <h3 class="card-title">
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M16 10h4a2 2 0 0 1 0 4h-4l-4 7h-3l2 -7h-4l-2 2h-3l2 -4l-2 -4h3l2 2h4l-2 -7h3z" /></svg>
-                    İzin Talepleri (4)
+                    İzin Talepleri ({{count($Izinler)}})
                 </h3>
             </div>
             <div class="list-group list-group-flush list-group-hoverable">
@@ -16,16 +16,7 @@
                     <div class="row align-items-center">
                         <div class="col-auto">
                             <a href="{{ route('IK.edit', $Izin->user->id) }}" title="{{ $Izin->user->full_name }}">
-                               <span class="avatar me-2"
-                                     title="{{$Izin->user->full_name}}"
-                                     style="color:white;
-                                         background: {{ $Izin->user->departman()->first()->renk }} linear-gradient(135deg,hsla(0,0%,20%,.4),{{ $Izin->user->departman()->first()->renk }});
-                                         background-image: url({{$Izin->user->getFirstMediaUrl() }});
-                                         background-size: cover;
-                                         border: 2px solid  {{$Izin->user->departman()->first()->renk}};
-                                        ">
-                                     {{ (!$Izin->user->getFirstMediaUrl()) ? isim($Izin->user->full_name) : null }}
-                                </span>
+                               {!! $Izin->user->avatar !!}
                             </a>
                         </div>
                         <div class="col d-flex justify-content-between">
@@ -119,35 +110,25 @@
             <div class="card-header">
                 <h3 class="card-title">
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" /><circle cx="18" cy="18" r="4" /><path d="M15 3v4" /><path d="M7 3v4" /><path d="M3 11h16" /><path d="M18 16.496v1.504l1 1" /></svg>
-                    Mesai Talepleri  (4)
+                    Avans Talepleri  ({{count($Avanslar)}})
                 </h3>
             </div>
             <div class="list-group list-group-flush list-group-hoverable">
-{{--                @foreach($Personel->slice(0,4) as $item)--}}
-{{--                    <div class="list-group-item">--}}
-{{--                        <div class="row align-items-center">--}}
-{{--                            <div class="col-auto">--}}
-{{--                                <a href="{{ route('personel.edit', $item->id) }}" title="{{ $item->adsoyad }}">--}}
-
-{{--                               <span class="avatar me-2"--}}
-{{--                                     title="{{$item->adsoyad}}"--}}
-{{--                                     style="color:white;--}}
-{{--                                         background: {{ $item->mesai->mesai_renk }} linear-gradient(135deg,hsla(0,0%,20%,.4),{{ $item->mesai->mesai_renk }});--}}
-{{--                                         background-image: url({{$item->getFirstMediaUrl() }});--}}
-{{--                                         background-size: cover;--}}
-{{--                                         border: 2px solid  {{$item->mesai->mesai_renk}};--}}
-{{--                                         ">--}}
-{{--                                     {{ (!$item->getFirstMediaUrl()) ? isim($item->adsoyad) : null }}--}}
-{{--                                </span>--}}
-{{--                                </a>--}}
-{{--                            </div>--}}
-{{--                            <div class="col d-flex justify-content-between">--}}
-{{--                                <a href="{{ route('personel.edit', $item->id) }}" class="text-body  birsatir" title="{{ $item->adsoyad }}">{{ $item->adsoyad }}</a>--}}
-{{--                                <div class="text-body birsatir badge">10.02.2022</div>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                @endforeach--}}
+                @foreach($Avanslar as $item)
+                    <div class="list-group-item">
+                        <div class="row align-items-center">
+                            <div class="col-auto">
+                                <a href="javascript:;" title="{{ $item->user->full_name }}" data-toggle="avansDetay" data-id="{{$item->id}}">
+                                    {!! $item->user->avatar !!}
+                                </a>
+                            </div>
+                            <div class="col d-flex justify-content-between">
+                                <a href="javascript:;" data-toggle="avansDetay" data-id="{{$item->id}}" class="text-body  birsatir" title="{{ $item->user->full_name }}">{{ $item->user->full_name }}</a>
+                                <div class="text-body birsatir badge">{{$item->tarih->locale('tr')->translatedFormat('d F Y')}}</div>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
 
             </div>
         </div>
@@ -231,47 +212,47 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js"></script>
     <script>
         // @formatter:off
-        document.addEventListener("DOMContentLoaded", function () {
-            window.ApexCharts && (new ApexCharts(document.getElementById('chart-demo-pie'), {
-                chart: {
-                    type: "donut",
-                    fontFamily: 'inherit',
-                    height: 400,
-                    sparkline: {
-                        enabled: true
-                    },
-                    animations: {
-                        enabled: false
-                    },
-                },
-                fill: {
-                    opacity: 1,
-                },
-                series: [44, 55, 12, 2, 12, 6],
-                labels: ['Hukuk', 'İdari İşler', 'İcra', 'Değer Kaybı', 'Dış Görev', 'Muhasebe', 'Bedeni Hasar'],
-                grid: {
-                    strokeDashArray: 4,
-                },
-                colors: ["#e6de00", '#00670a', "#0018ff", "#ff0000",'#999', '#e400ff', '#ff6000' ],
-                legend: {
-                    show: true,
-                    position: 'bottom',
-                    offsetY: 12,
-                    markers: {
-                        width: 10,
-                        height: 10,
-                        radius: 100,
-                    },
-                    itemMargin: {
-                        horizontal: 8,
-                        vertical: 8
-                    },
-                },
-                tooltip: {
-                    fillSeriesColor: false
-                },
-            })).render();
-        });
+        // document.addEventListener("DOMContentLoaded", function () {
+        //     window.ApexCharts && (new ApexCharts(document.getElementById('chart-demo-pie'), {
+        //         chart: {
+        //             type: "donut",
+        //             fontFamily: 'inherit',
+        //             height: 400,
+        //             sparkline: {
+        //                 enabled: true
+        //             },
+        //             animations: {
+        //                 enabled: false
+        //             },
+        //         },
+        //         fill: {
+        //             opacity: 1,
+        //         },
+        //         series: [44, 55, 12, 2, 12, 6],
+        //         labels: ['Hukuk', 'İdari İşler', 'İcra', 'Değer Kaybı', 'Dış Görev', 'Muhasebe', 'Bedeni Hasar'],
+        //         grid: {
+        //             strokeDashArray: 4,
+        //         },
+        //         colors: ["#e6de00", '#00670a', "#0018ff", "#ff0000",'#999', '#e400ff', '#ff6000' ],
+        //         legend: {
+        //             show: true,
+        //             position: 'bottom',
+        //             offsetY: 12,
+        //             markers: {
+        //                 width: 10,
+        //                 height: 10,
+        //                 radius: 100,
+        //             },
+        //             itemMargin: {
+        //                 horizontal: 8,
+        //                 vertical: 8
+        //             },
+        //         },
+        //         tooltip: {
+        //             fillSeriesColor: false
+        //         },
+        //     })).render();
+        // });
         // @formatter:on
     </script>
 @endsection

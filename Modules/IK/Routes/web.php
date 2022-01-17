@@ -30,4 +30,9 @@ Route::prefix('ik')->group(function() {
     Route::get('/IzinDetay/{id}', [IKController::class, 'IzinDetay'])->name('IK.izinDetay');
     Route::post('/IzinOnayla', [IKController::class, 'IzinOnayla'])->name('IK.izinOnayla');
     Route::post('/IzinReddet', [IKController::class, 'IzinReddet'])->name('IK.izinReddet');
+
+    Route::post('/AvansTalep', [IKController::class, 'AvansTalep'])->name('IK.avansTalep');
+    Route::get('/AvansDetay/{id}', [IKController::class, 'AvansDetay'])->name('IK.avansDetay');
+    Route::post('/AvansOnayla', [IKController::class, 'AvansOnayla'])->name('IK.avansOnayla');
+    Route::post('/AvansReddet', [IKController::class, 'AvansReddet'])->name('IK.avansReddet');
 });

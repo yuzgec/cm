@@ -28,29 +28,22 @@
                 <li class="nav-item">
                     <a href="#raporlar" class="nav-link" data-bs-toggle="tab"><span class="m-2">Raporlar</span></a>
                 </li>
-                <li class="nav-item">
-                    <a href="{{route('izinkurallari.index')}}" class="nav-link"><span class="m-2">İzin Kuralları</span></a>
-                </li>
-                <li class="nav-item">
-                    <a href="#onay-surecleri" class="nav-link" data-bs-toggle="tab"><span class="m-2">Onay Süreçleri</span></a>
-                </li>
             </ul>
             <div class="card-body">
                 <div class="tab-content">
                     <div class="tab-pane active show" id="izinler">
-
                         <ul class="nav nav-tabs" data-bs-toggle="tabs">
                             <li class="nav-item">
-                                <a href="#yaklasanlar" class="nav-link active" data-bs-toggle="tab">Yaklaşanlar <span class="badge m-2"> 4</span></a>
+                                <a href="#yaklasanlar" class="nav-link active" data-bs-toggle="tab">Yaklaşanlar <span class="badge m-2"> {{count($YaklasanIzinler)}}</span></a>
                             </li>
                             <li class="nav-item">
-                                <a href="#onaybekleyen" class="nav-link" data-bs-toggle="tab">Onay Bekleyen <span class="badge m-2"> 4</span></a>
+                                <a href="#onaybekleyen" class="nav-link" data-bs-toggle="tab">Onay Bekleyen <span class="badge m-2"> {{count($OnayBekleyenler)}}</span></a>
                             </li>
                             <li class="nav-item">
-                                <a href="#onayverilen" class="nav-link" data-bs-toggle="tab">Onay Verilen <span class="badge m-2"> 4</span></a>
+                                <a href="#onayverilen" class="nav-link" data-bs-toggle="tab">Onay Verilen <span class="badge m-2"> {{count($Onaylananlar)}}</span></a>
                             </li>
                             <li class="nav-item">
-                                <a href="#reddedilenler" class="nav-link" data-bs-toggle="tab">Reddedilenler <span class="badge m-2"> 4</span></a>
+                                <a href="#reddedilenler" class="nav-link" data-bs-toggle="tab">Reddedilenler <span class="badge m-2"> {{count($Reddedilenler)}}</span></a>
                             </li>
 
                         </ul>
@@ -74,36 +67,33 @@
                                                 </thead>
                                                 <tbody>
 
-                                                @foreach($Personel->slice(1) as $item)
-                                                <tr>
-                                                    <td data-label="Name" >
-                                                        <div class="d-flex py-1 align-items-center">
-                                                            <a href="#">
-                                                                <span class="avatar me-2" style="background-image: url({{'/images/personel/50/'.$item->foto}})">
-                                                                    {{ ($item->foto == "") ? isim($item->adsoyad) : null }}
-                                                                </span>
-                                                            </a>
-                                                            <div class="flex-fill">
-                                                                <div class="font-weight-medium">{{$item->adsoyad}}</div>
+                                                @foreach($YaklasanIzinler as $item)
+                                                    <tr>
+                                                        <td data-label="Name" >
+                                                            <div class="d-flex py-1 align-items-center">
+                                                                <a href="#">
+                                                                    {!! $item->user->avatar !!}
+                                                                </a>
+                                                                <div class="flex-fill">
+                                                                    <div class="font-weight-medium">{{$item->user->full_name}}</div>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </td>
-                                                    <td data-label="Title" >
-                                                        <div>Yıllık İzin</div>
-                                                    </td>
-                                                    <td class="text-muted" >
-                                                        4
-                                                    </td>
+                                                        </td>
+                                                        <td data-label="Title" >
+                                                            <div>{{$item->izin_turu}}</div>
+                                                        </td>
+                                                        <td class="text-muted" >
+                                                            {{$item->gun}}
+                                                        </td>
 
-                                                    <td class="text-muted" >
-                                                        {{ \Carbon\Carbon::today() }}
-                                                    </td>
+                                                        <td class="text-muted" >
+                                                            {{ $item->baslangic->locale('tr')->translatedFormat('d F Y H:i') }}
+                                                        </td>
 
-                                                    <td class="text-muted" >
-                                                        {{ \Carbon\Carbon::yesterday() }}
-                                                    </td>
-
-                                                </tr>
+                                                        <td class="text-muted" >
+                                                            {{ $item->bitis->locale('tr')->translatedFormat('d F Y H:i') }}
+                                                        </td>
+                                                    </tr>
                                                 @endforeach
                                                 </tbody>
                                             </table>
@@ -130,35 +120,32 @@
                                                 </thead>
                                                 <tbody>
 
-                                                @foreach($Personel->slice(1) as $item)
+                                                @foreach($OnayBekleyenler as $item)
                                                     <tr>
                                                         <td data-label="Name" >
                                                             <div class="d-flex py-1 align-items-center">
                                                                 <a href="#">
-                                                                <span class="avatar me-2" style="background-image: url({{'/images/personel/50/'.$item->foto}})">
-                                                                    {{ ($item->foto == "") ? isim($item->adsoyad) : null }}
-                                                                </span>
+                                                                    {!! $item->user->avatar !!}
                                                                 </a>
                                                                 <div class="flex-fill">
-                                                                    <div class="font-weight-medium">{{$item->adsoyad}}</div>
+                                                                    <div class="font-weight-medium">{{$item->user->full_name}}</div>
                                                                 </div>
                                                             </div>
                                                         </td>
                                                         <td data-label="Title" >
-                                                            <div>Yıllık İzin</div>
+                                                            <div>{{$item->izin_turu}}</div>
                                                         </td>
                                                         <td class="text-muted" >
-                                                            4
+                                                            {{$item->gun}}
                                                         </td>
 
                                                         <td class="text-muted" >
-                                                            {{ \Carbon\Carbon::today() }}
+                                                            {{ $item->baslangic->locale('tr')->translatedFormat('d F Y H:i') }}
                                                         </td>
 
                                                         <td class="text-muted" >
-                                                            {{ \Carbon\Carbon::yesterday() }}
+                                                            {{ $item->bitis->locale('tr')->translatedFormat('d F Y H:i') }}
                                                         </td>
-
                                                     </tr>
                                                 @endforeach
                                                 </tbody>
@@ -169,7 +156,6 @@
 
                             </div>
                             <div class="tab-pane" id="onayverilen">
-
                                 <div class="col-12 mt-2">
                                     <div class="card">
                                         <div class="table-responsive">
@@ -186,38 +172,32 @@
                                                 </thead>
                                                 <tbody>
 
-                                                @foreach($Personel->slice(1) as $item)
+                                                @foreach($Onaylananlar as $item)
                                                     <tr>
-                                                        <td data-label="Title" >
-                                                            <div>Yıllık İzin</div>
-                                                        </td>
                                                         <td data-label="Name" >
                                                             <div class="d-flex py-1 align-items-center">
                                                                 <a href="#">
-                                                                <span class="avatar me-2" style="background-image: url({{'/images/personel/50/'.$item->foto}})">
-                                                                    {{ ($item->foto == "") ? isim($item->adsoyad) : null }}
-                                                                </span>
+                                                                {!! $item->user->avatar !!}
                                                                 </a>
                                                                 <div class="flex-fill">
-                                                                    <div class="font-weight-medium">{{$item->adsoyad}}</div>
+                                                                    <div class="font-weight-medium">{{$item->user->full_name}}</div>
                                                                 </div>
                                                             </div>
                                                         </td>
                                                         <td data-label="Title" >
-                                                            <div>Yıllık İzin</div>
+                                                            <div>{{$item->izin_turu}}</div>
                                                         </td>
                                                         <td class="text-muted" >
-                                                            4
+                                                            {{$item->gun}}
                                                         </td>
 
                                                         <td class="text-muted" >
-                                                            {{ \Carbon\Carbon::today() }}
+                                                            {{ $item->baslangic->locale('tr')->translatedFormat('d F Y H:i') }}
                                                         </td>
 
                                                         <td class="text-muted" >
-                                                            {{ \Carbon\Carbon::yesterday() }}
+                                                            {{ $item->bitis->locale('tr')->translatedFormat('d F Y H:i') }}
                                                         </td>
-
                                                     </tr>
                                                 @endforeach
                                                 </tbody>
@@ -245,35 +225,32 @@
                                                 </thead>
                                                 <tbody>
 
-                                                @foreach($Personel->slice(1) as $item)
+                                                @foreach($Reddedilenler as $item)
                                                     <tr>
                                                         <td data-label="Name" >
                                                             <div class="d-flex py-1 align-items-center">
                                                                 <a href="#">
-                                                                <span class="avatar me-2" style="background-image: url({{'/images/personel/50/'.$item->foto}})">
-                                                                    {{ ($item->foto == "") ? isim($item->adsoyad) : null }}
-                                                                </span>
+                                                                    {!! $item->user->avatar !!}
                                                                 </a>
                                                                 <div class="flex-fill">
-                                                                    <div class="font-weight-medium">{{$item->adsoyad}}</div>
+                                                                    <div class="font-weight-medium">{{$item->user->full_name}}</div>
                                                                 </div>
                                                             </div>
                                                         </td>
                                                         <td data-label="Title" >
-                                                            <div>Yıllık İzin</div>
+                                                            <div>{{$item->izin_turu}}</div>
                                                         </td>
                                                         <td class="text-muted" >
-                                                            4
+                                                            {{$item->gun}}
                                                         </td>
 
                                                         <td class="text-muted" >
-                                                            {{ \Carbon\Carbon::today() }}
+                                                            {{ $item->baslangic->locale('tr')->translatedFormat('d F Y H:i') }}
                                                         </td>
 
                                                         <td class="text-muted" >
-                                                            {{ \Carbon\Carbon::yesterday() }}
+                                                            {{ $item->bitis->locale('tr')->translatedFormat('d F Y H:i') }}
                                                         </td>
-
                                                     </tr>
                                                 @endforeach
                                                 </tbody>

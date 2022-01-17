@@ -376,20 +376,6 @@
 @endsection
 @section('customJS')
     <script>
-        $(document).on('click', '[data-toggle="izinDetay"]', function (){
-            var id = $(this).data('id');
-            axios.get('/ik/IzinDetay/' + id)
-            .then(result => {
-                var res = $(result.data);
-                var content = $('div#content', result.data);
-                $('#modal-izinDetay .modal-body').html(res[0].innerHTML);
-                $('#modal-izinDetay .modal-footer').html(res[2].innerHTML);
-            })
-            $('#modal-izinDetay').modal('show');
-        });
-        function changeDate(){
-            val = document.getElementById('ay').value;
-            document.location = "?ay=" + val + '#mesai';
-        }
+
     </script>
 @endsection

@@ -128,24 +128,56 @@
                 </div>
             </div>
         </div>
+        <div class="modal modal-blur fade" id="modal-avanstalep" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Avans Talep Et</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="get" action="javascript:;" id="avansTalepForm">
+                            <div class="row">
+                                <div class="col-6 mb-3">
+                                    <label class="form-label">Tutar</label>
+                                    <input type="text" class="form-control" value="" name="avansTalep[tutar]" id="avansTalep_tutar">
+                                </div>
+                                <div class="col-6 mb-3">
+                                    <label class="form-label">Tarih</label>
+                                    <input type="date" name="avansTalep[tarih]" id="avansTalep_tarih" class="form-control" value="{{\Carbon\Carbon::now()->addDay()->format('Y-m-d')}}">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label class="form-label">Açıklama</label>
+                                <textarea class="form-control" name="avansTalep[aciklama]" id="avansTalep_aciklama"></textarea>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn me-auto" data-bs-dismiss="modal">Kapat</button>
+                        <button type="button" class="btn btn-primary" id="btnAvansTalepSend">Avans Talep Et</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal modal-blur fade" id="modal-avansDetay" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Avans Detay</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+
+                    </div>
+                    <div class="modal-footer">
+
+                    </div>
+                </div>
+            </div>
+        </div>
         <script src="{{mix('js/app.js')}}"></script>
         @include('layouts.js')
         @yield('customJS')
-        <script>
-            $('#btnIzinTalepEt').on('click', function (){
-                $('#modal-izintalep').modal('show');
-            });
-            $('#btnIzinTalepSend').on('click', function (){
-                var data = $('#modal-izintalep form#izinTalepForm').serialize();
-                axios.post('{{route('IK.izinTalep')}}', data)
-                .then(res => {
-                    alert('İzin Talebi başarıyla oluşturulmuştur');
-                    document.location.reload();
-                })
-                .catch(err => {
-                    console.log(err);
-                })
-            })
-        </script>
     </body>
 </html>

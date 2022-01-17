@@ -9,6 +9,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Modules\Ayarlar\Entities\Departman;
 use Modules\Ayarlar\Entities\Sube;
+use Modules\IK\Entities\Avans;
 use Modules\IK\Entities\Izin;
 use Modules\Personel\Entities\Mesai;
 use Modules\Personel\Entities\Monitoring;
@@ -89,6 +90,14 @@ class User extends Authenticatable implements HasMedia
     {
         return $this->hasMany(
             Izin::class,
+            'user_id',
+            'id'
+        );
+    }
+    public function avanslar()
+    {
+        return $this->hasMany(
+            Avans::class,
             'user_id',
             'id'
         );
