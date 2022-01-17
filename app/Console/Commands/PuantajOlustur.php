@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\User;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Illuminate\Console\Command;
@@ -26,15 +27,15 @@ class PuantajOlustur extends Command
         else
             $SonTarih = $SonTarih->first()->gun->format('Y-m-d');
         $Tarihler = CarbonPeriod::create($SonTarih, Carbon::now()->subDay()->format('Y-m-d'));
-        foreach(Personel::query()->whereNotNull('remote_id')->get() as $Personel){
-            $Mesai = $Personel->mesai;
-            $MesaiBitisSaati = $Mesai->mesai_cikis;
-            dump($Personel->adsoyad." İşleniyor...");
+        foreach(User::query()->whereNotNull('remote_id')->get() as $Personel){
+            $Mesai = $Personel->departman()->first();
+            $MesaiBitisSaati = $Mesai->mesai_bitis;
+            dump($Personel->full_name." İşleniyor...");
             foreach($Tarihler as $Tarih){
                 if($Tarih->isFriday())
                     $MesaiBitisSaati = "17:00:00";
                 else
-                    $MesaiBitisSaati = $Mesai->mesai_cikis;
+                    $MesaiBitisSaati = $Mesai->mesai_bitis;
                 $PuantajKontrol = Puantaj::query()->where('user_id', $Personel->id)->where('gun', $Tarih->format('Y-m-d'));
                 if($PuantajKontrol->count() > 0){
                     dump($Tarih->format('d.m.Y') . " için puantaj kaydı mevcut");
@@ -51,7 +52,7 @@ class PuantajOlustur extends Command
                     ->first();
                 if(!$Giris)
                     continue;
-                $MesaiBaslangic = Carbon::parse($Tarih->format('Y-m-d')." ".$Mesai->mesai_giris)->format('Y-m-d H:i:s');
+                $MesaiBaslangic = Carbon::parse($Tarih->format('Y-m-d')." ".$Mesai->mesai_baslangic)->format('Y-m-d H:i:s');
                 $BaslangicFarki = Carbon::parse($MesaiBaslangic)->diffInMinutes($Giris->Eventtime, false);
                 if($BaslangicFarki < 0 )
                     $BaslangicFarki = 0;
