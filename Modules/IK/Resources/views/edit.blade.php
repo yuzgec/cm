@@ -376,6 +376,10 @@
 @endsection
 @section('customJS')
     <script>
+        function changeDate(){
+            val = document.getElementById('ay').value;
+            document.location = "?ay=" + val + '#mesai';
+        }
 
     </script>
 @endsection
