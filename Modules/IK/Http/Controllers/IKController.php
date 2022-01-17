@@ -570,6 +570,8 @@ class IKController extends Controller
             }
         }
 
+        $Avanslar = Avans::query()->get();
+
         return view('ik::raporlar', compact(
             'Gunler',
             'Personeller',
@@ -580,7 +582,8 @@ class IKController extends Controller
             'YaklasanIzinler',
             'OnayBekleyenler',
             'Onaylananlar',
-            'Reddedilenler'
+            'Reddedilenler',
+            'Avanslar'
         ));
     }
 }

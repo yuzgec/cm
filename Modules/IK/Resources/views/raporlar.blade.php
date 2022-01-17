@@ -9,6 +9,9 @@
                 <li class="nav-item">
                     <a href="#izinler" class="nav-link " data-bs-toggle="tab"><span class="m-2">İzinler </span></a>
                 </li>
+                <li class="nav-item">
+                    <a href="#avanslar" class="nav-link " data-bs-toggle="tab"><span class="m-2">Avanslar </span></a>
+                </li>
             </ul>
             <div class="card-body">
                 <div class="tab-content">
@@ -327,6 +330,93 @@
                                     </div>
                                 </div>
 
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="avanslar">
+                        <ul class="nav nav-tabs" data-bs-toggle="tabs">
+                            <li class="nav-item"><a href="#onayBekleyenAvanslar" class="nav-link actvie" data-bs-toggle="tab">Onay Bekleyenler</a></li>
+                            <li class="nav-item"><a href="#onaylananAvanslar" class="nav-link" data-bs-toggle="tab">Onaylananlar</a></li>
+                            <li class="nav-item"><a href="#reddedilenAvanslar" class="nav-link" data-bs-toggle="tab">Reddilenler</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane active show" id="onayBekleyenAvanslar">
+                                <div class="table-responsive">
+                                    <table class="table table-vcenter">
+                                        <thead>
+                                            <tr>
+                                                <th>Personel</th>
+                                                <th>Departman</th>
+                                                <th>Tutar</th>
+                                                <th>Tarih</th>
+                                                <th>Durum</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach(\Modules\IK\Entities\Avans::query()->where('durum',0)->get() as $Item)
+                                                <tr>
+                                                    <td class="d-flex py-1 align-items-center">{!! $Item->user->avatar !!} {{$Item->user->full_name}}</td>
+                                                    <td>{{$Item->user->departman()->first()->name}}</td>
+                                                    <td>{{$Item->tutar}}</td>
+                                                    <td>{{$Item->tarih->locale('tr')->translatedFormat('d F Y')}}</td>
+                                                    <td><span class="badge bg-warning">Onay Bekliyor</span></td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="onaylananAvanslar">
+                                <div class="table-responsive">
+                                    <table class="table table-vcenter">
+                                        <thead>
+                                        <tr>
+                                            <th>Personel</th>
+                                            <th>Departman</th>
+                                            <th>Tutar</th>
+                                            <th>Tarih</th>
+                                            <th>Durum</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        @foreach(\Modules\IK\Entities\Avans::query()->where('durum',1)->get() as $Item)
+                                            <tr>
+                                                <td class="d-flex py-1 align-items-center">{!! $Item->user->avatar !!} {{$Item->user->full_name}}</td>
+                                                <td>{{$Item->user->departman()->first()->name}}</td>
+                                                <td>{{$Item->tutar}}</td>
+                                                <td>{{$Item->tarih->locale('tr')->translatedFormat('d F Y')}}</td>
+                                                <td><span class="badge bg-success">Onaylandı</span></td>
+                                            </tr>
+                                        @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="reddedilenAvanslar">
+                                <div class="table-responsive">
+                                    <table class="table table-vcenter">
+                                        <thead>
+                                        <tr>
+                                            <th>Personel</th>
+                                            <th>Departman</th>
+                                            <th>Tutar</th>
+                                            <th>Tarih</th>
+                                            <th>Durum</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        @foreach(\Modules\IK\Entities\Avans::query()->where('durum',-1)->get() as $Item)
+                                            <tr>
+                                                <td class="d-flex py-1 align-items-center">{!! $Item->user->avatar !!} {{$Item->user->full_name}}</td>
+                                                <td>{{$Item->user->departman()->first()->name}}</td>
+                                                <td>{{$Item->tutar}}</td>
+                                                <td>{{$Item->tarih->locale('tr')->translatedFormat('d F Y')}}</td>
+                                                <td><span class="badge bg-danger">Reddedildi</span></td>
+                                            </tr>
+                                        @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
