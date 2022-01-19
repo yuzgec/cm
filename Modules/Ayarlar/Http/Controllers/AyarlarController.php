@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\DB;
 use Modules\Ayarlar\Entities\Departman;
 use Modules\Ayarlar\Entities\Sube;
 use Modules\Ayarlar\Entities\Unvan;
@@ -20,7 +21,7 @@ class AyarlarController extends Controller
         $Subeler = Sube::with('Yetkili')->get();
         $Departmanlar = Departman::with('Yetkili','Sube')->get();
         $Unvanlar = Unvan::with('Yetkili','Departman')->get();
-        $Calisanlar = User::select('id','name')->get();
+        $Calisanlar = User::select(DB::raw("CONCAT(name,' ',last_name) as name, id"))->get();
         return response()->json([
             "Subeler" => $Subeler,
             "Departmanlar" => $Departmanlar,

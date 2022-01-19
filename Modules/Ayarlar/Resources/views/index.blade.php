@@ -77,7 +77,7 @@
                                     <tbody>
                                         <tr v-for="item in Departmanlar">
                                             <td class="d-flex align-items-center gap-2"><div class="avatar avatar-sm text-white" v-bind:style="{ backgroundColor: item.renk }">B</div><span v-html="item.name"></span></td>
-                                            <td><span v-html="item.yonetici ? item.yetkili.name : null"></span></td>
+                                            <td><span v-html="item.yonetici ? item.yetkili.name + ' ' + item.yetkili.last_name : null"></span></td>
                                             <td><span v-html="item.sube_id ? item.sube.name : null"></span></td>
                                             <td><span v-html="item.calisan"></span></td>
                                             <td>
