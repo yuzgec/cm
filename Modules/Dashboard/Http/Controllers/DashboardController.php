@@ -58,9 +58,12 @@ class DashboardController extends Controller
             }
         }
 
+        $Tarih = Carbon::now()->startOfMonth();
+        $Izinlerim = Izin::query()->where('user_id', request()->user()->id)->whereDate('created_at', '>=', $Tarih->format('Y-m-d'))->get();
+        $AvansTaleplerim = Avans::query()->where('user_id', request()->user()->id)->whereDate('created_at', '>=', $Tarih->format('Y-m-d'))->get();
         return view('dashboard::index', compact(
             'UserCount', 'PersonelCount','OdemeListesi', 'GunlukToplam',
-            'Izinler','Avanslar'
+            'Izinler','Avanslar','Izinlerim', 'AvansTaleplerim'
         ));
     }
 
