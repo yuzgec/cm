@@ -165,6 +165,7 @@
         </div>
     </div>
     @endcan
+    @can('Ödeme Al')
     <div class="col-12">
         <div class="card">
             <div class="card-header justify-content-between">
@@ -223,4 +224,5 @@
             </div>
         </div>
     </div>
+    @endcan
 @endsection
