@@ -2,68 +2,19 @@
 @section('title', 'İnsan Kaynakları Yönetim Paneli | '.config('app.name'))
 @section('content')
     {{-- İzin Talepleri   --}}
-    <div class="col-4">
-        <div class="card mb-3">
-            <div class="card-header">
-                <h3 class="card-title">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M16 10h4a2 2 0 0 1 0 4h-4l-4 7h-3l2 -7h-4l-2 2h-3l2 -4l-2 -4h3l2 2h4l-2 -7h3z" /></svg>
-                    İzin Talepleri ({{count($Izinler)}})
-                </h3>
-            </div>
-            <div class="list-group list-group-flush list-group-hoverable">
-                @foreach($Izinler as $Izin)
-                <div class="list-group-item">
-                    <div class="row align-items-center">
-                        <div class="col-auto">
-                            <a href="{{ route('IK.edit', $Izin->user->id) }}" title="{{ $Izin->user->full_name }}">
-                               {!! $Izin->user->avatar !!}
-                            </a>
-                        </div>
-                        <div class="col d-flex justify-content-between">
-                            <a href="{{ route('IK.edit', $Izin->user->id) }}" class="text-body  birsatir" title="{{ $Izin->user->full_name }}">{{ $Izin->user->full_name }}</a>
-                            <div class="text-body birsatir badge">{{$Izin->baslangic->locale('tr')->translatedFormat('d F Y H:i')}}</div>
-                        </div>
-                    </div>
-                </div>
-                @endforeach
-            </div>
-        </div>
-    </div>
+
 
     {{-- Yaklaşan İzinler  --}}
     <div class="col-4">
         <div class="card mb-3">
             <div class="card-header">
                 <h3 class="card-title">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><circle cx="12" cy="12" r="9" /><polyline points="12 7 12 12 15 15" /></svg>                    Yaklaşan İzinler (4)
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><circle cx="12" cy="12" r="9" /><polyline points="12 7 12 12 15 15" /></svg>
+                    Yaklaşan İzinler (0)
                 </h3>
             </div>
             <div class="list-group list-group-flush list-group-hoverable">
-{{--                @foreach($Personel->slice(0,5) as $item)--}}
-{{--                    <div class="list-group-item">--}}
-{{--                        <div class="row align-items-center">--}}
-{{--                            <div class="col-auto">--}}
-{{--                                <a href="{{ route('personel.edit', $item->id) }}" title="{{ $item->adsoyad }}">--}}
 
-{{--                               <span class="avatar me-2"--}}
-{{--                                     title="{{$item->adsoyad}}"--}}
-{{--                                     style="color:white;--}}
-{{--                                         background: {{ $item->mesai->mesai_renk }} linear-gradient(135deg,hsla(0,0%,20%,.4),{{ $item->mesai->mesai_renk }});--}}
-{{--                                         background-image: url({{$item->getFirstMediaUrl() }});--}}
-{{--                                         background-size: cover;--}}
-{{--                                         border: 2px solid  {{$item->mesai->mesai_renk}};--}}
-{{--                                         ">--}}
-{{--                                     {{ (!$item->getFirstMediaUrl()) ? isim($item->adsoyad) : null }}--}}
-{{--                                </span>--}}
-{{--                                </a>--}}
-{{--                            </div>--}}
-{{--                            <div class="col d-flex justify-content-between">--}}
-{{--                                <a href="{{ route('personel.edit', $item->id) }}" class="text-body  birsatir" title="{{ $item->adsoyad }}">{{ $item->adsoyad }}</a>--}}
-{{--                                <div class="text-body birsatir badge">10.02.2022</div>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                @endforeach--}}
             </div>
         </div>
     </div>
@@ -72,67 +23,17 @@
         <div class="card mb-3">
             <div class="card-header">
                 <h3 class="card-title">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><rect x="3" y="8" width="18" height="4" rx="1" /><line x1="12" y1="8" x2="12" y2="21" /><path d="M19 12v7a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-7" /><path d="M7.5 8a2.5 2.5 0 0 1 0 -5a4.8 8 0 0 1 4.5 5a4.8 8 0 0 1 4.5 -5a2.5 2.5 0 0 1 0 5" /></svg>                    Yaklaşan Doğum Günleri (8)
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><rect x="3" y="8" width="18" height="4" rx="1" /><line x1="12" y1="8" x2="12" y2="21" /><path d="M19 12v7a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-7" /><path d="M7.5 8a2.5 2.5 0 0 1 0 -5a4.8 8 0 0 1 4.5 5a4.8 8 0 0 1 4.5 -5a2.5 2.5 0 0 1 0 5" /></svg>
+                    Yaklaşan Doğum Günleri (0)
                 </h3>
             </div>
             <div class="list-group list-group-flush list-group-hoverable">
-{{--                @foreach($Personel->slice(0,8) as $item)--}}
-{{--                    <div class="list-group-item">--}}
-{{--                        <div class="row align-items-center">--}}
-{{--                            <div class="col-auto">--}}
-{{--                                <a href="{{ route('personel.edit', $item->id) }}" title="{{ $item->adsoyad }}">--}}
-{{--                               <span class="avatar me-2"--}}
-{{--                                     title="{{$item->adsoyad}}"--}}
-{{--                                     style="color:white;--}}
-{{--                                         background: {{ $item->mesai->mesai_renk }} linear-gradient(135deg,hsla(0,0%,20%,.4),{{ $item->mesai->mesai_renk }});--}}
-{{--                                         background-image: url({{$item->getFirstMediaUrl() }});--}}
-{{--                                         background-size: cover;--}}
-{{--                                         border: 2px solid  {{$item->mesai->mesai_renk}};--}}
-{{--                                         ">--}}
-{{--                                     {{ (!$item->getFirstMediaUrl()) ? isim($item->adsoyad) : null }}--}}
-{{--                                </span>--}}
-{{--                                </a>--}}
-{{--                            </div>--}}
-{{--                            <div class="col d-flex justify-content-between">--}}
-{{--                                <a href="{{ route('personel.edit', $item->id) }}" class="text-body  birsatir" title="{{ $item->adsoyad }}">{{ $item->adsoyad }}</a>--}}
-{{--                                <div class="text-body birsatir badge">10.02.2022</div>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                @endforeach--}}
-            </div>
-        </div>
-    </div>
-    {{-- Mesai Talepleri  --}}
-    <div class="col-4">
-
-        <div class="card mb-3">
-            <div class="card-header">
-                <h3 class="card-title">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" /><circle cx="18" cy="18" r="4" /><path d="M15 3v4" /><path d="M7 3v4" /><path d="M3 11h16" /><path d="M18 16.496v1.504l1 1" /></svg>
-                    Avans Talepleri  ({{count($Avanslar)}})
-                </h3>
-            </div>
-            <div class="list-group list-group-flush list-group-hoverable">
-                @foreach($Avanslar as $item)
-                    <div class="list-group-item">
-                        <div class="row align-items-center">
-                            <div class="col-auto">
-                                <a href="javascript:;" title="{{ $item->user->full_name }}" data-toggle="avansDetay" data-id="{{$item->id}}">
-                                    {!! $item->user->avatar !!}
-                                </a>
-                            </div>
-                            <div class="col d-flex justify-content-between">
-                                <a href="javascript:;" data-toggle="avansDetay" data-id="{{$item->id}}" class="text-body  birsatir" title="{{ $item->user->full_name }}">{{ $item->user->full_name }}</a>
-                                <div class="text-body birsatir badge">{{$item->tarih->locale('tr')->translatedFormat('d F Y')}}</div>
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
 
             </div>
         </div>
     </div>
+    {{-- Avans Talepleri  --}}
+
     {{-- Ödeme Talepleri  --}}
     <div class="col-4">
         <div class="card">
@@ -149,63 +50,6 @@
             </div>
         </div>
     </div>
-
-    {{-- Resmi Tatiller  --}}
-{{--    <div class="col-4">--}}
-{{--        <div class="card">--}}
-{{--            <div class="card-body">--}}
-{{--                <div class="d-flex">--}}
-{{--                    <h3 class="card-title">--}}
-{{--                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 12a8 8 0 0 1 16 0z" /><path d="M12 12v6a2 2 0 0 0 4 0" /></svg>--}}
-{{--                        Resmi Tatiller--}}
-{{--                    </h3>--}}
-{{--                </div>--}}
-{{--                <div class="d-flex justify-content-between">--}}
-{{--                    <p>Yılbaşı</p>--}}
-{{--                    <p>01.01.2022</p>--}}
-{{--                </div>--}}
-{{--                <div class="d-flex justify-content-between">--}}
-{{--                    <p class="birsatir">23 Nisan Egemenlik ve Çocuk Bayramı</p>--}}
-{{--                    <p>23.04.2022</p>--}}
-{{--                </div>--}}
-{{--                <div class="d-flex justify-content-between">--}}
-{{--                    <p class="birsatir"> Atatürk'ü Anma ve Gençlik ve Spor Bayramı </p>--}}
-{{--                    <p>01.01.2022</p>--}}
-{{--                </div>--}}
-{{--                <div class="d-flex justify-content-between">--}}
-{{--                    <p>Ramazan Bayramı</p>--}}
-{{--                    <p>01.01.2022</p>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        </div>--}}
-{{--    </div>--}}
-    {{-- Çalışan Dağılımı   --}}
-{{--    <div class="col-4">--}}
-{{--        <div class="card">--}}
-{{--            <div class="card-body">--}}
-{{--                <div class="d-flex">--}}
-{{--                    <h3 class="card-title">--}}
-{{--                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><circle cx="7" cy="7" r="4" /><path d="M7 3v4h4" /><line x1="9" y1="17" x2="9" y2="21" /><line x1="17" y1="14" x2="17" y2="21" /><line x1="13" y1="13" x2="13" y2="21" /><line x1="21" y1="12" x2="21" y2="21" /></svg>--}}
-{{--                        Çalışan Dağılımı ({{ $Personel->count() }})--}}
-{{--                    </h3>--}}
-{{--                    <div class="ms-auto">--}}
-{{--                        <div class="dropdown">--}}
-{{--                            <a class="dropdown-toggle text-muted" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Şirket</a>--}}
-{{--                            <div class="dropdown-menu dropdown-menu-end">--}}
-{{--                                <a class="dropdown-item active" href="#">Şirket</a>--}}
-{{--                                <a class="dropdown-item" href="#">Şube</a>--}}
-{{--                                <a class="dropdown-item" href="#">Depertman</a>--}}
-{{--                                <a class="dropdown-item" href="#">Ünvan</a>--}}
-{{--                                <a class="dropdown-item" href="#">Yaş</a>--}}
-{{--                                <a class="dropdown-item" href="#">Cinsiyet</a>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--                <div id="chart-demo-pie"></div>--}}
-{{--            </div>--}}
-{{--        </div>--}}
-{{--    </div>--}}
 @endsection
 @section('customJS')
     <script src="/assets/libs/apexcharts/dist/apexcharts.min.js"></script>

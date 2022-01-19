@@ -36,4 +36,12 @@ Route::prefix('ik')->group(function() {
     Route::post('/AvansReddet', [IKController::class, 'AvansReddet'])->name('IK.avansReddet');
 
     Route::get('/raporlar', [IKController::class, 'Raporlar'])->name('IK.raporlar');
+
+    Route::get('/Mail', function (){
+        $izin = \Modules\IK\Entities\Izin::query()->first();
+
+        dump();
+        dd('');
+        return view('ik::emails.izintalep', compact('izin'));
+    });
 });

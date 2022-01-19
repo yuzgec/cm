@@ -9,8 +9,10 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Modules\Ayarlar\Entities\Departman;
 use Modules\Ayarlar\Entities\Sube;
+use Modules\IK\Emails\IzinTalep;
 use Modules\IK\Entities\Avans;
 use Modules\IK\Entities\Izin;
 use Modules\Kullanici\Entities\Puantaj;
@@ -361,6 +363,12 @@ class IKController extends Controller
             "MuhasebeMessage" => "",
         ];
         $Izin->save();
+        $Muhasebe = "ceyda.demir@mecitkahraman.com.tr";
+        $Yetkili = $request->user()->departman()->first()->yetkili->email;
+        Mail::to($request->user())
+            ->cc([$Muhasebe,$Yetkili])
+            ->send(new IzinTalep($Izin));
+
         return response()->json(["Success" => true]);
     }
     public function izinDetay($id){

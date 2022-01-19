@@ -8,6 +8,9 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
+use Modules\Ayarlar\Entities\Departman;
+use Modules\IK\Entities\Avans;
+use Modules\IK\Entities\Izin;
 use Modules\Odeme\Entities\Odeme;
 use Modules\Personel\Entities\Personel;
 
@@ -28,7 +31,37 @@ class DashboardController extends Controller
             ->where('odeme_cevap', 1)
             ->sum('odeme.odeme_tutari');
 
-        return view('dashboard::index', compact('UserCount', 'PersonelCount','OdemeListesi', 'GunlukToplam'));
+        $Departmanlar = Departman::query()
+            ->where('yonetici', auth()->user()->id)
+            ->with('users.izinler')
+            ->get();
+        $Izinler = [];
+        $Avanslar = [];
+        foreach($Departmanlar as $Row){
+            foreach ($Row->users as $user){
+                foreach ($user->izinler as $izin){
+                    if($izin->onaylar["Yetkili"] == 0)
+                        $Izinler[] = $izin;
+                }
+                foreach ($user->avanslar as $avans){
+                    if($avans->onaylar["Yetkili"] == 0)
+                        $Avanslar[] = $avans;
+                }
+            }
+        }
+        if(auth()->user()->departman()->first()->name == "Muhasebe"){
+            foreach (Izin::query()->where('durum',0)->where('onaylar->Muhasebe', 0)->where('onaylar->Yetkili',1)->get() as $Row){
+                $Izinler[] = $Row;
+            }
+            foreach (Avans::query()->where('durum',0)->where('onaylar->Muhasebe', 0)->where('onaylar->Yetkili',1)->get() as $Row){
+                $Avanslar[] = $Row;
+            }
+        }
+
+        return view('dashboard::index', compact(
+            'UserCount', 'PersonelCount','OdemeListesi', 'GunlukToplam',
+            'Izinler','Avanslar'
+        ));
     }
 
     /**

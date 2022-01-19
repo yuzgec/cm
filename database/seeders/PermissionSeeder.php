@@ -85,6 +85,13 @@ class PermissionSeeder extends Seeder
                     ["name" => "SMS Raporlama", "parent_id" => 0],
                 ]
             ],
+            [
+                "name" => "IK Yönetim",
+                "parent_id" => 0,
+                "subs" => [
+
+                ]
+            ],
         ];
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         DB::table('permissions')->truncate();
