@@ -13,6 +13,7 @@ use Modules\IK\Entities\Avans;
 use Modules\IK\Entities\Izin;
 use Modules\Odeme\Entities\Odeme;
 use Modules\Personel\Entities\Personel;
+use Modules\Personel\Entities\Puantaj;
 
 class DashboardController extends Controller
 {
@@ -61,9 +62,16 @@ class DashboardController extends Controller
         $Tarih = Carbon::now()->startOfMonth();
         $Izinlerim = Izin::query()->where('user_id', request()->user()->id)->whereDate('created_at', '>=', $Tarih->format('Y-m-d'))->get();
         $AvansTaleplerim = Avans::query()->where('user_id', request()->user()->id)->whereDate('created_at', '>=', $Tarih->format('Y-m-d'))->get();
+        $FazlaMesai = Puantaj::query()
+            ->select(DB::raw('user_id,SUM(fazla_calisma) AS mesai, SUM(gec_mesai) AS gec'))
+            ->where('user_id', auth()->user()->id)
+            ->whereYear('gun', Carbon::now()->format('Y'))
+            ->whereMonth('gun', Carbon::now()->format('m'))
+            ->groupBy('user_id')
+            ->first();
         return view('dashboard::index', compact(
             'UserCount', 'PersonelCount','OdemeListesi', 'GunlukToplam',
-            'Izinler','Avanslar','Izinlerim', 'AvansTaleplerim'
+            'Izinler','Avanslar','Izinlerim', 'AvansTaleplerim','FazlaMesai'
         ));
     }
 

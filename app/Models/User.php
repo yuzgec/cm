@@ -47,12 +47,10 @@ class User extends Authenticatable implements HasMedia
     public function Puantaj(){
         return $this->belongsTo(Puantaj::class,'user_id', 'id');
     }
-
     //Personel Bilgilerini Çeker
     public function Bilgiler(){
         return $this->belongsTo(PersonelBilgileri::class, 'id', 'user_id');
     }
-
     public function departman(): BelongsToMany
     {
         return $this->belongsToMany(
