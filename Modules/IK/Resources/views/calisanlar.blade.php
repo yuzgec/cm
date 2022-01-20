@@ -49,10 +49,10 @@
                     </div>
                 </div>
 
-                <a href="{{route('IK.edit', $item->id)}}" title="{{$item->name}}">
+                <a href="{{route('IK.edit', $item->id)}}" title="{{$item->full_name}}">
                     <span class="avatar avatar-xl mb-3 avatar-rounded"
                           style="background-image: url({{$item->getFirstMediaUrl() }});border: 2px solid {{ @$item->departman()->first()->renk }}" title="{{$item->name}}">
-                        {{ (!$item->getFirstMediaUrl()) ? isim($item->name) : null }}
+                        {{ (!$item->getFirstMediaUrl()) ? isim($item->full_name) : null }}
                     </span>
                 </a>
                 <h3 class="m-0 mb-1">
