@@ -272,11 +272,11 @@ class IKController extends Controller
         }
         if($request->diger["departman"]){
             $Departman = Departman::findOrFail($request->diger["departman"]);
-            $User->departman()->sync($Departman, false);
+            $User->departman()->sync($Departman, true);
         }
         if($request->diger["sube"]){
             $Sube = Sube::findOrFail($request->diger["sube"]);
-            $User->sube()->sync($Sube, false);
+            $User->sube()->sync($Sube, true);
         }
         return redirect(route('IK.calisanlar'));
     }
