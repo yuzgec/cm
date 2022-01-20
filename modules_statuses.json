@@ -9,5 +9,6 @@
     "Personel": true,
     "Agent": true,
     "CallCenter": true,
-    "IK": true
+    "IK": true,
+    "Profil": true
 }

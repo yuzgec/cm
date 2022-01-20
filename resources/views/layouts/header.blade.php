@@ -36,14 +36,14 @@
         </div>
         <div class="nav-item dropdown">
           <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
-            <span class="avatar avatar-sm" >{{ isim(auth()->user()->name)}}</span>
+            <span class="avatar avatar-sm" >{{ isim(auth()->user()->full_name)}}</span>
             <div class="d-none d-xl-block ps-2">
-              <div>{{ auth()->user()->name }}</div>
+              <div>{{ auth()->user()->full_name }}</div>
               <div class="mt-1 small text-muted">Kullanıcı Görevi</div>
             </div>
           </a>
           <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-            <a href="#" class="dropdown-item">Profil Düzenle</a>
+            <a href="{{route('profil.duzenle')}}" class="dropdown-item">Profil Düzenle</a>
             <div class="dropdown-divider"></div>
             <a href="#" class="dropdown-item">Ayarlar</a>
             <form action="{{route('logout')}}" method="post">

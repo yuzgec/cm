@@ -256,14 +256,19 @@
             </div>
             <div class="list-group list-group-flush list-group-hoverable">
                 <div class="list-group-item">
-                        <div class="row d-flex justify-content-between align-items-center">
-                            <div class="col">Fazla Mesai : </div>
-                            <div class="col">{{$FazlaMesai->mesai}} dk.</div>
+                    <div class="row d-flex justify-content-between align-items-center">
+                        <div class="col">Fazla Mesai : </div>
+                        <div class="col">{{@$FazlaMesai->mesai | 0}} dk.</div>
+                    </div>
+                    <div class="row d-flex justify-content-between align-items-center">
+                        <div class="col">Geç Giriş : </div>
+                        <div class="col">{{@$FazlaMesai->gec | 0}} dk.</div>
+                    </div>
+                    <div class="row">
+                        <div class="col mt-2">
+                            <a href="{{route('profil.mesailerim')}}" class="">Günlük Görüntüle</a>
                         </div>
-                        <div class="row d-flex justify-content-between align-items-center">
-                            <div class="col">Geç Giriş : </div>
-                            <div class="col">{{$FazlaMesai->gec}} dk.</div>
-                        </div>
+                    </div>
                 </div>
             </div>
         </div>
