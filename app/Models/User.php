@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -102,5 +103,18 @@ class User extends Authenticatable implements HasMedia
     }
     public function DepartmanYonetici(){
         return $this->hasMany(Departman::class, 'yonetici', 'id');
+    }
+    public function getIzinHakkiAttribute(){
+        $Baslangic = auth()->user()->bilgiler->ise_baslama_tarihi;
+        $Now = Carbon::now();
+        $Hak = 14;
+        if($Baslangic){
+            $Fark = $Now->diffInYears($Baslangic);
+            if($Fark > 5 AND $Fark < 16)
+                $Hak = 20;
+            if($Fark > 15)
+                $Hak = 26;
+        }
+        return $Hak;
     }
 }

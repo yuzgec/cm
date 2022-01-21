@@ -6,6 +6,8 @@
     <x-widget-cagridurumu />
     {{-- Dosya Sayısı --}}
     <x-widget-dosyasayisi />
+    {{-- İzin Bilgilerim --}}
+    <x-widget-izinbilgilerim />
     {{-- İzin Talepleri --}}
     <x-widget-izintalepleri />
     {{-- Avans Talepleri --}}

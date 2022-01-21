@@ -12,6 +12,7 @@ use App\View\Components\Widget\AvansTalepleri;
 use App\View\Components\Widget\AvansTaleplerim;
 use App\View\Components\Widget\CagriDurumu;
 use App\View\Components\Widget\DosyaSayisi;
+use App\View\Components\Widget\IzinBilgilerim;
 use App\View\Components\Widget\IzinTalepleri;
 use App\View\Components\Widget\IzinTaleplerim;
 use App\View\Components\Widget\MesaiBilgileri;
@@ -63,6 +64,7 @@ class AppServiceProvider extends ServiceProvider
         Blade::component('widget-toplamodemeler', ToplamOdemeler::class);
         Blade::component('widget-cagridurumu', CagriDurumu::class);
         Blade::component('widget-dosyasayisi', DosyaSayisi::class);
+        Blade::component('widget-izinbilgilerim', IzinBilgilerim::class);
 
 
         Blade::if('departmanyonetici', function (){
