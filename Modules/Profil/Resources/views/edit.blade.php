@@ -104,7 +104,8 @@
                                         </div>
                                         <div class="form-group row mb-3">
                                             <div class="col-6">
-                                                <x-form-date label="İşe Başlama Tarihi" name="pb[ise_baslama_tarihi]"/>
+                                                <label class="form-label">İşe Başlama Tarihi</label>
+                                                <input type="text" class="form-control" disabled value="{{($Personel->Bilgiler->ise_baslama_tarihi)?$Personel->Bilgiler->ise_baslama_tarihi->translatedFormat('d F Y'):null}}">
                                             </div>
                                             <div class="col-6">
                                                 <label class="form-label">Yetki Grubu</label>

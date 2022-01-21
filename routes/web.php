@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 use Modules\Personel\Entities\Personel;
 use Nwidart\Modules\Facades\Module;
 use Spatie\Permission\Models\Permission;
-
+use Illuminate\Support\Facades\Auth;
+use Modules\Ayarlar\Entities\Departman;
 
 Route::get('/', function () {
     return view('auth.login');
@@ -15,27 +16,6 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::resource('roles', \App\Http\Controllers\RoleController::class)->middleware('auth');
-
-/*Route::get('rollers', function (){
-
-   foreach (Module::scan() as $m){
-       Permission::create(['name' => $m. ' Listele']);
-       Permission::create(['name' => $m. ' Ekle']);
-       Permission::create(['name' => $m. ' Düzenle']);
-       Permission::create(['name' => $m. ' Sil']);
-   }
-});*/
-
-/*Route::get('personelbilgiler', function (){
-    $all = Personel::all();
-    foreach ($all as $a){
-        \Modules\Personel\Entities\PersonelBilgileri::create([
-            'personel_id' => $a->id,
-            'kisisel_eposta' => $a->email,
-            'kisisel_telefon' => $a->adsoyad,
-            ]);
-    }
-});*/
 
 Route::post('/OdemeSonuc', function (Request $request){
 
@@ -86,5 +66,9 @@ Route::post('/OdemeSonuc', function (Request $request){
     }
 
     return "Ödeme işlemi başarıyla gerçekleşmiştir.";
+
+});
+
+Route::get('/Deneme', function (){
 
 });

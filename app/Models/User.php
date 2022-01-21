@@ -100,4 +100,7 @@ class User extends Authenticatable implements HasMedia
             'id'
         );
     }
+    public function DepartmanYonetici(){
+        return $this->hasMany(Departman::class, 'yonetici', 'id');
+    }
 }

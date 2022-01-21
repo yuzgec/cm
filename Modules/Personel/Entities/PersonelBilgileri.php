@@ -13,5 +13,7 @@ class PersonelBilgileri extends Model
     protected $table = 'personel_bilgileri';
     protected $dates = [];
 
-
+    protected $casts = [
+        "ise_baslama_tarihi" => "date"
+    ];
 }

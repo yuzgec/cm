@@ -38,7 +38,7 @@ class OdemeController extends Controller
         Config::$CLIENT_USERNAME    = env('CLIENT_USERNAME');
         Config::$CLIENT_PASSWORD    = env('CLIENT_PASSWORD');
         Config::$SERVICE_URI        = env('SERVICE_URI');
-
+        dd(Config::$SERVICE_URI);
         ## Kullanıcının IP adresi
         if( isset( $_SERVER["HTTP_CLIENT_IP"] ) ) {
             $ip = $_SERVER["HTTP_CLIENT_IP"];
