@@ -105,7 +105,7 @@ class User extends Authenticatable implements HasMedia
         return $this->hasMany(Departman::class, 'yonetici', 'id');
     }
     public function getIzinHakkiAttribute(){
-        $Baslangic = auth()->user()->bilgiler->ise_baslama_tarihi;
+        $Baslangic = @auth()->user()->bilgiler->ise_baslama_tarihi;
         $Now = Carbon::now();
         $Hak = 14;
         if($Baslangic){
