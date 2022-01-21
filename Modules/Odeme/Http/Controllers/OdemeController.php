@@ -34,15 +34,7 @@ class OdemeController extends Controller
         if(!$validator->passes()){
             return response()->json(["Success" => false, "Errors" => $validator->errors()->all()]);
         }
-        /**
-         * CLIENT_CODE=
-        CLIENT_USERNAME=
-        CLIENT_PASSWORD=
-        GUID=
-        SERVICE_URI=
 
-
-         */
         Config::$CLIENT_CODE        = "41460";
         Config::$CLIENT_USERNAME    = "TP10072800";
         Config::$CLIENT_PASSWORD    = "0088DCBA01823014";
@@ -59,7 +51,7 @@ class OdemeController extends Controller
 
         $soap = new Soap();
         $spid = 1011;
-        $guid = env('GUID');
+        $guid = "E8AAD860-80C3-4C35-9EF9-7E5D5FD1765D";
         $kkSahibi = $request->adsoyad;
         $kkNo = $request->kartno;
         $kkSkAy = $request->kartay;
