@@ -12,8 +12,6 @@
     <x-widget-izintalepleri />
     {{-- Avans Talepleri --}}
     <x-widget-avanstalepleri />
-    {{-- İzin Taleplerim --}}
-    <x-widget-izintaleplerim />
     {{-- Avans Taleplerim --}}
     <x-widget-avanstaleplerim />
     {{-- Mesailerim --}}
