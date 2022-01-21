@@ -34,11 +34,20 @@ class OdemeController extends Controller
         if(!$validator->passes()){
             return response()->json(["Success" => false, "Errors" => $validator->errors()->all()]);
         }
-        Config::$CLIENT_CODE        = env('CLIENT_CODE');
-        Config::$CLIENT_USERNAME    = env('CLIENT_USERNAME');
-        Config::$CLIENT_PASSWORD    = env('CLIENT_PASSWORD');
-        Config::$SERVICE_URI        = env('SERVICE_URI');
-        dd(env('SERVICE_URI'));
+        /**
+         * CLIENT_CODE=
+        CLIENT_USERNAME=
+        CLIENT_PASSWORD=
+        GUID=
+        SERVICE_URI=
+
+
+         */
+        Config::$CLIENT_CODE        = "41460";
+        Config::$CLIENT_USERNAME    = "TP10072800";
+        Config::$CLIENT_PASSWORD    = "0088DCBA01823014";
+        Config::$GUID               = "E8AAD860-80C3-4C35-9EF9-7E5D5FD1765D";
+        Config::$SERVICE_URI        = "https://posws.param.com.tr/turkpos.ws/service_turkpos_prod.asmx?wsdl";
         ## Kullanıcının IP adresi
         if( isset( $_SERVER["HTTP_CLIENT_IP"] ) ) {
             $ip = $_SERVER["HTTP_CLIENT_IP"];
