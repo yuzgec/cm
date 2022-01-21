@@ -16,6 +16,8 @@
     <x-widget-avanstaleplerim />
     {{-- Mesailerim --}}
     <x-widget-mesaibilgileri />
+    {{-- Yaklaşan Doğum Günleri --}}
+    <x-widget-dogumgunleri />
     {{-- Son Ödemeler --}}
     <x-widget-sonodemeler />
 @endsection

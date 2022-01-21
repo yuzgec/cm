@@ -1,14 +1,16 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use Modules\Personel\Entities\Personel;
+use Modules\Personel\Entities\PersonelBilgileri;
 use Nwidart\Modules\Facades\Module;
 use Spatie\Permission\Models\Permission;
 use Illuminate\Support\Facades\Auth;
 use Modules\Ayarlar\Entities\Departman;
-
+use Illuminate\Support\Facades\DB;
 Route::get('/', function () {
     return view('auth.login');
 });
@@ -70,5 +72,14 @@ Route::post('/OdemeSonuc', function (Request $request){
 });
 
 Route::get('/Deneme', function (){
-
+    $DOB = PersonelBilgileri::query()->whereMonth('dogum_tarihi', '>', \Carbon\Carbon::now()->month)
+        ->whereRaw('CONCAT(YEAR(NOW()),"-",MONTH(dogum_tarihi),"-",DAY(dogum_tarihi)) > NOW()')->limit(5);
+    foreach ($DOB->get() as $row){
+        dump($row->user->full_name . " / " . $row->dogum_tarihi->format('d.m.Y') . " / " . $row->yeni);
+    }
+    dd($DOB->get());
+//    $Users = User::query()->whereHas('bilgiler', function ($query){
+//        return $query->whereNotNull('dogum_tarihi')->orderBy('dogum_tarihi');
+//    })->with('bilgiler')->orderByRaw("DAYOFMONTH('dogum_tarihi')","ASC")->get();
+    dd($Users);
 });

@@ -11,6 +11,7 @@ use App\View\Components\Form\TextArea;
 use App\View\Components\Widget\AvansTalepleri;
 use App\View\Components\Widget\AvansTaleplerim;
 use App\View\Components\Widget\CagriDurumu;
+use App\View\Components\Widget\DogumGunleri;
 use App\View\Components\Widget\DosyaSayisi;
 use App\View\Components\Widget\IzinBilgilerim;
 use App\View\Components\Widget\IzinTalepleri;
@@ -65,6 +66,7 @@ class AppServiceProvider extends ServiceProvider
         Blade::component('widget-cagridurumu', CagriDurumu::class);
         Blade::component('widget-dosyasayisi', DosyaSayisi::class);
         Blade::component('widget-izinbilgilerim', IzinBilgilerim::class);
+        Blade::component('widget-dogumgunleri', DogumGunleri::class);
 
 
         Blade::if('departmanyonetici', function (){
