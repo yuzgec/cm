@@ -75,7 +75,10 @@ class User extends Authenticatable implements HasMedia
             return mb_substr($this->name,0,1,"UTF-8").mb_substr($this->last_name,0,1,"UTF-8");
     }
     public function getAvatarAttribute(){
-        $renk = $this->departman()->first()->renk;
+        $renk = null;
+        if($this->departman()->count())
+            $renk = $this->departman()->first()->renk;
+        
         $styles = "background: " . $renk . " linear-gradient(135deg,hsla(0,0%,20%,.4), ".$renk.");";
         $styles.= "background-image: url(".$this->getFirstMediaUrl().");";
         $styles.= "background-size: cover;";
