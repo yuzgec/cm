@@ -569,12 +569,8 @@ class IKController extends Controller
         $OnayBekleyenler = [];
         $Onaylananlar = [];
         $Reddedilenler = [];
-        $Departmanlar = Departman::query()
-            ->where('yonetici', auth()->user()->id)
-            ->with('users.izinler')
-            ->get();
-        foreach ($Departmanlar as $Row){
-            foreach ($Row->users as $user){
+        if(auth()->user()->departman()->first()->name == "Muhasebe"){
+            foreach (User::all() as $user){
                 foreach ($user->izinler as $izin){
                     if($izin->durum == 0)
                         $OnayBekleyenler[] = $izin;
@@ -584,8 +580,27 @@ class IKController extends Controller
                         $Onaylananlar[] = $izin;
                 }
             }
+        }else{
+            $Departmanlar = Departman::query()
+                ->where('yonetici', auth()->user()->id)
+                ->with('users.izinler')
+                ->get();
+            foreach ($Departmanlar as $Row){
+                foreach ($Row->users as $user){
+                    foreach ($user->izinler as $izin){
+                        if($izin->durum == 0)
+                            $OnayBekleyenler[] = $izin;
+                        if($izin->durum == -1)
+                            $Reddedilenler[] = $izin;
+                        if($izin->durum == 1)
+                            $Onaylananlar[] = $izin;
+                    }
+                }
+            }
         }
         $Onaylananlar = collect($Onaylananlar)->sortByDesc('baslangic');
+        $OnayBekleyenler = collect($OnayBekleyenler)->sortByDesc('baslangic');
+        $Reddedilenler = collect($Reddedilenler)->sortByDesc('baslangic');
         $Avanslar = Avans::query()->get();
 
         return view('ik::raporlar', compact(
