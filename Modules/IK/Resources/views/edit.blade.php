@@ -126,6 +126,7 @@
                                         <div class="form-group row mb-3">
                                             <div class="col-6">
                                                 <x-form-date label="İşe Başlama Tarihi" name="pb[ise_baslama_tarihi]"/>
+{{--                                                {{$Personel->pb["ise_baslama_tarihi"]}}--}}
                                             </div>
                                             <div class="col-6">
                                                 <x-form-select label="Yetki Grubu" name="diger[role]" :list="$Roles"/>

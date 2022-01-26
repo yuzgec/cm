@@ -1,7 +1,12 @@
 $('#btnIzinTalepEt').on('click', function (){
+    var tmp = '<div class="d-flex flex-column align-items-center justify-content-center gap-2"><div class="spinner-border text-cyan" role="status"></div><div><h1>Yükleniyor<span class="animated-dots"></span></h1></div></div>';
+    $('#modal-izintalep .modal-body').html(tmp);
     $('#modal-izintalep').modal('show');
+    $('#modal-izintalep').load('/ik/IzinTalepEt');
 });
-$('#btnIzinTalepSend').on('click', function (){
+$(document).on('click','#btnIzinTalepSend', function (){
+    $(this).data('originaltext',$(this).text());
+    $(this).html('Lütfen Bekleyin<span class="animated-dots"></span>').attr('disabled','disabled');
     var data = $('#modal-izintalep form#izinTalepForm').serialize();
     axios.post('/ik/IzinTalep', data)
 .then(res => {
@@ -78,23 +83,6 @@ $(document).on('click', '#btnIzinDetayIzinReddet', function (){
     }else{
         alert('İptal Edildi');
     }
-    // if(confirm('İzin talebini onaylıyor musunuz ?') == true){
-    //     axios.post('/ik/IzinOnayla', {
-    //         id: id,
-    //         tip: type
-    //     })
-    //         .then(result => {
-    //             $('#btnIzinDetayIzinOnayla').remove();
-    //             $('#btnIzinDetayIzinReddet').remove();
-    //         })
-    //         .catch(error => {
-    //             if(error.response.status == 406){
-    //                 alert(error.response.data.Message);
-    //             }else{
-    //                 alert('Sistemde yaşanan bir problemden ötürü işleminizi gerçekleştiremiyoruz');
-    //             }
-    //         })
-    // }
 });
 
 $(document).on('click', '#btnAvansDetayAvansOnayla', function (){

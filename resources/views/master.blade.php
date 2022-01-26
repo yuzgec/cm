@@ -123,7 +123,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn me-auto" data-bs-dismiss="modal">Kapat</button>
-                        <button type="button" class="btn btn-primary" id="btnIzinTalepSend">İzin Talep Et</button>
+{{--                        <button type="button" class="btn btn-primary" id="btnIzinTalepSend">İzin Talep Et</button>--}}
                     </div>
                 </div>
             </div>

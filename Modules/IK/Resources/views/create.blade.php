@@ -61,7 +61,7 @@
                                     <x-form-select label="Sözleşme Türü" name="pb[sozlesme_turu]" :list="['0' => 'Süresiz', '1' => 'Süreli']"/>
                                 </div>
                                 <div class="col-6">
-                                    <x-form-date label="Sözleşme Bitiş Tarihi" name="pb[sozlems_bitis_tarihi]" class="form-control" disabled="disabled"/>
+                                    <x-form-date label="Sözleşme Bitiş Tarihi" name="pb[sozleme_bitis_tarihi]" class="form-control" disabled="disabled"/>
                                 </div>
                             </div>
                             <div class="form-group row mb-3">

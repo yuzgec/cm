@@ -72,14 +72,43 @@ Route::post('/OdemeSonuc', function (Request $request){
 });
 
 Route::get('/Deneme', function (){
-    $DOB = PersonelBilgileri::query()->whereMonth('dogum_tarihi', '>', \Carbon\Carbon::now()->month)
-        ->whereRaw('CONCAT(YEAR(NOW()),"-",MONTH(dogum_tarihi),"-",DAY(dogum_tarihi)) > NOW()')->limit(5);
-    foreach ($DOB->get() as $row){
-        dump($row->user->full_name . " / " . $row->dogum_tarihi->format('d.m.Y') . " / " . $row->yeni);
+    $csv = \Illuminate\Support\Facades\Storage::get('izinler.csv');
+    $ayir = explode(PHP_EOL, $csv);
+//    \Illuminate\Support\Facades\Artisan::command('optimize');
+    $sonuc = [];
+    $i = 0;
+    foreach ($ayir as $row){
+        $parcala = explode(";", $row);
+        $i++;
+        if($i == 1)
+            continue;
+//        dd(\Carbon\Carbon::createFromFormat('d.m.Y H:i', $parcala[3])->format('Y-m-d H:i:s'));
+
+        $sonuc[] = [
+            "user_id" => $parcala[0],
+            "created_at" => \Carbon\Carbon::createFromFormat("d.m.Y H:i", $parcala[3])->format('Y-m-d H:i:s'),
+            "updated_at" => \Carbon\Carbon::createFromFormat("d.m.Y H:i", $parcala[3])->format('Y-m-d H:i:s'),
+            "baslangic" => \Carbon\Carbon::createFromFormat("d.m.Y H:i", $parcala[4])->format('Y-m-d H:i:s'),
+            "bitis" => \Carbon\Carbon::createFromFormat("d.m.Y H:i", $parcala[5])->format('Y-m-d H:i:s'),
+            "donus" => \Carbon\Carbon::createFromFormat("d.m.Y H:i", $parcala[6])->format('Y-m-d H:i:s'),
+            "gun" => str_replace([","],["."],$parcala[7]),
+            "tur" => $parcala[9],
+            "durum" => 1
+        ];
     }
-    dd($DOB->get());
-//    $Users = User::query()->whereHas('bilgiler', function ($query){
-//        return $query->whereNotNull('dogum_tarihi')->orderBy('dogum_tarihi');
-//    })->with('bilgiler')->orderByRaw("DAYOFMONTH('dogum_tarihi')","ASC")->get();
-    dd($Users);
+    foreach ($sonuc as $row){
+        $Onaylar = [
+            "Yetkili" =>1,
+            "Muhasebe" => 1,
+            "YetkiliMessage" => "",
+            "MuhasebeMessage" => "",
+            "MuhasebeUser" => 16,
+            "YetkiliTarih" => $row["created_at"],
+            "MuhasebeTarih" => $row["created_at"]
+        ];
+        $a = $row;
+        $a["onaylar"] = $Onaylar;
+//        dd($a);
+        \Modules\IK\Entities\Izin::query()->create($a);
+    }
 });

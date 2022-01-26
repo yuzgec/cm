@@ -8,7 +8,11 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Nwidart\Modules\Facades\Module;
+use Turkpos\BuilderObject\BinSanalPos;
+use Turkpos\BuilderObject\TpOzelOranListele;
+use Turkpos\BuilderObject\TpOzelOranSkListe;
 use Turkpos\Config;
 use Turkpos\Soap;
 use Turkpos\BuilderObject\Odeme;
@@ -16,6 +20,14 @@ use Validator;
 
 class OdemeController extends Controller
 {
+
+    public function __construct(){
+        Config::$CLIENT_CODE        = \config('odeme.code');
+        Config::$CLIENT_USERNAME    = \config('odeme.user');
+        Config::$CLIENT_PASSWORD    = \config('odeme.pass');
+        Config::$GUID               = \config('odeme.guid');
+        Config::$SERVICE_URI        = \config('odeme.url');
+    }
 
     public function odemeal(Request $request){
         $validator = Validator::make($request->all(), [
@@ -35,11 +47,11 @@ class OdemeController extends Controller
             return response()->json(["Success" => false, "Errors" => $validator->errors()->all()]);
         }
 
-        Config::$CLIENT_CODE        = "41460";
-        Config::$CLIENT_USERNAME    = "TP10072800";
-        Config::$CLIENT_PASSWORD    = "0088DCBA01823014";
-        Config::$GUID               = "E8AAD860-80C3-4C35-9EF9-7E5D5FD1765D";
-        Config::$SERVICE_URI        = "https://posws.param.com.tr/turkpos.ws/service_turkpos_prod.asmx?wsdl";
+        Config::$CLIENT_CODE        = \config('odeme.code');
+        Config::$CLIENT_USERNAME    = \config('odeme.user');
+        Config::$CLIENT_PASSWORD    = \config('odeme.pass');
+        Config::$GUID               = \config('odeme.guid');
+        Config::$SERVICE_URI        = \config('odeme.url');
         ## Kullanıcının IP adresi
         if( isset( $_SERVER["HTTP_CLIENT_IP"] ) ) {
             $ip = $_SERVER["HTTP_CLIENT_IP"];
@@ -155,9 +167,48 @@ class OdemeController extends Controller
         $baslangic       = Carbon::today();
         $bitis           = Carbon::now();
         $odemegecmisi    = \Modules\Odeme\Entities\Odeme::where('personel_id', auth()->user()->id)->whereBetween('created_at', [$baslangic, $bitis])->get();
-        return view('odeme::index', compact('odemegecmisi', 'gunluktoplam'));
-    }
 
+
+        $Oranlar = null;
+        if(Storage::exists('oranlistesi.json')){
+            $Oranlar = Storage::get('oranlistesi.json');
+            $Oranlar = json_decode($Oranlar);
+            if($Oranlar->Tarih != Carbon::now()->format('Y-m-d')){
+                $Oranlar = $this->OranGetir();
+                $Oranlar["Tarih"] = Carbon::now()->format('Y-m-d');
+                Storage::put('oranlistesi.json', json_encode($Oranlar));
+            }
+        }else{
+            $Oranlar = $this->OranGetir();
+            $Oranlar["Tarih"] = Carbon::now()->format('Y-m-d');
+            Storage::put('oranlistesi.json', json_encode($Oranlar));
+        }
+        $Taksitler = [];
+        for ($i=1;$i<=12;$i++){
+            $Taksitler[] = ["label" => $i." Taksit", "id" => $i];
+        }
+        return view('odeme::index', compact('odemegecmisi', 'gunluktoplam','Taksitler'));
+    }
+    private function OranGetir(){
+        $OzelOranListesi = new TpOzelOranSkListe(\config('odeme.guid'));
+        $soap = new Soap();
+        $res = $soap->send($OzelOranListesi)->getAnyData();
+        $Oranlar = (count($res["DT_Ozel_Oranlar_SK"])) ? $res["DT_Ozel_Oranlar_SK"] : null;
+        return $Oranlar;
+    }
+    public function Oranlar(Request $request){
+        if(strlen($request->cc)<6)
+            return ["Success" => false];
+        $Oranlar = collect(json_decode(\Illuminate\Support\Facades\Storage::get('oranlistesi.json')));
+        $cc = @substr($request->cc,0,6);
+        $OranGetir = new BinSanalPos(substr($cc, 0,6));
+        $soap = new Soap();
+        $res = $soap->send($OranGetir)->getAnyData();
+        $res = (array)$res["Temp"];
+        $Oran = $Oranlar->where("SanalPOS_ID", $res["SanalPOS_ID"])->first();
+        $Taksit = ($request->taksit < 10)?"MO_0".$request->taksit:"MO_".$request->taksit;
+        return ["Success" => true, "Oran" => $Oran->$Taksit];
+    }
     public function create()
     {
         return view('odeme::create');

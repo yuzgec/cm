@@ -256,7 +256,7 @@
                         <table width="600" border="0" align="center" cellpadding="0" cellspacing="0" class="main">
                             <tr>
                                 <td align="left" valign="top" style="background:#FFF;padding:10px">
-                                    <p>Merhaba, {{$izin->user->full_name}},<br>İzin talebiniz başarıyla oluşturulmuştur.</p>
+                                    <p>{!! $Mesaj !!}</p>
                                     <table width="100%" border="0" cellpadding="0" cellspacing="0">
                                         <tr>
                                             <td width="50%" style="border-bottom: 1px solid #9ca3af;"><p style="font-weight: bold;margin: 8px 0">İzin Başlangıç Tarihi</p></td>

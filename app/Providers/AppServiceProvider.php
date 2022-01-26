@@ -22,6 +22,8 @@ use App\View\Components\Widget\ToplamOdemeler;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Pagination\Paginator;
@@ -71,6 +73,10 @@ class AppServiceProvider extends ServiceProvider
 
         Blade::if('departmanyonetici', function (){
             return \auth()->user()->DepartmanYonetici()->count() || \auth()->user()->email == "ceyda.demir@mecitkahraman.com.tr";
+        });
+
+        DB::listen(function ($query){
+            Log::info('sql: ' . $query->sql);
         });
 
     }

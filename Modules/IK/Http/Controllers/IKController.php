@@ -15,6 +15,7 @@ use Modules\Ayarlar\Entities\Sube;
 use Modules\IK\Emails\IzinTalep;
 use Modules\IK\Entities\Avans;
 use Modules\IK\Entities\Izin;
+use Modules\IK\Jobs\IzinTalepEMailJob;
 use Modules\Kullanici\Entities\Puantaj;
 use Modules\Personel\Entities\Mesai;
 use Modules\Personel\Entities\Personel;
@@ -62,7 +63,6 @@ class IKController extends Controller
             'Avanslar'
         ));
     }
-
     /**
      * Show the form for creating a new resource.
      * @return Renderable
@@ -84,7 +84,6 @@ class IKController extends Controller
             'Subeler'
         ));
     }
-
     /**
      * Store a newly created resource in storage.
      * @param Request $request
@@ -92,6 +91,7 @@ class IKController extends Controller
      */
     public function store(Request $request)
     {
+
         $request->validate(
             [
                 "name" => "required",
@@ -131,11 +131,12 @@ class IKController extends Controller
             $Sube = Sube::findOrFail($request->diger["sube"]);
             $User->sube()->sync($Sube, false);
         }
+        $pb = $request->pb;
         $PB = new PersonelBilgileri();
         $PB->user_id = $User->id;
-        $PB->kisisel_telefon = $request->pb["kisisel_telefon"];
-        $PB->ise_baslama_tarihi = $request->pb["ise_baslama_tarihi"];
-        $PB->sozlesme_turu = $request->pb["sozlesme_turu"];
+        $PB->kisisel_telefon = $pb["kisisel_telefon"];
+        $PB->ise_baslama_tarihi = $pb["ise_baslama_tarihi"];
+        $PB->sozlesme_turu = $pb["sozlesme_turu"];
         $PB->save();
         return redirect(route('IK.calisanlar'));
     }
@@ -265,7 +266,12 @@ class IKController extends Controller
         }
         $User = User::findOrFail($id);
         $User->update($data);
-        $Bilgiler = PersonelBilgileri::where('user_id', $id)->update($request->pb);
+        $pb = $request->pb;
+        $Bilgiler = PersonelBilgileri::where('user_id', $id)->first();
+        foreach ($pb as $index => $value){
+            $Bilgiler->$index = $value;
+        }
+        $Bilgiler->save();
         if($request->diger["role"]){
             $Role = Role::findById($request->diger["role"]);
             $User->assignRole($Role);
@@ -363,11 +369,11 @@ class IKController extends Controller
             "MuhasebeMessage" => "",
         ];
         $Izin->save();
-        $Muhasebe = "ceyda.demir@mecitkahraman.com.tr";
         $Yetkili = $request->user()->departman()->first()->yetkili->email;
-        Mail::to($request->user())
-            ->cc([$Muhasebe,$Yetkili])
-            ->send(new IzinTalep($Izin));
+        $Mesaj = "Merhaba, {$Izin->user->full_name},<br>İzin talebiniz başarıyla oluşturulmuştur.";
+        dispatch(new IzinTalepEMailJob($Izin,$Izin->user->email, $Mesaj));
+        $Mesaj = "Merhaba<br> <strong>{$Izin->user->full_name}</strong> İzin talebinde bulunmuştur ve onayınızı beklemektedir.";
+        dispatch(new IzinTalepEMailJob($Izin,$Yetkili, $Mesaj));
 
         return response()->json(["Success" => true]);
     }
@@ -392,6 +398,8 @@ class IKController extends Controller
                 $Onay["YetkiliTarih"] = Carbon::now()->format('Y-m-d H:i:s');
                 $Izin->onaylar = $Onay;
                 $Izin->save();
+                $Mesaj = "Merhaba<br> <strong>{$Izin->user->full_name}</strong> İzin talebinde bulunmuştur. Yetkili onayından geçmiş ve tarafınızadan onay beklemektedir.";
+                dispatch(new IzinTalepEMailJob($Izin, 'ekrem@baro.com.tr', $Mesaj));
                 break;
             case "Muhasebe":
                 if(auth()->user()->departman()->first()->name != "Muhasebe")
@@ -577,7 +585,7 @@ class IKController extends Controller
                 }
             }
         }
-
+        $Onaylananlar = collect($Onaylananlar)->sortByDesc('baslangic');
         $Avanslar = Avans::query()->get();
 
         return view('ik::raporlar', compact(
@@ -593,5 +601,8 @@ class IKController extends Controller
             'Reddedilenler',
             'Avanslar'
         ));
+    }
+    public function IzinTalepEt(){
+        return view('Modals.IzinTalep');
     }
 }

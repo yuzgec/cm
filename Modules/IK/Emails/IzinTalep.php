@@ -13,14 +13,16 @@ class IzinTalep extends Mailable
     use Queueable, SerializesModels;
 
     public $izin;
+    public $Mesaj;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(Izin $izin)
+    public function __construct(Izin $izin, $Mesaj)
     {
         $this->izin = $izin;
+        $this->Mesaj = $Mesaj;
     }
 
     /**

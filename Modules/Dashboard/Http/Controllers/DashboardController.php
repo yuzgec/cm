@@ -26,10 +26,6 @@ class DashboardController extends Controller
         $UserCount = User::all()->count();
         $PersonelCount = Personel::all()->count();
 
-
-
-
-
         return view('dashboard::index', compact(
             'UserCount', 'PersonelCount'
 

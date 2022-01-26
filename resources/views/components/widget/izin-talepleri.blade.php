@@ -7,7 +7,7 @@
                 İzin Talepleri ({{count($Izinler)}})
             </h3>
         </div>
-        <div class="list-group list-group-flush list-group-hoverable">
+        <div class="list-group list-group-flush list-group-hoverable overflow-hidden" style="max-height: 250px; overflow-y: scroll!important;">
             @foreach($Izinler as $Izin)
                 <div class="list-group-item">
                     <div class="row align-items-center">

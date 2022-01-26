@@ -44,4 +44,6 @@ Route::prefix('ik')->group(function() {
         dd('');
         return view('ik::emails.izintalep', compact('izin'));
     });
+
+    Route::get('/IzinTalepEt', [IKController::class, 'IzinTalepEt'])->name('IK.izinTalepEt');
 });

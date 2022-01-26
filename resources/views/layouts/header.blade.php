@@ -39,7 +39,7 @@
             <span class="avatar avatar-sm" >{{ isim(auth()->user()->full_name)}}</span>
             <div class="d-none d-xl-block ps-2">
               <div>{{ auth()->user()->full_name }}</div>
-              <div class="mt-1 small text-muted">Kullanıcı Görevi</div>
+              <div class="mt-1 small text-muted">{{ auth()->user()->departman()->first()->name }}</div>
             </div>
           </a>
           <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">

@@ -39,18 +39,31 @@
                         <x-form-inputtext label="Borçlu TC Kimlik No" name="tcKimlikNo"/>
                     </div>
 
-                    <div class="form-group">
-                        <x-form-inputtext label="Ödeme Alınacak Tutar *" name="tutar"/>
+                    <div class="form-group row">
+                        <div class="col-4">
+                            <x-form-inputtext label="Ödeme Alınacak Tutar *" name="tutar"/>
+                        </div>
+                        <div class="col-4">
+                            <label class="form-label">Komisyon</label>
+                            <small id="hesaplanan_komisyon">0,00 ₺ (%0,00)</small>
+                        </div>
+                        <div class="col-4">
+                            <label class="form-label">Taksit Sayısı</label>
+                            <select name="taksit" id="taksit" class="form-select">
+                                @foreach($Taksitler as $row)
+                                    <option value="{{$row["id"]}}">{{$row["label"]}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
                     </div>
 
                     <div class="form-group">
                         <x-form-inputtext label="Kart ÜZerindeki İsim Soyisim *" name="adsoyad"/>
                     </div>
-
                     <div class="form-group">
                         <x-form-inputtext label="Kart Numarası *" name="kartno"/>
                     </div>
-
                     <div class="form-group d-flex justify-content-between">
                         <div class="col-5">
 
@@ -93,16 +106,13 @@
                             </select>
                         </div>
                     </div>
-
                     <div class="form-group">
                         <x-form-inputtext label="Kart CVC *" name="cvc"/>
                     </div>
-
                     <div class="form-group">
                         <label for="singin-email-2">Ödeme Notu *</label>
                         <textarea type="text" name="aciklama" class="form-control mb-2" placeholder="Ödeme Notu" value="{{old('aciklama')}}"></textarea>
                     </div>
-
                     <button type="submit" class="btn btn-primary btn-block">Ödemeyi Gerçekleştir</button>
                 </div>
             </form>
@@ -184,7 +194,15 @@
 @endsection
 @section('customJS')
     <script>
+        var oranlar = null;
         $(document).ready(function (){
+            // $.ajax({
+            //     type: "GET",
+            //     url: '/odeme/Oranlar',
+            //     success: function (result){
+            //         console.log(result);
+            //     }
+            // });
             $('#odemeForm').on('submit', function (e){
                 e.preventDefault();
                 $.ajax({
@@ -207,6 +225,31 @@
             $("#odemeForm").on("hidden.bs.modal", function () {
                 document.location = '{{route('odeme.index')}}'
             });
-        })
+            $('#kartno, #taksit').on('change', function (e){
+                var kart = $('#kartno').val(),
+                    taksit = $('#taksit').val();
+                if(kart == "")
+                    return;
+                $.ajax({
+                    type: 'POST',
+                    data: 'cc=' + kart + "&taksit="+taksit+"&_token={{csrf_token()}}",
+                    url: '/odeme/Oranlar',
+                    success: function (result){
+                        switch (result.Success) {
+                            case true:
+                                var oran = parseFloat(result.Oran),
+                                    tutar = parseFloat($('#tutar').val());
+
+                                var hesaplanan = (tutar * oran / 100);
+                                $('#hesaplanan_komisyon').text(parseFloat(hesaplanan).toFixed(2) + ' ₺ (%' + oran.toFixed(2) +')');
+                                break;
+                            case false:
+
+                                break;
+                        }
+                    }
+                })
+            });
+        });
     </script>
 @endsection
