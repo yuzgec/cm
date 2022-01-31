@@ -78,7 +78,7 @@ class User extends Authenticatable implements HasMedia
         $renk = null;
         if($this->departman()->count())
             $renk = $this->departman()->first()->renk;
-        
+
         $styles = "background: " . $renk . " linear-gradient(135deg,hsla(0,0%,20%,.4), ".$renk.");";
         $styles.= "background-image: url(".$this->getFirstMediaUrl().");";
         $styles.= "background-size: cover;";

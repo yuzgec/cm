@@ -26,49 +26,41 @@
                 @csrf
                 <div class="card-body">
                     <h2 class="card-title text-center mb-4">Online Ödeme Ekranı</h2>
-
-                    <div class="form-group">
+                    <div class="form-group mb-2">
                         <x-form-inputtext label="Dosya No" name="dosyaNo"/>
                     </div>
-
-                    <div class="form-group">
+                    <div class="form-group mb-2">
                         <x-form-inputtext label="Borçlu Ad Soyad" name="adSoyad"/>
                     </div>
-
-                    <div class="form-group">
+                    <div class="form-group mb-2">
                         <x-form-inputtext label="Borçlu TC Kimlik No" name="tcKimlikNo"/>
                     </div>
-
-                    <div class="form-group row">
+                    <div class="form-group row mb-2">
+                        <div class="col-8">
+                            <x-form-inputtext label="Kart ÜZerindeki İsim Soyisim *" name="adsoyad"/>
+                        </div>
                         <div class="col-4">
                             <x-form-inputtext label="Ödeme Alınacak Tutar *" name="tutar"/>
                         </div>
-                        <div class="col-4">
-                            <label class="form-label">Komisyon</label>
-                            <small id="hesaplanan_komisyon">0,00 ₺ (%0,00)</small>
-                        </div>
+                    </div>
+                    <div class="form-group mb-2">
+                        <x-form-inputtext label="Kart Numarası *" name="kartno"/>
+                    </div>
+                    <div class="form-group row mb-2">
                         <div class="col-4">
                             <label class="form-label">Taksit Sayısı</label>
                             <select name="taksit" id="taksit" class="form-select">
-                                @foreach($Taksitler as $row)
-                                    <option value="{{$row["id"]}}">{{$row["label"]}}</option>
-                                @endforeach
+                                    <option value="1">1 Taksit</option>
                             </select>
                         </div>
-
+                        <div class="col-8">
+                            <label class="form-label">Komisyon</label>
+                            <small id="hesaplanan_komisyon">Lütfen <strong>Turar</strong> ve <strong>Kart numarası</strong>  girin</small>
+                        </div>
                     </div>
-
-                    <div class="form-group">
-                        <x-form-inputtext label="Kart ÜZerindeki İsim Soyisim *" name="adsoyad"/>
-                    </div>
-                    <div class="form-group">
-                        <x-form-inputtext label="Kart Numarası *" name="kartno"/>
-                    </div>
-                    <div class="form-group d-flex justify-content-between">
+                    <div class="form-group d-flex justify-content-between mb-2">
                         <div class="col-5">
-
-                            <label for="singin-email-2">Kart Son Kullanma Yıl *</label>
-
+                            <label for="singin-email-2" class="form-label">Kart Son Kullanma Yıl *</label>
                             <select class="form-select" name="kartay">
                                 <option value="" disabled>Kart Son Kullanma Ay</option>
                                 <option value="01">01</option>
@@ -87,7 +79,7 @@
 
                         </div>
                         <div class="col-5">
-                            <label for="singin-email-2">Kart Son Kullanma Yıl *</label>
+                            <label class="form-label" for="singin-email-2">Kart Son Kullanma Yıl *</label>
                             <select class="form-select" name="kartyil">
                                 <option value="" disabled>Kart Son Kullanma Yıl</option>
                                 <option value="2021">2021</option>
@@ -106,13 +98,14 @@
                             </select>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group  mb-2">
                         <x-form-inputtext label="Kart CVC *" name="cvc"/>
                     </div>
-                    <div class="form-group">
-                        <label for="singin-email-2">Ödeme Notu *</label>
+                    <div class="form-group  mb-2">
+                        <label for="singin-email-2" class="form-label">Ödeme Notu *</label>
                         <textarea type="text" name="aciklama" class="form-control mb-2" placeholder="Ödeme Notu" value="{{old('aciklama')}}"></textarea>
                     </div>
+                    <input type="hidden" name="oran" id="oran" value="">
                     <button type="submit" class="btn btn-primary btn-block">Ödemeyi Gerçekleştir</button>
                 </div>
             </form>
@@ -196,13 +189,6 @@
     <script>
         var oranlar = null;
         $(document).ready(function (){
-            // $.ajax({
-            //     type: "GET",
-            //     url: '/odeme/Oranlar',
-            //     success: function (result){
-            //         console.log(result);
-            //     }
-            // });
             $('#odemeForm').on('submit', function (e){
                 e.preventDefault();
                 $.ajax({
@@ -225,7 +211,36 @@
             $("#odemeForm").on("hidden.bs.modal", function () {
                 document.location = '{{route('odeme.index')}}'
             });
-            $('#kartno, #taksit').on('change', function (e){
+            $('#kartno').on('change', function (){
+                var no = $(this).val();
+                console.log(no);
+                if(no.length == 16){
+                    $.ajax({
+                        type: 'POST',
+                        data: 'cc=' + no +"&_token={{csrf_token()}}",
+                        url: '/odeme/Oranlar',
+                        success: function (result){
+                            switch (result.Success) {
+                                case true:
+                                    oranlar = result.Oranlar;
+                                    var tmp = '';
+                                    $.each(oranlar, function (index, value){
+                                        tmp = tmp + '<option value="'+value.Taksit+'">'+value.Taksit+' Taksit (%'+value.Oran.toFixed(2)+')</option>';
+                                    })
+                                    $('#taksit').html(tmp);
+                                    OranHesapla();
+                                    break;
+                                case false:
+
+                                    break;
+                            }
+                        }
+                    })
+                }
+            })
+            $('#taksit').on('change', function (e){
+                OranHesapla();
+                return;
                 var kart = $('#kartno').val(),
                     taksit = $('#taksit').val();
                 if(kart == "")
@@ -237,6 +252,7 @@
                     success: function (result){
                         switch (result.Success) {
                             case true:
+
                                 var oran = parseFloat(result.Oran),
                                     tutar = parseFloat($('#tutar').val());
 
@@ -250,6 +266,22 @@
                     }
                 })
             });
+
         });
+        function OranHesapla(){
+            var Taksit = parseInt($('#taksit').val()),
+                tutar = parseFloat($('#tutar').val());
+            var oran = "";
+            $.each(oranlar, function (index, value){
+                if(value.Taksit === Taksit){
+                    oran = value;
+                }
+            })
+            $('#oran').val(oran.Oran);
+            if(tutar > 0){
+                var hesaplanan = (tutar * oran.Oran / 100);
+                $('#hesaplanan_komisyon').text(parseFloat(hesaplanan).toFixed(2) + ' ₺ (%' + oran.Oran.toFixed(2) +')');
+            }
+        }
     </script>
 @endsection

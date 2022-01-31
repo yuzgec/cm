@@ -75,10 +75,10 @@ class OdemeController extends Controller
         $siparisId = time();
         $odemeUrl = route('odeme.index');
         $siparisAciklama = $request->aciklama;
-        $taksit = 1;
+        $taksit = $request->taksit;
 
         $islemtutar = money($request->tutar);
-        $toplamTutar = money($request->tutar + ( $request->tutar * 1.69 / 100 ));
+        $toplamTutar = money($request->tutar + ( $request->tutar * $request->oran / 100 ));
 
         $islemid    = time();
 
@@ -206,8 +206,26 @@ class OdemeController extends Controller
         $res = $soap->send($OranGetir)->getAnyData();
         $res = (array)$res["Temp"];
         $Oran = $Oranlar->where("SanalPOS_ID", $res["SanalPOS_ID"])->first();
-        $Taksit = ($request->taksit < 10)?"MO_0".$request->taksit:"MO_".$request->taksit;
-        return ["Success" => true, "Oran" => $Oran->$Taksit];
+        $Ret = [];
+        for($i=1; $i<=12; $i++){
+            if($i == 1 && (float)$Oran->MO_01 == 0){
+                $Ret[] = [
+                    "Taksit" => $i,
+                    "Oran" => 1.6900
+                ];
+                continue;
+            }
+            $T = $i < 10 ? "MO_0" . $i : "MO_".$i;
+            if((float)$Oran->$T<0)
+                continue;
+            $Ret[] = [
+                "Taksit" => $i,
+                "Oran" => (float)$Oran->$T
+            ];
+        }
+//        dd($Ret);
+//        $Taksit = ($request->taksit < 10)?"MO_0".$request->taksit:"MO_".$request->taksit;
+        return ["Success" => true, "Oranlar" => $Ret];
     }
     public function create()
     {
