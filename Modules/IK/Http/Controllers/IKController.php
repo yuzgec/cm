@@ -665,4 +665,37 @@ class IKController extends Controller
 //        dd($SS);
 //        dd($fileName);
     }
+    public function IzinMutabakat(){
+        $BuYil = Carbon::now()->firstOfYear();
+        $kullanilan = \auth()->user()->izinler()->where('tur',1)->whereYear('baslangic', $BuYil->year)->where('durum',1)->sum('gun');
+        $fileName = storage_path('app/IzinMutabakat.xlsx');
+        $SS = IOFactory::load($fileName);
+        $SS->setActiveSheetIndex(0);
+        $SS->getActiveSheet()->setCellValue('A3','Ad Soyadı : ' . \auth()->user()->full_name);
+        $SS->getActiveSheet()->setCellValue('C3','T.C. Kimlik : ' . \auth()->user()->tckn);
+        $SS->getActiveSheet()->setCellValue('F3','İşe Giriş Tarihi : ');
+        $SS->getActiveSheet()->setCellValue('A4','Birim : ' . \auth()->user()->departman()->first()->name);
+
+        $SS->getActiveSheet()->setCellValue('A9','Devir Gelen : 0 gün');
+        $SS->getActiveSheet()->setCellValue('C9','Bu Yıl Kazanılan :' . \auth()->user()->izin_hakki . 'gün');
+        $SS->getActiveSheet()->setCellValue('F9','Bu Yıl Kullanılan :' . $kullanilan. 'gün');
+
+        $SS->getActiveSheet()->setCellValue('A10','Toplam : '.\auth()->user()->izin_hakki.' gün');
+        $SS->getActiveSheet()->setCellValue('C10','Bu Yıl Kazanılan :' . $kullanilan . 'gün');
+        $SS->getActiveSheet()->setCellValue('F10','Bu Yıl Kullanılan :' . (\auth()->user()->izin_hakki - $kullanilan). 'gün');
+
+        $SS->getActiveSheet()->setCellValue('A15', ' Tarihleri Arasında Kullandığım İzinler');
+
+
+        $SS->getActiveSheet()->setCellValue('A36', 'Yukarıda belirtilen kalan izin günümün doğru olduğunu ve listede yer alan tüm izinleri kullandığımı kabul ve taahhüt ediyorum');
+        $SS->getActiveSheet()->setCellValue('A39', 'Ad Soyad');
+        $SS->getActiveSheet()->setCellValue('A42', 'İmza');
+        $SS->getActiveSheet()->setCellValue('E40', Carbon::now()->locale('tr')->translatedFormat('d F Y'));
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="IzinMutabakat.xlsx"');
+        header('Cache-Control: max-age=0');
+
+        $writer = IOFactory::createWriter($SS, 'Xlsx');
+        $writer->save('php://output');
+    }
 }
