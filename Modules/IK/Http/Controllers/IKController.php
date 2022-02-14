@@ -637,7 +637,15 @@ class IKController extends Controller
     public function MesaiTarihAralihi(Request $request){
         $baslangic = $request->baslangic ? Carbon::parse($request->baslangic)->format('Y-m-d') : Carbon::now()->subDays(7)->format('Y-m-d');
         $bitis = $request->bitis ? Carbon::parse($request->bitis)->format('Y-m-d') : Carbon::now()->format('Y-m-d');
-        $Puantaj = Puantaj::query()->with('user')->whereBetween('gun', [$baslangic, $bitis])->orderBy('user_id')->orderBy('gun')->get();
+
+        $Puantaj = Puantaj::query()
+            ->with('user')
+            ->whereBetween('gun', [$baslangic, $bitis])
+            ->orderBy('user_id')
+            ->orderBy('gun');
+        if($request->kullanici > 0)
+            $Puantaj->where('user_id', $request->kullanici);
+        $Puantaj = $Puantaj->get();
 
         return response()->json(['Liste' => $Puantaj]);
     }
@@ -662,8 +670,6 @@ class IKController extends Controller
 
         $writer = IOFactory::createWriter($SS, 'Xlsx');
         $writer->save('php://output');
-//        dd($SS);
-//        dd($fileName);
     }
     public function IzinMutabakat(){
         $BuYil = Carbon::now()->firstOfYear();

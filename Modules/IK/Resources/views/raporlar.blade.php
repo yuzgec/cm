@@ -117,12 +117,20 @@
                             <div class="col-6">
                                 <div class="row">
                                     <div class="col-4">
-                                        <input type="text" id="baslangic_tarihi" class="form-control" value="01.12.2021">
+                                        <select id="mesai_kullanici" class="form-select">
+                                            <option value="0">Tüm Kullanıcılar</option>
+                                            @foreach(\App\Models\User::all() as $user)
+                                                <option value="{{$user->id}}">{{$user->full_name}}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
-                                    <div class="col-4">
-                                        <input type="text" id="bitis_tarihi" class="form-control" value="31.12.2021">
+                                    <div class="col-3">
+                                        <input type="text" id="baslangic_tarihi" class="form-control" value="">
                                     </div>
-                                    <div class="col-4">
+                                    <div class="col-3">
+                                        <input type="text" id="bitis_tarihi" class="form-control" value="">
+                                    </div>
+                                    <div class="col-1">
                                         <button type="button" class="btn btn-primary btn-block" id="mesaigetir">Getir</button>
                                     </div>
                                 </div>
@@ -527,11 +535,12 @@
     });
     $(document).on('click', 'button#mesaigetir', function (){
         var baslangic = $('#baslangic_tarihi').val(),
-            bitis = $('#bitis_tarihi').val();
+            bitis = $('#bitis_tarihi').val(),
+            kullanici = $('#mesai_kullanici').val();
         $.ajax({
             type: 'GET',
             url: "{{route('IK.raporlar.mesaitariharaligi')}}",
-            data: 'page=1&baslangic=' + baslangic + '&bitis=' + bitis,
+            data: 'page=1&baslangic=' + baslangic + '&bitis=' + bitis + '&kullanici=' + kullanici,
             success: function (result){
                 moment.locale('tr');
                 var table = $('#mesaitarih table#liste tbody');
