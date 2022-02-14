@@ -8,6 +8,7 @@ use Carbon\CarbonPeriod;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Modules\Ayarlar\Entities\Departman;
@@ -304,7 +305,7 @@ class IKController extends Controller
             $Users->where('name', 'like' , '%'. request()->get('q') .'%')
                 ->orWhere('last_name', 'like', '%'. request()->get('q') .'%');
 
-        $Users = $Users->paginate(20);
+        $Users = $Users->orderBy('name')->paginate(20);
         //dd($Personel);
 
         return view('ik::calisanlar', compact('Users'));
@@ -563,7 +564,15 @@ class IKController extends Controller
         foreach ($MesaiRapor as $Row){
             $Personeller[$Row->user_id][] = $Row;
         }
-
+        $KalanIzinler = [];
+        foreach (User::all() as $user){
+            $BuYil = Carbon::now()->firstOfYear();
+            $kullanilan = $user->izinler()->where('tur',1)->whereYear('baslangic', $BuYil->year)->where('durum',1)->sum('gun');
+            $kalan = $user->izin_hakki - $kullanilan;
+            $user->kalan_izin = $kalan;
+            $user->kullanilan = $kullanilan;
+            $KalanIzinler[] = $user;
+        }
         $Personel = Personel::with('mesai')->paginate(5);
         $YaklasanIzinler = [];
         $OnayBekleyenler = [];
@@ -614,10 +623,21 @@ class IKController extends Controller
             'OnayBekleyenler',
             'Onaylananlar',
             'Reddedilenler',
-            'Avanslar'
+            'Avanslar',
+            'KalanIzinler'
         ));
     }
     public function IzinTalepEt(){
         return view('Modals.IzinTalep');
+    }
+    public function IzinEkle(){
+        return view('Modals.IzinEkle');
+    }
+    public function MesaiTarihAralihi(Request $request){
+        $baslangic = $request->baslangic ? Carbon::parse($request->baslangic)->format('Y-m-d') : Carbon::now()->subDays(7)->format('Y-m-d');
+        $bitis = $request->bitis ? Carbon::parse($request->bitis)->format('Y-m-d') : Carbon::now()->format('Y-m-d');
+        $Puantaj = Puantaj::query()->with('user')->whereBetween('gun', [$baslangic, $bitis])->orderBy('user_id')->orderBy('gun')->get();
+
+        return response()->json(['Liste' => $Puantaj]);
     }
 }

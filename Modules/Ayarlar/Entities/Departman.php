@@ -13,7 +13,9 @@ class Departman extends Model
 
     protected $guarded = [];
     protected $table = "departmanlar";
-
+    protected $casts = [
+        "mesai" => "array"
+    ];
     public function Yetkili(){
         return $this->belongsTo(User::class, 'yonetici');
     }

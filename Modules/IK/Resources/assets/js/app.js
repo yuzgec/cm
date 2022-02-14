@@ -153,3 +153,10 @@ $(document).on('click', '[data-toggle="avansDetay"]', function (){
         })
     $('#modal-avansDetay').modal('show');
 });
+$(document).on('click', '[data-toggle="userIzinEkle"]', function (){
+    var user = $(this).data('user');
+    var tmp = '<div class="d-flex flex-column align-items-center justify-content-center gap-2"><div class="spinner-border text-cyan" role="status"></div><div><h1>Yükleniyor<span class="animated-dots"></span></h1></div></div>';
+    $('#modal-userIzinEkle .modal-body').html(tmp);
+    $('#modal-userIzinEkle').modal('show');
+    $('#modal-userIzinEkle').load('/ik/IzinEkle/' + user);
+});

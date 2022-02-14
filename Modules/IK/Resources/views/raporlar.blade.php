@@ -7,6 +7,9 @@
                     <a href="#mesai" class="nav-link active" data-bs-toggle="tab"><span class="m-2">Mesai</span></a>
                 </li>
                 <li class="nav-item">
+                    <a href="#mesaitarih" class="nav-link" data-bs-toggle="tab"><span class="m-2">Mesai Tarih Aralığı</span></a>
+                </li>
+                <li class="nav-item">
                     <a href="#izinler" class="nav-link " data-bs-toggle="tab"><span class="m-2">İzinler </span></a>
                 </li>
                 <li class="nav-item">
@@ -103,6 +106,46 @@
                             </table>
                         </div>
                     </div>
+                    <div class="tab-pane" id="mesaitarih">
+                        <div class="row mb-4">
+                            <div class="col-6">
+                                <h3 class="page-title">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 20h4l10.5 -10.5a1.5 1.5 0 0 0 -4 -4l-10.5 10.5v4" /><line x1="13.5" y1="6.5" x2="17.5" y2="10.5" /></svg>
+                                    Personel Giriş - Çıkış Listesi
+                                </h3>
+                            </div>
+                            <div class="col-6">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <input type="text" id="baslangic_tarihi" class="form-control" value="01.12.2021">
+                                    </div>
+                                    <div class="col-4">
+                                        <input type="text" id="bitis_tarihi" class="form-control" value="31.12.2021">
+                                    </div>
+                                    <div class="col-4">
+                                        <button type="button" class="btn btn-primary btn-block" id="mesaigetir">Getir</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-vcenter" id="liste">
+                                <thead>
+                                    <tr>
+                                        <th>Personel</th>
+                                        <th>Tarih</th>
+                                        <th>Mesai Giriş</th>
+                                        <th>Geç Giriş</th>
+                                        <th>Mesai Çıkış</th>
+                                        <th>Fazla Mesai</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                     <div class="tab-pane" id="izinler">
                         <ul class="nav nav-tabs" data-bs-toggle="tabs">
                             <li class="nav-item">
@@ -116,6 +159,9 @@
                             </li>
                             <li class="nav-item">
                                 <a href="#reddedilenler" class="nav-link" data-bs-toggle="tab">Reddedilenler <span class="badge m-2"> {{count($Reddedilenler)}}</span></a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#kalanlar" class="nav-link" data-bs-toggle="tab">Kalan İzinler</a>
                             </li>
 
                         </ul>
@@ -190,7 +236,6 @@
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-
                                                 @foreach($OnayBekleyenler as $item)
                                                     <tr>
                                                         <td data-label="Name" >
@@ -331,6 +376,51 @@
                                 </div>
 
                             </div>
+                            <div class="tab-pane" id="kalanlar">
+                                <div class="col-12 mt-2">
+                                    <div class="card">
+                                        <div class="table-responsive">
+                                            <table class="table table-vcenter table-mobile-md card-table">
+                                                <thead>
+                                                <tr>
+                                                    <th>İsim Soyisim</th>
+                                                    <th>İzin Hakkı</th>
+                                                    <th>Kullanılan İzin</th>
+                                                    <th>Kalan İzin Hakkı</th>
+                                                    <th class="w-1"></th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                @foreach($KalanIzinler as $item)
+                                                    <tr>
+                                                        <td data-label="Name" >
+                                                            <div class="d-flex py-1 align-items-center">
+                                                                <a href="#">
+                                                                    {!! $item->avatar !!}
+                                                                </a>
+                                                                <div class="flex-fill">
+                                                                    <div class="font-weight-medium">{{$item->full_name}}</div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td data-label="Title" >
+                                                            <div>{{$item->izin_hakki}}</div>
+                                                        </td>
+                                                        <td data-label="Title" >
+                                                            <div>{{$item->kullanilan}}</div>
+                                                        </td>
+                                                        <td data-label="Title" >
+                                                            <div>{{$item->kalan_izin}}</div>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
                         </div>
                     </div>
                     <div class="tab-pane" id="avanslar">
@@ -425,8 +515,43 @@
         </div>
     </div>
 @endsection
-@section('js')
-
+@section('customJS')
+<script>
+    new Litepicker({
+        element: document.getElementById('baslangic_tarihi'),
+        elementEnd: document.getElementById('bitis_tarihi'),
+        singleMode: false,
+        allowRepick: true,
+        format: 'DD.MM.YYYY',
+        lang: 'tr-TR'
+    });
+    $(document).on('click', 'button#mesaigetir', function (){
+        var baslangic = $('#baslangic_tarihi').val(),
+            bitis = $('#bitis_tarihi').val();
+        $.ajax({
+            type: 'GET',
+            url: "{{route('IK.raporlar.mesaitariharaligi')}}",
+            data: 'page=1&baslangic=' + baslangic + '&bitis=' + bitis,
+            success: function (result){
+                moment.locale('tr');
+                var table = $('#mesaitarih table#liste tbody');
+                table.html('');
+                $.each(result.Liste, function (i,v){
+                    table.append(
+                        '<tr>' +
+                            '<td>'+v.user.name + ' ' + v.user.last_name +'</td>' +
+                            '<td>'+ moment(v.gun).utc().format('DD.MM.YYYY') +'</td>' +
+                            '<td>'+ moment(v.mesai_giris).utc().format('LT') +'</td>' +
+                            '<td>'+ v.gec_mesai +' dk.</td>' +
+                            '<td>'+ moment(v.mesai_cikis).utc().format('LT') +'</td>' +
+                            '<td>'+ v.fazla_calisma +' dk.</td>' +
+                        '</tr>'
+                    );
+                })
+            }
+        })
+    })
+</script>
 @endsection
 @section('css')
 

@@ -61,24 +61,24 @@ class OdemeController extends Controller
             $ip = $_SERVER["REMOTE_ADDR"];
         }
 
-        $soap = new Soap();
-        $spid = 1011;
-        $guid = "E8AAD860-80C3-4C35-9EF9-7E5D5FD1765D";
-        $kkSahibi = $request->adsoyad;
-        $kkNo = $request->kartno;
-        $kkSkAy = $request->kartay;
-        $kkSkYil = $request->kartyil;
-        $kkCvc = $request->cvc;
-        $kkSahibiGsm = "5321347703";
-        $hataUrl = url('OdemeSonuc');
-        $basariliUrl = url('OdemeSonuc');
-        $siparisId = time();
-        $odemeUrl = route('odeme.index');
-        $siparisAciklama = $request->aciklama;
-        $taksit = $request->taksit;
+            $soap = new Soap();
+            $spid = 1011;
+            $guid = "E8AAD860-80C3-4C35-9EF9-7E5D5FD1765D";
+            $kkSahibi = $request->adsoyad;
+            $kkNo = $request->kartno;
+            $kkSkAy = $request->kartay;
+            $kkSkYil = $request->kartyil;
+            $kkCvc = $request->cvc;
+            $kkSahibiGsm = "5321347703";
+            $hataUrl = url('OdemeSonuc');
+            $basariliUrl = url('OdemeSonuc');
+            $siparisId = time();
+            $odemeUrl = route('odeme.index');
+            $siparisAciklama = $request->aciklama;
+            $taksit = $request->taksit;
 
-        $islemtutar = money($request->tutar);
-        $toplamTutar = money($request->tutar + ( $request->tutar * $request->oran / 100 ));
+            $islemtutar = money($request->tutar);
+            $toplamTutar = money($request->tutar + ( $request->tutar * $request->oran / 100 ));
 
         $islemid    = time();
 

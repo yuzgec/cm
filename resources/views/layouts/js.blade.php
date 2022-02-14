@@ -1,5 +1,6 @@
 <script src="/assets/js/tabler.js"></script>
 <script src="/assets/libs/litepicker/dist/litepicker.js"></script>
+<script src="/assets/js/moment-with-locales.min.js"></script>
 <script>
     $(document).ready(function (){
         $('[picker="date"]').each(function (i,v){

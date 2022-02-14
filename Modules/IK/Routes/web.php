@@ -35,8 +35,8 @@ Route::prefix('ik')->group(function() {
     Route::post('/AvansOnayla', [IKController::class, 'AvansOnayla'])->name('IK.avansOnayla');
     Route::post('/AvansReddet', [IKController::class, 'AvansReddet'])->name('IK.avansReddet');
 
+    Route::get('/raporlar/mesai/tariharaligi', [IKController::class, 'MesaiTarihAralihi'])->name('IK.raporlar.mesaitariharaligi');
     Route::get('/raporlar', [IKController::class, 'Raporlar'])->name('IK.raporlar');
-
     Route::get('/Mail', function (){
         $izin = \Modules\IK\Entities\Izin::query()->first();
 
@@ -46,4 +46,5 @@ Route::prefix('ik')->group(function() {
     });
 
     Route::get('/IzinTalepEt', [IKController::class, 'IzinTalepEt'])->name('IK.izinTalepEt');
+    Route::get('/IzinEkle/{id}', [IKController::class, 'IzinEkle'])->name('IK.izinEkle');
 });

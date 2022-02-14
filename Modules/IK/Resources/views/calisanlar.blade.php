@@ -41,19 +41,20 @@
         <div class="col-md-6 col-lg-3">
             <div class="card">
                 <div class="card-body p-4 text-center">
-                    <div class="d-flex">
-                        <div class="ms-auto">
-                            <div class="dropdown">
-                                <a class="dropdown-toggle text-muted" href="#" data-bs-toggle="dropdown"
-                                   aria-haspopup="true" aria-expanded="false"></a>
-                                <div class="dropdown-menu dropdown-menu-end">
-                                    <a class="dropdown-item active" href="#" title="İzin Ekle">İzin ekle</a>
-                                    <a class="dropdown-item" href="#" title="Avans Ekle">Avans Ekle</a>
-                                    <a class="dropdown-item" href="#" title="Harcama Ekle">Harcama Ekle</a>
+                    @if(auth()->user()->departman()->first()->name == 'Muhasebe')
+                        <div class="d-flex">
+                            <div class="ms-auto">
+                                <div class="dropdown">
+                                    <a class="dropdown-toggle text-muted" href="#" data-bs-toggle="dropdown"
+                                       aria-haspopup="true" aria-expanded="false"></a>
+                                    <div class="dropdown-menu dropdown-menu-end">
+                                        <a class="dropdown-item active" href="javascript:;" data-user="{{$item->id}}" data-toggle="userIzinEkle" title="İzin Ekle">İzin ekle</a>
+                                        <a class="dropdown-item d-none" href="javascript:;" data-user="{{$item->id}}" data-toggle="userAvansEkle" title="Avans Ekle">Avans Ekle</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    @endif
 
                     <a href="{{route('IK.edit', $item->id)}}" title="{{$item->full_name}}">
                     <span class="avatar avatar-xl mb-3 avatar-rounded"
@@ -81,4 +82,10 @@
     <div class="d-flex justify-content-center">
             {{ $Users->appends(['siralama' => 'personel'])->links() }}
     </div>
+@endsection
+
+@section('customJS')
+    <script>
+        
+    </script>
 @endsection

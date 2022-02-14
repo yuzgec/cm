@@ -19,9 +19,22 @@ class AyarlarController extends Controller
     }
     public function getSirket(){
         $Subeler = Sube::with('Yetkili')->get();
-        $Departmanlar = Departman::with('Yetkili','Sube')->get();
+        $DepartmanlarList = Departman::with('Yetkili','Sube')->get();
         $Unvanlar = Unvan::with('Yetkili','Departman')->get();
         $Calisanlar = User::select(DB::raw("CONCAT(name,' ',last_name) as name, id"))->get();
+        $Departmanlar = [];
+        foreach ($DepartmanlarList as $row){
+            if($row->mesai == null)
+                $row->mesai = [
+                    "Pazartesi" => "08:00-18:00",
+                    "Sali" => "08:00-18:00",
+                    "Carsamba" => "08:00-18:00",
+                    "Persembe" => "08:00-18:00",
+                    "Cuma" => "08:00-18:00",
+                ];
+            $Departmanlar[] = $row;
+        }
+//        dd($Departmanlar);
         return response()->json([
             "Subeler" => $Subeler,
             "Departmanlar" => $Departmanlar,
@@ -46,12 +59,20 @@ class AyarlarController extends Controller
             $Item = Departman::findOrFail($request->id);
         else
             $Item = new Departman();
+        $Mesai = [
+            "Pazartesi" => $request->mesai_pazartesi ?? null,
+            "Sali" => $request->mesai_sali ?? null,
+            "Carsamba" => $request->mesai_carsamba ?? null,
+            "Persembe" => $request->mesai_persembe ?? null,
+            "Cuma" => $request->mesai_cuma ?? null,
+        ];
         $Item->name = $request->name;
         $Item->yonetici = $request->yetkili ? $request->yetkili : null;
         $Item->sube_id = $request->sube_id ? $request->sube_id : null;
         $Item->mesai_baslangic = $request->mesai_baslangic ? $request->mesai_baslangic : null;
         $Item->mesai_bitis = $request->mesai_bitis ? $request->mesai_bitis : null;
         $Item->renk = $request->renk;
+        $Item->mesai = $Mesai;
         $Item->save();
         return response()->json(["Departmanlar" => Departman::with('Yetkili','Sube')->get()]);
     }
