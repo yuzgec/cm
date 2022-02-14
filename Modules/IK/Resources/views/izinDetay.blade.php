@@ -80,6 +80,10 @@
         <div class="d-flex justify-content-between border-bottom p-1">
             <span>Oluşturulma Tarihi</span><span>{{$Izin->created_at->locale('tr')->translatedFormat('d F Y H:i')}}</span>
         </div>
+        <div class="d-flex justify-content-between border-bottom p-1">
+            <span>İzin Talep Formu</span>
+            <a href="{{route('IK.IzinTalepFormu', $Izin->id)}}" target="_blank">Formu İndir</a>
+        </div>
     </div>
     <div class="mt-3 bg-muted-lt py-3 px-5" style="margin-left: -1.5rem; margin-right: -1.5rem">
         <p class="text-blue font-weight-bold">Onay Süreci</p>

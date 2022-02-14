@@ -21,6 +21,7 @@ use Modules\Kullanici\Entities\Puantaj;
 use Modules\Personel\Entities\Mesai;
 use Modules\Personel\Entities\Personel;
 use Modules\Personel\Entities\PersonelBilgileri;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 use Spatie\Permission\Models\Role;
 
 class IKController extends Controller
@@ -639,5 +640,29 @@ class IKController extends Controller
         $Puantaj = Puantaj::query()->with('user')->whereBetween('gun', [$baslangic, $bitis])->orderBy('user_id')->orderBy('gun')->get();
 
         return response()->json(['Liste' => $Puantaj]);
+    }
+    public function IzinTalepFormu($id){
+        $Izin = Izin::findOrFail($id);
+
+
+        $fileName = storage_path('app/IzinTalepFormu.xlsx');
+        $SS = IOFactory::load($fileName);
+        $SS->setActiveSheetIndex(0);
+        $SS->getActiveSheet()->setCellValue('F5', $Izin->user->full_name);
+        $SS->getActiveSheet()->setCellValue('F6', $Izin->user->tckn);
+        $SS->getActiveSheet()->setCellValue('F7', $Izin->user->departman()->first()->name);
+        $SS->getActiveSheet()->setCellValue('F8', $Izin->izin_turu);
+        $SS->getActiveSheet()->setCellValue('F9', $Izin->gun);
+        $SS->getActiveSheet()->setCellValue('F10', $Izin->baslangic->format('d.m.Y H:i'));
+        $SS->getActiveSheet()->setCellValue('F11', $Izin->bitis->format('d.m.Y H:i'));
+        $SS->getActiveSheet()->setCellValue('F12', $Izin->donus->format('d.m.Y H:i'));
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="IzinTalepFormu.xlsx"');
+        header('Cache-Control: max-age=0');
+
+        $writer = IOFactory::createWriter($SS, 'Xlsx');
+        $writer->save('php://output');
+//        dd($SS);
+//        dd($fileName);
     }
 }
