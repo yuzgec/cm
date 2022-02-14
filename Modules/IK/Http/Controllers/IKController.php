@@ -565,11 +565,8 @@ class IKController extends Controller
         $Gunler = ['Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi', 'Pazar'];
         $Personeller = [];
 
-        dd($MesaiRapor->first());
         foreach ($MesaiRapor as $Row){
             $Personeller[$Row->user_id][] = $Row;
-            if($Row->user_id == 23)
-                dd($Row);
         }
         $KalanIzinler = [];
         foreach (User::all() as $user){
