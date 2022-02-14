@@ -1,11 +1,12 @@
 <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
     <div class="modal-content">
         <div class="modal-header">
-            <h5 class="modal-title">Izin Ekle</h5>
+            <h5 class="modal-title">Izin Ekle - {{$Personel->full_name}}</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-            <form method="get" action="javascript:;" id="izinTalepForm">
+            <form method="get" action="javascript:;" id="izinEkleForm">
+                <input type="hidden" name="user_id" value="{{$Personel->id}}">
                 <div class="row">
                     <div class="col-8 mb-3">
                         <label class="form-label">İzin Türü</label>
@@ -75,7 +76,7 @@
         </div>
         <div class="modal-footer">
             <button type="button" class="btn me-auto" data-bs-dismiss="modal">Kapat</button>
-            <button type="button" class="btn btn-primary" id="btnIzinTalepSend">İzin Talep Et</button>
+            <button type="button" class="btn btn-primary" id="btnIzinEkleSend">İzin Talep Et</button>
         </div>
     </div>
 </div>

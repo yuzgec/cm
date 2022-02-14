@@ -160,3 +160,16 @@ $(document).on('click', '[data-toggle="userIzinEkle"]', function (){
     $('#modal-userIzinEkle').modal('show');
     $('#modal-userIzinEkle').load('/ik/IzinEkle/' + user);
 });
+$(document).on('click','#btnIzinEkleSend', function (){
+    $(this).data('originaltext',$(this).text());
+    $(this).html('Lütfen Bekleyin<span class="animated-dots"></span>').attr('disabled','disabled');
+    var data = $('#modal-userIzinEkle form#izinEkleForm').serialize();
+    axios.post('/ik/IzinOlustur', data)
+        .then(res => {
+            alert('İzin başarıyla oluşturulmuştur');
+            document.location.reload();
+        })
+        .catch(err => {
+            console.log(err);
+        })
+});

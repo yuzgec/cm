@@ -13,7 +13,7 @@
                     <a href="#izinler" class="nav-link " data-bs-toggle="tab"><span class="m-2">İzinler </span></a>
                 </li>
                 <li class="nav-item">
-                    <a href="#avanslar" class="nav-link " data-bs-toggle="tab"><span class="m-2">Avanslar </span></a>
+                    <a href="#avanslar" class="nav-link" data-bs-toggle="tab"><span class="m-2">Avanslar </span></a>
                 </li>
             </ul>
             <div class="card-body">

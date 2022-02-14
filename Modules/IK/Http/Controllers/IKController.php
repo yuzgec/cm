@@ -557,13 +557,19 @@ class IKController extends Controller
         $HaftaBaslangic = $now->startOfWeek()->format('Y-m-d H:i');
         $HaftaBitis = $now->endOfWeek()->format('Y-m-d H:i');
 
-        $MesaiRapor = Puantaj::with('user')->whereBetween('gun', [$HaftaBaslangic, $HaftaBitis])->get();
+        $MesaiRapor = Puantaj::with('user')
+            ->whereBetween('gun', [$HaftaBaslangic, $HaftaBitis])
+            ->get();
 
         $RaporTarih = Carbon::parse($HaftaBaslangic)->translatedFormat('d F Y').' - '.Carbon::parse($HaftaBitis)->translatedFormat('d F Y');
         $Gunler = ['Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi', 'Pazar'];
         $Personeller = [];
+
+        dd($MesaiRapor->first());
         foreach ($MesaiRapor as $Row){
             $Personeller[$Row->user_id][] = $Row;
+            if($Row->user_id == 23)
+                dd($Row);
         }
         $KalanIzinler = [];
         foreach (User::all() as $user){
@@ -631,8 +637,41 @@ class IKController extends Controller
     public function IzinTalepEt(){
         return view('Modals.IzinTalep');
     }
-    public function IzinEkle(){
-        return view('Modals.IzinEkle');
+    public function IzinEkle($id){
+        $Personel = User::findOrFail($id);
+        return view('Modals.IzinEkle', compact('Personel'));
+    }
+    public function IzinOlustur(Request $request){
+        $data = $request->izinTalep;
+
+        $baslangic = Carbon::parse($data["baslangic_tarihi"]." " . $data["baslangic_saati"]);
+        $bitis = Carbon::parse($data["bitis_tarihi"]." " . $data["bitis_saati"]);
+        $gun = $bitis->diffInDays($baslangic)+1;
+        if($gun < 1)
+            if($bitis->diffInHours($baslangic))
+                $gun = 1;
+
+        $Onay = [
+            "Muhasebe" => 1,
+            "Yetkili" => 1,
+            "YetkiliTarih" => Carbon::now()->format('Y-m-d H:i:s'),
+            "MuhasebeTarih" => Carbon::now()->format('Y-m-d H:i:s'),
+            "MuhasebeUser" => \auth()->user()->id
+        ];
+
+        $Izin = new Izin();
+        $Izin->user_id = $request->user_id;
+        $Izin->tur = $data["tur"];
+        $Izin->baslangic = $baslangic;
+        $Izin->bitis = $bitis;
+        $Izin->aciklama = $data["aciklama"];
+        $Izin->yerine_bakacak = $data["yerine_bakacak"];
+        $Izin->donus = Carbon::parse($data["donus_tarihi"]." " . $data["donus_saati"])->format('Y-m-d H:i:s');
+        $Izin->durum = 1;
+        $Izin->gun = $gun;
+        $Izin->onaylar = $Onay;
+        $Izin->save();
+        return response()->json(["Success" => true]);
     }
     public function MesaiTarihAralihi(Request $request){
         $baslangic = $request->baslangic ? Carbon::parse($request->baslangic)->format('Y-m-d') : Carbon::now()->subDays(7)->format('Y-m-d');

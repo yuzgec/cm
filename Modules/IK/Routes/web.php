@@ -47,6 +47,7 @@ Route::prefix('ik')->group(function() {
 
     Route::get('/IzinTalepEt', [IKController::class, 'IzinTalepEt'])->name('IK.izinTalepEt');
     Route::get('/IzinEkle/{id}', [IKController::class, 'IzinEkle'])->name('IK.izinEkle');
+    Route::post('/IzinOlustur', [IKController::class, 'IzinOlustur'])->name('IK.izinOlustur');
     Route::get('/IzinTalepFormu/{id}', [IKController::class, 'IzinTalepFormu'])->name('IK.IzinTalepFormu');
     Route::get('/IzinMutabakat', [IKController::class, 'IzinMutabakat'])->name('IK.IzinMUtakabat');
 });
