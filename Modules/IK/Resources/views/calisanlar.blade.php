@@ -41,19 +41,21 @@
         <div class="col-md-6 col-lg-3">
             <div class="card">
                 <div class="card-body p-4 text-center">
-                    @if(auth()->user()->departman()->first()->name == 'Muhasebe')
-                        <div class="d-flex">
-                            <div class="ms-auto">
-                                <div class="dropdown">
-                                    <a class="dropdown-toggle text-muted" href="#" data-bs-toggle="dropdown"
-                                       aria-haspopup="true" aria-expanded="false"></a>
-                                    <div class="dropdown-menu dropdown-menu-end">
-                                        <a class="dropdown-item active" href="javascript:;" data-user="{{$item->id}}" data-toggle="userIzinEkle" title="İzin Ekle">İzin ekle</a>
-                                        <a class="dropdown-item d-none" href="javascript:;" data-user="{{$item->id}}" data-toggle="userAvansEkle" title="Avans Ekle">Avans Ekle</a>
+                    @if(auth()->user()->departman())
+                        @if(auth()->user()->departman()->first()->name == 'Muhasebe')
+                            <div class="d-flex">
+                                <div class="ms-auto">
+                                    <div class="dropdown">
+                                        <a class="dropdown-toggle text-muted" href="#" data-bs-toggle="dropdown"
+                                           aria-haspopup="true" aria-expanded="false"></a>
+                                        <div class="dropdown-menu dropdown-menu-end">
+                                            <a class="dropdown-item active" href="javascript:;" data-user="{{$item->id}}" data-toggle="userIzinEkle" title="İzin Ekle">İzin ekle</a>
+                                            <a class="dropdown-item d-none" href="javascript:;" data-user="{{$item->id}}" data-toggle="userAvansEkle" title="Avans Ekle">Avans Ekle</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        @endif
                     @endif
 
                     <a href="{{route('IK.edit', $item->id)}}" title="{{$item->full_name}}">
@@ -86,6 +88,6 @@
 
 @section('customJS')
     <script>
-        
+
     </script>
 @endsection
