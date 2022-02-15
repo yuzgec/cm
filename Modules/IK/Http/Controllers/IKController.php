@@ -347,12 +347,27 @@ class IKController extends Controller
     }
     public function IzinTalep(Request $request){
         $Talep = $request->izinTalep;
+
+        $Time = new \Carbon\Carbon($Talep["baslangic_tarihi"]." " . $Talep["baslangic_saati"]);
+        $End = new \Carbon\Carbon($Talep["bitis_tarihi"]." " . $Talep["bitis_saati"]);
+        $Fark = $Time->diffInHours($End);
+        $MesaiBaslangic = new Carbon(auth()->user()->departman()->first()->mesai_baslangic);
+        $MesaiBitis = new Carbon(auth()->user()->departman()->first()->mesai_bitis);
+        $MesaiSaat = $MesaiBitis->diffInHours($MesaiBaslangic);
+        if($Fark < $MesaiSaat){
+            $Fark = $Fark / $MesaiSaat;
+            if($Fark > 0.9)
+                $Fark = 1;
+        }else{
+            $Fark = $Time->diffInDays($End);
+            $Fark = $Fark < 1 ? 1: $Fark;
+        }
+
+
         $baslangic = Carbon::parse($Talep["baslangic_tarihi"]." " . $Talep["baslangic_saati"]);
         $bitis = Carbon::parse($Talep["bitis_tarihi"]." " . $Talep["bitis_saati"]);
-        $gun = $bitis->diffInDays($baslangic)+1;
-        if($gun < 1)
-            if($bitis->diffInHours($baslangic))
-                $gun = 1;
+        $gun = $Fark;
+        
 
         $Izin = new Izin();
         $Izin->user_id = auth()->user()->id;
@@ -641,12 +656,26 @@ class IKController extends Controller
     public function IzinOlustur(Request $request){
         $data = $request->izinTalep;
 
+
+        $Time = new \Carbon\Carbon($data["baslangic_tarihi"]." " . $data["baslangic_saati"]);
+        $End = new \Carbon\Carbon($data["bitis_tarihi"]." " . $data["bitis_saati"]);
+        $Fark = $Time->diffInHours($End);
+        $MesaiBaslangic = new Carbon(auth()->user()->departman()->first()->mesai_baslangic);
+        $MesaiBitis = new Carbon(auth()->user()->departman()->first()->mesai_bitis);
+        $MesaiSaat = $MesaiBitis->diffInHours($MesaiBaslangic);
+        if($Fark < $MesaiSaat){
+            $Fark = $Fark / $MesaiSaat;
+            if($Fark > 0.9)
+                $Fark = 1;
+        }else{
+            $Fark = $Time->diffInDays($End);
+            $Fark = $Fark < 1 ? 1: $Fark;
+        }
+
+
         $baslangic = Carbon::parse($data["baslangic_tarihi"]." " . $data["baslangic_saati"]);
         $bitis = Carbon::parse($data["bitis_tarihi"]." " . $data["bitis_saati"]);
-        $gun = $bitis->diffInDays($baslangic)+1;
-        if($gun < 1)
-            if($bitis->diffInHours($baslangic))
-                $gun = 1;
+        $gun = $Fark;
 
         $Onay = [
             "Muhasebe" => 1,
@@ -656,6 +685,7 @@ class IKController extends Controller
             "MuhasebeUser" => \auth()->user()->id
         ];
 
+        dd($gun);
         $Izin = new Izin();
         $Izin->user_id = $request->user_id;
         $Izin->tur = $data["tur"];
@@ -744,10 +774,10 @@ class IKController extends Controller
         $Time = new \Carbon\Carbon($request->baslangic);
         $End = new \Carbon\Carbon($request->bitis);
         $Fark = $Time->diffInHours($End);
-        if($Fark < 10){
-            $MesaiBaslangic = 8;
-            $MesaiBitis = 18;
-            $MesaiSaat = $MesaiBitis - $MesaiBaslangic;
+        $MesaiBaslangic = new Carbon(auth()->user()->departman()->first()->mesai_baslangic);
+        $MesaiBitis = new Carbon(auth()->user()->departman()->first()->mesai_bitis);
+        $MesaiSaat = $MesaiBitis->diffInHours($MesaiBaslangic);
+        if($Fark < $MesaiSaat){
             $Fark = $Fark / $MesaiSaat;
             if($Fark > 0.9)
                 $Fark = 1;
