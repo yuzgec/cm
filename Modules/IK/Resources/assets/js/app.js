@@ -84,7 +84,6 @@ $(document).on('click', '#btnIzinDetayIzinReddet', function (){
         alert('İptal Edildi');
     }
 });
-
 $(document).on('click', '#btnAvansDetayAvansOnayla', function (){
     var id = $(this).data('id');
     var type = $(this).data('type');
@@ -173,3 +172,20 @@ $(document).on('click','#btnIzinEkleSend', function (){
             console.log(err);
         })
 });
+
+$(document).on('change', '#izinTalep_baslangic_tarihi, #izinTalep_baslangic_saati, #izinTalep_bitis_tarihi, #izinTalep_bitis_saati', function (){
+    var baslangic = $('#izinTalep_baslangic_tarihi').val() + " " + $("#izinTalep_baslangic_saati").val(),
+        bitis = $('#izinTalep_bitis_tarihi').val() + " " + $("#izinTalep_bitis_saati").val();
+
+    $.ajax({
+        type: 'GET',
+        url: '/ik/IzinHesapla',
+        data: 'baslangic=' + baslangic + '&bitis=' + bitis,
+        success: function (response){
+            $('#izinTalep_gun').val(response.Fark + ' gün');
+        }
+    })
+})
+function IzinHesapla(){
+
+}

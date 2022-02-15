@@ -740,4 +740,21 @@ class IKController extends Controller
         $writer = IOFactory::createWriter($SS, 'Xlsx');
         $writer->save('php://output');
     }
+    public function IzinHesapla(Request $request){
+        $Time = new \Carbon\Carbon($request->baslangic);
+        $End = new \Carbon\Carbon($request->bitis);
+        $Fark = $Time->diffInHours($End);
+        if($Fark < 10){
+            $MesaiBaslangic = 8;
+            $MesaiBitis = 18;
+            $MesaiSaat = $MesaiBitis - $MesaiBaslangic;
+            $Fark = $Fark / $MesaiSaat;
+            if($Fark > 0.9)
+                $Fark = 1;
+        }else{
+            $Fark = $Time->diffInDays($End);
+            $Fark = $Fark < 1 ? 1: $Fark;
+        }
+        return ["Fark" => $Fark];
+    }
 }
