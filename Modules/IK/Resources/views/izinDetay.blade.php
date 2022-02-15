@@ -139,15 +139,18 @@
 </div>
 <div id="footer">
     <button type="button" class="btn me-auto" data-bs-dismiss="modal">Kapat</button>
+    @if(auth()->user()->departman()->first()->name == 'Muhasebe')
+        <button type="button" class="btn btn-danger" id="btnIzinDetayIzinSil" data-id="{{$Izin->id}}" data-type="Muhasebe">Kaydı Sil</button>
+    @endif
     @if($Izin->user->departman()->first()->yetkili->id == auth()->user()->id)
         @if($Izin->onaylar["Yetkili"] == 0)
-            <button type="button" class="btn btn-danger" id="btnIzinDetayIzinReddet"  data-id="{{$Izin->id}}" data-type="Yetkili">Reddet</button>
+            <button type="button" class="btn btn-warning" id="btnIzinDetayIzinReddet"  data-id="{{$Izin->id}}" data-type="Yetkili">Reddet</button>
             <button type="button" class="btn btn-success" id="btnIzinDetayIzinOnayla" data-id="{{$Izin->id}}" data-type="Yetkili">Onayla</button>
         @endif
     @endif
     @if(auth()->user()->departman()->first()->name == 'Muhasebe')
         @if($Izin->onaylar["Yetkili"] == 1 && $Izin->onaylar["Muhasebe"] == 0)
-            <button type="button" class="btn btn-danger" id="btnIzinDetayIzinReddet"  data-id="{{$Izin->id}}" data-type="Muhasebe">Reddet</button>
+            <button type="button" class="btn btn-warning" id="btnIzinDetayIzinReddet"  data-id="{{$Izin->id}}" data-type="Muhasebe">Reddet</button>
             <button type="button" class="btn btn-success" id="btnIzinDetayIzinOnayla" data-id="{{$Izin->id}}" data-type="Muhasebe">Onayla</button>
         @endif
     @endif

@@ -787,4 +787,9 @@ class IKController extends Controller
         }
         return ["Fark" => $Fark];
     }
+    public function IzinSil($id){
+        $Izin = Izin::findOrFail($id);
+        $Izin->delete();
+        return ["Success" => true];
+    }
 }

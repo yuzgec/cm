@@ -1,3 +1,9 @@
+$(document).ready(function() {
+    $.ajaxSetup({
+        headers:
+            {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
+    });
+});
 $('#btnIzinTalepEt').on('click', function (){
     var tmp = '<div class="d-flex flex-column align-items-center justify-content-center gap-2"><div class="spinner-border text-cyan" role="status"></div><div><h1>Yükleniyor<span class="animated-dots"></span></h1></div></div>';
     $('#modal-izintalep .modal-body').html(tmp);
@@ -172,7 +178,6 @@ $(document).on('click','#btnIzinEkleSend', function (){
             console.log(err);
         })
 });
-
 $(document).on('change', '#izinTalep_baslangic_tarihi, #izinTalep_baslangic_saati, #izinTalep_bitis_tarihi, #izinTalep_bitis_saati', function (){
     var baslangic = $('#izinTalep_baslangic_tarihi').val() + " " + $("#izinTalep_baslangic_saati").val(),
         bitis = $('#izinTalep_bitis_tarihi').val() + " " + $("#izinTalep_bitis_saati").val();
@@ -186,6 +191,25 @@ $(document).on('change', '#izinTalep_baslangic_tarihi, #izinTalep_baslangic_saat
         }
     })
 })
-function IzinHesapla(){
-
-}
+$(document).on('click', '#btnIzinDetayIzinSil', function (){
+    var id = $(this).data('id');
+    var button = $(this);
+    var sonuc = confirm('Bu kaydı silmek istediğinize emin misiniz ?');
+    if(sonuc){
+        $(button).attr('originalText', $(button).text());
+        $(button).attr('disabled','disabled').addClass('disabled').html('Lütfen bekleyin <span class="animated-dots"></span>');
+        $.ajax({
+            type: 'DELETE',
+            url: '/ik/IzinSil/' + id,
+            success: function (response){
+                alert('İzin başarıyla silinmiştir');
+                document.location.reload();
+            },
+            error: function (error){
+                $(button).text($(button).attr('originalText'));
+                $(button).removeAttr('originalText', $(button).text()).removeClass('disabled').removeAttr('disabled');
+                alert('Sistemde yaşanan bir sorundan ötürü işleminizi gerçekleştiremedik');
+            }
+        })
+    }
+})
