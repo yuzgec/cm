@@ -55,7 +55,7 @@ Route::post('/OdemeSonuc', function (Request $request){
     if ($request->TURKPOS_RETVAL_Sonuc == 1){
 
         Mail::send("mail.odeme",compact('odeme'),function ($message){
-            $message->to('izinler')->subject("Ödeme başarıyla oluşturmuştur.");
+            $message->to('orhan.ozcan@mecitkahraman.com.tr')->subject("Ödeme başarıyla oluşturmuştur.");
         });
 
 //        Mail::send("mail.odeme",compact('odeme'),function ($message){
