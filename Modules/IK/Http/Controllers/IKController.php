@@ -367,7 +367,7 @@ class IKController extends Controller
         $baslangic = Carbon::parse($Talep["baslangic_tarihi"]." " . $Talep["baslangic_saati"]);
         $bitis = Carbon::parse($Talep["bitis_tarihi"]." " . $Talep["bitis_saati"]);
         $gun = $Fark;
-        
+
 
         $Izin = new Izin();
         $Izin->user_id = auth()->user()->id;
