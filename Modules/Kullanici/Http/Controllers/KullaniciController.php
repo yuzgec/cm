@@ -200,6 +200,7 @@ class KullaniciController extends Controller
     }
     public function MesaiRaporExcelIndir(Request $request){
 
+        dd('Burada');
         $RaporTarih = Carbon::yesterday()->toDateString();
         $now = Carbon::now();
         if($request->tarih)
@@ -213,6 +214,7 @@ class KullaniciController extends Controller
         $data = [];
         $data[] =  ['Personel ID', 'Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi', 'Pazar'];
         foreach ($MesaiRapor as $Row){
+            dd($Row);
             if($Row->getUser()->count() < 1)
                 continue;
             $data[] = $Row->getUser->adsoyad;
