@@ -277,6 +277,7 @@ class IKController extends Controller
                 "user_id" => $User->id
             ]);
         }
+        $Bilgiler = PersonelBilgileri::where('user_id', $id)->get();
         foreach ($pb as $index => $value){
             $Bilgiler->$index = $value;
         }
