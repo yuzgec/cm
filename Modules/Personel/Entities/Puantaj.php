@@ -17,7 +17,7 @@ class Puantaj extends Model
     ];
 
     public function getUser(){
-        return $this->hasOne('Modules\Personel\Entities\Personel', 'id', 'user_id');
+        return $this->hasOne(Personel::class, 'id', 'user_id');
     }
 
     protected static function newFactory()

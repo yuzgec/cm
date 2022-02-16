@@ -199,8 +199,6 @@ class KullaniciController extends Controller
         return view('kullanici::mesai.raporlama', compact('MesaiRapor', 'RaporTarih', 'Gunler', 'Personeller', 'HaftaBaslangic'));
     }
     public function MesaiRaporExcelIndir(Request $request){
-
-        dd('Burada');
         $RaporTarih = Carbon::yesterday()->toDateString();
         $now = Carbon::now();
         if($request->tarih)
@@ -214,9 +212,10 @@ class KullaniciController extends Controller
         $data = [];
         $data[] =  ['Personel ID', 'Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi', 'Pazar'];
         foreach ($MesaiRapor as $Row){
-            dd($Row);
-            if($Row->getUser()->count() < 1)
+            if($Row->getUser()->count() < 1){
                 continue;
+            }
+            dd($Row);
             $data[] = $Row->getUser->adsoyad;
             for ($i=0; $i >= 6;$i++){
                 $data[] = $Row->fazla_calisma;
@@ -225,7 +224,7 @@ class KullaniciController extends Controller
                 $data[] = substr($Row->mesai_cikis, -8);
             }
         }
-
+        dd($data);
         $data = new MesaiRaporExport($data);
         return Excel::download($data, $RaporTarih.' Mesai Rapor.xlsx');
     }

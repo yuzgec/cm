@@ -271,7 +271,12 @@ class IKController extends Controller
         $User = User::findOrFail($id);
         $User->update($data);
         $pb = $request->pb;
-        $Bilgiler = PersonelBilgileri::where('user_id', $id)->first();
+        $Bilgiler = PersonelBilgileri::where('user_id', $id)->get();
+        if($Bilgiler->count()<1){
+            PersonelBilgileri::query()->insert([
+                "user_id" => $User->id
+            ]);
+        }
         foreach ($pb as $index => $value){
             $Bilgiler->$index = $value;
         }
