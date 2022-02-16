@@ -2,6 +2,7 @@
 
 namespace Modules\IK\Http\Controllers;
 
+use App\Exports\OzlukExport;
 use App\Models\User;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
@@ -11,6 +12,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Maatwebsite\Excel\Facades\Excel;
 use Modules\Ayarlar\Entities\Departman;
 use Modules\Ayarlar\Entities\Sube;
 use Modules\IK\Emails\IzinTalep;
@@ -791,5 +793,123 @@ class IKController extends Controller
         $Izin = Izin::findOrFail($id);
         $Izin->delete();
         return ["Success" => true];
+    }
+    public function OzlukIndir(){
+        $Users = User::all();
+        $Data = [];
+        $Data[] = [
+            "Adı Soyadı",
+            "TC Kimlik No",
+            "E-Posta Adresi",
+            "Telefon",
+            "Şube",
+            "Departman",
+            "Doğum Tarihi",
+            "Medeni Hal",
+            "Cinsiyet",
+            "Engel Derecesi",
+            "Uyruğu",
+            "Çocuk Sayısı",
+            "Askerlik Durumu",
+            "Kan Grubu",
+            "Eğitim Durumu",
+            "Tamamlanan En Yüksek Eğitim Seviyesi",
+            "Son Tamamlanan Eğitim Kurumu"
+        ];
+        foreach ($Users as $user){
+            $Data[] = [
+                $user->full_name,
+                $user->tckn,
+                $user->email,
+                $user->telefon,
+                @$user->sube()->first()->name ?? null,
+                @$user->departman()->first()->name ?? null,
+                (@$user->bilgiler->dogum_tarihi) ? $user->bilgiler->dogum_tarihi->format('d.m.Y') : null,
+                $this->getDetails("medeni_hal", @$user->bilgiler->medeni_hal),
+                $this->getDetails("cinsiyet", @$user->bilgiler->cinsiyet),
+                $this->getDetails("engel_derecesi", @$user->bilgiler->engel_derecesi),
+                @$user->bilgiler->uyrugu,
+                @$user->bilgiler->cocuk_sayisi,
+                $this->getDetails("askerlik_durumu", @$user->bilgiler->askerlik_durumu),
+                $this->getDetails("kan_grubu", @$user->bilgiler->kan_grubu),
+                $this->getDetails("egitim_durumu", @$user->bilgiler->egitim_durumu),
+                $this->getDetails("mezuniyet", @$user->bilgiler->mezuniyet),
+                @$user->bilgiler->mezun_okul,
+            ];
+        }
+        $Data = new OzlukExport($Data);
+        return Excel::download($Data, 'Ozluk.xlsx');
+    }
+    private function getDetails($alan, $value){
+        switch ($alan){
+            case "medeni_hal":
+                switch ($value){
+                    case 0: return null;
+                    case 1: return "Evli";
+                    case 2: return "Bekar";
+                    case 3: return "Boşanmış";
+                }
+                break;
+            case "cinsiyet":
+                switch ($value){
+                    case 0: return null;
+                    case 1: return "Kadın";
+                    case 2: return "Erkek";
+                    case 3: return "Diğer";
+                }
+                break;
+            case "engel_derecesi":
+                switch ($value){
+                    case 0: return "Yok";
+                    case 1: return "1. Derece";
+                    case 2: return "2. Derece";
+                    case 3: return "3. derece";
+                }
+                break;
+            case "askerlik_durumu":
+                switch ($value){
+                    case 0: return null;
+                    case 1: return "Yapıldı";
+                    case 2: return "Yapılmadı";
+                    case 3: return "Muaf";
+                    case 4: return "Tecilli";
+                    case 5: return "Yoklama Kaçağı";
+                    case 6: return "Bakaya";
+                }
+                break;
+            case "kan_grubu":
+                switch ($value){
+                    case 0: return null;
+                    case 1: return "0-";
+                    case 2: return "0+";
+                    case 3: return "A-";
+                    case 4: return "A+";
+                    case 5: return "B-";
+                    case 6: return "B+";
+                    case 7: return "AB-";
+                    case 8: return "AB+";
+                }
+                break;
+            case "egitim_durumu":
+                switch ($value){
+                    case 0: return null;
+                    case 1: return "Mezun";
+                    case 2: return "Öğrenci";
+                }
+                break;
+            case "mezuniyet":
+                switch ($value){
+                    case 0: return null;
+                    case 1: return "Yok";
+                    case 2: return "İlkokul";
+                    case 3: return "Ortaokul";
+                    case 4: return "Lise";
+                    case 5: return "Ön Lisans";
+                    case 6: return "Lisans";
+                    case 7: return "Yüksek Lisans";
+                    case 8: return "Doktora";
+                }
+                break;
+        }
     }
 }

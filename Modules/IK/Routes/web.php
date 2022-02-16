@@ -52,4 +52,5 @@ Route::prefix('ik')->group(function() {
     Route::get('/IzinMutabakat', [IKController::class, 'IzinMutabakat'])->name('IK.IzinMUtakabat');
     Route::get('/IzinHesapla', [IKController::class, 'IzinHesapla'])->name('IK.IzinHesapla');
     Route::delete('/IzinSil/{id}', [IKController::class, 'IzinSil'])->name('IK.IzinSil');
+    Route::get('/OzlukIndir', [IKController::class, 'OzlukIndir'])->name('IK.OzlukIndir');
 });
