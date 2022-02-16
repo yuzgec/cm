@@ -212,8 +212,9 @@ class KullaniciController extends Controller
 
         $data = [];
         $data[] =  ['Personel ID', 'Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi', 'Pazar'];
-
         foreach ($MesaiRapor as $Row){
+            if($Row->getUser()->count() < 1)
+                continue;
             $data[] = $Row->getUser->adsoyad;
             for ($i=0; $i >= 6;$i++){
                 $data[] = $Row->fazla_calisma;
