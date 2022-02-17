@@ -32,6 +32,9 @@
                 </svg>
                 Çalışan Ekle
             </a>
+            <a href="{{route('IK.OzlukIndir')}}" class="btn btn-info">
+                Özlük İndir
+            </a>
         </div>
         <div class="col-2 justify-content-end">
             {{ $Users->appends(['siralama' => 'personel'])->links() }}
