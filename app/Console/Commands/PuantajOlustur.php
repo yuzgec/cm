@@ -6,8 +6,11 @@ use App\Models\User;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\DB;
+use Modules\IK\Jobs\MesaiBildirimEmailJob;
 use Modules\Personel\Entities\Monitoring;
 use Modules\Personel\Entities\Personel;
+use Modules\Personel\Entities\PersonelBilgileri;
 use Modules\Personel\Entities\Puantaj;
 
 class PuantajOlustur extends Command
@@ -20,6 +23,14 @@ class PuantajOlustur extends Command
     }
     public function handle()
     {
+        $DogumGunleri = PersonelBilgileri::query()
+            ->has('user')
+            ->whereDate('dogum_tarihi','=', Carbon::now()->addHour())
+            ->get();
+        if($DogumGunleri->count()>0){
+            
+        }
+
         Carbon::setLocale('tr');
         $SonTarih = Puantaj::query()->orderByDesc('gun')->limit(1);
         if($SonTarih->count()<1)
@@ -27,15 +38,20 @@ class PuantajOlustur extends Command
         else
             $SonTarih = $SonTarih->first()->gun->format('Y-m-d');
         $Tarihler = CarbonPeriod::create($SonTarih, Carbon::now()->subDay()->format('Y-m-d'));
+//        dd($Tarihler);
         foreach(User::query()->whereNotNull('remote_id')->get() as $Personel){
             $Mesai = $Personel->departman()->first();
-            $MesaiBitisSaati = $Mesai->mesai_bitis;
+            $MesaiBitisSaati = null;
+            $MesaiBaslangicSaati = null;
             dump($Personel->full_name." İşleniyor...");
+            dump($Mesai->mesai);
             foreach($Tarihler as $Tarih){
-                if($Tarih->isFriday())
-                    $MesaiBitisSaati = "17:00:00";
-                else
-                    $MesaiBitisSaati = $Mesai->mesai_bitis;
+                $Mesailer = $Mesai->mesai;
+
+                if($MesaiBitisSaati == null)
+                    continue;
+                dd('Diğer' . $Tarih->format('d.m.Y'));
+
                 $PuantajKontrol = Puantaj::query()->where('user_id', $Personel->id)->where('gun', $Tarih->format('Y-m-d'));
                 if($PuantajKontrol->count() > 0){
                     dump($Tarih->format('d.m.Y') . " için puantaj kaydı mevcut");
@@ -50,9 +66,16 @@ class PuantajOlustur extends Command
                     ->where('TerminalID', 3)
                     ->orderBy('Eventtime')
                     ->first();
-                if(!$Giris)
+                if(!$Giris){
+                    //TODO Burada Mail Gönderecek
+                    $Yetkili = $Mesai->Yetkili->email;
+                    $Muhasebe = env('MUHASEBE_MAIL');
+                    $Saat = Carbon::parse(Carbon::now()->format('Y-m-d 09:00:00'));
+                    dispatch(new MesaiBildirimEmailJob($Yetkili,$Personel,$Tarih->format('d.m.Y')))->delay($Saat);
+                    dispatch(new MesaiBildirimEmailJob($Muhasebe,$Personel,$Tarih->format('d.m.Y')))->delay($Saat);
                     continue;
-                $MesaiBaslangic = Carbon::parse($Tarih->format('Y-m-d')." ".$Mesai->mesai_baslangic)->format('Y-m-d H:i:s');
+                }
+                $MesaiBaslangic = Carbon::parse($Tarih->format('Y-m-d')." ".$MesaiBaslangicSaati)->format('Y-m-d H:i:s');
                 $BaslangicFarki = Carbon::parse($MesaiBaslangic)->diffInMinutes($Giris->Eventtime, false);
                 if($BaslangicFarki < 0 )
                     $BaslangicFarki = 0;

@@ -8,28 +8,25 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Support\Facades\Mail;
-use Modules\IK\Emails\IzinTalep;
-use Modules\IK\Entities\Izin;
+use Modules\IK\Emails\MesaiBildirim;
 
-class IzinTalepEMailJob implements ShouldQueue
+class MesaiBildirimEmailJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    protected $izin;
-    protected $Adres;
-    protected $Mesaj;
-    protected $excel;
+    protected $Email;
+    protected $User;
+    protected $Tarih;
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct(Izin $izin,$Adres, $Mesaj, $excel = null)
+    public function __construct($Email, $User, $Tarih)
     {
-        $this->izin = $izin;
-        $this->Adres = $Adres;
-        $this->Mesaj = $Mesaj;
-        $this->excel = $excel;
+        $this->Email = $Email;
+        $this->User = $User;
+        $this->Tarih = $Tarih;
     }
 
     /**
@@ -39,7 +36,7 @@ class IzinTalepEMailJob implements ShouldQueue
      */
     public function handle()
     {
-        Mail::to($this->Adres)
-            ->send(new IzinTalep($this->izin, $this->Mesaj, $this->excel));
+        Mail::to($this->Email)
+            ->send(new MesaiBildirim($this->User, $this->Tarih));
     }
 }
