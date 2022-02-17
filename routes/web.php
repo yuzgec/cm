@@ -74,7 +74,7 @@ Route::post('/OdemeSonuc', function (Request $request){
 Route::get('/Deneme', function (Request $request){
 
 
-    return view('ik::emails.mesaibildirimi',[
+    return view('ik::emails.dogumgunu',[
         "User" => \auth()->user(),
         "Tarih" => \Carbon\Carbon::now()->format('d.m.Y')
     ]);

@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
+use Modules\IK\Jobs\DogumGunuMailGonderimJob;
 use Modules\IK\Jobs\MesaiBildirimEmailJob;
 use Modules\Personel\Entities\Monitoring;
 use Modules\Personel\Entities\Personel;
@@ -33,9 +34,11 @@ class PuantajOlustur extends Command
             foreach ($DogumGunleri as $Row){
                 $Yetkili = $Row->user->departman()->first()->yetkili->email;
                 $Muhasebe = env('MUHASEBE_MAIL');
+                $Saat = Carbon::parse(Carbon::now()->format('Y-m-d 09:00:00'));
+                dispatch(new DogumGunuMailGonderimJob($Row->user, $Yetkili))->delay($Saat);
+                dispatch(new DogumGunuMailGonderimJob($Row->user, $Muhasebe))->delay($Saat);
             }
         }
-        dd($DogumGunleri);
 
         Carbon::setLocale('tr');
         $SonTarih = Puantaj::query()->orderByDesc('gun')->limit(1);
