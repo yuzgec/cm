@@ -15,6 +15,7 @@ Route::prefix('ik')->group(function() {
     Route::resource('/ik', 'IKController');
     Route::resource('/varyant', 'VaryantController');
     Route::resource('/izinkurallari', 'IzinKurallariController');
+    Route::get('/calisanlar/pasif', [IKController::class, 'pasifcalisanlar'])->name('IK.pasifcalisanlar');
     Route::get('/calisanlar', 'IKController@calisanlar')->name('IK.calisanlar');
     Route::get('/calisanlar/Ekle', [IKController::class, 'create'])->name('IK.create');
     Route::post('/calisanlar/Ekle', [IKController::class, 'store'])->name('IK.store');
@@ -53,4 +54,5 @@ Route::prefix('ik')->group(function() {
     Route::get('/IzinHesapla', [IKController::class, 'IzinHesapla'])->name('IK.IzinHesapla');
     Route::delete('/IzinSil/{id}', [IKController::class, 'IzinSil'])->name('IK.IzinSil');
     Route::get('/OzlukIndir', [IKController::class, 'OzlukIndir'])->name('IK.OzlukIndir');
+    Route::post('/KullaniciPasiflestir', [IKController::class, 'KullaniciPassif'])->name('IK.KullaniciPasiflestir');
 });

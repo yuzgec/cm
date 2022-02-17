@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Modules\Ayarlar\Entities\Departman;
@@ -35,6 +36,14 @@ class User extends Authenticatable implements HasMedia
 
     protected $hidden = [ 'password','remember_token', ];
     protected $casts = [ 'email_verified_at' => 'datetime',];
+
+    protected static function booted()
+    {
+        parent::boot();
+        static::addGlobalScope('where', function (Builder $builder){
+            $builder->where('durum','=', 1);
+        });
+    }
 
     public function getFullNameAttribute(){
         return $this->name." ".$this->last_name;

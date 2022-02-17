@@ -213,3 +213,21 @@ $(document).on('click', '#btnIzinDetayIzinSil', function (){
         })
     }
 })
+$(document).on('click', '[data-toggle="userPassive"]', function (){
+    var id = $(this).data('user');
+    var result = confirm('Kullanıcıyı Pasifleştirmek istediğinize emin misiniz ?');
+    var t = $(this);
+    if(result){
+        $.ajax({
+            type: 'POST',
+            url: '/ik/KullaniciPasiflestir',
+            data: 'user=' + id,
+            success: function (response){
+                t.closest('.card').closest('.col-md-6.col-lg-3').remove();
+            },
+            error: function (error){
+                alert('Sistemde yaşanan bir problemden ötürü işleminizi gerçekleştiremiyoruz. Lütfen tekrar deneyin.');
+            }
+        })
+    }
+})

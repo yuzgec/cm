@@ -22,7 +22,7 @@
                 </form>
             </div>
         </div>
-        <div class="col-4 justify-content-center align-items-center">
+        <div class="col-6 d-flex gap-2 justify-content-end align-items-center">
             <a href="{{route('IK.create')}}" class="btn btn-secondary" style="margin-left:50px">
                 <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24"
                      stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -35,9 +35,15 @@
             <a href="{{route('IK.OzlukIndir')}}" class="btn btn-info">
                 Özlük İndir
             </a>
-        </div>
-        <div class="col-2 justify-content-end">
-            {{ $Users->appends(['siralama' => 'personel'])->links() }}
+            @if(\Illuminate\Support\Facades\Route::currentRouteName() == "IK.pasifcalisanlar")
+            <a href="{{route('IK.calisanlar')}}" class="btn btn-success">
+                Aktif Çalışanlar
+            </a>
+            @else
+            <a href="{{route('IK.pasifcalisanlar')}}" class="btn btn-danger">
+                Pasif Çalışanlar
+            </a>
+            @endif
         </div>
     </div>
     @foreach($Users as $item)
@@ -52,7 +58,15 @@
                                         <a class="dropdown-toggle text-muted" href="#" data-bs-toggle="dropdown"
                                            aria-haspopup="true" aria-expanded="false"></a>
                                         <div class="dropdown-menu dropdown-menu-end">
-                                            <a class="dropdown-item active" href="javascript:;" data-user="{{$item->id}}" data-toggle="userIzinEkle" title="İzin Ekle">İzin ekle</a>
+                                            <a class="dropdown-item" href="javascript:;" data-user="{{$item->id}}" data-toggle="userIzinEkle" title="İzin Ekle">İzin ekle</a>
+                                            <a class="dropdown-item" href="javascript:;" data-user="{{$item->id}}" data-toggle="userPassive" title="Pasifleştir">
+                                                Kullanıcıyı
+                                                @if($item->durum == 1)
+                                                    Pasifleştir
+                                                @else
+                                                    Aktifleştir
+                                                @endif
+                                            </a>
                                             <a class="dropdown-item d-none" href="javascript:;" data-user="{{$item->id}}" data-toggle="userAvansEkle" title="Avans Ekle">Avans Ekle</a>
                                         </div>
                                     </div>

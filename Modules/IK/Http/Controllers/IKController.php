@@ -10,6 +10,7 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
@@ -320,6 +321,16 @@ class IKController extends Controller
 
         $Users = $Users->orderBy('name')->paginate(20);
         //dd($Personel);
+
+        return view('ik::calisanlar', compact('Users'));
+    }
+    public function pasifcalisanlar(){
+        $Users = User::query()->withoutGlobalScopes()->where('durum','=',0);
+        if(\request()->get('q'))
+            $Users->where('name', 'like' , '%'. request()->get('q') .'%')
+                ->orWhere('last_name', 'like', '%'. request()->get('q') .'%');
+
+        $Users = $Users->orderBy('name')->paginate(20);
 
         return view('ik::calisanlar', compact('Users'));
     }
@@ -937,5 +948,10 @@ class IKController extends Controller
         $writer->save(storage_path('app/tmp/'.$name));
 
         return $name;
+    }
+    public function KullaniciPassif(Request $request){
+        $User = User::query()->withoutGlobalScopes()->findOrFail($request->user);
+        $User->durum = ($User->durum == 0) ? 1 : 0;
+        $User->save();
     }
 }
