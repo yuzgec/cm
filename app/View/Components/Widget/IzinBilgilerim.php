@@ -22,7 +22,9 @@ class IzinBilgilerim extends Component
     {
         $this->Izinler = Auth::user()->izinler()->latest()->limit(5)->get();
         $this->Hakedis = Auth::user()->izin_hakki;
+        $IsBasi = Auth::user()->bilgiler->ise_baslama_tarihi;
         $BuYil = Carbon::now()->firstOfYear();
+        $BuYil = Carbon::parse(Carbon::now()->format('Y-').$IsBasi->format("m-d"))->subYear();
         $this->Kullanilan = Auth::user()->izinler()->where('tur',1)->whereYear('baslangic', $BuYil->year)->where('durum',1)->sum('gun');
         $this->Yuzde = $this->Kullanilan / $this->Hakedis * 100;
         $this->Kalan = $this->Hakedis - $this->Kullanilan;

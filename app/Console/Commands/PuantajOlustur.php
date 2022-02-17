@@ -25,11 +25,17 @@ class PuantajOlustur extends Command
     {
         $DogumGunleri = PersonelBilgileri::query()
             ->has('user')
-            ->whereDate('dogum_tarihi','=', Carbon::now()->addHour())
+            ->selectRaw('*')
+            ->addSelect(DB::raw('DATE(CONCAT(YEAR(NOW()),"-",DATE_FORMAT(dogum_tarihi,"%m-%d"))) as tmp'))
+            ->whereRaw('DATE(CONCAT(YEAR(NOW()),"-",DATE_FORMAT(dogum_tarihi,"%m-%d"))) = DATE(NOW())')
             ->get();
         if($DogumGunleri->count()>0){
-
+            foreach ($DogumGunleri as $Row){
+                $Yetkili = $Row->user->departman()->first()->yetkili->email;
+                $Muhasebe = env('MUHASEBE_MAIL');
+            }
         }
+        dd($DogumGunleri);
 
         Carbon::setLocale('tr');
         $SonTarih = Puantaj::query()->orderByDesc('gun')->limit(1);
