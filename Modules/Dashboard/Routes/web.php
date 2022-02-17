@@ -1,2 +1,2 @@
 <?php
-    Route::resource('/dashboard', 'DashboardController')->middleware('auth');
+    Route::resource('/dashboard', 'DashboardController')->middleware(['auth:sanctum']);
