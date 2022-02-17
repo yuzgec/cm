@@ -207,24 +207,28 @@ class KullaniciController extends Controller
         $HaftaBitis = $now->endOfWeek()->format('Y-m-d H:i');
 
 
-        $MesaiRapor = Puantaj::with('getUser')->whereBetween('gun', [$HaftaBaslangic, $HaftaBitis])->get();
+        $MesaiRapor = Puantaj::with('getUser')
+            ->whereBetween('gun', [$HaftaBaslangic, $HaftaBitis])
+            ->has('getUser')
+            ->get();
 
-        $data = [];
-        $data[] =  ['Personel ID', 'Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi', 'Pazar'];
-        foreach ($MesaiRapor as $Row){
-            if($Row->getUser()->count() < 1){
-                continue;
-            }
-            dd($Row);
-            $data[] = $Row->getUser->adsoyad;
-            for ($i=0; $i >= 6;$i++){
-                $data[] = $Row->fazla_calisma;
-                $data[] = $Row->gec_mesai;
-                $data[] = substr($Row->mesai_giris, -8);
-                $data[] = substr($Row->mesai_cikis, -8);
-            }
+        $data = collect([]);
+        $data->add(['Personel ID', 'Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi', 'Pazar']);
+        foreach (User::all() as $Row){
+            $data->put($Row->full_name, [$Row->full_name]);
         }
-        dd($data);
+        $data = $data->toArray();
+//        dd($data);
+        foreach ($MesaiRapor as $Row){
+            $user = $Row->getUser->adsoyad;
+            $a = "";
+            $a.= $Row->gec_mesai . " - ";
+            $a.= $Row->fazla_calisma. " - ";
+            $a.= substr($Row->mesai_giris, -8) . " - ";
+            $a.= substr($Row->mesai_cikis, -8);
+            $data[$user][] = $a;
+        }
+//        dd($data);
         $data = new MesaiRaporExport($data);
         return Excel::download($data, $RaporTarih.' Mesai Rapor.xlsx');
     }
