@@ -10,8 +10,11 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Str;
 use Maatwebsite\Excel\Facades\Excel;
 use Modules\Ayarlar\Entities\Departman;
 use Modules\Ayarlar\Entities\Sube;
@@ -24,6 +27,7 @@ use Modules\Personel\Entities\Mesai;
 use Modules\Personel\Entities\Personel;
 use Modules\Personel\Entities\PersonelBilgileri;
 use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Spatie\Permission\Models\Role;
 
 class IKController extends Controller
@@ -738,12 +742,21 @@ class IKController extends Controller
         $SS->getActiveSheet()->setCellValue('F10', $Izin->baslangic->format('d.m.Y H:i'));
         $SS->getActiveSheet()->setCellValue('F11', $Izin->bitis->format('d.m.Y H:i'));
         $SS->getActiveSheet()->setCellValue('F12', $Izin->donus->format('d.m.Y H:i'));
-        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment;filename="IzinTalepFormu.xlsx"');
-        header('Cache-Control: max-age=0');
 
-        $writer = IOFactory::createWriter($SS, 'Xlsx');
-        $writer->save('php://output');
+
+        $writer = new Xlsx($SS);
+        if(!File::exists(storage_path('app/tmp')))
+            File::makeDirectory(storage_path('app/tmp'));
+        $name = Str::uuid().".xlsx";
+        $writer->save(storage_path('app/tmp/'.$name));
+        return Response::download(storage_path('app/tmp/'.$name), "IzinTalepFormu.xlsx");
+
+//        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+//        header('Content-Disposition: attachment;filename="IzinTalepFormu.xlsx"');
+//        header('Cache-Control: max-age=0');
+//
+//        $writer = IOFactory::createWriter($SS, 'Xlsx');
+//        $writer->save('php://output');
     }
     public function IzinMutabakat(){
         $BuYil = Carbon::now()->firstOfYear();
