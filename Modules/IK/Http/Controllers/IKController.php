@@ -939,7 +939,10 @@ class IKController extends Controller
         $SS->getActiveSheet()->setCellValue('F10', $Izin->baslangic->format('d.m.Y H:i'));
         $SS->getActiveSheet()->setCellValue('F11', $Izin->bitis->format('d.m.Y H:i'));
         $SS->getActiveSheet()->setCellValue('F12', $Izin->donus->format('d.m.Y H:i'));
+        $SS->getActiveSheet()->setCellValue('B18', 'İnsan Kaynakları/Muhasebe Yetkilisi');
+        $SS->getActiveSheet()->setCellValue('F18', $Izin->user->full_name);
 
+        $SS->getActiveSheet()->setCellValue('C25', $Izin->user->departman()->first()->yetkili->full_name);
 
         $writer = new Xlsx($SS);
         if(!File::exists(storage_path('app/tmp')))

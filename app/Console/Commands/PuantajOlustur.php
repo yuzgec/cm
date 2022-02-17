@@ -28,7 +28,7 @@ class PuantajOlustur extends Command
             ->whereDate('dogum_tarihi','=', Carbon::now()->addHour())
             ->get();
         if($DogumGunleri->count()>0){
-            
+
         }
 
         Carbon::setLocale('tr');
