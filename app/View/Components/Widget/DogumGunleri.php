@@ -18,6 +18,7 @@ class DogumGunleri extends Component
     public function __construct()
     {
         $this->DOBS = PersonelBilgileri::query()
+            ->has('user')
             ->addSelect('*')
             ->addSelect(DB::raw('DATE(CONCAT(YEAR(NOW()),"-",DATE_FORMAT(dogum_tarihi,"%m-%d"))) as tmp'))
             ->whereRaw('DATE(CONCAT(YEAR(NOW()),"-",DATE_FORMAT(dogum_tarihi,"%m-%d"))) >= DATE(NOW())')
