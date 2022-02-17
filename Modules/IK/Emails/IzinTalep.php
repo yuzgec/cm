@@ -14,15 +14,17 @@ class IzinTalep extends Mailable
 
     public $izin;
     public $Mesaj;
+    public $Excel;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(Izin $izin, $Mesaj)
+    public function __construct(Izin $izin, $Mesaj, $Excel = null)
     {
         $this->izin = $izin;
         $this->Mesaj = $Mesaj;
+        $this->Excel = $Excel;
     }
 
     /**
@@ -32,6 +34,13 @@ class IzinTalep extends Mailable
      */
     public function build()
     {
-        return $this->view('ik::emails.izintalep');
+        if($this->Excel == null)
+            return $this->view('ik::emails.izintalep');
+        else
+            return $this->view('ik::emails.izintalep')
+                ->attach($this->Excel, [
+                    "as" => "IzinTalepFormu.xlsx",
+                    "mime" => "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                ]);
     }
 }

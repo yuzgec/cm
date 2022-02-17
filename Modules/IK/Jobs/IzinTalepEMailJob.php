@@ -18,16 +18,18 @@ class IzinTalepEMailJob implements ShouldQueue
     protected $izin;
     protected $Adres;
     protected $Mesaj;
+    protected $excel;
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct(Izin $izin,$Adres, $Mesaj)
+    public function __construct(Izin $izin,$Adres, $Mesaj, $excel = null)
     {
         $this->izin = $izin;
         $this->Adres = $Adres;
         $this->Mesaj = $Mesaj;
+        $this->excel = $excel;
     }
 
     /**
@@ -38,6 +40,7 @@ class IzinTalepEMailJob implements ShouldQueue
     public function handle()
     {
 //        $EMail = new IzinTalep($this->izin);
-        Mail::to($this->Adres)->send(new IzinTalep($this->izin, $this->Mesaj));
+        Mail::to($this->Adres)
+            ->send(new IzinTalep($this->izin, $this->Mesaj, $this->excel));
     }
 }

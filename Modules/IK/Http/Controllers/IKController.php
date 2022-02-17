@@ -400,7 +400,9 @@ class IKController extends Controller
         $Izin->save();
         $Yetkili = $request->user()->departman()->first()->yetkili->email;
         $Mesaj = "Merhaba, {$Izin->user->full_name},<br>İzin talebiniz başarıyla oluşturulmuştur.";
-        dispatch(new IzinTalepEMailJob($Izin,$Izin->user->email, $Mesaj));
+        $IzinTalepFormu = storage_path("app/tmp/" . $this->IzinTalepFormuOlustur($Izin->id));
+        dispatch(new IzinTalepEMailJob($Izin,$Izin->user->email, $Mesaj, $IzinTalepFormu));
+
         $Mesaj = "Merhaba<br> <strong>{$Izin->user->full_name}</strong> İzin talebinde bulunmuştur ve onayınızı beklemektedir.";
         dispatch(new IzinTalepEMailJob($Izin,$Yetkili, $Mesaj));
 
@@ -728,27 +730,7 @@ class IKController extends Controller
         return response()->json(['Liste' => $Puantaj]);
     }
     public function IzinTalepFormu($id){
-        $Izin = Izin::findOrFail($id);
-
-
-        $fileName = storage_path('app/IzinTalepFormu.xlsx');
-        $SS = IOFactory::load($fileName);
-        $SS->setActiveSheetIndex(0);
-        $SS->getActiveSheet()->setCellValue('F5', $Izin->user->full_name);
-        $SS->getActiveSheet()->setCellValue('F6', $Izin->user->tckn);
-        $SS->getActiveSheet()->setCellValue('F7', $Izin->user->departman()->first()->name);
-        $SS->getActiveSheet()->setCellValue('F8', $Izin->izin_turu);
-        $SS->getActiveSheet()->setCellValue('F9', $Izin->gun);
-        $SS->getActiveSheet()->setCellValue('F10', $Izin->baslangic->format('d.m.Y H:i'));
-        $SS->getActiveSheet()->setCellValue('F11', $Izin->bitis->format('d.m.Y H:i'));
-        $SS->getActiveSheet()->setCellValue('F12', $Izin->donus->format('d.m.Y H:i'));
-
-
-        $writer = new Xlsx($SS);
-        if(!File::exists(storage_path('app/tmp')))
-            File::makeDirectory(storage_path('app/tmp'));
-        $name = Str::uuid().".xlsx";
-        $writer->save(storage_path('app/tmp/'.$name));
+        $name = $this->IzinTalepFormuOlustur($id);
         return Response::download(storage_path('app/tmp/'.$name), "IzinTalepFormu.xlsx");
 
 //        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
@@ -930,5 +912,30 @@ class IKController extends Controller
                 }
                 break;
         }
+    }
+    private function IzinTalepFormuOlustur($id){
+        $Izin = Izin::findOrFail($id);
+
+
+        $fileName = storage_path('app/IzinTalepFormu.xlsx');
+        $SS = IOFactory::load($fileName);
+        $SS->setActiveSheetIndex(0);
+        $SS->getActiveSheet()->setCellValue('F5', $Izin->user->full_name);
+        $SS->getActiveSheet()->setCellValue('F6', $Izin->user->tckn);
+        $SS->getActiveSheet()->setCellValue('F7', $Izin->user->departman()->first()->name);
+        $SS->getActiveSheet()->setCellValue('F8', $Izin->izin_turu);
+        $SS->getActiveSheet()->setCellValue('F9', $Izin->gun);
+        $SS->getActiveSheet()->setCellValue('F10', $Izin->baslangic->format('d.m.Y H:i'));
+        $SS->getActiveSheet()->setCellValue('F11', $Izin->bitis->format('d.m.Y H:i'));
+        $SS->getActiveSheet()->setCellValue('F12', $Izin->donus->format('d.m.Y H:i'));
+
+
+        $writer = new Xlsx($SS);
+        if(!File::exists(storage_path('app/tmp')))
+            File::makeDirectory(storage_path('app/tmp'));
+        $name = Str::uuid().".xlsx";
+        $writer->save(storage_path('app/tmp/'.$name));
+
+        return $name;
     }
 }
