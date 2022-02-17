@@ -752,37 +752,55 @@ class IKController extends Controller
 //        $writer->save('php://output');
     }
     public function IzinMutabakat(){
-        $BuYil = Carbon::now()->firstOfYear();
-        $kullanilan = \auth()->user()->izinler()->where('tur',1)->whereYear('baslangic', $BuYil->year)->where('durum',1)->sum('gun');
+        $User = \auth()->user();
+        $IsBasi = $User->bilgiler->ise_baslama_tarihi;
+        if(!$IsBasi)
+            dd('İşe başlama tarihi belirtilmemiş');
+
+        $BuYil = Carbon::parse(Carbon::now()->format('Y-').$IsBasi->format("m-d"))->subYear();
+
+        $kullanilan = \auth()->user()->izinler()->where('tur',1)->whereDate('baslangic', '>=', $BuYil->format('Y-m-d'))->where('durum',1)->get();
+        $KullanilanToplam = $kullanilan->sum('gun');
         $fileName = storage_path('app/IzinMutabakat.xlsx');
         $SS = IOFactory::load($fileName);
         $SS->setActiveSheetIndex(0);
         $SS->getActiveSheet()->setCellValue('A3','Ad Soyadı : ' . \auth()->user()->full_name);
         $SS->getActiveSheet()->setCellValue('C3','T.C. Kimlik : ' . \auth()->user()->tckn);
-        $SS->getActiveSheet()->setCellValue('F3','İşe Giriş Tarihi : ');
+        $SS->getActiveSheet()->setCellValue('F3','İşe Giriş Tarihi : ' . $IsBasi->format('d.m.Y'));
         $SS->getActiveSheet()->setCellValue('A4','Birim : ' . \auth()->user()->departman()->first()->name);
 
         $SS->getActiveSheet()->setCellValue('A9','Devir Gelen : 0 gün');
         $SS->getActiveSheet()->setCellValue('C9','Bu Yıl Kazanılan :' . \auth()->user()->izin_hakki . 'gün');
-        $SS->getActiveSheet()->setCellValue('F9','Bu Yıl Kullanılan :' . $kullanilan. 'gün');
+        $SS->getActiveSheet()->setCellValue('F9','Bu Yıl Kullanılan :' . $KullanilanToplam. 'gün');
 
         $SS->getActiveSheet()->setCellValue('A10','Toplam : '.\auth()->user()->izin_hakki.' gün');
-        $SS->getActiveSheet()->setCellValue('C10','Bu Yıl Kazanılan :' . $kullanilan . 'gün');
-        $SS->getActiveSheet()->setCellValue('F10','Bu Yıl Kullanılan :' . (\auth()->user()->izin_hakki - $kullanilan). 'gün');
+        $SS->getActiveSheet()->setCellValue('C10','Bu Yıl Kazanılan :' . $KullanilanToplam . 'gün');
+        $SS->getActiveSheet()->setCellValue('F10','Bu Yıl Kullanılan :' . (\auth()->user()->izin_hakki - $KullanilanToplam). 'gün');
 
-        $SS->getActiveSheet()->setCellValue('A15', ' Tarihleri Arasında Kullandığım İzinler');
+        $SS->getActiveSheet()->setCellValue('A15', $BuYil->format('d.m.Y') . ' ile ' . Carbon::now()->format('d.m.Y') . ' Tarihleri Arasında Kullandığım İzinler');
 
 
         $SS->getActiveSheet()->setCellValue('A36', 'Yukarıda belirtilen kalan izin günümün doğru olduğunu ve listede yer alan tüm izinleri kullandığımı kabul ve taahhüt ediyorum');
         $SS->getActiveSheet()->setCellValue('A39', 'Ad Soyad');
         $SS->getActiveSheet()->setCellValue('A42', 'İmza');
         $SS->getActiveSheet()->setCellValue('E40', Carbon::now()->locale('tr')->translatedFormat('d F Y'));
-        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment;filename="IzinMutabakat.xlsx"');
-        header('Cache-Control: max-age=0');
 
-        $writer = IOFactory::createWriter($SS, 'Xlsx');
-        $writer->save('php://output');
+        $satir = 17;
+        foreach ($kullanilan as $row){
+            $SS->getActiveSheet()->setCellValue('A'.$satir, $row->baslangic->format('d.m.Y'));
+            $SS->getActiveSheet()->setCellValue('C'.$satir, $row->bitis->format('d.m.Y'));
+            $SS->getActiveSheet()->setCellValue('E'.$satir, 'Yıllık İzin');
+            $SS->getActiveSheet()->setCellValue('G'.$satir, $row->gun);
+
+            $satir++;
+        }
+
+        $writer = new Xlsx($SS);
+        if(!File::exists(storage_path('app/tmp')))
+            File::makeDirectory(storage_path('app/tmp'));
+        $name = Str::uuid().".xlsx";
+        $writer->save(storage_path('app/tmp/'.$name));
+        return Response::download(storage_path('app/tmp/'.$name), 'İzin Mutabakat Formu - ' . $User->full_name.'.xlsx');
     }
     public function IzinHesapla(Request $request){
         $Time = new \Carbon\Carbon($request->baslangic);
