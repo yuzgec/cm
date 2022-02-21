@@ -178,16 +178,29 @@ $(document).on('click','#btnIzinEkleSend', function (){
             console.log(err);
         })
 });
-$(document).on('change', '#izinTalep_baslangic_tarihi, #izinTalep_baslangic_saati, #izinTalep_bitis_tarihi, #izinTalep_bitis_saati', function (){
-    var baslangic = $('#izinTalep_baslangic_tarihi').val() + " " + $("#izinTalep_baslangic_saati").val(),
-        bitis = $('#izinTalep_bitis_tarihi').val() + " " + $("#izinTalep_bitis_saati").val();
+$(document).on('change', '#izinTalepForm #izinTalep_baslangic_tarihi,#izinTalepForm  #izinTalep_baslangic_saati,#izinTalepForm  #izinTalep_bitis_tarihi,#izinTalepForm  #izinTalep_bitis_saati', function (){
+    var baslangic = $('#izinTalepForm #izinTalep_baslangic_tarihi').val() + " " + $("#izinTalepForm #izinTalep_baslangic_saati").val(),
+        bitis = $('#izinTalepForm #izinTalep_bitis_tarihi').val() + " " + $("#izinTalepForm #izinTalep_bitis_saati").val();
 
     $.ajax({
         type: 'GET',
         url: '/ik/IzinHesapla',
         data: 'baslangic=' + baslangic + '&bitis=' + bitis,
         success: function (response){
-            $('#izinTalep_gun').val(response.Fark + ' gün');
+            $('#izinTalepForm #izinTalep_gun').val(response.Fark + ' gün');
+        }
+    })
+})
+$(document).on('change', '#izinEkleForm #izinTalep_baslangic_tarihi,#izinEkleForm  #izinTalep_baslangic_saati,#izinEkleForm  #izinTalep_bitis_tarihi,#izinEkleForm  #izinTalep_bitis_saati', function (){
+    var baslangic = $('#izinEkleForm #izinTalep_baslangic_tarihi').val() + " " + $("#izinEkleForm #izinTalep_baslangic_saati").val(),
+        bitis = $('#izinEkleForm #izinTalep_bitis_tarihi').val() + " " + $("#izinEkleForm #izinTalep_bitis_saati").val();
+
+    $.ajax({
+        type: 'GET',
+        url: '/ik/IzinHesapla',
+        data: 'baslangic=' + baslangic + '&bitis=' + bitis,
+        success: function (response){
+            $('#izinEkleForm #izinTalep_gun').val(response.Fark + ' gün');
         }
     })
 })
