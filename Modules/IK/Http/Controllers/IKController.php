@@ -623,9 +623,10 @@ class IKController extends Controller
         $Onaylananlar = [];
         $Reddedilenler = [];
         $IzinBaslangic = $request->get('IzinBaslangic') ? $request->get('IzinBaslangic') : Carbon::now()->subDays(7);
+        $IzinBitis = $request->get('IzinBitis') ? $request->get('IzinBitis') : Carbon::now();
         if(auth()->user()->departman()->first()->name == "Muhasebe"){
             foreach (User::all() as $user){
-                foreach ($user->izinler()->whereDate('baslangic', '>=', $IzinBaslangic)->get() as $izin){
+                foreach ($user->izinler()->whereBetween('baslangic', [Carbon::parse($IzinBaslangic)->format('Y-m-d'), Carbon::parse($IzinBitis)->format('Y-m-d')])->get() as $izin){
                     if($izin->durum == 0)
                         $OnayBekleyenler[] = $izin;
                     if($izin->durum == -1)
@@ -669,7 +670,9 @@ class IKController extends Controller
             'Onaylananlar',
             'Reddedilenler',
             'Avanslar',
-            'KalanIzinler'
+            'KalanIzinler',
+            'IzinBitis',
+            'IzinBaslangic'
         ));
     }
     public function IzinTalepEt(){

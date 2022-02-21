@@ -155,6 +155,17 @@
                         </div>
                     </div>
                     <div class="tab-pane" id="izinler">
+                        <div class="row mb-3">
+                            <div class="col-3">
+                                <input type="text" name="IzinBaslangic" id="IzinBaslangic" class="form-control" value="{{$IzinBaslangic}}">
+                            </div>
+                            <div class="col-3">
+                                <input type="text" name="IzinBitis" id="IzinBitis" class="form-control" value="{{$IzinBitis}}">
+                            </div>
+                            <div class="col-3">
+                                <button type="button" class="btn btn-primary" id="btnIzinFiltre">Filtrele</button>
+                            </div>
+                        </div>
                         <ul class="nav nav-tabs" data-bs-toggle="tabs">
                             <li class="nav-item">
                                 <a href="#yaklasanlar" class="nav-link active" data-bs-toggle="tab">Yaklaşanlar <span class="badge m-2"> {{count($YaklasanIzinler)}}</span></a>
@@ -553,6 +564,14 @@
         format: 'DD.MM.YYYY',
         lang: 'tr-TR'
     });
+    new Litepicker({
+        element: document.getElementById('IzinBaslangic'),
+        elementEnd: document.getElementById('IzinBitis'),
+        singleMode: false,
+        allowRepick: true,
+        format: 'DD.MM.YYYY',
+        lang: 'tr-TR'
+    });
     $(document).on('click', 'button#mesaigetir', function (){
         var baslangic = $('#baslangic_tarihi').val(),
             bitis = $('#bitis_tarihi').val(),
@@ -579,6 +598,9 @@
                 })
             }
         })
+    });
+    $(document).on('click', '#btnIzinFiltre', function(){
+        document.location = '?IzinBaslangic=' + $('#IzinBaslangic').val() + '&IzinBitis=' + $('#IzinBitis').val();
     })
 </script>
 @endsection
