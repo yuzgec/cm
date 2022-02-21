@@ -127,8 +127,9 @@ class PuantajOlustur extends Command
                     $Yetkili = $Mesai->Yetkili->email;
                     $Muhasebe = env('MUHASEBE_MAIL');
                     $Saat = Carbon::parse(Carbon::now()->format('Y-m-d 09:00:00'));
-                    dispatch(new MesaiBildirimEmailJob($Yetkili,$Personel,$Tarih->format('d.m.Y')))->delay($Saat);
-                    dispatch(new MesaiBildirimEmailJob($Muhasebe,$Personel,$Tarih->format('d.m.Y')))->delay($Saat);
+                    $U = User::findOrFail($Personel->id);
+                    dispatch(new MesaiBildirimEmailJob($Yetkili,$U,$Tarih->format('d.m.Y')))->delay($Saat);
+                    dispatch(new MesaiBildirimEmailJob($Muhasebe,$U,$Tarih->format('d.m.Y')))->delay($Saat);
                     continue;
                 }
                 $MesaiBaslangic = Carbon::parse($Tarih->format('Y-m-d')." ".$MesaiBaslangicSaati)->format('Y-m-d H:i:s');

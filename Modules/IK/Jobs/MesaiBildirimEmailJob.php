@@ -2,6 +2,7 @@
 
 namespace Modules\IK\Jobs;
 
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
@@ -22,7 +23,7 @@ class MesaiBildirimEmailJob implements ShouldQueue
      *
      * @return void
      */
-    public function __construct($Email, $User, $Tarih)
+    public function __construct($Email, User $User, $Tarih)
     {
         $this->Email = $Email;
         $this->User = $User;
