@@ -600,7 +600,7 @@
         })
     });
     $(document).on('click', '#btnIzinFiltre', function(){
-        document.location = '?IzinBaslangic=' + $('#IzinBaslangic').val() + '&IzinBitis=' + $('#IzinBitis').val();
+        document.location = '?IzinBaslangic=' + $('#IzinBaslangic').val() + '&IzinBitis=' + $('#IzinBitis').val() + '#izinler';
     })
 </script>
 @endsection
