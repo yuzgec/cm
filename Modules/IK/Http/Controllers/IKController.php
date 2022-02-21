@@ -714,7 +714,6 @@ class IKController extends Controller
             "MuhasebeUser" => \auth()->user()->id
         ];
 
-        dd($gun);
         $Izin = new Izin();
         $Izin->user_id = $request->user_id;
         $Izin->tur = $data["tur"];
