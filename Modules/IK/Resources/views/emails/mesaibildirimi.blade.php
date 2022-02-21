@@ -257,7 +257,7 @@
                             <tr>
                                 <td align="left" valign="top" style="background:#FFF;padding:10px">
                                     <p>Merhaba,<br>
-                                        {{$User->full_name}} {{$Tarih}} Tarihinde mesaiye gelmemiştir. <br/><br/>Bilgilerinize
+                                        {{$user->full_name}} {{$Tarih}} Tarihinde mesaiye gelmemiştir. <br/><br/>Bilgilerinize
                                     </p>
                                 </td>
                             </tr>
