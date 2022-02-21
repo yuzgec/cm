@@ -19,7 +19,7 @@ class MesaiBildirim extends Mailable
      *
      * @return void
      */
-    public function __construct(User $user, $Tarih)
+    public function __construct($user, $Tarih)
     {
         $this->user = $user;
         $this->Tarih = $Tarih;
