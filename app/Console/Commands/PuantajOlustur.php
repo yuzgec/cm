@@ -130,6 +130,8 @@ class PuantajOlustur extends Command
                     $U = User::findOrFail($Personel->id);
                     dispatch(new MesaiBildirimEmailJob($Yetkili,$U,$Tarih->format('d.m.Y')))->delay($Saat);
                     dispatch(new MesaiBildirimEmailJob($Muhasebe,$U,$Tarih->format('d.m.Y')))->delay($Saat);
+                    dump('Giriş Yapılmamış. Bildirim Gönderilecek');
+                    dump($U);
                     continue;
                 }
                 $MesaiBaslangic = Carbon::parse($Tarih->format('Y-m-d')." ".$MesaiBaslangicSaati)->format('Y-m-d H:i:s');
