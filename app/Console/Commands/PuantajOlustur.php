@@ -59,7 +59,6 @@ class PuantajOlustur extends Command
 
                 if($MesaiBitisSaati == null)
                     continue;
-                dd('Diğer' . $Tarih->format('d.m.Y'));
 
                 $PuantajKontrol = Puantaj::query()->where('user_id', $Personel->id)->where('gun', $Tarih->format('Y-m-d'));
                 if($PuantajKontrol->count() > 0){
