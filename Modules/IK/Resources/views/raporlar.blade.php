@@ -29,7 +29,7 @@
                             <div class="col-6" style="text-align: right">
                                 <a href="?tarih={{ Carbon\Carbon::parse($HaftaBaslangic)->subWeek()->format('Y-m-d') }}" class="btn btn-warning">Önceki Hafta</a>
                                 <a href="?tarih={{ Carbon\Carbon::parse($HaftaBaslangic)->addWeek()->format('Y-m-d') }}" class="btn btn-info">Sonraki Hafta</a>
-                                <a href="{{route('mesairaporexcel')}}" class="btn btn-primary">Excel'e Aktar</a>
+                                <a href="{{route('mesairaporexcel')}}?tarih={{request()->get('tarih')}}" class="btn btn-primary">Excel'e Aktar</a>
                             </div>
                         </div>
                         <div class="table-responsive">
@@ -197,7 +197,7 @@
                                                         <td data-label="Name" >
                                                             <div class="d-flex py-1 align-items-center">
                                                                 <a href="#">
-                                                                    {!! $item->user->avatar !!}
+                                                                    {!! @$item->user->avatar !!}
                                                                 </a>
                                                                 <div class="flex-fill">
                                                                     <div class="font-weight-medium">{{$item->user->full_name}}</div>
@@ -424,10 +424,10 @@
                                                         <td data-label="Name" >
                                                             <div class="d-flex py-1 align-items-center">
                                                                 <a href="#">
-                                                                    {!! $item->avatar !!}
+                                                                    {!! @$item->avatar !!}
                                                                 </a>
                                                                 <div class="flex-fill">
-                                                                    <div class="font-weight-medium">{{$item->full_name}}</div>
+                                                                    <div class="font-weight-medium">{{@$item->full_name}}</div>
                                                                 </div>
                                                             </div>
                                                         </td>
@@ -471,9 +471,9 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach(\Modules\IK\Entities\Avans::query()->where('durum',0)->get() as $Item)
+                                            @foreach(\Modules\IK\Entities\Avans::query()->has('user')->where('durum',0)->get() as $Item)
                                                 <tr>
-                                                    <td class="d-flex py-1 align-items-center">{!! $Item->user->avatar !!} {{$Item->user->full_name}}</td>
+                                                    <td class="d-flex py-1 align-items-center">{!! @$Item->user->avatar !!} {{ @$Item->user->full_name}}</td>
                                                     <td>{{$Item->user->departman()->first()->name}}</td>
                                                     <td>{{$Item->tutar}}</td>
                                                     <td>{{$Item->tarih->locale('tr')->translatedFormat('d F Y')}}</td>

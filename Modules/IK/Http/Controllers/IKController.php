@@ -622,9 +622,10 @@ class IKController extends Controller
         $OnayBekleyenler = [];
         $Onaylananlar = [];
         $Reddedilenler = [];
+        $IzinBaslangic = $request->get('IzinBaslangic') ? $request->get('IzinBaslangic') : Carbon::now()->subDays(7);
         if(auth()->user()->departman()->first()->name == "Muhasebe"){
             foreach (User::all() as $user){
-                foreach ($user->izinler as $izin){
+                foreach ($user->izinler()->whereDate('baslangic', '>=', $IzinBaslangic)->get() as $izin){
                     if($izin->durum == 0)
                         $OnayBekleyenler[] = $izin;
                     if($izin->durum == -1)

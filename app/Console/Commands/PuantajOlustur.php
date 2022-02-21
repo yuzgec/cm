@@ -59,7 +59,6 @@ class PuantajOlustur extends Command
 
                 if($MesaiBitisSaati == null)
                     continue;
-
                 $PuantajKontrol = Puantaj::query()->where('user_id', $Personel->id)->where('gun', $Tarih->format('Y-m-d'));
                 if($PuantajKontrol->count() > 0){
                     dump($Tarih->format('d.m.Y') . " için puantaj kaydı mevcut");
