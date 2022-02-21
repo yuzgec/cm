@@ -53,9 +53,58 @@ class PuantajOlustur extends Command
             $MesaiBitisSaati = null;
             $MesaiBaslangicSaati = null;
             dump($Personel->full_name." İşleniyor...");
-            dump($Mesai->mesai);
+
             foreach($Tarihler as $Tarih){
                 $Mesailer = $Mesai->mesai;
+
+                if($Tarih->isMonday()){
+                    $Ayir = explode("-",$Mesailer["Pazartesi"]);
+                    $Baslangic = $Ayir[0];
+                    $Bitis = $Ayir[1];
+                    $MesaiBaslangicSaati = $Baslangic;
+                    $MesaiBitisSaati = $Bitis;
+                }
+                if($Tarih->isTuesday()){
+                    $Ayir = explode("-",$Mesailer["Sali"]);
+                    $Baslangic = $Ayir[0];
+                    $Bitis = $Ayir[1];
+                    $MesaiBaslangicSaati = $Baslangic;
+                    $MesaiBitisSaati = $Bitis;
+                }
+                if($Tarih->isWednesday()){
+                    $Ayir = explode("-",$Mesailer["Carsamba"]);
+                    $Baslangic = $Ayir[0];
+                    $Bitis = $Ayir[1];
+                    $MesaiBaslangicSaati = $Baslangic;
+                    $MesaiBitisSaati = $Bitis;
+                }
+                if($Tarih->isThursday()){
+                    $Ayir = explode("-",$Mesailer["Persembe"]);
+                    $Baslangic = $Ayir[0];
+                    $Bitis = $Ayir[1];
+                    $MesaiBaslangicSaati = $Baslangic;
+                    $MesaiBitisSaati = $Bitis;
+                }
+                if($Tarih->isFriday()){
+                    $Ayir = explode("-",$Mesailer["Cuma"]);
+                    $Baslangic = $Ayir[0];
+                    $Bitis = $Ayir[1];
+                    $MesaiBaslangicSaati = $Baslangic;
+                    $MesaiBitisSaati = $Bitis;
+                }
+                if($Tarih->isSaturday()){
+                    if(!in_array("Cumartesi", $Mesailer))
+                        continue;
+                    $Ayir = explode("-",$Mesailer["Cumartesi"]);
+                    $Baslangic = $Ayir[0];
+                    $Bitis = $Ayir[1];
+                    $MesaiBaslangicSaati = $Baslangic;
+                    $MesaiBitisSaati = $Bitis;
+                }
+                if($Tarih->isSunday()){
+                    if(!in_array("Pazar", $Mesailer))
+                        continue;
+                }
 
                 if($MesaiBitisSaati == null)
                     continue;
