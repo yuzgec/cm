@@ -34,7 +34,7 @@ class PuantajOlustur extends Command
             foreach ($DogumGunleri as $Row){
                 $Yetkili = $Row->user->departman()->first()->yetkili->email;
                 $Muhasebe = env('MUHASEBE_MAIL');
-                $Saat = Carbon::parse(Carbon::now()->format('Y-m-d 07:00:00'));
+                $Saat = Carbon::parse(Carbon::now()->format('Y-m-d 05:00:00'));
                 dispatch(new DogumGunuMailGonderimJob($Row->user, $Yetkili))->delay($Saat)->onQueue('DogumTarihi');
                 dispatch(new DogumGunuMailGonderimJob($Row->user, $Muhasebe))->delay($Saat)->onQueue('DogumTarihi');
             }
@@ -126,7 +126,7 @@ class PuantajOlustur extends Command
                     //TODO Burada Mail Gönderecek
                     $Yetkili = $Mesai->Yetkili->email;
                     $Muhasebe = env('MUHASEBE_MAIL');
-                    $Saat = Carbon::parse(Carbon::now()->format('Y-m-d 07:00:00'));
+                    $Saat = Carbon::parse(Carbon::now()->format('Y-m-d 05:00:00'));
                     $U = User::findOrFail($Personel->id);
                     dispatch(new MesaiBildirimEmailJob($Yetkili,$U,$Tarih->format('d.m.Y')))->delay($Saat)->onQueue('MesaiBildirim');
                     dispatch(new MesaiBildirimEmailJob($Muhasebe,$U,$Tarih->format('d.m.Y')))->delay($Saat)->onQueue('MesaiBildirim');
