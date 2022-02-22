@@ -12,7 +12,7 @@ class DogunuMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    protected $User;
+    public $User;
     /**
      * Create a new message instance.
      *

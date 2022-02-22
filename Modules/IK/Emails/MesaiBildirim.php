@@ -12,8 +12,8 @@ class MesaiBildirim extends Mailable
 {
     use Queueable, SerializesModels;
 
-    protected $user;
-    protected $Tarih;
+    public $user;
+    public $Tarih;
     /**
      * Create a new message instance.
      *
