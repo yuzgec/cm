@@ -126,10 +126,10 @@ class PuantajOlustur extends Command
                     //TODO Burada Mail Gönderecek
                     $Yetkili = $Mesai->Yetkili->email;
                     $Muhasebe = env('MUHASEBE_MAIL');
-                    $Saat = Carbon::parse(Carbon::now()->format('Y-m-d 03:00:00'));
+                    $Saat = Carbon::parse(Carbon::now()->format('Y-m-d 07:00:00'));
                     $U = User::findOrFail($Personel->id);
-                    dispatch(new MesaiBildirimEmailJob($Yetkili,$U,$Tarih->format('d.m.Y')))->onQueue('MesaiBildirim');
-                    dispatch(new MesaiBildirimEmailJob($Muhasebe,$U,$Tarih->format('d.m.Y')))->onQueue('MesaiBildirim');
+                    dispatch(new MesaiBildirimEmailJob($Yetkili,$U,$Tarih->format('d.m.Y')))->delay($Saat)->onQueue('MesaiBildirim');
+                    dispatch(new MesaiBildirimEmailJob($Muhasebe,$U,$Tarih->format('d.m.Y')))->delay($Saat)->onQueue('MesaiBildirim');
                     dump('Giriş Yapılmamış. Bildirim Gönderilecek');
                     dump($U);
                     continue;
