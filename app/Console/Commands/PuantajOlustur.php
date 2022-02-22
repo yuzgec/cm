@@ -35,8 +35,8 @@ class PuantajOlustur extends Command
                 $Yetkili = $Row->user->departman()->first()->yetkili->email;
                 $Muhasebe = env('MUHASEBE_MAIL');
                 $Saat = Carbon::parse(Carbon::now()->format('Y-m-d 03:00:00'));
-                dispatch(new DogumGunuMailGonderimJob($Row->user, $Yetkili))->delay($Saat)->onQueue('DogumTarihi');
-                dispatch(new DogumGunuMailGonderimJob($Row->user, $Muhasebe))->delay($Saat)->onQueue('DogumTarihi');
+                dispatch(new DogumGunuMailGonderimJob($Row->user, $Yetkili))->onQueue('DogumTarihi');
+                dispatch(new DogumGunuMailGonderimJob($Row->user, $Muhasebe))->onQueue('DogumTarihi');
             }
         }
 
@@ -128,8 +128,8 @@ class PuantajOlustur extends Command
                     $Muhasebe = env('MUHASEBE_MAIL');
                     $Saat = Carbon::parse(Carbon::now()->format('Y-m-d 03:00:00'));
                     $U = User::findOrFail($Personel->id);
-                    dispatch(new MesaiBildirimEmailJob($Yetkili,$U,$Tarih->format('d.m.Y')))->delay($Saat)->onQueue('MesaiBildirim');
-                    dispatch(new MesaiBildirimEmailJob($Muhasebe,$U,$Tarih->format('d.m.Y')))->delay($Saat)->onQueue('MesaiBildirim');
+                    dispatch(new MesaiBildirimEmailJob($Yetkili,$U,$Tarih->format('d.m.Y')))->onQueue('MesaiBildirim');
+                    dispatch(new MesaiBildirimEmailJob($Muhasebe,$U,$Tarih->format('d.m.Y')))->onQueue('MesaiBildirim');
                     dump('Giriş Yapılmamış. Bildirim Gönderilecek');
                     dump($U);
                     continue;
