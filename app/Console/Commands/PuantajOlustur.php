@@ -132,7 +132,7 @@ class PuantajOlustur extends Command
                     dispatch(new MesaiBildirimEmailJob($Muhasebe,$U,$Tarih->format('d.m.Y')))->delay($Saat);
                     dump('Giriş Yapılmamış. Bildirim Gönderilecek');
                     dump($U);
-//                    continue;
+                    continue;
                 }
                 dump($Giris);
                 $MesaiBaslangic = Carbon::parse($Tarih->format('Y-m-d')." ".$MesaiBaslangicSaati)->format('Y-m-d H:i:s');
