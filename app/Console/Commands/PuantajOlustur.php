@@ -134,6 +134,7 @@ class PuantajOlustur extends Command
                     dump($U);
 //                    continue;
                 }
+                dump($Giris);
                 $MesaiBaslangic = Carbon::parse($Tarih->format('Y-m-d')." ".$MesaiBaslangicSaati)->format('Y-m-d H:i:s');
                 $BaslangicFarki = Carbon::parse($MesaiBaslangic)->diffInMinutes($Giris->Eventtime, false);
                 if($BaslangicFarki < 0 )
