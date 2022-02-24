@@ -207,28 +207,96 @@ class KullaniciController extends Controller
         $HaftaBitis = $now->endOfWeek()->format('Y-m-d H:i');
 
 
-        $MesaiRapor = Puantaj::with('getUser')
-            ->whereBetween('gun', [$HaftaBaslangic, $HaftaBitis])
-            ->has('getUser')
-            ->get();
 
+        $Period = CarbonPeriod::create($now->startOfWeek()->format('Y-m-d'), $now->endOfWeek()->format('Y-m-d'));
+        $Tarihler = $Period->toArray();
+        $Users = User::query()->whereNotNull('remote_id')->get();
         $data = collect([]);
-        $data->add(['Personel ID', 'Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi', 'Pazar']);
-        foreach (User::all() as $Row){
-            $data->put($Row->full_name, [$Row->full_name]);
+        $tmp = ["Personel"];
+        foreach ($Period as $row){
+            $tmp[] = $row->translatedFormat('d F Y l');
         }
+        $data->add($tmp);
+        foreach ($Users as $row){
+            $puantaj = $row->puantaj()->whereBetween('gun', [$HaftaBaslangic, $HaftaBitis])->get();
+            $data->put($row->full_name, [
+                $row->full_name,
+                ($puantaj->where('gun', $Tarihler[0])->count()) ?
+                        $puantaj->where('gun', $Tarihler[0])->first()->mesai_giris->format('H:i') . " - " .
+                        $puantaj->where('gun', $Tarihler[0])->first()->gec_mesai . " - " .
+                        $puantaj->where('gun', $Tarihler[0])->first()->mesai_cikis->format('H:i') . " - " .
+                        $puantaj->where('gun', $Tarihler[0])->first()->fazla_calisma
+                    :
+                    ' - ',
+                ($puantaj->where('gun', $Tarihler[1])->count()) ?
+                        $puantaj->where('gun', $Tarihler[1])->first()->mesai_giris->format('H:i') . " - " .
+                        $puantaj->where('gun', $Tarihler[1])->first()->gec_mesai . " - " .
+                        $puantaj->where('gun', $Tarihler[1])->first()->mesai_cikis->format('H:i') . " - " .
+                        $puantaj->where('gun', $Tarihler[1])->first()->fazla_calisma
+                    :
+                    ' - ',
+                ($puantaj->where('gun', $Tarihler[2])->count()) ?
+                        $puantaj->where('gun', $Tarihler[2])->first()->mesai_giris->format('H:i') . " - " .
+                        $puantaj->where('gun', $Tarihler[2])->first()->gec_mesai . " - " .
+                        $puantaj->where('gun', $Tarihler[2])->first()->mesai_cikis->format('H:i') . " - " .
+                        $puantaj->where('gun', $Tarihler[2])->first()->fazla_calisma
+                    :
+                    ' - ',
+                ($puantaj->where('gun', $Tarihler[3])->count()) ?
+                        $puantaj->where('gun', $Tarihler[3])->first()->mesai_giris->format('H:i') . " - " .
+                        $puantaj->where('gun', $Tarihler[3])->first()->gec_mesai . " - " .
+                        $puantaj->where('gun', $Tarihler[3])->first()->mesai_cikis->format('H:i') . " - " .
+                        $puantaj->where('gun', $Tarihler[3])->first()->fazla_calisma
+                    :
+                    ' - ',
+                ($puantaj->where('gun', $Tarihler[4])->count()) ?
+                        $puantaj->where('gun', $Tarihler[4])->first()->mesai_giris->format('H:i') . " - " .
+                        $puantaj->where('gun', $Tarihler[4])->first()->gec_mesai . " - " .
+                        $puantaj->where('gun', $Tarihler[4])->first()->mesai_cikis->format('H:i') . " - " .
+                        $puantaj->where('gun', $Tarihler[4])->first()->fazla_calisma
+                    :
+                    ' - ',
+                ($puantaj->where('gun', $Tarihler[5])->count()) ?
+                        $puantaj->where('gun', $Tarihler[5])->first()->mesai_giris->format('H:i') . " - " .
+                        $puantaj->where('gun', $Tarihler[5])->first()->gec_mesai . " - " .
+                        $puantaj->where('gun', $Tarihler[5])->first()->mesai_cikis->format('H:i') . " - " .
+                        $puantaj->where('gun', $Tarihler[5])->first()->fazla_calisma
+                    :
+                    ' - ',
+                ($puantaj->where('gun', $Tarihler[6])->count()) ?
+                        $puantaj->where('gun', $Tarihler[6])->first()->mesai_giris->format('H:i') . " - " .
+                        $puantaj->where('gun', $Tarihler[6])->first()->gec_mesai . " - " .
+                        $puantaj->where('gun', $Tarihler[6])->first()->mesai_cikis->format('H:i') . " - " .
+                        $puantaj->where('gun', $Tarihler[6])->first()->fazla_calisma
+                    :
+                    ' - ',
+            ]);
+        }
+//
+//        $MesaiRapor = Puantaj::with('getUser')
+//            ->whereBetween('gun', [$HaftaBaslangic, $HaftaBitis])
+//            ->has('getUser')
+//            ->get();
+//
+//        $data = collect([]);
+//        $data->add(['Personel ID', 'Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi', 'Pazar']);
+//        foreach (User::all() as $Row){
+//            $data->put($Row->full_name, [$Row->full_name]);
+//        }
+//        $data = $data->toArray();
+////        dd($data);
+//        foreach ($MesaiRapor as $Row){
+//            $user = $Row->getUser->adsoyad;
+//            $a = "";
+//            $a.= $Row->gec_mesai . " - ";
+//            $a.= $Row->fazla_calisma. " - ";
+//            $a.= substr($Row->mesai_giris, -8) . " - ";
+//            $a.= substr($Row->mesai_cikis, -8);
+//            $data[$user][] = $a;
+//        }
+////        dd($data);
+//        dd($data);
         $data = $data->toArray();
-//        dd($data);
-        foreach ($MesaiRapor as $Row){
-            $user = $Row->getUser->adsoyad;
-            $a = "";
-            $a.= $Row->gec_mesai . " - ";
-            $a.= $Row->fazla_calisma. " - ";
-            $a.= substr($Row->mesai_giris, -8) . " - ";
-            $a.= substr($Row->mesai_cikis, -8);
-            $data[$user][] = $a;
-        }
-//        dd($data);
         $data = new MesaiRaporExport($data);
         return Excel::download($data, $RaporTarih.' Mesai Rapor.xlsx');
     }
