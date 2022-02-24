@@ -599,15 +599,23 @@ class IKController extends Controller
 
         $MesaiRapor = Puantaj::with('user')
             ->whereBetween('gun', [$HaftaBaslangic, $HaftaBitis])
+            ->has('user')
             ->get();
+
+        $Period = CarbonPeriod::create($now->startOfWeek()->format('Y-m-d'), $now->endOfWeek()->format('Y-m-d'));
 
         $RaporTarih = Carbon::parse($HaftaBaslangic)->translatedFormat('d F Y').' - '.Carbon::parse($HaftaBitis)->translatedFormat('d F Y');
         $Gunler = ['Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi', 'Pazar'];
         $Personeller = [];
 
-        foreach ($MesaiRapor as $Row){
-            $Personeller[$Row->user_id][] = $Row;
+
+        $Kullanicilar = [];
+        $Users = User::query()->whereNotNull('remote_id')->get();
+        foreach ($Users as $row){
+            $Kullanicilar[$row->full_name] = $row->puantaj()->whereBetween('gun', [$HaftaBaslangic, $HaftaBitis])->get();
         }
+
+
         $KalanIzinler = [];
         foreach (User::all() as $user){
             $BuYil = Carbon::now()->firstOfYear();
@@ -672,7 +680,9 @@ class IKController extends Controller
             'Avanslar',
             'KalanIzinler',
             'IzinBitis',
-            'IzinBaslangic'
+            'IzinBaslangic',
+            'Kullanicilar',
+            'Period'
         ));
     }
     public function IzinTalepEt(){
@@ -746,13 +756,6 @@ class IKController extends Controller
     public function IzinTalepFormu($id){
         $name = $this->IzinTalepFormuOlustur($id);
         return Response::download(storage_path('app/tmp/'.$name), "IzinTalepFormu.xlsx");
-
-//        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-//        header('Content-Disposition: attachment;filename="IzinTalepFormu.xlsx"');
-//        header('Cache-Control: max-age=0');
-//
-//        $writer = IOFactory::createWriter($SS, 'Xlsx');
-//        $writer->save('php://output');
     }
     public function IzinMutabakat(){
         $User = \auth()->user();

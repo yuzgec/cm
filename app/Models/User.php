@@ -55,7 +55,7 @@ class User extends Authenticatable implements HasMedia
         return $this->hasMany(Monitoring::class, 'UserID', 'remote_id');
     }
     public function Puantaj(){
-        return $this->belongsTo(Puantaj::class,'user_id', 'id');
+        return $this->hasMany(Puantaj::class,'user_id', 'id');
     }
     //Personel Bilgilerini Çeker
     public function Bilgiler(){

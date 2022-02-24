@@ -45,60 +45,111 @@
                                 <thead>
                                 <tr>
                                     <th>Personel ID</th>
-                                    @foreach($Gunler as $gun)
-                                        <th colspan="5" class="text-center">{{$gun}}</th>
+                                    @foreach($Period as $gun)
+                                        <th colspan="5" class="text-center">{{$gun->translatedFormat('d F Y l')}}</th>
                                     @endforeach
                                 </tr>
                                 </thead>
                                 <tbody style="font-size: 12px !important;">
-                                @foreach($Personeller as $item)
+                                @foreach($Kullanicilar as $name => $item)
+                                    @php($Tarihler = $Period->toArray())
+                                    @php($Icerik = collect($item))
                                     <tr>
                                         <td>
                                             <div class="text-muted">
-                                                {{ $item[0]->user->full_name }}
+                                                {{ $name }}
                                             </div>
                                         </td>
-                                        <td class="text-center yazi">
-                                            <th>{{$item[0]->fazla_calisma}}</th>
-                                            <th>{{$item[0]->gec_mesai}}</th>
-                                            <th>{{substr($item[0]->mesai_giris, -8)}}</th>
-                                            <th>{{substr($item[0]->mesai_cikis, -8)}}</th>
+                                        <td colspan="5">
+                                            <div class="d-flex justify-content-start">
+                                                @php($Pazartesi = $Icerik->where('gun', $Tarihler[0]))
+                                                @if($Pazartesi->count() > 0)
+                                                    <span>{{\Carbon\Carbon::parse($Pazartesi->first()->mesai_giris)->format('H:i')}} - </span>
+                                                    <span>{{$Pazartesi->first()->gec_mesai}} - </span>
+                                                    <span>{{\Carbon\Carbon::parse($Pazartesi->first()->mesai_cikis)->format('H:i')}} - </span>
+                                                    <span>{{$Pazartesi->first()->fazla_calisma}}</span>
+                                                @else
+                                                    <span>-</span>
+                                                @endif
+                                            </div>
                                         </td>
-                                        <td class="text-center yazi">
-                                        <th>{{@$item[1]->fazla_calisma}}</th>
-                                        <th>{{@$item[1]->gec_mesai}}</th>
-                                        <th>{{substr(@$item[1]->mesai_giris, -8)}}</th>
-                                        <th>{{substr(@$item[1]->mesai_cikis, -8)}}</th>
+                                        <td colspan="5">
+                                            <div class="d-flex justify-content-start">
+                                                @php($Sali = $Icerik->where('gun', $Tarihler[1]))
+                                                @if($Sali->count() > 0)
+                                                    <span>{{\Carbon\Carbon::parse($Sali->first()->mesai_giris)->format('H:i')}} - </span>
+                                                    <span>{{$Sali->first()->gec_mesai}} - </span>
+                                                    <span>{{\Carbon\Carbon::parse($Sali->first()->mesai_cikis)->format('H:i')}} - </span>
+                                                    <span>{{$Sali->first()->fazla_calisma}}</span>
+                                                @else
+                                                    <span>-</span>
+                                                @endif
+                                            </div>
                                         </td>
-                                        <td class="text-center yazi">
-                                        <th>{{@$item[2]->fazla_calisma}}</th>
-                                        <th>{{@$item[2]->gec_mesai}}</th>
-                                        <th>{{substr(@$item[2]->mesai_giris, -8)}}</th>
-                                        <th>{{substr(@$item[2]->mesai_cikis, -8)}}</th>
+                                        <td colspan="5">
+                                            <div class="d-flex justify-content-start">
+                                                @php($Carsamba = $Icerik->where('gun', $Tarihler[2]))
+                                                @if($Carsamba->count() > 0)
+                                                    <span>{{\Carbon\Carbon::parse($Carsamba->first()->mesai_giris)->format('H:i')}} - </span>
+                                                    <span>{{$Carsamba->first()->gec_mesai}} - </span>
+                                                    <span>{{\Carbon\Carbon::parse($Carsamba->first()->mesai_cikis)->format('H:i')}} - </span>
+                                                    <span>{{$Carsamba->first()->fazla_calisma}}</span>
+                                                @else
+                                                    <span>-</span>
+                                                @endif
+                                            </div>
                                         </td>
-                                        <td class="text-center yazi">
-                                        <th>{{@$item[3]->fazla_calisma}}</th>
-                                        <th>{{@$item[3]->gec_mesai}}</th>
-                                        <th>{{substr(@$item[3]->mesai_giris, -8)}}</th>
-                                        <th>{{substr(@$item[3]->mesai_cikis, -8)}}</th>
+                                        <td colspan="5">
+                                            <div class="d-flex justify-content-start">
+                                                @php($Persembe = $Icerik->where('gun', $Tarihler[3]))
+                                                @if($Persembe->count() > 0)
+                                                    <span>{{\Carbon\Carbon::parse($Persembe->first()->mesai_giris)->format('H:i')}} - </span>
+                                                    <span>{{$Persembe->first()->gec_mesai}} - </span>
+                                                    <span>{{\Carbon\Carbon::parse($Persembe->first()->mesai_cikis)->format('H:i')}} - </span>
+                                                    <span>{{$Persembe->first()->fazla_calisma}}</span>
+                                                @else
+                                                    <span>-</span>
+                                                @endif
+                                            </div>
                                         </td>
-                                        <td class="text-center yazi">
-                                        <th>{{@$item[4]->fazla_calisma}}</th>
-                                        <th>{{@$item[4]->gec_mesai}}</th>
-                                        <th>{{substr(@$item[4]->mesai_giris, -8)}}</th>
-                                        <th>{{substr(@$item[4]->mesai_cikis, -8)}}</th>
+                                        <td colspan="5">
+                                            <div class="d-flex justify-content-start">
+                                                @php($Cuma = $Icerik->where('gun', $Tarihler[4]))
+                                                @if($Cuma->count() > 0)
+                                                    <span>{{\Carbon\Carbon::parse($Cuma->first()->mesai_giris)->format('H:i')}} - </span>
+                                                    <span>{{$Cuma->first()->gec_mesai}} - </span>
+                                                    <span>{{\Carbon\Carbon::parse($Cuma->first()->mesai_cikis)->format('H:i')}} - </span>
+                                                    <span>{{$Cuma->first()->fazla_calisma}}</span>
+                                                @else
+                                                    <span>-</span>
+                                                @endif
+                                            </div>
                                         </td>
-                                        <td class="text-center yazi">
-                                        <th>{{@$item[5]->fazla_calisma}}</th>
-                                        <th>{{@$item[5]->gec_mesai}}</th>
-                                        <th>{{substr(@$item[5]->mesai_giris, -8)}}</th>
-                                        <th>{{substr(@$item[5]->mesai_cikis, -8)}}</th>
+                                        <td colspan="5">
+                                            <div class="d-flex justify-content-start">
+                                                @php($Cumartesi = $Icerik->where('gun', $Tarihler[5]))
+                                                @if($Cumartesi->count() > 0)
+                                                    <span>{{\Carbon\Carbon::parse($Cumartesi->first()->mesai_giris)->format('H:i')}} - </span>
+                                                    <span>{{$Cumartesi->first()->gec_mesai}} - </span>
+                                                    <span>{{\Carbon\Carbon::parse($Cumartesi->first()->mesai_cikis)->format('H:i')}} - </span>
+                                                    <span>{{$Cumartesi->first()->fazla_calisma}}</span>
+                                                @else
+                                                    <span>-</span>
+                                                @endif
+                                            </div>
                                         </td>
-                                        <td class="text-center yazi">
-                                        <th>{{@$item[6]->fazla_calisma}}</th>
-                                        <th>{{@$item[6]->gec_mesai}}</th>
-                                        <th>{{substr(@$item[6]->mesai_giris, -8)}}</th>
-                                        <th>{{substr(@$item[6]->mesai_cikis, -8)}}</th>
+                                        <td colspan="5">
+                                            <div class="d-flex justify-content-start">
+                                                @php($Pazar = $Icerik->where('gun', $Tarihler[6]))
+                                                @if($Pazar->count() > 0)
+                                                    <span>{{\Carbon\Carbon::parse($Pazar->first()->mesai_giris)->format('H:i')}} - </span>
+                                                    <span>{{$Pazar->first()->gec_mesai}} - </span>
+                                                    <span>{{\Carbon\Carbon::parse($Pazar->first()->mesai_cikis)->format('H:i')}} - </span>
+                                                    <span>{{$Pazar->first()->fazla_calisma}}</span>
+                                                @else
+                                                    <span>-</span>
+                                                @endif
+                                            </div>
                                         </td>
                                     </tr>
                                 @endforeach
