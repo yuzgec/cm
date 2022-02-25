@@ -26,7 +26,7 @@ class IzinTalepleri extends Component
                 }
             }
         }
-        if(env('MUHASEBE_MAIL') == Auth::user()->email){
+        if(env('MUHASEBE_MAIL') == Auth::user()->email OR Auth::user()->email == 'orhan.ozcan@mecitkahraman.com.tr'){
             $Rows = Izin::query()->where('durum',0)->where('onaylar->Muhasebe',0)->where('onaylar->Yetkili', 1)->get();
             foreach ($Rows as $row){
                 $this->Izinler[] = $row;
