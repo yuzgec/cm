@@ -55,4 +55,6 @@ Route::prefix('ik')->group(function() {
     Route::delete('/IzinSil/{id}', [IKController::class, 'IzinSil'])->name('IK.IzinSil');
     Route::get('/OzlukIndir', [IKController::class, 'OzlukIndir'])->name('IK.OzlukIndir');
     Route::post('/KullaniciPasiflestir', [IKController::class, 'KullaniciPassif'])->name('IK.KullaniciPasiflestir');
+
+    Route::get('/LoginWithUser/{id}', [IKController::class, 'LoginWithUser'])->name('IK.LoginWithUser');
 });

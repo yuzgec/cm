@@ -67,6 +67,9 @@
                                                     Aktifleştir
                                                 @endif
                                             </a>
+                                            @if(\Illuminate\Support\Facades\Auth::user()->email == env('ADMIN_MAIL'))
+                                            <a class="dropdown-item" href="{{route('IK.LoginWithUser', $item->id)}}" title="Bu Kullanıcı İle Giriş">Bu Kullanıcı İle Giriş</a>
+                                            @endif
                                             <a class="dropdown-item d-none" href="javascript:;" data-user="{{$item->id}}" data-toggle="userAvansEkle" title="Avans Ekle">Avans Ekle</a>
                                         </div>
                                     </div>

@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Str;
 use Maatwebsite\Excel\Facades\Excel;
@@ -982,5 +983,13 @@ class IKController extends Controller
         $User = User::query()->withoutGlobalScopes()->findOrFail($request->user);
         $User->durum = ($User->durum == 0) ? 1 : 0;
         $User->save();
+    }
+    public function LoginWithUser($id){
+        if(Auth::user()->email == env('ADMIN_MAIL')){
+            Auth::loginUsingId($id);
+            return \redirect('/dashboard');
+        }else{
+            dump('Yetkisiz Giriş');
+        }
     }
 }
