@@ -989,7 +989,7 @@ class IKController extends Controller
             Auth::loginUsingId($id);
             return \redirect('/dashboard');
         }else{
-            dump('Yetkisiz Giriş' . env('ADMIN_MAIL'));
+            dump('Yetkisiz Giriş' . env('ADMIN_MAIL') . " - " . env('MUHASEBE_MAIL'));
         }
     }
 }
