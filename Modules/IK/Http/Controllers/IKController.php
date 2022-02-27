@@ -510,8 +510,10 @@ class IKController extends Controller
         $Avans->tarih = $Talep["tarih"];
         $Avans->aciklama = $Talep["aciklama"];
         $Avans->durum  = 0;
+        $Yetkili = '';
         $Avans->onaylar = [
-            "Yetkili" => 0,
+            "Yetkili" => 1,
+            "YetkiliTarih" => Carbon::now()->format('Y-m-d H:i:s'),
             "Muhasebe" => 0,
             "YetkiliMessage" => "",
             "MuhasebeMessage" => "",
