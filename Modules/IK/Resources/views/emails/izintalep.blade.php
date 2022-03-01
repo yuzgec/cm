@@ -272,7 +272,7 @@
                                         </tr>
                                         <tr>
                                             <td width="50%" style="border-bottom: 1px solid #9ca3af;"><p style="font-weight: bold;margin: 8px 0">İzin Türü</p></td>
-                                            <td width="50%" style="border-bottom: 1px solid #9ca3af;"><p style="text-align: right; margin: 8px 0;">{{$izin->izin_turu}}</p></td>
+                                            <td width="50%" style="border-bottom: 1px solid #9ca3af;"><p style="text-align: right; margin: 8px 0;">{{$izin->izin_turu->name}}</p></td>
                                         </tr>
                                         <tr>
                                             <td width="50%" style="border-bottom: 1px solid #9ca3af;"><p style="font-weight: bold;margin: 8px 0">İzin Gün Sayısı</p></td>

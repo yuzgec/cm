@@ -65,7 +65,7 @@
                                         </td>
 
                                         <td class="text-muted">
-                                            {{ $item->izin_turu }}
+                                            {{ $item->izin_turu->name }}
                                         </td>
                                         <td class="text-muted">
                                             {{ $item->hakedis }}

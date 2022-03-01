@@ -267,7 +267,7 @@
                                                             </div>
                                                         </td>
                                                         <td data-label="Title" >
-                                                            <div>{{$item->izin_turu}}</div>
+                                                            <div>{{$item->izin_turu->name}}</div>
                                                         </td>
                                                         <td class="text-muted" >
                                                             {{$item->gun}}
@@ -324,7 +324,7 @@
                                                             </div>
                                                         </td>
                                                         <td data-label="Title" >
-                                                            <div>{{$item->izin_turu}}</div>
+                                                            <div>{{$item->izin_turu->name}}</div>
                                                         </td>
                                                         <td class="text-muted" >
                                                             {{$item->gun}}
@@ -381,7 +381,7 @@
                                                             </div>
                                                         </td>
                                                         <td data-label="Title" >
-                                                            <div>{{$item->izin_turu}}</div>
+                                                            <div>{{$item->izin_turu->name}}</div>
                                                         </td>
                                                         <td class="text-muted" >
                                                             {{$item->gun}}
@@ -439,7 +439,7 @@
                                                             </div>
                                                         </td>
                                                         <td data-label="Title" >
-                                                            <div>{{$item->izin_turu}}</div>
+                                                            <div>{{$item->izin_turu->name}}</div>
                                                         </td>
                                                         <td class="text-muted" >
                                                             {{$item->gun}}

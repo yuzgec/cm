@@ -25,10 +25,13 @@ class Izin extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function getIzinTuruAttribute(){
-        switch ($this->tur){
-            case 1: return "Yıllık İzin";
-        }
+//    public function getIzinTuruAttribute(){
+//        switch ($this->tur){
+//            case 1: return "Yıllık İzin";
+//        }
+//    }
+    public function izin_turu(){
+        return $this->belongsTo(IzinTuru::class, 'tur','id');
     }
 
 }

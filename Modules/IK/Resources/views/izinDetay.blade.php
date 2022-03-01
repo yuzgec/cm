@@ -4,7 +4,7 @@
             {!! $Izin->user->avatar !!}
             <div class="bg-muted-lt rounded-3 p-3">
                 <p class="p-0 m-0">
-                    <span class="font-weight-bold">{{$Izin->user->full_name}}, {{$Izin->izin_turu}}</span> için
+                    <span class="font-weight-bold">{{$Izin->user->full_name}}, {{$Izin->izin_turu->name}}</span> için
                     <span class="font-weight-bold">{{$Izin->gun}}</span> gün izin talep ediyor.
                 </p>
                 <small>{{$Izin->aciklama}}</small>
@@ -63,7 +63,7 @@
             @endif
         </div>
         <div class="d-flex justify-content-between border-bottom p-1">
-            <span>İzin Türü</span><span>{{$Izin->izin_turu}}</span>
+            <span>İzin Türü</span><span>{{$Izin->izin_turu->name}}</span>
         </div>
         <div class="d-flex justify-content-between border-bottom p-1">
             <span>Toplam İzin</span><span>{{$Izin->gun}} gün</span>

@@ -961,7 +961,7 @@ class IKController extends Controller
         $SS->getActiveSheet()->setCellValue('F5', $Izin->user->full_name);
         $SS->getActiveSheet()->setCellValue('F6', $Izin->user->tckn);
         $SS->getActiveSheet()->setCellValue('F7', $Izin->user->departman()->first()->name);
-        $SS->getActiveSheet()->setCellValue('F8', $Izin->izin_turu);
+        $SS->getActiveSheet()->setCellValue('F8', $Izin->izin_turu->name);
         $SS->getActiveSheet()->setCellValue('F9', $Izin->gun);
         $SS->getActiveSheet()->setCellValue('F10', $Izin->baslangic->format('d.m.Y H:i'));
         $SS->getActiveSheet()->setCellValue('F11', $Izin->bitis->format('d.m.Y H:i'));

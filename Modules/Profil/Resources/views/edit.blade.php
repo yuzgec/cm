@@ -271,7 +271,7 @@
                                     <td>{{$row->bitis->locale('tr')->translatedFormat('d F Y H:i')}}</td>
                                     <td>{{$row->donus->locale('tr')->translatedFormat('d F Y H:i')}}</td>
                                     <td>{{$row->gun}} Gün</td>
-                                    <td>{{$row->izin_turu}}</td>
+                                    <td>{{$row->izin_turu->name}}</td>
                                     <td>{{$row->aciklama}}</td>
                                     <td>{{$row->created_at->locale('tr')->translatedFormat('d F Y H:i')}}</td>
                                     <td>

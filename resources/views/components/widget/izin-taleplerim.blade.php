@@ -11,7 +11,7 @@
                 <div class="list-group-item">
                     <div class="row align-items-center">
                         <div class="col d-flex justify-content-between align-items-center">
-                            <p>{{$Izin->izin_turu}}</p>
+                            <p>{{$Izin->izin_turu->name}}</p>
                             <p>{{$Izin->gun}} Gün</p>
                             <p>{{$Izin->baslangic->format('d.m.Y')}}</p>
                             <p>
