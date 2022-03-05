@@ -13,12 +13,9 @@
 
 Route::prefix('callcenter')->group(function() {
     Route::resource('/callcenter', 'CallCenterController');
-
     Route::get('dosyaexcelyukle', 'DosyaController@excelyukle')->name('dosyaexcelyukle');
-
     Route::resource('/grup', 'GrupController');
     Route::resource('/dosya', 'DosyaController');
-
     Route::get('toplu-takip-acilislari', 'CallCenterController@topluTakipAcilis')->name('callcenter.toplu-takip-acilislari');
     Route::get('takdiyat-raporlari', 'CallCenterController@takdiyatRaporlari')->name('callcenter.takdiyat-raporlari');
     Route::get('mts-toplu-takip-islemleri', 'CallCenterController@mtsTopluTakipIslemleri')->name('callcenter.mts-toplu-takip-islemleri');

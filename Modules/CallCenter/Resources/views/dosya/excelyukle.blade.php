@@ -1,10 +1,12 @@
 @extends('master')
 @section('title', 'Excel Dosya Ekle | '.config('app.name'))
 @section('content')
+
     <div class="col-12">
         <div class="card">
 
             <div class="card-body">
+
 
                 <div class="mb-1 d-flex justify-content-between">
                     <div></div>
@@ -19,21 +21,29 @@
                     </div>
                 </div>
 
+                <input type="file" name="upload" class="form-control">
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
                 <form action="{{ route('dosya.store') }}" method="POST">
                     @csrf
                     <div class="form-group mb-3 row">
                         <div class="col-12">
                             <label class="form-label">  İcra Dairesi</label>
                             <select class="form-select" name="sozlemeturu">
-                                <option value="1" selected="">Satır 1 </option>
-                                <option value="2">Satır 2</option>
-                                <option value="2">Satır 2</option>
-                                <option value="2">Satır 2</option>
-                                <option value="2">Satır 2</option>
-                                <option value="2">Satır 2</option>
-                                <option value="2">Satır 2</option>
-                                <option value="2">Satır 2</option>
-                                <option value="2">Satır 2</option>
+                                <option value="1" selected="">Sütun 1 </option>
+                                <option value="2">Sütun 2</option>
+                                <option value="2">Sütun 3</option>
+                                <option value="2">Sütun 4</option>
+                                <option value="2">Sütun 5</option>
+                                <option value="2">Sütun 6</option>
+                                <option value="2">Sütun 7</option>
+                                <option value="2">Sütun 8</option>
+                                <option value="2">Sütun 9</option>
                             </select>
                         </div>
                     </div>
@@ -42,15 +52,15 @@
                         <div class="col-12">
                             <label class="form-label"> Dosya Numarası</label>
                             <select class="form-select" name="sozlemeturu">
-                                <option value="1" selected="">Satır 1 </option>
-                                <option value="2">Satır 2</option>
-                                <option value="2">Satır 2</option>
-                                <option value="2">Satır 2</option>
-                                <option value="2">Satır 2</option>
-                                <option value="2">Satır 2</option>
-                                <option value="2">Satır 2</option>
-                                <option value="2">Satır 2</option>
-                                <option value="2">Satır 2</option>
+                                <option value="1" selected="">Sütun 1 </option>
+                                <option value="2">Sütun 2</option>
+                                <option value="2">Sütun 3</option>
+                                <option value="2">Sütun 4</option>
+                                <option value="2">Sütun 5</option>
+                                <option value="2">Sütun 6</option>
+                                <option value="2">Sütun 7</option>
+                                <option value="2">Sütun 8</option>
+                                <option value="2">Sütun 9</option>
                             </select>
                         </div>
                     </div>
