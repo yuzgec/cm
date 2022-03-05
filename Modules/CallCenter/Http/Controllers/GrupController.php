@@ -6,7 +6,7 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
-class CallCenterController extends Controller
+class GrupController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class CallCenterController extends Controller
      */
     public function index()
     {
-        return view('callcenter::index');
+        return view('callcenter::grup.index');
     }
 
     /**
@@ -23,7 +23,7 @@ class CallCenterController extends Controller
      */
     public function create()
     {
-        return view('callcenter::create');
+        return view('callcenter::grup.create');
     }
 
     /**
@@ -75,11 +75,5 @@ class CallCenterController extends Controller
     public function destroy($id)
     {
         //
-    }
-
-    public function dosya(){
-
-
-        return view('callcenter::dosya.index');
     }
 }

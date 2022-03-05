@@ -16,7 +16,8 @@
                                  stroke-linecap="round" stroke-linejoin="round">
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                 <circle cx="10" cy="10" r="7" />
-                                <line x1="21" y1="21" x2="15" y2="15" /></svg>
+                                <line x1="21" y1="21" x2="15" y2="15" />
+                            </svg>
                         </span>
                 </form>
             </div>
@@ -50,7 +51,7 @@
                     </div>
 
                     <a href="{{route('personel.edit', $item->id)}}" title="{{$item->name}}">
-                    <span class="avatar avatar-xl mb-3 avatar-rounded" style="background-image: url({{$item->getFirstMediaUrl() }});border: 2px solid {{ $item->mesai->mesai_renk }}" title="{{$item->name}}">
+                    <span class="avatar avatar-xl mb-3 avatar-rounded" style="background-image: url({{$item->getFirstMediaUrl() }});border: 2px solid " title="{{$item->name}}">
                         {{ (!$item->getFirstMediaUrl()) ? isim($item->name) : null }}
                     </span>
                     </a>
@@ -60,9 +61,7 @@
                     <div class="text-muted birsatir" title="{{ $item->email}}">{{ $item->email}}</div>
                     <div class="text-muted birsatir">{{ ($item->telefon) ? $item->telefon : null}}</div>
                     <div class="mt-3">
-                    <span class="badge" style="background: {{ $item->mesai->mesai_renk }}">
-                        {{ $item->mesai->mesai_adi}}
-                    </span>
+
                     </div>
                 </div>
             </div>

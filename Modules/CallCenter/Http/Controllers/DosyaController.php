@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Dosya\Http\Controllers;
+namespace Modules\CallCenter\Http\Controllers;
 
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
@@ -14,7 +14,7 @@ class DosyaController extends Controller
      */
     public function index()
     {
-        return view('dosya::index');
+        return view('callcenter::dosya.index');
     }
 
     /**
@@ -23,7 +23,7 @@ class DosyaController extends Controller
      */
     public function create()
     {
-        return view('dosya::create');
+        return view('callcenter::dosya.create');
     }
 
     /**
@@ -43,7 +43,7 @@ class DosyaController extends Controller
      */
     public function show($id)
     {
-        return view('dosya::show');
+        return view('callcenter::show');
     }
 
     /**
@@ -53,7 +53,7 @@ class DosyaController extends Controller
      */
     public function edit($id)
     {
-        return view('dosya::edit');
+        return view('callcenter::dosya.edit');
     }
 
     /**
@@ -75,5 +75,9 @@ class DosyaController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function excelyukle(){
+        return view('callcenter::dosya.excelyukle');
     }
 }
