@@ -80,7 +80,7 @@
                             Takdiyat Raporları
                         </a>
                         <a class="dropdown-item" href="{{route('smsgonder')}}" title="SMS Gönder">
-                            MTS Toplu Takip İşlermleri
+                            MTS Toplu Takip İşlemleri
                         </a>
                         <a class="dropdown-item" href="{{route('smsgonder')}}" title="SMS Gönder">
                             Uyap Mernis Sorgulama
@@ -91,20 +91,6 @@
                         <a class="dropdown-item" href="{{route('smsgonder')}}" title="SMS Gönder">
                             Lisan ve Modül
                         </a>
-                    </div>
-                </li>
-
-
-                <li class="nav-item {{ menu_is_active('agent') }} dropdown">
-                    <a class="nav-link dropdown-toggle {{ menu_is_active('agent', 'show') }}" href="#sms" data-bs-toggle="dropdown" role="button" aria-expanded="{{ menu_is_active('agent', 'true') }}" >
-                        <span class="nav-link-icon d-md-none d-lg-inline-block">
-	                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M11 3h10v8h-3l-4 2v-2h-3z" /><path d="M15 16v4a1 1 0 0 1 -1 1h-8a1 1 0 0 1 -1 -1v-14a1 1 0 0 1 1 -1h2" /><path d="M10 18v.01" /></svg>
-                        </span>
-                        <span class="nav-link-title {{ menu_is_active('agent') }}">
-                            Uyap Entegrasyon
-                        </span>
-                    </a>
-                    <div class="dropdown-menu {{ menu_is_active('agent', 'show') }}">
                         <a class="dropdown-item" href="{{route('smsgonder')}}" title="SMS Gönder">
                             Uyap Kullanıcı
                         </a>
@@ -119,45 +105,7 @@
                         </a>
                     </div>
                 </li>
-<!--
 
-                <li class="nav-item {{ menu_is_active('agent') }} dropdown">
-                    <a class="nav-link dropdown-toggle {{ menu_is_active('agent', 'show') }}" href="#sms" data-bs-toggle="dropdown" role="button" aria-expanded="{{ menu_is_active('agent', 'true') }}" >
-                        <span class="nav-link-icon d-md-none d-lg-inline-block">
-	                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M11 3h10v8h-3l-4 2v-2h-3z" /><path d="M15 16v4a1 1 0 0 1 -1 1h-8a1 1 0 0 1 -1 -1v-14a1 1 0 0 1 1 -1h2" /><path d="M10 18v.01" /></svg>
-                        </span>
-                        <span class="nav-link-title {{ menu_is_active('agent') }}">
-                            Santral Yönetimi
-                        </span>
-                    </a>
-                    <div class="dropdown-menu {{ menu_is_active('agent', 'show') }}">
-                        <a class="dropdown-item" href="{{route('smsgonder')}}" title="SMS Gönder">
-                            Kullanıcı Tanımlama
-                        </a>
-                        <a class="dropdown-item" href="{{route('toplusmsgonder')}}" title="Toplu SMS Gönder">
-                            IVR Yönetimi
-                        </a>
-                        <a class="dropdown-item" href="{{route('smsgonder')}}" title="SMS Gönder">
-                            Kuyruk Yönetimi
-                        </a>
-                        <a class="dropdown-item" href="{{route('smsgonder')}}" title="SMS Gönder">
-                            Zaman Yönetimi
-                        </a>
-                        <a class="dropdown-item" href="{{route('toplusmsgonder')}}" title="Toplu SMS Gönder">
-                            Custom Content
-                        </a>
-                        <a class="dropdown-item" href="{{route('smsgonder')}}" title="SMS Gönder">
-                            Santral Ayarları
-                        </a>
-                        <a class="dropdown-item" href="{{route('smsgonder')}}" title="SMS Gönder">
-                            Kara Liste
-                        </a>
-                        <a class="dropdown-item" href="{{route('smsgonder')}}" title="SMS Gönder">
-                            Follow Me
-                        </a>
-                    </div>
-                </li>
--->
                 @can('Rapor Yönetimi')
                     <li class="nav-item  {{ menu_is_active('rapor') }} dropdown">
                         <a class="nav-link dropdown-toggle {{ menu_is_active('rapor', 'show') }}" href="#rapor" data-bs-toggle="dropdown" role="button" aria-expanded="{{ menu_is_active('rapor', 'true') }}" >
@@ -205,27 +153,23 @@
                             <a class="dropdown-item" href="{{route('sms.index')}}" title="CallCenter Dashboard">
                                 SMS Yönetimi
                             </a>
-                        </div>
-                        <div class="dropdown-menu {{ menu_is_active('callcenter', 'show') }}">
                             <a class="dropdown-item" href="{{route('agent.index')}}" title="CallCenter Dashboard">
                                 Agent Yönetimi
                             </a>
-                        </div>
-                        <div class="dropdown-menu {{ menu_is_active('callcenter', 'show') }}">
                             <a class="dropdown-item" href="{{route('dosya.index')}}" title="CallCenter Dashboard">
                                 Dosya Yönetimi
                             </a>
-                        </div>
-                        <div class="dropdown-menu {{ menu_is_active('callcenter', 'show') }}">
+
                             <a class="dropdown-item" href="{{route('callcenter.index')}}" title="CallCenter Dashboard">
                                 Santral Yönetimi
                             </a>
-                        </div>
-                        <div class="dropdown-menu {{ menu_is_active('callcenter', 'show') }}">
+
                             <a class="dropdown-item" href="{{route('callcenter.index')}}" title="CallCenter Dashboard">
                                 CallCenter Dashboard
                             </a>
+
                         </div>
+
                     </li>
                 @endcan
                 @can('Ayar Yönetimi')
