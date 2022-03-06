@@ -78,6 +78,8 @@ class DosyaController extends Controller
     }
 
     public function excelyukle(){
-        return view('callcenter::dosya.excelyukle');
+
+        $Sutunlar = ['id' => 'Sutun 1', 'name' => 'Sutun 2', 'surname' => 'Sutun 3', 'email' => 'Sutun 4', 'phone' => 'Sutun 5'];
+        return view('callcenter::dosya.excelyukle', compact('Sutunlar'));
     }
 }
