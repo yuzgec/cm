@@ -284,7 +284,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($Personel->izinler()->latest()->get() as $row)
+                                @foreach($Personel->izinler()->orderBy('baslangic','DESC')->get() as $row)
                                     <tr>
                                         <td>{{$row->baslangic->locale('tr')->translatedFormat('d F Y H:i')}}</td>
                                         <td>{{$row->bitis->locale('tr')->translatedFormat('d F Y H:i')}}</td>

@@ -975,6 +975,7 @@ class IKController extends Controller
         if(!File::exists(storage_path('app/tmp')))
             File::makeDirectory(storage_path('app/tmp'));
         $name = Str::uuid().".xlsx";
+        $writer->save();
         $writer->save(storage_path('app/tmp/'.$name));
 
         return $name;

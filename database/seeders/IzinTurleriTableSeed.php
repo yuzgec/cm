@@ -29,6 +29,6 @@ class IzinTurleriTableSeed extends Seeder
             ["id" => 12, "name" =>  "Vefat İzni"],
             ["id" => 13, "name" =>  "Yol İzni"],
         ];
-        IzinTuru::query()->insert($data);
+        \Modules\IK\Entities\IzinTuru::query()->insert($data);
     }
 }
