@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('callcenter')->group(function() {
     Route::resource('/callcenter', 'CallCenterController');
     Route::get('dosyaexcelyukle', 'DosyaController@excelyukle')->name('dosyaexcelyukle');
+    Route::post('dosyaexcelyukle', 'DosyaController@exceloku')->name('callcenter.dosya.exceloku');
+    Route::post('dosyaexcelisle', 'DosyaController@excelisle')->name('callcenter.dosya.excelisle');
     Route::resource('/grup', 'GrupController');
     Route::resource('/dosya', 'DosyaController');
     Route::resource('/alacakli', 'AlacakliController');
@@ -25,10 +27,4 @@ Route::prefix('callcenter')->group(function() {
     Route::get('uyap-sgk-sorgulama', 'CallCenterController@uyapSgkSorgulama')->name('callcenter.uyap-sgk-sorgulama');
     Route::get('lisans-modulu', 'CallCenterController@lisansModulu')->name('callcenter.lisans-modulu');
 
-    Route::prefix('/ayarlar')->group(function (){
-        Route::resource('icra_mudurlugu', 'IcraMudurluguController');
-        Route::resource('dosya_gruplari', 'DosyaGruplariController');
-        Route::resource('form_turleri', 'FormTurleriController');
-        Route::resource('foy_durumlari', 'FoyDurumlariController');
-    });
 });

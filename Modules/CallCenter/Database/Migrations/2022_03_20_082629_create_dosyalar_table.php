@@ -16,17 +16,24 @@ class CreateDosyalarTable extends Migration
         Schema::create('dosyalar', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->bigInteger('grup');
-            $table->bigInteger('alacakli_id');
-            $table->bigInteger('borclu_id');
-            $table->bigInteger('icra_mudurlugu');
-            $table->bigInteger('form_turu');
-            $table->bigInteger('foy_durumu');
-            $table->date('takip_tarihi')->nullable();
+            $table->string('klasor')->nullable();
             $table->string('foy_no')->nullable();
+            $table->date('takip_tarihi')->nullable();
+            $table->string('alacakli_adi')->nullable();
+            $table->string('borclu_adi')->nullable();
+            $table->string('tc')->nullable();
+            $table->string('borclu_tc')->nullable();
             $table->string('icra_dosya_no')->nullable();
-            $table->double('tutar');
-            $table->json('telefonlar')->nullable();
+            $table->string('icra_mudurlugu')->nullable();
+            $table->string('form_turu')->nullable();
+            $table->double('alacak')->nullable();
+            $table->string('para_birimi')->nullable();
+            $table->string('telefon1')->nullable();
+            $table->string('telefon2')->nullable();
+            $table->string('telefon3')->nullable();
+            $table->string('telefon4')->nullable();
+            $table->string('telefon5')->nullable();
+            $table->string('foy_durumu')->nullable();
         });
     }
 

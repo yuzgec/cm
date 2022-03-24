@@ -16,17 +16,4 @@ class Dosya extends Model
     {
         return \Modules\CallCenter\Database\factories\DosyaFactory::new();
     }
-
-    public function grubu(){
-        return $this->belongsTo(DosyaGrubu::class, 'grup');
-    }
-    public function alacakli(){
-        return $this->belongsTo(Alacakli::class);
-    }
-    public function borclu(){
-        return $this->belongsTo(Borclu::class);
-    }
-    public function durum(){
-        return $this->belongsTo(FoyDurumu::class, 'foy_durumu');
-    }
 }
