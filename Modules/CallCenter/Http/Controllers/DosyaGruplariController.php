@@ -5,9 +5,10 @@ namespace Modules\CallCenter\Http\Controllers;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Modules\CallCenter\Entities\Dosya;
 use Modules\CallCenter\Entities\DosyaGrubu;
 
-class GrupController extends Controller
+class DosyaGruplariController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +16,9 @@ class GrupController extends Controller
      */
     public function index()
     {
-        $Gruplar = DosyaGrubu::all();
-        return view('callcenter::grup.index', compact('Gruplar'));
+        $Liste = DosyaGrubu::all();
+        $item = new DosyaGrubu();
+        return view('callcenter::ayarlar.dosya_gruplari', compact('Liste', 'item'));
     }
 
     /**
@@ -25,7 +27,7 @@ class GrupController extends Controller
      */
     public function create()
     {
-        return view('callcenter::grup.create');
+
     }
 
     /**
@@ -38,11 +40,10 @@ class GrupController extends Controller
         $request->validate([
             "name" => "required"
         ]);
-
-        $DosyaGrubu = new DosyaGrubu();
-        $DosyaGrubu->name = $request->name;
-        $DosyaGrubu->save();
-        return redirect(route('grup.index'));
+        $IcraMudurlugu = new DosyaGrubu();
+        $IcraMudurlugu->name = $request->name;
+        $IcraMudurlugu->save();
+        return redirect(route('dosya_gruplari.index'));
     }
 
     /**
@@ -62,7 +63,9 @@ class GrupController extends Controller
      */
     public function edit($id)
     {
-        return view('callcenter::edit');
+        $Liste = DosyaGrubu::all();
+        $item = DosyaGrubu::findOrFail($id);
+        return view('callcenter::ayarlar.dosya_gruplari', compact('Liste', 'item'));
     }
 
     /**
@@ -73,7 +76,13 @@ class GrupController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            "name" => "required"
+        ]);
+        $IcraMudurlugu = DosyaGrubu::findOrFail($id);
+        $IcraMudurlugu->name = $request->name;
+        $IcraMudurlugu->save();
+        return redirect(route('dosya_gruplari.index'));
     }
 
     /**

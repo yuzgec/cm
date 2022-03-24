@@ -10,8 +10,7 @@ class Alacakli extends Model
     use HasFactory;
 
     protected $guarded = [];
-    protected $table = $TABLE$;
-    
+
     protected static function newFactory()
     {
         return \Modules\CallCenter\Database\factories\AlacakliFactory::new();

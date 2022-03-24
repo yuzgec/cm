@@ -5,9 +5,9 @@ namespace Modules\CallCenter\Http\Controllers;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Modules\CallCenter\Entities\DosyaGrubu;
+use Modules\CallCenter\Entities\FoyDurumu;
 
-class GrupController extends Controller
+class FoyDurumlariController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +15,9 @@ class GrupController extends Controller
      */
     public function index()
     {
-        $Gruplar = DosyaGrubu::all();
-        return view('callcenter::grup.index', compact('Gruplar'));
+        $Liste = FoyDurumu::all();
+        $item = new FoyDurumu();
+        return view('callcenter::ayarlar.foy_durumlari', compact('Liste', 'item'));
     }
 
     /**
@@ -25,7 +26,7 @@ class GrupController extends Controller
      */
     public function create()
     {
-        return view('callcenter::grup.create');
+        return view('callcenter::create');
     }
 
     /**
@@ -38,11 +39,10 @@ class GrupController extends Controller
         $request->validate([
             "name" => "required"
         ]);
-
-        $DosyaGrubu = new DosyaGrubu();
-        $DosyaGrubu->name = $request->name;
-        $DosyaGrubu->save();
-        return redirect(route('grup.index'));
+        $IcraMudurlugu = new FoyDurumu();
+        $IcraMudurlugu->name = $request->name;
+        $IcraMudurlugu->save();
+        return redirect(route('foy_durumlari.index'));
     }
 
     /**
@@ -62,7 +62,9 @@ class GrupController extends Controller
      */
     public function edit($id)
     {
-        return view('callcenter::edit');
+        $Liste = FoyDurumu::all();
+        $item = FoyDurumu::findOrFail($id);
+        return view('callcenter::ayarlar.foy_durumlari', compact('Liste', 'item'));
     }
 
     /**
@@ -73,7 +75,13 @@ class GrupController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            "name" => "required"
+        ]);
+        $IcraMudurlugu = FoyDurumu::findOrFail($id);
+        $IcraMudurlugu->name = $request->name;
+        $IcraMudurlugu->save();
+        return redirect(route('foy_durumlari.index'));
     }
 
     /**

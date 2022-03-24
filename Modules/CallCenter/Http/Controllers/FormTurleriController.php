@@ -5,9 +5,9 @@ namespace Modules\CallCenter\Http\Controllers;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Modules\CallCenter\Entities\DosyaGrubu;
+use Modules\CallCenter\Entities\FormTuru;
 
-class GrupController extends Controller
+class FormTurleriController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +15,9 @@ class GrupController extends Controller
      */
     public function index()
     {
-        $Gruplar = DosyaGrubu::all();
-        return view('callcenter::grup.index', compact('Gruplar'));
+        $Liste = FormTuru::all();
+        $item = new FormTuru();
+        return view('callcenter::ayarlar.form_turleri', compact('Liste', 'item'));
     }
 
     /**
@@ -25,7 +26,7 @@ class GrupController extends Controller
      */
     public function create()
     {
-        return view('callcenter::grup.create');
+        return view('callcenter::create');
     }
 
     /**
@@ -38,11 +39,10 @@ class GrupController extends Controller
         $request->validate([
             "name" => "required"
         ]);
-
-        $DosyaGrubu = new DosyaGrubu();
-        $DosyaGrubu->name = $request->name;
-        $DosyaGrubu->save();
-        return redirect(route('grup.index'));
+        $IcraMudurlugu = new FormTuru();
+        $IcraMudurlugu->name = $request->name;
+        $IcraMudurlugu->save();
+        return redirect(route('form_turleri.index'));
     }
 
     /**
@@ -62,7 +62,9 @@ class GrupController extends Controller
      */
     public function edit($id)
     {
-        return view('callcenter::edit');
+        $Liste = FormTuru::all();
+        $item = FormTuru::findOrFail($id);
+        return view('callcenter::ayarlar.form_turleri', compact('Liste', 'item'));
     }
 
     /**
@@ -73,7 +75,13 @@ class GrupController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            "name" => "required"
+        ]);
+        $IcraMudurlugu = FormTuru::findOrFail($id);
+        $IcraMudurlugu->name = $request->name;
+        $IcraMudurlugu->save();
+        return redirect(route('form_turleri.index'));
     }
 
     /**

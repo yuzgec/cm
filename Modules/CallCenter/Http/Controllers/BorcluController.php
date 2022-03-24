@@ -5,9 +5,9 @@ namespace Modules\CallCenter\Http\Controllers;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Modules\CallCenter\Entities\DosyaGrubu;
+use Modules\CallCenter\Entities\Borclu;
 
-class GrupController extends Controller
+class BorcluController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +15,9 @@ class GrupController extends Controller
      */
     public function index()
     {
-        $Gruplar = DosyaGrubu::all();
-        return view('callcenter::grup.index', compact('Gruplar'));
+        $Liste = Borclu::paginate();
+        $item = new Borclu();
+        return view('callcenter::borclu',compact('Liste','item'));
     }
 
     /**
@@ -25,7 +26,7 @@ class GrupController extends Controller
      */
     public function create()
     {
-        return view('callcenter::grup.create');
+        return view('callcenter::create');
     }
 
     /**
@@ -36,13 +37,16 @@ class GrupController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            "name" => "required"
+            "name" => "unvan"
         ]);
-
-        $DosyaGrubu = new DosyaGrubu();
-        $DosyaGrubu->name = $request->name;
-        $DosyaGrubu->save();
-        return redirect(route('grup.index'));
+        $Alacakli = new Borclu();
+        $Alacakli->unvan = $request->unvan;
+        $Alacakli->tc = $request->tc;
+        $Alacakli->adres = $request->adres;
+        $Alacakli->il = $request->il;
+        $Alacakli->ilce = $request->ilce;
+        $Alacakli->save();
+        return redirect(route('borclu.index'));
     }
 
     /**
@@ -62,7 +66,9 @@ class GrupController extends Controller
      */
     public function edit($id)
     {
-        return view('callcenter::edit');
+        $Liste = Borclu::paginate();
+        $item = Borclu::findOrFail($id);
+        return view('callcenter::borclu', compact('Liste', 'item'));
     }
 
     /**
@@ -73,7 +79,17 @@ class GrupController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            "name" => "unvan"
+        ]);
+        $Alacakli = Borclu::findOrFail(id);
+        $Alacakli->unvan = $request->unvan;
+        $Alacakli->tc = $request->tc;
+        $Alacakli->adres = $request->adres;
+        $Alacakli->il = $request->il;
+        $Alacakli->ilce = $request->ilce;
+        $Alacakli->save();
+        return redirect(route('borclu.index'));
     }
 
     /**
