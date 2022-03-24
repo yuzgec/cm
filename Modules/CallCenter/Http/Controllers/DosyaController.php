@@ -183,5 +183,7 @@ class DosyaController extends Controller
         foreach($data as $row){
             Dosya::query()->insert($row->toArray());
         }
+
+        return redirect(route('dosya.index'));
     }
 }
