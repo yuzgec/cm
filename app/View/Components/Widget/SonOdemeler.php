@@ -15,7 +15,7 @@ class SonOdemeler extends Component
      */
     public function __construct()
     {
-        $this->OdemeListesi = Odeme::with('getPersonel')->where('odeme_cevap', 1)->limit(200)->paginate(10);
+        $this->OdemeListesi = Odeme::with('getPersonel')->where('odeme_cevap', 1)->limit(200)->latest()->paginate(10);
     }
 
     /**
