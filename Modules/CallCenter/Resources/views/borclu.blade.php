@@ -1,12 +1,11 @@
 @extends('master')
-@section('title', 'Callcenter Grup Yönetimi | '.config('app.name'))
+@section('title', 'Callcenter Borçlu Yönetimi | '.config('app.name'))
 @section('content')
-
     <div class="col-12">
         <div class="card">
             <div class="card-body">
                 <div class="mb-1 d-flex justify-content-between">
-                    <div></div>
+                    <div><h3>Borçlu Yönetimi</h3></div>
                     <div>
                         <a class="btn btn-danger" href="{{ route('dosya.index') }}">
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-back-up" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -15,14 +14,24 @@
                             </svg>
                             Dosyalar
                         </a>
-                        <a class="btn btn-success" href="{{ route('grup.create') }}">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-plus" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                <line x1="12" y1="5" x2="12" y2="19"></line>
-                                <line x1="5" y1="12" x2="19" y2="12"></line>
-                            </svg>
-                            Grup Ekle
+                        <a class="btn" href="{{ route('alacakli.index') }}">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><circle cx="9" cy="7" r="4" /><path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /><path d="M21 21v-2a4 4 0 0 0 -3 -3.85" /></svg>
+                            Alacaklı Yönetimi
                         </a>
+                        <a class="btn" href="{{ route('borclu.index') }}">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><circle cx="9" cy="7" r="4" /><path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /><path d="M21 21v-2a4 4 0 0 0 -3 -3.85" /></svg>
+                            Borçlu Yönetimi
+                        </a>
+                        <a class="btn" href="javascript:;" data-bs-toggle="dropdown">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-layout-list" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><rect x="4" y="4" width="16" height="6" rx="2"></rect><rect x="4" y="14" width="16" height="6" rx="2"></rect></svg>
+                            Tanımlamalar
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                            <a href="{{route('dosya_gruplari.index')}}" class="dropdown-item">Dosya Grupları</a>
+                            <a href="{{route('foy_durumlari.index')}}" class="dropdown-item">Föy Durumları</a>
+                            <a href="{{route('form_turleri.index')}}" class="dropdown-item">Form Türleri</a>
+                            <a href="{{route('icra_mudurlugu.index')}}" class="dropdown-item">İcra Müdürlükleri</a>
+                        </div>
                     </div>
                 </div>
             </div>
