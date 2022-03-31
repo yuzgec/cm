@@ -70,6 +70,10 @@ Route::post('/OdemeSonuc', function (Request $request){
     return "Ödeme işlemi başarıyla gerçekleşmiştir.";
 
 });
+Route::get('/Phone', function (){
+    return view('phone');
+});
+
 
 Route::get('/Deneme', function (Request $request){
 

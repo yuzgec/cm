@@ -58,6 +58,11 @@
       <div class="col-auto ms-auto d-print-none">
         <div class="btn-list">
             <span class="d-none d-sm-inline">
+                <a href="javascript:;" id="openSoftPhone" class="btn btn-success">
+                Telefon
+                </a>
+            </span>
+            <span class="d-none d-sm-inline">
                 <a href="#" class="btn btn-white">
                 Duyurular
                 </a>

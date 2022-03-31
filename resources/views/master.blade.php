@@ -278,5 +278,10 @@
         <script src="{{mix('js/app.js')}}"></script>
         @include('layouts.js')
         @yield('customJS')
+        <script>
+            $(document).on('click', '#openSoftPhone', function(){
+                popupWindow = window.open("/Phone",'popUpWindow','height=575,width=325,right=0,top=0,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes');
+            });
+        </script>
     </body>
 </html>
