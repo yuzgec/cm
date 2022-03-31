@@ -35,10 +35,10 @@
             wssServer: '78.188.150.116',
             WebSocketPort: '8089',
             ServerPath: '/ws',
-            SipUsername: '192',
-            SipPassword: 'mk903121',
-            profileUser: '192',
-            profileName: '192',
+            SipUsername: '{{auth()->user()->sip_user}}',
+            SipPassword: '{{auth()->user()->sip_password}}',
+            profileUser: '{{auth()->user()->sip_user}}',
+            profileName: '{{auth()->user()->sip_user}}',
             NotificationsActive: true,
             ChatEngine: 'sip'
         }
