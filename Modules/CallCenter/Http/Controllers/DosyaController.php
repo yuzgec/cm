@@ -34,19 +34,9 @@ class DosyaController extends Controller
      */
     public function create()
     {
-        $Gruplar = DosyaGrubu::all()->pluck('name','id');
-        $Alacaklilar = Alacakli::all()->pluck('unvan','id');
-        $Borclular = Borclu::all()->pluck('unvan','id');
-        $FoyDurumlari = FoyDurumu::all()->pluck('name','id');
-        $IcraMudurlukleri = IcraMudurlugu::all()->pluck('name','id');
-        $FormTurleri = FormTuru::all()->pluck('name','id');
+        $Dosya = new Dosya();
         return view('callcenter::dosya.create', compact(
-            'Gruplar',
-            'Alacaklilar',
-            'Borclular',
-            'FoyDurumlari',
-            'IcraMudurlukleri',
-            'FormTurleri'
+            'Dosya'
         ));
     }
 
@@ -102,7 +92,8 @@ class DosyaController extends Controller
      */
     public function edit($id)
     {
-        return view('callcenter::dosya.edit');
+        $Dosya = Dosya::findOrFail($id);
+        return view('callcenter::dosya.edit', compact('Dosya'));
     }
 
     /**
