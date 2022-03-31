@@ -77,7 +77,7 @@ let TransportReconnectionTimeout = parseInt(getDbItem("TransportReconnectionTime
 
 let VoiceMailSubscribe = (getDbItem("VoiceMailSubscribe", "1") == "1");             // Enable Subscribe to voicemail
 let userAgentStr = getDbItem("UserAgentStr", "Browser Phone "+ appversion +" (SIPJS - "+ sipjsversion +")");   // Set this to whatever you want.
-let hostingPrefex = getDbItem("HostingPrefex", "/Phone/");                                 // Use if hosting off root directiory. eg: "/phone/" or "/static/"
+let hostingPrefex = getDbItem("HostingPrefex", "/PhoneLib/");                                 // Use if hosting off root directiory. eg: "/phone/" or "/static/"
 let RegisterExpires = parseInt(getDbItem("RegisterExpires", 300));                  // Registration expiry time (in seconds)
 let WssInTransport = (getDbItem("WssInTransport", "1") == "1");                     // Set the transport parameter to wss when used in SIP URIs. (Required for Asterisk as it doesnt support Path)
 let IpInContact = (getDbItem("IpInContact", "1") == "1");                           // Set a random IP address as the host value in the Contact header field and Via sent-by parameter. (Suggested for Asterisk)
