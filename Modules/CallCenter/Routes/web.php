@@ -17,6 +17,7 @@ Route::prefix('callcenter')->group(function() {
     Route::post('dosyaexcelyukle', 'DosyaController@exceloku')->name('callcenter.dosya.exceloku');
     Route::post('dosyaexcelisle', 'DosyaController@excelisle')->name('callcenter.dosya.excelisle');
     Route::resource('/grup', 'GrupController');
+    Route::post('/dosya/GorusmeKaydet/{dosyaId}', 'DosyaController@gorusmeKaydet')->name('callcenter.dosya.gorusmekaydet');
     Route::resource('/dosya', 'DosyaController');
     Route::resource('/alacakli', 'AlacakliController');
     Route::resource('/borclu', 'BorcluController');

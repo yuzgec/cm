@@ -49,7 +49,7 @@
                         <tbody>
                         @foreach($Dosyalar as $row)
                             <tr>
-                                <td><span class="text-muted">{{$row->id}}</span></td>
+                                <td><span class="text-muted"><a href="{{route('dosya.show', $row->id)}}">{{$row->id}}</a> </span></td>
                                 <td>{{$row->klasor}}</td>
                                 <td>{{$row->alacakli_adi}}</td>
                                 <td>{{$row->borclu_adi}}</td>

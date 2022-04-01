@@ -75,9 +75,5 @@ class AppServiceProvider extends ServiceProvider
             return \auth()->user()->DepartmanYonetici()->count() || \auth()->user()->email == "ceyda.demir@mecitkahraman.com.tr";
         });
 
-        DB::listen(function ($query){
-            Log::info('sql: ' . $query->sql);
-        });
-
     }
 }

@@ -12,12 +12,14 @@ use Modules\CallCenter\Entities\Dosya;
 use Modules\CallCenter\Entities\DosyaGrubu;
 use Modules\CallCenter\Entities\FormTuru;
 use Modules\CallCenter\Entities\FoyDurumu;
+use Modules\CallCenter\Entities\Gorusme;
 use Modules\CallCenter\Entities\IcraMudurlugu;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Reader\Xls;
 
 class DosyaController extends Controller
 {
+    public $sonucListe = ["" => "Seçin", "0" => "Cevapsız","1" => "Yarıda Kesildi","2" => "Müsait Değil","3" => "Yanlış Arama","4" => "Meşgul","5" => "Kapalı","7" => "Uygunsuz Arama","8" => "Şikayet","9" => "Genel Bilgi","10" => "Müşteriyi Geç","11" => "Numara Kullanılmıyor","12" => "Numara Yok","13" => "TCKN Olmayanlar","50" => "Ödeme Sözü Alındı","51" => "Tekrar Ara","52" => "Ödeme Reddetti","53" => "Yanlış Arama","54" => "Ulaşılamadı","55" => "Teklif Düşünüyor","56" => "İtirazlı Dosya","57" => "Taksitli Ödeme","58" => "Evrak Bekliyor","59" => "İnfaz","99" => "Sonuç Girilmedi"];
     /**
      * Display a listing of the resource.
      * @return Renderable
@@ -82,7 +84,10 @@ class DosyaController extends Controller
      */
     public function show($id)
     {
-        return view('callcenter::show');
+        $Dosya = Dosya::findOrFail($id);
+        $Gorusme = new Gorusme();
+        $SonucListe = $this->sonucListe;
+        return view('callcenter::dosya.show', compact('Dosya', 'Gorusme', 'SonucListe'));
     }
 
     /**
@@ -176,5 +181,26 @@ class DosyaController extends Controller
         }
 
         return redirect(route('dosya.index'));
+    }
+    public function gorusmeKaydet(Request $request, $dosyaId){
+
+        $request->validate(
+            [
+                "telefon" => "required",
+                "detay" => "required",
+                "tarih" => "required",
+                "sonuc" => "required",
+            ]
+        );
+
+        $Gorusme = new Gorusme();
+        $Gorusme->user_id = auth()->user()->id;
+        $Gorusme->dosya_id = $dosyaId;
+        $Gorusme->telefon = $request->telefon;
+        $Gorusme->detay = $request->detay;
+        $Gorusme->tarih = Carbon::parse($request->tarih)->format('Y-m-d H:i:s');
+        $Gorusme->sonuc = $request->sonuc;
+        $Gorusme->save();
+        return redirect(route("dosya.show", $dosyaId));
     }
 }

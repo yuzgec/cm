@@ -61,5 +61,36 @@ function PuantajGetir($Personel, $Tarih, $MesaiBaslangic, $MesaiBitis){
     $Kayit->save();
     return $Kayit;
 }
+function getGorusmeSonuc($id){
+    $sonucListe = [
+        ["id" => "0", "name" => "Cevapsız"],
+        ["id" => "1", "name" => "Yarıda Kesildi"],
+        ["id" => "2", "name" => "Müsait Değil"],
+        ["id" => "3", "name" => "Yanlış Arama"],
+        ["id" => "4", "name" => "Meşgul"],
+        ["id" => "5", "name" => "Kapalı"],
+        ["id" => "7", "name" => "Uygunsuz Arama"],
+        ["id" => "8", "name" => "Şikayet"],
+        ["id" => "9", "name" => "Genel Bilgi"],
+        ["id" => "10", "name" => "Müşteriyi Geç"],
+        ["id" => "11", "name" => "Numara Kullanılmıyor"],
+        ["id" => "12", "name" => "Numara Yok"],
+        ["id" => "13", "name" => "TCKN Olmayanlar"],
+        ["id" => "50", "name" => "Ödeme Sözü Alındı"],
+        ["id" => "51", "name" => "Tekrar Ara"],
+        ["id" => "52", "name" => "Ödeme Reddetti"],
+        ["id" => "53", "name" => "Yanlış Arama"],
+        ["id" => "54", "name" => "Ulaşılamadı"],
+        ["id" => "55", "name" => "Teklif Düşünüyor"],
+        ["id" => "56", "name" => "İtirazlı Dosya"],
+        ["id" => "57", "name" => "Taksitli Ödeme"],
+        ["id" => "58", "name" => "Evrak Bekliyor"],
+        ["id" => "59", "name" => "İnfaz"],
+        ["id" => "99", "name" => "Sonuç Girilmedi"],
+    ];
+    $liste = collect($sonucListe);
+    $sonuc = $liste->where('id' ,$id)->first();
+    return $sonuc["name"];
+}
 
 
