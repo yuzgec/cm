@@ -26,7 +26,28 @@ class DosyaController extends Controller
      */
     public function index()
     {
-        $Dosyalar = Dosya::query()->latest()->paginate();
+
+        $Dosyalar = Dosya::query();
+        if(\request()->get('q')){
+            $q = \request()->get('q');
+            $Dosyalar->Where('klasor','like', '%'.$q.'%')
+                ->orWhere('alacakli_adi','like', '%'.$q.'%')
+                ->orWhere('borclu_adi','like', '%'.$q.'%')
+                ->orWhere('tc','like', '%'.$q.'%')
+                ->orWhere('borclu_tc','like', '%'.$q.'%')
+                ->orWhere('icra_dosya_no','like', '%'.$q.'%')
+                ->orWhere('icra_mudurlugu','like', '%'.$q.'%')
+                ->orWhere('icra_mudurlugu','like', '%'.$q.'%')
+                ->orWhere('form_turu','like', '%'.$q.'%')
+                ->orWhere('telefon1','like', '%'.$q.'%')
+                ->orWhere('telefon2','like', '%'.$q.'%')
+                ->orWhere('telefon3','like', '%'.$q.'%')
+                ->orWhere('telefon4','like', '%'.$q.'%')
+                ->orWhere('telefon5','like', '%'.$q.'%')
+                ->orWhere('foy_durumu','like', '%'.$q.'%')
+            ;
+        }
+        $Dosyalar = $Dosyalar->latest()->paginate();
         return view('callcenter::dosya.index', compact('Dosyalar'));
     }
 

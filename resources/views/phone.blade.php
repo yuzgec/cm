@@ -32,7 +32,7 @@
         window.localStorage.setItem("profileUserID", "{{auth()->user()->id}}");
         var phoneOptions = {
             loadAlternateLang: true,
-            wssServer: '78.188.150.116',
+            wssServer: '192.168.1.149',
             WebSocketPort: '8089',
             ServerPath: '/ws',
             SipUsername: '{{auth()->user()->sip_user}}',

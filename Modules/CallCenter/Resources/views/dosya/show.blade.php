@@ -32,6 +32,11 @@
                                 <tr><td>Form Türü</td><td>{{$Dosya->form_turu}}</td></tr>
                                 <tr><td>Müvekkil</td><td>{{$Dosya->alacakli_adi}}</td></tr>
                                 <tr><td>İcra Müdürlüğü / Dosya No</td><td>{{$Dosya->icra_mudurlugu. " / " . $Dosya->icra_dosya_no}}</td></tr>
+                                <tr><td>Telefon 1</td><td>{{$Dosya->telefon1}}</td></tr>
+                                <tr><td>Telefon 2</td><td>{{$Dosya->telefon2}}</td></tr>
+                                <tr><td>Telefon 3</td><td>{{$Dosya->telefon3}}</td></tr>
+                                <tr><td>Telefon 4</td><td>{{$Dosya->telefon4}}</td></tr>
+                                <tr><td>Telefon 5</td><td>{{$Dosya->telefon5}}</td></tr>
                             </tbody>
                         </table>
                     </div>
