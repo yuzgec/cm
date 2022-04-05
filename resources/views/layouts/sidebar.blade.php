@@ -159,6 +159,9 @@
                             <a class="dropdown-item" href="{{route('dosya.index')}}" title="CallCenter Dashboard">
                                 Dosya Yönetimi
                             </a>
+                            <a class="dropdown-item" href="{{route('bedenihasar.index')}}" title="CallCenter Dashboard">
+                                Bedeni Hasar Dosya Yönetimi
+                            </a>
 
                             <a class="dropdown-item" href="{{route('callcenter.index')}}" title="CallCenter Dashboard">
                                 Santral Yönetimi
