@@ -10,7 +10,7 @@
                         <a href="javascript:;" class="btn btn-primary">Ödeme Al</a>
                     </div>
                     <div>
-                        <a class="btn btn-danger" href="{{ route('dosya.index') }}">
+                        <a class="btn btn-danger" href="{{ route('bedenihasar.index') }}">
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-back-up" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                                 <path d="M9 13l-4 -4l4 -4m-4 4h11a4 4 0 0 1 0 8h-1" />
@@ -29,29 +29,29 @@
                     <div class="col-6">
                         <table class="table table-striped table-hover table-bordered table-vcenter">
                             <tbody>
-                                <tr><td>Portföy Sahibi</td><td>&nbsp;</td></tr>
-                                <tr><td>Borçlu Kod</td><td></td></tr>
-                                <tr><td>Takip Tarihi</td><td>{{Carbon\Carbon::parse($Dosya->takip_tarihi)->format('d.m.Y')}}</td></tr>
-                                <tr><td>Form Türü</td><td>{{$Dosya->form_turu}}</td></tr>
-                                <tr><td>Müvekkil</td><td>{{$Dosya->alacakli_adi}}</td></tr>
-                                <tr><td>İcra Müdürlüğü / Dosya No</td><td>{{$Dosya->icra_mudurlugu. " / " . $Dosya->icra_dosya_no}}</td></tr>
-                                <tr><td>Telefon 1</td><td>{{$Dosya->telefon1}}</td></tr>
-                                <tr><td>Telefon 2</td><td>{{$Dosya->telefon2}}</td></tr>
-                                <tr><td>Telefon 3</td><td>{{$Dosya->telefon3}}</td></tr>
-                                <tr><td>Telefon 4</td><td>{{$Dosya->telefon4}}</td></tr>
-                                <tr><td>Telefon 5</td><td>{{$Dosya->telefon5}}</td></tr>
+                                <tr><td>Vaka Türü</td><td>{{$Dosya->vaka_turu}}</td></tr>
+                                <tr><td>Şube</td><td>{{$Dosya->sube}}</td></tr>
+                                <tr><td>Hastane</td><td>{{$Dosya->hastane}}</td></tr>
+                                <tr><td>Yetkili</td><td>{{$Dosya->yetkili}}</td></tr>
+                                <tr><td>M.Tarihi</td><td>{{Carbon\Carbon::parse($Dosya->m_tarihi)->format('d.m.Y')}}</td></tr>
+                                <tr><td>Hasta Adı Soyadı</td><td>{{$Dosya->hasta}}</td></tr>
+                                <tr><td>TC</td><td>{{$Dosya->tc}}</td></tr>
+                                <tr><td>Cep Telefon 1</td><td>{{$Dosya->telefon1}}</td></tr>
+                                <tr><td>Cep Telefon 2</td><td>{{$Dosya->telefon2}}</td></tr>
                             </tbody>
                         </table>
                     </div>
                     <div class="col-6">
                         <table class="table table-striped table-hover table-bordered table-vcenter">
                             <tbody>
-                            <tr><td>Karşı Yan İsmi	</td><td>{{$Dosya->borclu_adi}}</td></tr>
-                            <tr><td>TC Kimlik</td><td>{{$Dosya->borclu_tc}}</td></tr>
-                            <tr><td>Kesinleşme Tarihi</td><td></td></tr>
-                            <tr><td>Kesinleşmiş Föy</td><td></td></tr>
-                            <tr><td>Kalan Alacak</td><td class="text-end">{{number_format($Dosya->alacak,2)}} {{$Dosya->para_birimi}}</td></tr>
-                            <tr><td>İşlem Tipi</td><td></td></tr>
+                            <tr><td>Bilgi</td><td>{{$Dosya->bilgi}}</td></tr>
+                            <tr><td>Adli Muayene</td><td>{{$Dosya->adli_muayene}}</td></tr>
+                            <tr><td>Parti İsmi</td><td>{{$Dosya->parti_ismi}}</td></tr>
+                            <tr><td>İl</td><td>{{$Dosya->il}}</td></tr>
+                            <tr><td>Kaynak</td><td>{{$Dosya->kaynak}}</td></tr>
+                            <tr><td>Hastane Bölüm</td><td>{{$Dosya->hastane_bolum}}</td></tr>
+                            <tr><td>Tedavi Türü</td><td>{{$Dosya->tedavi_turu}}</td></tr>
+                            <tr><td>İkamet Adresi</td><td>{{$Dosya->ikamet_adresi}}</td></tr>
                             </tbody>
                         </table>
                     </div>

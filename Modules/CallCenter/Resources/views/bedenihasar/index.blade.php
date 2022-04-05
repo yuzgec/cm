@@ -26,12 +26,12 @@
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 3v4a1 1 0 0 0 1 1h4" /><path d="M5 13v-8a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2h-5.5m-9.5 -2h7m-3 -3l3 3l-3 3" /></svg>
                             Mola Yap
                         </a>
-                        <a class="btn" href="{{route('dosyaexcelyukle')}}">
+                        <a class="btn" href="{{route('bedenihasarexcelyukle')}}">
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 3v4a1 1 0 0 0 1 1h4" /><path d="M5 13v-8a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2h-5.5m-9.5 -2h7m-3 -3l3 3l-3 3" /></svg>
                             Excel ile Yükle
                         </a>
 
-                        <a class="btn" href="{{ route('dosya.create') }}">
+                        <a class="btn" href="{{ route('bedenihasar.create') }}">
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 3v4a1 1 0 0 0 1 1h4" /><path d="M5 13v-8a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2h-5.5m-9.5 -2h7m-3 -3l3 3l-3 3" /></svg>
                             Dosya Ekle
                         </a>
@@ -42,29 +42,29 @@
                         <thead>
                         <tr>
                             <th class="w-1">ID</th>
-                            <th>Dosya Grup</th>
-                            <th>Alacaklı</th>
-                            <th>Borçlu</th>
-                            <th>Kalan Tutar</th>
-                            <th>Dosya Durumu</th>
+                            <th>Vaka Türü</th>
+                            <th>M.Tarihi</th>
+                            <th>Hasta Adı Soyadı</th>
+                            <th>TC</th>
+                            <th>Cep Telefonu</th>
                             <th>İşlemler</th>
                         </tr>
                         </thead>
                         <tbody>
                         @foreach($Dosyalar as $row)
                             <tr>
-                                <td><span class="text-muted"><a href="{{route('dosya.show', $row->id)}}">{{$row->id}}</a> </span></td>
-                                <td>{{$row->klasor}}</td>
-                                <td>{{$row->alacakli_adi}}</td>
-                                <td>{{$row->borclu_adi}}</td>
-                                <td>{{number_format($row->alacak,2)}} ₺</td>
-                                <td>{{$row->foy_durumu}}</td>
+                                <td><span class="text-muted"><a href="{{route('bedenihasar.show', $row->id)}}">{{$row->id}}</a> </span></td>
+                                <td>{{$row->vaka_turu}}</td>
+                                <td>{{$row->m_tarihi}}</td>
+                                <td>{{$row->hasta}}</td>
+                                <td>{{$row->tc}}</td>
+                                <td>{{$row->telefon1}}</td>
                                 <td>
                                     <a data-bs-toggle="modal" data-bs-target="#silmeonayi1" class="btn btn-sm btn-square btn-danger">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><line x1="4" y1="7" x2="20" y2="7" /><line x1="10" y1="11" x2="10" y2="17" /><line x1="14" y1="11" x2="14" y2="17" /><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" /></svg>
                                         Sil
                                     </a>
-                                    <a class="btn btn-primary btn-sm btn-square" href="{{route('dosya.edit', $row->id)}}">
+                                    <a class="btn btn-primary btn-sm btn-square" href="{{route('bedenihasar.edit', $row->id)}}">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 7h-3a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-3" /><path d="M9 15h3l8.5 -8.5a1.5 1.5 0 0 0 -3 -3l-8.5 8.5v3" /><line x1="16" y1="5" x2="19" y2="8" /></svg>
                                         Düzenle
                                     </a>
