@@ -10,19 +10,9 @@
                     <div class="col-8 mb-3">
                         <label class="form-label">İzin Türü</label>
                         <select class="form-select" name="izinTalep[tur]" id="izinTalep_tur">
-                            <option value="1">Yıllık İzin</option>
-                            <option value="2">Askerlik İzni</option>
-                            <option value="3">Babalık İzni</option>
-                            <option value="4">Doğum İzni</option>
-                            <option value="5">Doğum Sonrası İzni</option>
-                            <option value="6">Evlilik İzni</option>
-                            <option value="7">Hastalık İzni</option>
-                            <option value="8">İş Arama İzni</option>
-                            <option value="9">Mazeret İzni</option>
-                            <option value="10">Süt izni</option>
-                            <option value="11">Ücretsiz İzin</option>
-                            <option value="12">Vefat İzni</option>
-                            <option value="13">Yol İzni</option>
+                            @foreach(\Illuminate\Support\Facades\DB::table('izin_turus')->get() as $row)
+                                <option value="{{$row->id}}">{{$row->name}}</option>
+                            @endforeach
                         </select>
                     </div>
                     <div class="col-4 mb-3">
