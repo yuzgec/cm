@@ -47,7 +47,6 @@ class PuantajOlustur extends Command
         else
             $SonTarih = $SonTarih->first()->gun->format('Y-m-d');
         $Tarihler = CarbonPeriod::create($SonTarih, Carbon::now()->subDay()->format('Y-m-d'));
-//        dd($Tarihler);
         foreach(User::query()->whereNotNull('remote_id')->get() as $Personel){
             $Mesai = $Personel->departman()->first();
             $MesaiBitisSaati = null;
@@ -60,35 +59,35 @@ class PuantajOlustur extends Command
                 if($Tarih->isMonday()){
                     $Ayir = explode("-",$Mesailer["Pazartesi"]);
                     $Baslangic = $Ayir[0];
-                    $Bitis = $Ayir[1];
+                    $Bitis = $Ayir[1] ?? null;
                     $MesaiBaslangicSaati = $Baslangic;
                     $MesaiBitisSaati = $Bitis;
                 }
                 if($Tarih->isTuesday()){
                     $Ayir = explode("-",$Mesailer["Sali"]);
                     $Baslangic = $Ayir[0];
-                    $Bitis = $Ayir[1];
+                    $Bitis = $Ayir[1] ?? null;
                     $MesaiBaslangicSaati = $Baslangic;
                     $MesaiBitisSaati = $Bitis;
                 }
                 if($Tarih->isWednesday()){
                     $Ayir = explode("-",$Mesailer["Carsamba"]);
                     $Baslangic = $Ayir[0];
-                    $Bitis = $Ayir[1];
+                    $Bitis = $Ayir[1] ?? null;
                     $MesaiBaslangicSaati = $Baslangic;
                     $MesaiBitisSaati = $Bitis;
                 }
                 if($Tarih->isThursday()){
                     $Ayir = explode("-",$Mesailer["Persembe"]);
                     $Baslangic = $Ayir[0];
-                    $Bitis = $Ayir[1];
+                    $Bitis = $Ayir[1] ?? null;
                     $MesaiBaslangicSaati = $Baslangic;
                     $MesaiBitisSaati = $Bitis;
                 }
                 if($Tarih->isFriday()){
                     $Ayir = explode("-",$Mesailer["Cuma"]);
                     $Baslangic = $Ayir[0];
-                    $Bitis = $Ayir[1];
+                    $Bitis = $Ayir[1] ?? null;
                     $MesaiBaslangicSaati = $Baslangic;
                     $MesaiBitisSaati = $Bitis;
                 }
@@ -97,7 +96,7 @@ class PuantajOlustur extends Command
                         continue;
                     $Ayir = explode("-",$Mesailer["Cumartesi"]);
                     $Baslangic = $Ayir[0];
-                    $Bitis = $Ayir[1];
+                    $Bitis = $Ayir[1] ?? null;
                     $MesaiBaslangicSaati = $Baslangic;
                     $MesaiBitisSaati = $Bitis;
                 }
