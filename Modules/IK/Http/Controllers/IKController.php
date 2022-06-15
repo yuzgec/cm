@@ -821,7 +821,7 @@ class IKController extends Controller
             $Fark = $Time->diffInDaysFiltered(function (Carbon $date){
                 return !$date->isSunday();
             }, $End);
-            return ["Fark" => $Fark-1];
+            return ["Fark" => $Fark];
         }
         $MesaiBaslangic = new Carbon(auth()->user()->departman()->first()->mesai_baslangic);
         $MesaiBitis = new Carbon(auth()->user()->departman()->first()->mesai_bitis);
