@@ -494,7 +494,7 @@
                                                             </div>
                                                         </td>
                                                         <td data-label="Title" >
-                                                            <div>{{$item->izin_hakki}}</div>
+                                                            <div>{{$item->izin_hakedis}}</div>
                                                         </td>
                                                         <td data-label="Title" >
                                                             <div>{{$item->kullanilan}}</div>

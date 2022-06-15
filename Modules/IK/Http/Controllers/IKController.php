@@ -621,11 +621,13 @@ class IKController extends Controller
 
         $KalanIzinler = [];
         foreach (User::all() as $user){
-            $BuYil = Carbon::now()->firstOfYear();
-            $kullanilan = $user->izinler()->where('tur',1)->whereYear('baslangic', $BuYil->year)->where('durum',1)->sum('gun');
-            $kalan = $user->izin_hakki - $kullanilan;
+            $IzinHakedis = $user->izin_hakedis;
+            $Kullanilan = $user->izinler()->where('tur',1)->where('durum', 1)->sum('gun');
+             $BuYil = Carbon::now()->firstOfYear();
+//            $kullanilan = $user->izinler()->where('tur',1)->whereYear('baslangic', $BuYil->year)->where('durum',1)->sum('gun');
+            $kalan = $IzinHakedis - $Kullanilan;
             $user->kalan_izin = $kalan;
-            $user->kullanilan = $kullanilan;
+            $user->kullanilan = $Kullanilan;
             $KalanIzinler[] = $user;
         }
         $Personel = Personel::with('mesai')->paginate(5);
@@ -815,6 +817,12 @@ class IKController extends Controller
         $Time = new \Carbon\Carbon($request->baslangic);
         $End = new \Carbon\Carbon($request->bitis);
         $Fark = $Time->diffInHours($End);
+        if($request->tur == 1){
+            $Fark = $Time->diffInDaysFiltered(function (Carbon $date){
+                return !$date->isSunday();
+            }, $End);
+            return ["Fark" => $Fark-1];
+        }
         $MesaiBaslangic = new Carbon(auth()->user()->departman()->first()->mesai_baslangic);
         $MesaiBitis = new Carbon(auth()->user()->departman()->first()->mesai_bitis);
         $MesaiSaat = $MesaiBitis->diffInHours($MesaiBaslangic);

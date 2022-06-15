@@ -180,12 +180,13 @@ $(document).on('click','#btnIzinEkleSend', function (){
 });
 $(document).on('change', '#izinTalepForm #izinTalep_baslangic_tarihi,#izinTalepForm  #izinTalep_baslangic_saati,#izinTalepForm  #izinTalep_bitis_tarihi,#izinTalepForm  #izinTalep_bitis_saati', function (){
     var baslangic = $('#izinTalepForm #izinTalep_baslangic_tarihi').val() + " " + $("#izinTalepForm #izinTalep_baslangic_saati").val(),
-        bitis = $('#izinTalepForm #izinTalep_bitis_tarihi').val() + " " + $("#izinTalepForm #izinTalep_bitis_saati").val();
+        bitis = $('#izinTalepForm #izinTalep_bitis_tarihi').val() + " " + $("#izinTalepForm #izinTalep_bitis_saati").val(),
+        tur = $('#izinTalepForm #izinTalep_tur').val();
 
     $.ajax({
         type: 'GET',
         url: '/ik/IzinHesapla',
-        data: 'baslangic=' + baslangic + '&bitis=' + bitis,
+        data: 'baslangic=' + baslangic + '&bitis=' + bitis + '&tur=' + tur,
         success: function (response){
             $('#izinTalepForm #izinTalep_gun').val(response.Fark + ' gün');
         }

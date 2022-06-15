@@ -1,4 +1,6 @@
 @extends('master')
+@section('customCSS')
+@endsection
 @section('content')
     <div id="ayarlar">
         <div class="navbar-expand-md">
@@ -6,13 +8,13 @@
                 <div class="navbar navbar-light">
                     <div class="container-xl">
                         <ul class="navbar-nav">
-                            <li class="nav-item" v-bind:class="activeTab == 'sistem' ? 'active': ''"><a
+                            <li class="nav-item d-none" v-bind:class="activeTab == 'sistem' ? 'active': ''"><a
                                     href="javascript:;" class="nav-link" v-on:click="ChangeTab" data-id="sistem"><span
                                         class="nav-link-title">Sistem Ayarları</span></a></li>
                             <li class="nav-item" v-bind:class="activeTab == 'sirket' ? 'active': ''"><a
                                     href="javascript:;" class="nav-link" v-on:click="ChangeTab" data-id="sirket"><span
                                         class="nav-link-title">Şirket Bilgileri</span></a></li>
-                            <li class="nav-item" v-bind:class="activeTab == 'kural' ? 'active': ''"><a
+                            <li class="nav-item d-none" v-bind:class="activeTab == 'kural' ? 'active': ''"><a
                                     href="javascript:;" class="nav-link" v-on:click="ChangeTab" data-id="kural"><span
                                         class="nav-link-title">Kural Yönetimi</span></a></li>
                             <li class="nav-item" v-bind:class="activeTab == 'tatil' ? 'active': ''"><a
@@ -25,9 +27,6 @@
         </div>
         <div class="content mt-4" id="content">
             <div v-if="loaded">
-                <div class="row" v-if="activeTab == 'sistem'" style="display: none" v-show="activeTab == 'sistem'">
-                    Sistem
-                </div>
                 <div class="row" v-if="activeTab == 'sirket'" style="display: none" v-show="activeTab == 'sirket'">
                     <div class="col-lg-6 mb-3">
                         <div class="card">
@@ -176,9 +175,88 @@
                         </div>
                     </div>
                 </div>
-                <div class="row" v-if="activeTab == 'kural'" style="display: none" v-show="activeTab == 'kural'">Kural
+                <div class="row" v-if="activeTab == 'tatil'" style="display: none" v-show="activeTab == 'tatil'">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="card">
+                                <div class="card-header d-flex justify-content-between">
+                                    <h3 class="card-title">Tatil Listesi</h3>
+                                </div>
+                                <table class="table card-table table-vcenter text-nowrap datatable">
+                                    <thead>
+                                    <tr>
+                                        <th>Tatil Adı</th>
+                                        <th>Tatil Başlangıç / Bitiş</th>
+                                        <th>Toplam Gün</th>
+                                        <th>İşlemler</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr v-for="item in Tatiller">
+                                            <td><span v-html="item.name"></span></td>
+                                            <td><span v-html="this.Tarih(item.baslangic, 'DD.MM.YYYY') + ' / ' + this.Tarih(item.bitis, 'DD.MM.YYYY')"></span></td>
+                                            <td><span v-html="item.gun"></span></td>
+                                            <td>
+                                                <a href="javascript:;" v-on:click="TatilDuzenle(item)">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24"
+                                                         height="24" viewBox="0 0 24 24" stroke-width="2"
+                                                         stroke="currentColor" fill="none" stroke-linecap="round"
+                                                         stroke-linejoin="round">
+                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                                        <path
+                                                            d="M9 7h-3a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-3"/>
+                                                        <path d="M9 15h3l8.5 -8.5a1.5 1.5 0 0 0 -3 -3l-8.5 8.5v3"/>
+                                                        <line x1="16" y1="5" x2="19" y2="8"/>
+                                                    </svg>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title" v-if="editTatil.id == null">Tatil Ekle</h3>
+                                    <h3 class="card-title" v-if="editTatil.id != null">Tatil Güncelle</h3>
+                                </div>
+                                <div class="card-body">
+                                    <form action="javascript:;">
+                                        <input type="hidden" v-model="editTatil.id">
+                                        <div class="form-group mb-3 row">
+                                            <label class="form-label col-3 col-form-label">Tatil Adı</label>
+                                            <div class="col">
+                                                <input type="text" class="form-control" placeholder="Tatil Adını Giriniz" v-model="editTatil.name">
+                                            </div>
+                                        </div>
+                                        <div class="form-group mb-3 row">
+                                            <label class="form-label col-3 col-form-label">Başlangıç Tarihi</label>
+                                            <div class="col">
+                                                <input type="date" class="form-control" v-model="editTatil.baslangic">
+                                            </div>
+                                        </div>
+                                        <div class="form-group mb-3 row">
+                                            <label class="form-label col-3 col-form-label">Bitiş Tarihi</label>
+                                            <div class="col">
+                                                <input type="date" class="form-control" v-model="editTatil.bitis">
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="card-footer card-footer-gray d-flex justify-content-between">
+                                    <button class="btn btn-warning" v-on:click="this.resetTatil" v-if="editTatil.id != null">İptal</button>
+                                    <span v-if="editTatil.id == null">&nbsp;</span>
+                                    <button class="btn btn-primary" v-on:click="saveTatil">
+                                        <span v-if="editTatil.id == null">Tatil Ekle</span>
+                                        <span v-if="editTatil.id != null">Kaydı Güncelle</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="row" v-if="activeTab == 'tatil'" style="display: none" v-show="activeTab == 'tatil'">Tatil
+                <div class="row" v-if="activeTab == 'kural'" style="display: none" v-show="activeTab == 'kural'">Kural
                 </div>
             </div>
             <div class="card" v-if="!loaded">
@@ -352,6 +430,7 @@
                     Departmanlar: [],
                     Unvanlar: [],
                     Calisanlar: [],
+                    Tatiller: [],
                     editSube: {id: null, name: null, yetkili: null},
                     editDepartman: {
                         id: null,
@@ -363,6 +442,7 @@
                         renk: null
                     },
                     editUnvan: {id: null, name: null, yetkili: null, departman_id: null},
+                    editTatil: {id: null, name: null, baslangic: null, bitis: null},
                 }
             },
             methods: {
@@ -461,6 +541,22 @@
                     this.editUnvan = {id: item.id, name: item.name, yetkili: item.yonetici};
                     $('#modal-unvan').modal('show');
                 },
+                saveTatil: function (){
+                    axios.post("{{ route('Ayarlar.storeTatil') }}", this.editTatil)
+                        .then(result => {
+                            this.Tatiller = result.data.Tatiller;
+                            this.editTatil = {id: null, name: null, baslangic: null, bitis: null};
+                        })
+                },
+                resetTatil: function (){
+                    this.editTatil = {id: null, name: null, baslangic: null, bitis: null};
+                },
+                TatilDuzenle(item){
+                    this.editTatil = {id: item.id, name: item.name, baslangic: this.Tarih(item.baslangic, 'YYYY-MM-DD'), bitis: this.Tarih(item.bitis, 'YYYY-MM-DD')};;
+                },
+                Tarih(tarih, format){
+                    return moment(tarih).format(format);
+                }
             },
             mounted() {
                 var cur = localStorage.getItem('ayarlar_CurrentTab');
@@ -481,6 +577,15 @@
                                 this.loaded = true;
                             });
                         console.log("Çalışanlar", this.Subeler);
+                    }
+                    if(newValue == 'tatil') {
+                        this.tatiller = [];
+                        this.loaded = false;
+                        axios.get("{{ route('Ayarlar.getTatil') }}")
+                            .then(result => {
+                                this.Tatiller = result.data.Tatiller;
+                                this.loaded = true;
+                            });
                     }
                 }
             }

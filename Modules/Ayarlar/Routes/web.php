@@ -7,6 +7,9 @@
             Route::post('/storeSube', [AyarlarController::class, 'storeSube'])->name('Ayarlar.storeSube');
             Route::post('/storeDepartman', [AyarlarController::class, 'storeDepartman'])->name('Ayarlar.storeDepartman');
             Route::post('/storeUnvan', [AyarlarController::class, 'storeUnvan'])->name('Ayarlar.storeUnvan');
+
+            Route::get('/getTatil', [AyarlarController::class, 'getTatil'])->name('Ayarlar.getTatil');
+            Route::post('/storeTatil', [AyarlarController::class, 'storeTatil'])->name('Ayarlar.storeTatil');
         });
     });
 //    Route::resource('/ayarlar', 'AyarlarController')->middleware('auth');

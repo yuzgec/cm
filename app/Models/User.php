@@ -129,4 +129,25 @@ class User extends Authenticatable implements HasMedia
         }
         return $Hak;
     }
+    public function getIzinHakedisAttribute(){
+        $Baslangic = @$this->bilgiler->ise_baslama_tarihi;
+        if(!$Baslangic)
+            return 0;
+        $Yillar = [];
+        $ToplamHakedis = 0;
+        for($i=1;$i<50; $i++){
+            $tmp = Carbon::parse($Baslangic)->addYear($i);
+            $Yillar[] = $tmp->year;
+            if(count($Yillar) > 1 AND count($Yillar) <= 5) {
+                $ToplamHakedis += 14;
+            }elseif(count($Yillar) > 5 AND count($Yillar) <= 15) {
+                $ToplamHakedis += 20;
+            }elseif(count($Yillar) > 15) {
+                $ToplamHakedis += 26;
+            }
+            if($tmp->year == now()->year)
+                continue;
+        }
+        return $ToplamHakedis;
+    }
 }

@@ -9,6 +9,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Modules\Ayarlar\Entities\Departman;
 use Modules\Ayarlar\Entities\Sube;
+use Modules\Ayarlar\Entities\Tatil;
 use Modules\Ayarlar\Entities\Unvan;
 
 class AyarlarController extends Controller
@@ -16,6 +17,22 @@ class AyarlarController extends Controller
     public function index()
     {
         return view('ayarlar::index');
+    }
+    public function getTatil(){
+        $Tatiller = Tatil::query()->orderBy('baslangic')->get();
+        return response()->json(["Success" => true, "Tatiller" => $Tatiller]);
+    }
+    public function storeTatil(Request $request){
+        if($request->id>0){
+            $Tatil = Tatil::findOrFail($request->id);
+        }else{
+            $Tatil = new Tatil();
+        }
+        $Tatil->name = $request->name;
+        $Tatil->baslangic = $request->baslangic;
+        $Tatil->bitis = $request->bitis;
+        $Tatil->save();
+        return $this->getTatil();
     }
     public function getSirket(){
         $Subeler = Sube::with('Yetkili')->get();
