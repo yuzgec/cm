@@ -818,9 +818,11 @@ class IKController extends Controller
         $End = new \Carbon\Carbon($request->bitis);
         $Fark = $Time->diffInHours($End);
         if($request->tur == 1){
-            $Fark = $Time->diffInDaysFiltered(function (Carbon $date){
+            $Baslangic = new Carbon(Carbon::parse($request->baslangic)->format('Y-m-d'));
+            $Bitis = new Carbon(Carbon::parse($request->bitis));
+            $Fark = $Baslangic->diffInDaysFiltered(function (Carbon $date){
                 return !$date->isSunday();
-            }, $End);
+            }, $Bitis);
             return ["Fark" => $Fark];
         }
         $MesaiBaslangic = new Carbon(auth()->user()->departman()->first()->mesai_baslangic);
