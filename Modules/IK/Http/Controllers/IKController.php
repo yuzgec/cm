@@ -20,6 +20,7 @@ use Illuminate\Support\Str;
 use Maatwebsite\Excel\Facades\Excel;
 use Modules\Ayarlar\Entities\Departman;
 use Modules\Ayarlar\Entities\Sube;
+use Modules\Ayarlar\Entities\Tatil;
 use Modules\IK\Emails\IzinTalep;
 use Modules\IK\Entities\Avans;
 use Modules\IK\Entities\Izin;
@@ -818,10 +819,11 @@ class IKController extends Controller
         $End = new \Carbon\Carbon($request->bitis);
         $Fark = $Time->diffInHours($End);
         if($request->tur == 1){
-            $Baslangic = new Carbon(Carbon::parse($request->baslangic)->format('Y-m-d'));
-            $Bitis = new Carbon(Carbon::parse($request->bitis));
-            $Fark = $Baslangic->diffInDaysFiltered(function (Carbon $date){
-                return !$date->isSunday();
+            $Baslangic = new Carbon(Carbon::parse($request->baslangic)->format('Y-m-d 00:00:01'));
+            $Bitis = new Carbon(Carbon::parse($request->bitis)->format('Y-m-d 23:59:59'));
+            $Tatiller = Tatil::query()->whereBetween('baslangic', [$Baslangic, $Bitis])->get();
+            $Fark = $Baslangic->diffInDaysFiltered(function (Carbon $date) use ($Tatiller){
+                return !$date->isSunday() && !$this->checkHoliday($date->format('Y-m-d'));
             }, $Bitis);
             return ["Fark" => $Fark];
         }
@@ -837,6 +839,28 @@ class IKController extends Controller
             $Fark = $Fark < 1 ? 1: $Fark;
         }
         return ["Fark" => $Fark];
+    }
+    private function checkHoliday($date){
+        $days = [];
+        $Tatiller = \Modules\Ayarlar\Entities\Tatil::query()->whereYear("baslangic", \Carbon\Carbon::now()->year)->get();
+        foreach ($Tatiller as $row){
+            if($row->baslangic == $row->bitis){
+                $days[] = $row->baslangic->format("Y-m-d");
+                if($row->baslangic->isFriday())
+                    $days[] = Carbon::parse($row->baslangic)->addDay()->format('Y-m-d');
+            }else{
+                $Periyod = \Carbon\CarbonPeriod::create($row->baslangic, '1 day', $row->bitis);
+                foreach ($Periyod as $p){
+                    $days[] = $p->format('Y-m-d');
+                    if($p->isFriday())
+                        $days[] = Carbon::parse($p)->addDay()->format('Y-m-d');
+                }
+            }
+        }
+        if(in_array($date, $days))
+            return true;
+
+        return false;
     }
     public function IzinSil($id){
         $Izin = Izin::findOrFail($id);

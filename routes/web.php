@@ -77,9 +77,31 @@ Route::get('/Phone', function (){
 
 Route::get('/Deneme', function (Request $request){
 
+    $Baslangic = new Carbon\Carbon(\Carbon\Carbon::parse('2022-07-08 01:01:00'));
+    $Bitis = new \Carbon\Carbon(\Carbon\Carbon::parse('2022-07-18 23:59:00'));
 
-    return view('ik::emails.dogumgunu',[
-        "User" => \auth()->user(),
-        "Tarih" => \Carbon\Carbon::now()->format('d.m.Y')
-    ]);
+    $customDates = [];
+    $Fark = $Baslangic->diffInDaysFiltered(function ($date){
+        return !$date->isSunday() && !checkHoliday($date->format('Y-m-d'));
+    }, $Bitis);
+    dd($Fark);
 });
+
+function checkHoliday($date){
+    $days = [];
+    $Tatiller = \Modules\Ayarlar\Entities\Tatil::query()->whereYear("baslangic", \Carbon\Carbon::now()->year)->get();
+    foreach ($Tatiller as $row){
+        if($row->baslangic == $row->bitis){
+            $days[] = $row->baslangic->format("Y-m-d");
+        }else{
+            $Periyod = \Carbon\CarbonPeriod::create($row->baslangic, '1 day', $row->bitis);
+            foreach ($Periyod as $p){
+                $days[] = $p->format('Y-m-d');
+            }
+        }
+    }
+    if(in_array($date, $days))
+        return true;
+
+    return false;
+}
