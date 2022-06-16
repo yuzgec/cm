@@ -34,6 +34,9 @@ class User extends Authenticatable implements HasMedia
         'password',
     ];
 
+    protected $appends = [
+        "izin_hakedis"
+    ];
     protected $hidden = [ 'password','remember_token', ];
     protected $casts = [ 'email_verified_at' => 'datetime',];
 
@@ -133,10 +136,12 @@ class User extends Authenticatable implements HasMedia
         $Baslangic = @$this->bilgiler->ise_baslama_tarihi;
         if(!$Baslangic)
             return 0;
+
         $Yillar = [];
         $ToplamHakedis = 0;
-        for($i=1;$i<50; $i++){
-            $tmp = Carbon::parse($Baslangic)->addYear($i);
+        $a = 1;
+        for($i=$Baslangic->year;$i<=now()->year; $i++){
+            $tmp = Carbon::parse($Baslangic)->addYear($a);
             $Yillar[] = $tmp->year;
             if(count($Yillar) > 1 AND count($Yillar) <= 5) {
                 $ToplamHakedis += 14;
@@ -145,9 +150,9 @@ class User extends Authenticatable implements HasMedia
             }elseif(count($Yillar) > 15) {
                 $ToplamHakedis += 26;
             }
-            if($tmp->year == now()->year)
-                continue;
+            $a++;
         }
+//        dump($this->id . " - " . $Baslangic->format('d.m.Y') . " - " . $ToplamHakedis);
         return $ToplamHakedis;
     }
 }
