@@ -228,10 +228,16 @@
                                 <a href="#onayverilen" class="nav-link" data-bs-toggle="tab">Onay Verilen <span class="badge m-2"> {{count($Onaylananlar)}}</span></a>
                             </li>
                             <li class="nav-item">
-                                <a href="#reddedilenler" class="nav-link" data-bs-toggle="tab">Reddedilenler <span class="badge m-2"> {{count($Reddedilenler)}}</span></a>
+                                <a href="#reddedilenler" class="nav-link" data-bs-toggle="tab">
+                                    Reddedilenler
+                                    <span class="badge m-2"> {{count($Reddedilenler)}}</span>
+                                </a>
                             </li>
                             <li class="nav-item">
-                                <a href="#kalanlar" class="nav-link" data-bs-toggle="tab">Kalan İzinler</a>
+                                <a href="#kalanlar" class="nav-link" data-bs-toggle="tab">
+                                    Kalan İzinler
+                                    <span class="m-2">&nbsp;</span>
+                                </a>
                             </li>
 
                         </ul>
@@ -469,6 +475,9 @@
                             <div class="tab-pane" id="kalanlar">
                                 <div class="col-12 mt-2">
                                     <div class="card">
+                                        <div class="text-end mx-2 my-2">
+                                            <a href="{{ route('IK.raporlar.excelindir.izin') }}">Excel olarak indir</a>
+                                        </div>
                                         <div class="table-responsive">
                                             <table class="table table-vcenter table-mobile-md card-table">
                                                 <thead>

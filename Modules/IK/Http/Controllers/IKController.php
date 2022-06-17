@@ -2,6 +2,7 @@
 
 namespace Modules\IK\Http\Controllers;
 
+use App\Exports\IzinExport;
 use App\Exports\OzlukExport;
 use App\Models\User;
 use Carbon\Carbon;
@@ -1026,5 +1027,26 @@ class IKController extends Controller
         }else{
             dump('Yetkisiz Giriş' . env('ADMIN_MAIL') . " - " . env('MUHASEBE_MAIL'));
         }
+    }
+    public function ExcelIndirIzin(){
+        $Personeller = User::all();
+        $data = [];
+        $data[] = [
+            "Personel",
+            "İzin Hakkı",
+            "Kullanılan İzin",
+            "Kalan İzin Hakkı"
+        ];
+        foreach ($Personeller as $row){
+            $kullanilan = $row->izinler()->where('tur',1)->where('durum', 1)->sum('gun');
+            $data[] = [
+                $row->full_name,
+                $row->izin_hakedis,
+                $kullanilan,
+                ($row->izin_hakedis-$kullanilan)
+            ];
+        }
+        $data = new IzinExport($data);
+        return Excel::download($data, "İzinler.xlsx");
     }
 }

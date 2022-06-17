@@ -38,6 +38,7 @@ Route::prefix('ik')->group(function() {
 
     Route::get('/raporlar/mesai/tariharaligi', [IKController::class, 'MesaiTarihAralihi'])->name('IK.raporlar.mesaitariharaligi');
     Route::get('/raporlar', [IKController::class, 'Raporlar'])->name('IK.raporlar');
+    Route::get('/raporlar/excelindir/izin', [IKController::class, 'ExcelIndirIzin'])->name('IK.raporlar.excelindir.izin');
     Route::get('/Mail', function (){
         $izin = \Modules\IK\Entities\Izin::query()->first();
 
