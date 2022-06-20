@@ -828,9 +828,12 @@ class IKController extends Controller
             }, $Bitis);
             return ["Fark" => $Fark];
         }
-        $MesaiBaslangic = new Carbon(auth()->user()->departman()->first()->mesai_baslangic);
-        $MesaiBitis = new Carbon(auth()->user()->departman()->first()->mesai_bitis);
+        $Mesai = auth()->user()->departman()->first()->mesai["Çarşamba"];
+        $exp = explode("-",$Mesai);
+        $MesaiBaslangic = new Carbon($exp[0]);
+        $MesaiBitis = new Carbon($exp[1]);
         $MesaiSaat = $MesaiBitis->diffInHours($MesaiBaslangic);
+
         if($Fark < $MesaiSaat){
             $Fark = $Fark / $MesaiSaat;
             if($Fark > 0.9)
