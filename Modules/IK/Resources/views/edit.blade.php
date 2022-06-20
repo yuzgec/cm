@@ -68,6 +68,10 @@
                                                 <p>İşe Başlama Tarihi</p>
                                                 <p>{{\Illuminate\Support\Carbon::parse($Personel->Bilgiler->ise_baslama_tarihi)->locale('tr')->translatedFormat('d F Y')}}</p>
                                             </div>
+                                            <div class="d-flex justify-content-between">
+                                                <p>İzin Hakediş</p>
+                                                <p>{{ $Personel->izin_hakedis }}</p>
+                                            </div>
                                             @endif
                                             @if(@$Personel->departman()->first()->yonetici)
                                             <div class="d-flex justify-content-between">
@@ -145,7 +149,10 @@
                                                 <x-form-select label="Şube" name="diger[sube]" :list="$Subeler"/>
                                             </div>
                                             <div class="col-6">
-                                                <x-form-select label="Departman" name="diger[departman]" :list="$Departmanlar"/>
+                                                <div class="row">
+                                                    <div class="col-6"><x-form-select label="Departman" name="diger[departman]" :list="$Departmanlar"/></div>
+                                                    <div class="col-6"><x-form-inputtext label="Kart Sicil No" name="remote_id" /> </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

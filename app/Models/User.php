@@ -140,6 +140,7 @@ class User extends Authenticatable implements HasMedia
         $Yillar = [];
         $ToplamHakedis = 0;
         $a = 1;
+        $Baslangic = Carbon::parse($Baslangic)->addYear();
         for($i=$Baslangic->year;$i<=now()->year; $i++){
             $tmp = Carbon::parse($Baslangic)->addYear($a);
             $Yillar[] = $tmp->year;
