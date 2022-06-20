@@ -828,7 +828,7 @@ class IKController extends Controller
             }, $Bitis);
             return ["Fark" => $Fark];
         }
-        $Mesai = auth()->user()->departman()->first()->mesai["Çarşamba"];
+        $Mesai = auth()->user()->departman()->first()->mesai["Carsamba"];
         $exp = explode("-",$Mesai);
         $MesaiBaslangic = new Carbon($exp[0]);
         $MesaiBitis = new Carbon($exp[1]);
