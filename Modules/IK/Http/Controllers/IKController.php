@@ -389,6 +389,14 @@ class IKController extends Controller
             $Fark = $Fark < 1 ? 1: $Fark;
         }
 
+        if($Talep["tur"] == 1){
+            $Baslangic = new Carbon(Carbon::parse($Talep["baslangic_tarihi"])->format('Y-m-d 00:00:01'));
+            $Bitis = new Carbon(Carbon::parse($Talep["bitis_tarihi"])->format('Y-m-d 23:59:59'));
+            $Tatiller = Tatil::query()->whereBetween('baslangic', [$Baslangic, $Bitis])->get();
+            $Fark = $Baslangic->diffInDaysFiltered(function (Carbon $date) use ($Tatiller){
+                return !$date->isSunday() && !$this->checkHoliday($date->format('Y-m-d'));
+            }, $Bitis);
+        }
 
         $baslangic = Carbon::parse($Talep["baslangic_tarihi"]." " . $Talep["baslangic_saati"]);
         $bitis = Carbon::parse($Talep["bitis_tarihi"]." " . $Talep["bitis_saati"]);
