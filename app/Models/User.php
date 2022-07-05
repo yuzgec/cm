@@ -144,7 +144,7 @@ class User extends Authenticatable implements HasMedia
         for($i=$Baslangic->year;$i<=now()->year; $i++){
             $tmp = Carbon::parse($Baslangic)->addYear($a);
             $Yillar[] = $tmp->year;
-            if(count($Yillar) > 1 AND count($Yillar) <= 5) {
+            if(count($Yillar) >= 1 AND count($Yillar) <= 5) {
                 $ToplamHakedis += 14;
             }elseif(count($Yillar) > 5 AND count($Yillar) <= 15) {
                 $ToplamHakedis += 20;
