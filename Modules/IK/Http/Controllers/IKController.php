@@ -4,6 +4,7 @@ namespace Modules\IK\Http\Controllers;
 
 use App\Exports\IzinExport;
 use App\Exports\OzlukExport;
+use App\Helpers\IzinHesap;
 use App\Models\User;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
@@ -376,28 +377,31 @@ class IKController extends Controller
 
         $Time = new \Carbon\Carbon($Talep["baslangic_tarihi"]." " . $Talep["baslangic_saati"]);
         $End = new \Carbon\Carbon($Talep["bitis_tarihi"]." " . $Talep["bitis_saati"]);
-        $Fark = $Time->diffInHours($End);
-        $MesaiBaslangic = new Carbon(auth()->user()->departman()->first()->mesai_baslangic);
-        $MesaiBitis = new Carbon(auth()->user()->departman()->first()->mesai_bitis);
-        $MesaiSaat = $MesaiBitis->diffInHours($MesaiBaslangic);
-        if($Fark < $MesaiSaat){
-            $Fark = $Fark / $MesaiSaat;
-            if($Fark > 0.9)
-                $Fark = 1;
-        }else{
-            $Fark = $Time->diffInDays($End);
-            $Fark = $Fark < 1 ? 1: $Fark;
-        }
 
-        if($Talep["tur"] == 1){
-            $Baslangic = new Carbon(Carbon::parse($Talep["baslangic_tarihi"])->format('Y-m-d 00:00:01'));
-            $Bitis = new Carbon(Carbon::parse($Talep["bitis_tarihi"])->format('Y-m-d 23:59:59'));
-            $Tatiller = Tatil::query()->whereBetween('baslangic', [$Baslangic, $Bitis])->get();
-            $Fark = $Baslangic->diffInDaysFiltered(function (Carbon $date) use ($Tatiller){
-                return !$date->isSunday() && !$this->checkHoliday($date->format('Y-m-d'));
-            }, $Bitis);
-        }
+        $Fark = IzinHesap::IzinHesapla(auth()->user()->id, $Time, $End, $Talep["tur"]);
 
+//        $Fark = $Time->diffInHours($End);
+//        $MesaiBaslangic = new Carbon(auth()->user()->departman()->first()->mesai_baslangic);
+//        $MesaiBitis = new Carbon(auth()->user()->departman()->first()->mesai_bitis);
+//        $MesaiSaat = $MesaiBitis->diffInHours($MesaiBaslangic);
+//        if($Fark < $MesaiSaat){
+//            $Fark = $Fark / $MesaiSaat;
+//            if($Fark > 0.9)
+//                $Fark = 1;
+//        }else{
+//            $Fark = $Time->diffInDays($End);
+//            $Fark = $Fark < 1 ? 1: $Fark;
+//        }
+//
+//        if($Talep["tur"] == 1){
+//            $Baslangic = new Carbon(Carbon::parse($Talep["baslangic_tarihi"])->format('Y-m-d 00:00:01'));
+//            $Bitis = new Carbon(Carbon::parse($Talep["bitis_tarihi"])->format('Y-m-d 23:59:59'));
+//            $Tatiller = Tatil::query()->whereBetween('baslangic', [$Baslangic, $Bitis])->get();
+//            $Fark = $Baslangic->diffInDaysFiltered(function (Carbon $date) use ($Tatiller){
+//                return !$date->isSunday() && !$this->checkHoliday($date->format('Y-m-d'));
+//            }, $Bitis);
+//        }
+//
         $baslangic = Carbon::parse($Talep["baslangic_tarihi"]." " . $Talep["baslangic_saati"]);
         $bitis = Carbon::parse($Talep["bitis_tarihi"]." " . $Talep["bitis_saati"]);
         $gun = $Fark;
@@ -713,18 +717,21 @@ class IKController extends Controller
 
         $Time = new \Carbon\Carbon($data["baslangic_tarihi"]." " . $data["baslangic_saati"]);
         $End = new \Carbon\Carbon($data["bitis_tarihi"]." " . $data["bitis_saati"]);
-        $Fark = $Time->diffInHours($End);
-        $MesaiBaslangic = new Carbon(auth()->user()->departman()->first()->mesai_baslangic);
-        $MesaiBitis = new Carbon(auth()->user()->departman()->first()->mesai_bitis);
-        $MesaiSaat = $MesaiBitis->diffInHours($MesaiBaslangic);
-        if($Fark < $MesaiSaat){
-            $Fark = $Fark / $MesaiSaat;
-            if($Fark > 0.9)
-                $Fark = 1;
-        }else{
-            $Fark = $Time->diffInDays($End);
-            $Fark = $Fark < 1 ? 1: $Fark;
-        }
+
+        $Fark = IzinHesap::IzinHesapla(auth()->user()->id, $Time, $End, $data["tur"]);
+
+//        $Fark = $Time->diffInHours($End);
+//        $MesaiBaslangic = new Carbon(auth()->user()->departman()->first()->mesai_baslangic);
+//        $MesaiBitis = new Carbon(auth()->user()->departman()->first()->mesai_bitis);
+//        $MesaiSaat = $MesaiBitis->diffInHours($MesaiBaslangic);
+//        if($Fark < $MesaiSaat){
+//            $Fark = $Fark / $MesaiSaat;
+//            if($Fark > 0.9)
+//                $Fark = 1;
+//        }else{
+//            $Fark = $Time->diffInDays($End);
+//            $Fark = $Fark < 1 ? 1: $Fark;
+//        }
 
 
         $baslangic = Carbon::parse($data["baslangic_tarihi"]." " . $data["baslangic_saati"]);
@@ -826,31 +833,36 @@ class IKController extends Controller
     public function IzinHesapla(Request $request){
         $Time = new \Carbon\Carbon($request->baslangic);
         $End = new \Carbon\Carbon($request->bitis);
-        $Fark = $Time->diffInHours($End);
-        if($request->tur == 1){
-            $Baslangic = new Carbon(Carbon::parse($request->baslangic)->format('Y-m-d 00:00:01'));
-            $Bitis = new Carbon(Carbon::parse($request->bitis)->format('Y-m-d 23:59:59'));
-            $Tatiller = Tatil::query()->whereBetween('baslangic', [$Baslangic, $Bitis])->get();
-            $Fark = $Baslangic->diffInDaysFiltered(function (Carbon $date) use ($Tatiller){
-                return !$date->isSunday() && !$this->checkHoliday($date->format('Y-m-d'));
-            }, $Bitis);
-            return ["Fark" => $Fark];
-        }
-        $Mesai = auth()->user()->departman()->first()->mesai["Carsamba"];
-        $exp = explode("-",$Mesai);
-        $MesaiBaslangic = new Carbon($exp[0]);
-        $MesaiBitis = new Carbon($exp[1]);
-        $MesaiSaat = $MesaiBitis->diffInHours($MesaiBaslangic);
 
-        if($Fark < $MesaiSaat){
-            $Fark = $Fark / $MesaiSaat;
-            if($Fark > 0.9)
-                $Fark = 1;
-        }else{
-            $Fark = $Time->diffInDays($End);
-            $Fark = $Fark < 1 ? 1: $Fark;
-        }
+        $Fark = IzinHesap::IzinHesapla(\auth()->user()->id, $Time, $End, $request->tur);
         return ["Fark" => $Fark];
+//        $Fark = $Time->diffInHours($End);
+//        if($request->tur == 1){
+//            $Baslangic = new Carbon(Carbon::parse($request->baslangic)->format('Y-m-d 00:00:01'));
+//            $Bitis = new Carbon(Carbon::parse($request->bitis)->format('Y-m-d 23:59:59'));
+//            $Tatiller = Tatil::query()->whereBetween('baslangic', [$Baslangic, $Bitis])->get();
+//            $Fark = $Baslangic->diffInDaysFiltered(function (Carbon $date) use ($Tatiller){
+//                return !$date->isSunday() && !$this->checkHoliday($date->format('Y-m-d'));
+//            }, $Bitis);
+//            return ["Fark" => $Fark];
+//        }
+//        $Mesai = auth()->user()->departman()->first()->mesai["Carsamba"];
+//        $exp = explode("-",$Mesai);
+//        $MesaiBaslangic = new Carbon($exp[0]);
+//        $MesaiBitis = new Carbon($exp[1]);
+//        $MesaiSaat = $MesaiBitis->diffInHours($MesaiBaslangic);
+//
+////        $Fark = $Fark / $MesaiSaat;
+////        return ["Fark" => $Fark];
+//        if($Fark < $MesaiSaat){
+//            $Fark = $Fark / $MesaiSaat;
+//            if($Fark > 0.9)
+//                $Fark = 1;
+//        }else{
+//            $Fark = $Time->diffInDays($End);
+//            $Fark = $Fark < 1 ? 1: $Fark;
+//        }
+//        return ["Fark" => $Fark];
     }
     private function checkHoliday($date){
         $days = [];

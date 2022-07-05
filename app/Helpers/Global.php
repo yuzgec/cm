@@ -1,7 +1,10 @@
 <?php
 
+use App\Models\User;
 use Carbon\Carbon;
+use Carbon\CarbonPeriod;
 use Illuminate\Support\Facades\Request;
+use Modules\Ayarlar\Entities\Tatil;
 use Modules\Personel\Entities\Personel;
 
 function menu_is_active($url, $durum = 'active')
@@ -93,4 +96,10 @@ function getGorusmeSonuc($id){
     return $sonuc["name"];
 }
 
+function fnIzinHesapla($user_id, $baslangic, $bitis){
+
+}
+function fnGunlukMesai($Baslangic, $Bitis){
+
+}
 
