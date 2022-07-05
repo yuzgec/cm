@@ -44,6 +44,8 @@ class TatilHesapla extends Command
     public function handle()
     {
         $user_id = $this->argument('user_id');
+
+        dd('Here');
         $baslangic = $this->argument('baslangic');
         $bitis = $this->argument('bitis');
         $tur = $this->argument('tur');
