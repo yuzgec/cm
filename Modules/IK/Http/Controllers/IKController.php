@@ -718,7 +718,7 @@ class IKController extends Controller
         $Time = new \Carbon\Carbon($data["baslangic_tarihi"]." " . $data["baslangic_saati"]);
         $End = new \Carbon\Carbon($data["bitis_tarihi"]." " . $data["bitis_saati"]);
 
-        $Fark = IzinHesap::IzinHesapla(auth()->user()->id, $Time, $End, $data["tur"]);
+        $Fark = IzinHesap::IzinHesapla($data["user_id"], $Time, $End, $data["tur"]);
 
 //        $Fark = $Time->diffInHours($End);
 //        $MesaiBaslangic = new Carbon(auth()->user()->departman()->first()->mesai_baslangic);
