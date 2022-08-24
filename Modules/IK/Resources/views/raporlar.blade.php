@@ -322,7 +322,7 @@
                                                         <td data-label="Name" >
                                                             <div class="d-flex py-1 align-items-center">
                                                                 <a href="#">
-                                                                    {!! $item->user->avatar !!}
+                                                                    {!! @$item->user->avatar !!}
                                                                 </a>
                                                                 <div class="flex-fill">
                                                                     <div class="font-weight-medium">{{$item->user->full_name}}</div>
@@ -379,7 +379,7 @@
                                                         <td data-label="Name" >
                                                             <div class="d-flex py-1 align-items-center">
                                                                 <a href="#">
-                                                                    {!! $item->user->avatar !!}
+                                                                    {!! @$item->user->avatar !!}
                                                                 </a>
                                                                 <div class="flex-fill">
                                                                     <div class="font-weight-medium">{{$item->user->full_name}}</div>
@@ -437,7 +437,7 @@
                                                         <td data-label="Name" >
                                                             <div class="d-flex py-1 align-items-center">
                                                                 <a href="#">
-                                                                    {!! $item->user->avatar !!}
+                                                                    {!! @$item->user->avatar !!}
                                                                 </a>
                                                                 <div class="flex-fill">
                                                                     <div class="font-weight-medium">{{$item->user->full_name}}</div>
@@ -570,7 +570,7 @@
                                         <tbody>
                                         @foreach(\Modules\IK\Entities\Avans::query()->where('durum',1)->get() as $Item)
                                             <tr>
-                                                <td class="d-flex py-1 align-items-center">{!! $Item->user->avatar !!} {{$Item->user->full_name}}</td>
+                                                <td class="d-flex py-1 align-items-center">{!! @$Item->user->avatar !!} {{$Item->user->full_name}}</td>
                                                 <td>{{$Item->user->departman()->first()->name}}</td>
                                                 <td>{{$Item->tutar}}</td>
                                                 <td>{{$Item->tarih->locale('tr')->translatedFormat('d F Y')}}</td>
@@ -596,7 +596,7 @@
                                         <tbody>
                                         @foreach(\Modules\IK\Entities\Avans::query()->where('durum',-1)->get() as $Item)
                                             <tr>
-                                                <td class="d-flex py-1 align-items-center">{!! $Item->user->avatar !!} {{$Item->user->full_name}}</td>
+                                                <td class="d-flex py-1 align-items-center">{!! @$Item->user->avatar !!} {{$Item->user->full_name}}</td>
                                                 <td>{{$Item->user->departman()->first()->name}}</td>
                                                 <td>{{$Item->tutar}}</td>
                                                 <td>{{$Item->tarih->locale('tr')->translatedFormat('d F Y')}}</td>
