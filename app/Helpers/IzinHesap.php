@@ -48,9 +48,15 @@ class IzinHesap
                 if($item > $IzinBaslangic){
                     $b = $item;
                 }
-                $Fark = Carbon::parse($item->format('Y-m-d ' . $MesaiBitis . ':00'));
-                $Fark = $Fark->diffInHours($b);
+                $f = Carbon::parse($item->format('Y-m-d' . $MesaiBitis . ':00'));
+                if($f > $IzinBitis)
+                    $f = $IzinBitis;
+
+                $Fark = $f->diffInHours($b);
                 $HesaplananSaat+= $Fark;
+                /*
+                 *
+                 */
             }else if($item->format('Y-m-d') == $IzinBitis->format('Y-m-d')){
                 $b = $IzinBitis;
                 if($b > Carbon::parse($item->format('Y-m-d ' . $MesaiBitis.':00'))){
