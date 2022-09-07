@@ -10,6 +10,8 @@ use Modules\Ayarlar\Entities\Tatil;
 class IzinHesap
 {
     public static function IzinHesapla($user_id, $baslangic, $bitis, $tur){
+        if($bitis < $baslangic)
+            return 0;
         $User = User::findOrFail($user_id);
         $Mesai = $User->departman()->first()->mesai["Carsamba"];
         $Exp = explode("-", $Mesai);

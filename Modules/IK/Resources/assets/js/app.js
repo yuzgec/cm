@@ -1,3 +1,26 @@
+(function($){
+    $.fn.bindDelayed = function(event,delay,url,dataCallback,callback,dataType,action){
+        var xhr, timer, ct=0;
+        return this.on(event,function(){
+            clearTimeout(timer);
+            if (xhr) xhr.abort();
+            timer = setTimeout(function(){
+                var id = ++ct;
+                xhr = $.ajax({
+                    type:action||'get',
+                    url:url,
+                    data:dataCallback && dataCallback(),
+                    dataType:dataType||'json',
+                    success:function(data){
+                        xhr = null;
+                        if (id==ct) callback.call(this,data);
+                    }
+                });
+            },delay);
+        });
+    };
+})(jQuery);
+
 $(document).ready(function() {
     $.ajaxSetup({
         headers:
@@ -178,11 +201,24 @@ $(document).on('click','#btnIzinEkleSend', function (){
             console.log(err);
         })
 });
+
 $(document).on('change', '#izinTalepForm #izinTalep_baslangic_tarihi,#izinTalepForm  #izinTalep_baslangic_saati,#izinTalepForm  #izinTalep_bitis_tarihi,#izinTalepForm  #izinTalep_bitis_saati', function (){
     var baslangic = $('#izinTalepForm #izinTalep_baslangic_tarihi').val() + " " + $("#izinTalepForm #izinTalep_baslangic_saati").val(),
         bitis = $('#izinTalepForm #izinTalep_bitis_tarihi').val() + " " + $("#izinTalepForm #izinTalep_bitis_saati").val(),
         tur = $('#izinTalepForm #izinTalep_tur').val();
+    var ba = moment(baslangic, 'YYYY-MM-DD HH:mm');
+    var bi = moment(bitis, 'YYYY-MM-DD HH:mm');
+    if(!moment(baslangic, 'YYYY-MM-DD HH:mm', true).isValid() || !moment(bitis, 'YYYY-MM-DD HH:mm', true).isValid())
+        return;
 
+    if(ba > bi){
+        $('#izinTalepForm #izinTalep_gun').val('0');
+        return;
+    }
+    if(bi.diff(ba, 'days') > 90){
+        $('#izinTalepForm #izinTalep_gun').val('0');
+        return;
+    }
     $.ajax({
         type: 'GET',
         url: '/ik/IzinHesapla',
@@ -192,15 +228,31 @@ $(document).on('change', '#izinTalepForm #izinTalep_baslangic_tarihi,#izinTalepF
         }
     })
 })
+
 $(document).on('change', '#izinEkleForm #izinTalep_baslangic_tarihi,#izinEkleForm  #izinTalep_baslangic_saati,#izinEkleForm  #izinTalep_bitis_tarihi,#izinEkleForm  #izinTalep_bitis_saati', function (){
     var baslangic = $('#izinEkleForm #izinTalep_baslangic_tarihi').val() + " " + $("#izinEkleForm #izinTalep_baslangic_saati").val(),
         bitis = $('#izinEkleForm #izinTalep_bitis_tarihi').val() + " " + $("#izinEkleForm #izinTalep_bitis_saati").val(),
         tur = $('#izinEkleForm #izinTalep_tur').val();
 
+    console.log(bitis);
+    var ba = moment(baslangic, 'YYYY-MM-DD HH:mm');
+    var bi = moment(bitis, 'YYYY-MM-DD HH:mm');
+    if(!moment(baslangic, 'YYYY-MM-DD HH:mm', true).isValid() || !moment(bitis, 'YYYY-MM-DD HH:mm', true).isValid())
+        return;
+
+    if(ba > bi){
+        $('#izinEkleForm #izinTalep_gun').val('0');
+        return;
+    }
+    if(bi.diff(ba, 'days') > 90){
+        $('#izinEkleForm #izinTalep_gun').val('0');
+        return;
+    }
+
     $.ajax({
         type: 'GET',
         url: '/ik/IzinHesapla',
-        data: 'baslangic=' + baslangic + '&bitis=' + bitis % '&tur=' + tur,
+        data: 'baslangic=' + baslangic + '&bitis=' + bitis + '&tur=' + tur,
         success: function (response){
             $('#izinEkleForm #izinTalep_gun').val(response.Fark + ' gün');
         }
