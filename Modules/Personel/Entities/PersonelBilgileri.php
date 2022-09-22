@@ -35,6 +35,9 @@ class PersonelBilgileri extends Model
         $this->attributes["sozlesme_bitis_tarihi"] = Carbon::parse($value)->format('Y-m-d');
     }
     public function setDogumTarihiAttribute($value){
-        $this->attributes["dogum_Tarihi"] = Carbon::parse($value)->format('Y-m-d');
+        if($value != null)
+            $this->attributes["dogum_tarihi"] = Carbon::parse($value)->format('Y-m-d');
+        else
+            $this->attributes["dogum_tarihi"] = null;
     }
 }
