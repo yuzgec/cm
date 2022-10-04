@@ -169,7 +169,7 @@ class IKController extends Controller
      */
     public function edit($id)
     {
-        $Personel = User::with('bilgiler')->findOrFail($id);
+        $Personel = User::query()->withoutGlobalScope('where')->with('bilgiler')->findOrFail($id);
         $Roles = Role::query()->get()->pluck('name','id');
         $Roles[0] = "Seçiniz";
         $Roles = $Roles->sortKeys();

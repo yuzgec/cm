@@ -252,7 +252,7 @@ $(document).on('change', '#izinEkleForm #izinTalep_baslangic_tarihi,#izinEkleFor
     $.ajax({
         type: 'GET',
         url: '/ik/IzinHesapla',
-        data: 'baslangic=' + baslangic + '&bitis=' + bitis + '&tur=' + tur,
+        data: 'baslangic=' + baslangic + '&bitis=' + bitis +     '&tur=' + tur,
         success: function (response){
             $('#izinEkleForm #izinTalep_gun').val(response.Fark + ' gün');
         }
