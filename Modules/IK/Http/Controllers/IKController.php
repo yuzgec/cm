@@ -277,7 +277,7 @@ class IKController extends Controller
         if($request->password){
             $data["password"] = Hash::make($request->password);
         }
-        $User = User::findOrFail($id);
+        $User = User::query()->withoutGlobalScope('where')->findOrFail($id);
         $User->update($data);
         $pb = $request->pb;
         $Bilgiler = PersonelBilgileri::where('user_id', $id)->get();
